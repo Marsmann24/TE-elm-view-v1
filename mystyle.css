@@ -1,0 +1,15 @@
+.mdl-tabs__tab-bar{
+    -webkit-justify-content: flex-start!important;
+    -ms-flex-pack: start!important;
+    justify-content: flex-start!important;
+}
+
+.mdl-chip__text{
+    float: left!important;
+    text-align: center!important;
+    width: 126px;
+}
+.mdl-chip__action{
+    float: right!important;
+    padding: 4px 0!important;
+}

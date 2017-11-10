@@ -1,0 +1,186 @@
+var _user$project$Init$init = {
+	ctor: '_Tuple2',
+	_0: {
+		topics: {
+			ctor: '::',
+			_0: {
+				topicID: 0,
+				topicName: 'Stuff',
+				words: {
+					ctor: '::',
+					_0: 'Stuff',
+					_1: {
+						ctor: '::',
+						_0: 'Things',
+						_1: {
+							ctor: '::',
+							_0: 'Items',
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					topicID: 1,
+					topicName: 'Other',
+					words: {
+						ctor: '::',
+						_0: 'Some',
+						_1: {
+							ctor: '::',
+							_0: 'Any',
+							_1: {
+								ctor: '::',
+								_0: 'Other',
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				_1: {ctor: '[]'}
+			}
+		},
+		currentTopics: {
+			ctor: '::',
+			_0: {
+				topicID: 0,
+				topicName: 'Dummy',
+				words: {
+					ctor: '::',
+					_0: 'one',
+					_1: {
+						ctor: '::',
+						_0: 'two',
+						_1: {
+							ctor: '::',
+							_0: 'three',
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					topicID: 5,
+					topicName: 'Tryout',
+					words: {
+						ctor: '::',
+						_0: 'test',
+						_1: {
+							ctor: '::',
+							_0: 'time',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				_1: {ctor: '[]'}
+			}
+		},
+		articles: {
+			ctor: '::',
+			_0: {
+				articleID: 0,
+				rankedTopics: {
+					ctor: '::',
+					_0: 0,
+					_1: {
+						ctor: '::',
+						_0: 1,
+						_1: {
+							ctor: '::',
+							_0: 2,
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				title: 'Hallo',
+				date: '11.11.2011',
+				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					articleID: 1,
+					rankedTopics: {
+						ctor: '::',
+						_0: 0,
+						_1: {
+							ctor: '::',
+							_0: 1,
+							_1: {
+								ctor: '::',
+								_0: 2,
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					title: 'Article 0',
+					date: '13.07.1999',
+					text: 'Hallo, ich habe hier nur einen Dummytext.'
+				},
+				_1: {ctor: '[]'}
+			}
+		},
+		currentArticle: {
+			cardID: 0,
+			article: {
+				articleID: 0,
+				rankedTopics: {
+					ctor: '::',
+					_0: 0,
+					_1: {
+						ctor: '::',
+						_0: 1,
+						_1: {
+							ctor: '::',
+							_0: 2,
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				title: 'Hallo',
+				date: '11.11.2011',
+				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
+			}
+		},
+		raised: -1,
+		row: false,
+		wordList: {ctor: '[]'},
+		tabs: {
+			ctor: '::',
+			_0: _user$project$Model$PreviewTab,
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_user$project$Model$ArticleTab,
+					'Article 0',
+					{
+						articleID: 1,
+						rankedTopics: {
+							ctor: '::',
+							_0: 0,
+							_1: {
+								ctor: '::',
+								_0: 1,
+								_1: {
+									ctor: '::',
+									_0: 2,
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						title: 'Article 0',
+						date: '13.07.1999',
+						text: 'Hallo, ich habe hier nur einen Dummytext.'
+					}),
+				_1: {ctor: '[]'}
+			}
+		},
+		currentTab: 0,
+		mdl: _debois$elm_mdl$Material$model
+	},
+	_1: _elm_lang$core$Platform_Cmd$none
+};

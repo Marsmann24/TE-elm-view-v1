@@ -1,0 +1,149 @@
+var _user$project$Tabview$article2ArticleView = function (article) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0px 6px'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Options$span,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '4px'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'grey'),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(article.date),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$h1,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(article.title),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$span,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(article.text),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _user$project$Tabview$tab2TabView = function (tab) {
+	return A2(
+		_debois$elm_mdl$Material_Tabs$label,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Options$span,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '4px'),
+					_1: {ctor: '[]'}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(tab.tabID),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Tabview$view = function (model) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: _debois$elm_mdl$Material_Elevation$e0,
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '4 3 80%'),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A6(
+				_debois$elm_mdl$Material_Tabs$render,
+				_user$project$Model$Mdl,
+				{
+					ctor: '::',
+					_0: 0,
+					_1: {ctor: '[]'}
+				},
+				model.mdl,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Tabs$ripple,
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Tabs$onSelectTab(_user$project$Model$SelectTab),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Tabs$activeTab(model.currentTab),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				A2(_elm_lang$core$List$map, _user$project$Tabview$tab2TabView, model.tabs),
+				{
+					ctor: '::',
+					_0: function () {
+						var maybetab = _elm_lang$core$List$head(
+							A2(_elm_lang$core$List$drop, model.currentTab, model.tabs));
+						var tab = function () {
+							var _p0 = maybetab;
+							if (_p0.ctor === 'Just') {
+								return _p0._0;
+							} else {
+								return {
+									tabID: 'Error',
+									content: {
+										articleID: -1,
+										rankedTopics: {ctor: '[]'},
+										title: 'Error',
+										date: '',
+										text: 'No Tabs available.'
+									}
+								};
+							}
+						}();
+						return _user$project$Tabview$article2ArticleView(tab.content);
+					}(),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
