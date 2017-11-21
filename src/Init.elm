@@ -37,7 +37,7 @@ initSettings =
     , showArticles = True
     , showWordlist = False
     , showSaved = True
-    , bottom = True
+    , bottom = False
     , view2 = False
     , showSlotDialoge = False
     }

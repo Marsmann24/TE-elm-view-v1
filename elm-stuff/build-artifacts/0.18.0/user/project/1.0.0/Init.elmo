@@ -154,7 +154,7 @@ var _user$project$Init$initTabs = {
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: true, view2: false, showSlotDialoge: false};
+var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: false, showSlotDialoge: false};
 var _user$project$Init$init = {
 	ctor: '_Tuple2',
 	_0: {
