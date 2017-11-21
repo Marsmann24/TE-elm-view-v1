@@ -1,10 +1,9 @@
-var _user$project$Init$init = {
-	ctor: '_Tuple2',
-	_0: {
-		topics: {
-			ctor: '::',
-			_0: {
-				topicID: 0,
+var _user$project$Init$initTopic = function (id) {
+	var _p0 = id;
+	switch (_p0) {
+		case 0:
+			return {
+				topicID: id,
 				topicName: 'Stuff',
 				words: {
 					ctor: '::',
@@ -19,33 +18,42 @@ var _user$project$Init$init = {
 						}
 					}
 				}
-			},
-			_1: {
-				ctor: '::',
-				_0: {
-					topicID: 1,
-					topicName: 'Other',
-					words: {
+			};
+		case 1:
+			return {
+				topicID: id,
+				topicName: 'Other',
+				words: {
+					ctor: '::',
+					_0: 'Some',
+					_1: {
 						ctor: '::',
-						_0: 'Some',
+						_0: 'Any',
 						_1: {
 							ctor: '::',
-							_0: 'Any',
-							_1: {
-								ctor: '::',
-								_0: 'Other',
-								_1: {ctor: '[]'}
-							}
+							_0: 'Other',
+							_1: {ctor: '[]'}
 						}
 					}
-				},
-				_1: {ctor: '[]'}
-			}
-		},
-		currentTopics: {
-			ctor: '::',
-			_0: {
-				topicID: 0,
+				}
+			};
+		case 2:
+			return {
+				topicID: 2,
+				topicName: 'Tryout',
+				words: {
+					ctor: '::',
+					_0: 'test',
+					_1: {
+						ctor: '::',
+						_0: 'time',
+						_1: {ctor: '[]'}
+					}
+				}
+			};
+		default:
+			return {
+				topicID: id,
 				topicName: 'Dummy',
 				words: {
 					ctor: '::',
@@ -60,126 +68,128 @@ var _user$project$Init$init = {
 						}
 					}
 				}
-			},
-			_1: {
-				ctor: '::',
-				_0: {
-					topicID: 5,
-					topicName: 'Tryout',
-					words: {
+			};
+	}
+};
+var _user$project$Init$initArticle = function (id) {
+	var _p1 = id;
+	switch (_p1) {
+		case 0:
+			return {
+				articleID: 0,
+				rankedTopics: {
+					ctor: '::',
+					_0: 0,
+					_1: {
 						ctor: '::',
-						_0: 'test',
+						_0: 1,
 						_1: {
 							ctor: '::',
-							_0: 'time',
+							_0: 2,
 							_1: {ctor: '[]'}
 						}
 					}
 				},
+				title: 'Hallo',
+				date: '11.11.2011',
+				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
+			};
+		case 1:
+			return {
+				articleID: 1,
+				rankedTopics: {
+					ctor: '::',
+					_0: 0,
+					_1: {
+						ctor: '::',
+						_0: 1,
+						_1: {
+							ctor: '::',
+							_0: 2,
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				title: 'Article 0',
+				date: '13.07.1999',
+				text: 'Hallo, ich habe hier nur einen Dummytext.'
+			};
+		default:
+			return {
+				articleID: id,
+				rankedTopics: {ctor: '[]'},
+				title: '0',
+				date: '0.0.0',
+				text: ''
+			};
+	}
+};
+var _user$project$Init$initTabs = {
+	ctor: '::',
+	_0: _user$project$Model$PreviewTab,
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_user$project$Model$ArticleTab,
+			'Article 0',
+			{
+				articleID: 1,
+				rankedTopics: {
+					ctor: '::',
+					_0: 0,
+					_1: {
+						ctor: '::',
+						_0: 1,
+						_1: {
+							ctor: '::',
+							_0: 2,
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				title: 'Article 0',
+				date: '13.07.1999',
+				text: 'Hallo, ich habe hier nur einen Dummytext.'
+			}),
+		_1: {ctor: '[]'}
+	}
+};
+var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: true, view2: false, showSlotDialoge: false};
+var _user$project$Init$init = {
+	ctor: '_Tuple2',
+	_0: {
+		topics: A2(
+			_elm_lang$core$List$map,
+			_user$project$Init$initTopic,
+			A2(_elm_lang$core$List$range, 0, 3)),
+		currentTopics: {
+			ctor: '::',
+			_0: _user$project$Init$initTopic(0),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Init$initTopic(5),
 				_1: {ctor: '[]'}
 			}
 		},
 		articles: {
 			ctor: '::',
-			_0: {
-				articleID: 0,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Hallo',
-				date: '11.11.2011',
-				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
-			},
+			_0: _user$project$Init$initArticle(0),
 			_1: {
 				ctor: '::',
-				_0: {
-					articleID: 1,
-					rankedTopics: {
-						ctor: '::',
-						_0: 0,
-						_1: {
-							ctor: '::',
-							_0: 1,
-							_1: {
-								ctor: '::',
-								_0: 2,
-								_1: {ctor: '[]'}
-							}
-						}
-					},
-					title: 'Article 0',
-					date: '13.07.1999',
-					text: 'Hallo, ich habe hier nur einen Dummytext.'
-				},
+				_0: _user$project$Init$initArticle(1),
 				_1: {ctor: '[]'}
 			}
 		},
 		currentArticle: {
 			cardID: 0,
-			article: {
-				articleID: 0,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Hallo',
-				date: '11.11.2011',
-				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
-			}
+			article: _user$project$Init$initArticle(0)
 		},
 		raised: -1,
-		row: false,
 		wordList: {ctor: '[]'},
-		tabs: {
-			ctor: '::',
-			_0: _user$project$Model$PreviewTab,
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_user$project$Model$ArticleTab,
-					'Article 0',
-					{
-						articleID: 1,
-						rankedTopics: {
-							ctor: '::',
-							_0: 0,
-							_1: {
-								ctor: '::',
-								_0: 1,
-								_1: {
-									ctor: '::',
-									_0: 2,
-									_1: {ctor: '[]'}
-								}
-							}
-						},
-						title: 'Article 0',
-						date: '13.07.1999',
-						text: 'Hallo, ich habe hier nur einen Dummytext.'
-					}),
-				_1: {ctor: '[]'}
-			}
-		},
+		tabs: _user$project$Init$initTabs,
 		currentTab: 0,
+		settings: _user$project$Init$initSettings,
+		slots: {s1: _user$project$Model$TopicsView, s2: _user$project$Model$Empty, s3: _user$project$Model$Empty},
 		mdl: _debois$elm_mdl$Material$model
 	},
 	_1: _elm_lang$core$Platform_Cmd$none

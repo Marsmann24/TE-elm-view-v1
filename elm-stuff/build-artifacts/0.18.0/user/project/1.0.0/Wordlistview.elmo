@@ -15,8 +15,8 @@ var _user$project$Wordlistview$topic2WordList = function (word) {
 			_1: {ctor: '[]'}
 		});
 };
-var _user$project$Wordlistview$view = F2(
-	function (model, flex) {
+var _user$project$Wordlistview$view = F3(
+	function (model, flex, slotId) {
 		return A2(
 			_debois$elm_mdl$Material_Options$div,
 			{
@@ -64,7 +64,8 @@ var _user$project$Wordlistview$view = F2(
 									_0: _debois$elm_mdl$Material_Button$ripple,
 									_1: {
 										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$HideWordList),
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$HideWordList(slotId)),
 										_1: {ctor: '[]'}
 									}
 								}

@@ -5,55 +5,100 @@ import Model exposing (..)
 
 init : (Model, Cmd Msg)
 init =
-    ( { topics =
-          [ { topicID = 0
-            , topicName = "Stuff"
-            , words = [ "Stuff", "Things", "Items"]
-            }
-          , { topicID = 1
-            , topicName = "Other"
-            , words = [ "Some", "Any", "Other"]
-            }
-          ]
-      , currentTopics = [ { topicID = 0, topicName = "Dummy", words = [ "one", "two", "three"]}
-                        , { topicID = 5, topicName = "Tryout", words = [ "test", "time"]}]
-      , articles =
-          [ { articleID = 0
+    ({ topics = List.map initTopic (List.range 0 3)
+    , currentTopics =
+        [ initTopic 0
+        , initTopic 5
+        ]
+    , articles =
+        [ initArticle 0
+        , initArticle 1
+        ]
+    , currentArticle =
+        { cardID = 0
+        , article = initArticle 0
+        }
+    , raised = -1
+    , wordList = []
+    , tabs = initTabs
+    , currentTab = 0
+    , settings = initSettings
+    , slots =
+        { s1 = TopicsView
+        , s2 = Empty
+        , s3 = Empty
+        }
+    , mdl = Material.model
+    } , Cmd.none)
+
+initSettings : Settings
+initSettings =
+    { showTopics = True
+    , showArticles = True
+    , showWordlist = False
+    , showSaved = True
+    , bottom = True
+    , view2 = False
+    , showSlotDialoge = False
+    }
+
+initTabs : List Tab
+initTabs =
+    [ PreviewTab
+    , ArticleTab  "Article 0"
+        { articleID = 1
+        , rankedTopics = [0, 1, 2]
+        , title = "Article 0"
+        , date = "13.07.1999"
+        , text = "Hallo, ich habe hier nur einen Dummytext."
+        }
+    ]
+
+initArticle : Int -> Article
+initArticle id =
+    case id of
+        0 ->
+            { articleID = 0
             , rankedTopics = [0, 1, 2]
             , title = "Hallo"
             , date = "11.11.2011"
             , text = "Dieser Artikel ist der, der gerade an der Seite ausgewählt ist."
             }
-          , { articleID = 1
+        1 ->
+            { articleID = 1
             , rankedTopics = [0, 1, 2]
             , title = "Article 0"
             , date = "13.07.1999"
             , text = "Hallo, ich habe hier nur einen Dummytext."
             }
-          ]
-      , currentArticle =
-          { cardID = 0
-          , article =
-              { articleID = 0
-              , rankedTopics = [0, 1, 2]
-              , title = "Hallo"
-              , date = "11.11.2011"
-              , text = "Dieser Artikel ist der, der gerade an der Seite ausgewählt ist."
-              }
-          }
-      , raised = -1
-      , row = False
-      , wordList = []
-      , tabs =
-          [ PreviewTab
-          , ArticleTab  "Article 0"
-                        { articleID = 1
-                        , rankedTopics = [0, 1, 2]
-                        , title = "Article 0"
-                        , date = "13.07.1999"
-                        , text = "Hallo, ich habe hier nur einen Dummytext."
-                        }
-          ]
-      , currentTab = 0
-      , mdl = Material.model
-      } , Cmd.none)
+        _ ->
+            {articleID = id
+            , rankedTopics = []
+            , title = "0"
+            , date = "0.0.0"
+            , text = ""
+            }
+
+initTopic : Int -> Topic
+initTopic id =
+    case id of
+        0 ->
+            { topicID = id
+            , topicName = "Stuff"
+            , words = [ "Stuff", "Things", "Items"]
+            }
+        1 ->
+            { topicID = id
+            , topicName = "Other"
+            , words = [ "Some", "Any", "Other"]
+            }
+        2 ->
+            { topicID = 2
+            , topicName = "Tryout"
+            , words = [ "test", "time"]
+            }
+        _ ->
+            { topicID = id
+            , topicName = "Dummy"
+            , words = [ "one", "two", "three"]
+            }

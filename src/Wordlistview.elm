@@ -8,8 +8,8 @@ import Material.Elevation as Elevation
 import Material.Button as Button
 import Material.List as Lists
 
-view : Model -> String -> Html Msg
-view model flex =
+view : Model -> String -> Int -> Html Msg
+view model flex slotId =
     div
         [ css "flex" flex
         , css "margin" "3px 0px"
@@ -22,7 +22,7 @@ view model flex =
             [ Button.render Mdl [0] model.mdl
                 [ Button.raised
                 , Button.ripple
-                , onClick HideWordList
+                , onClick (HideWordList slotId)
                 ]
                 [ text "Hide"]
             ]

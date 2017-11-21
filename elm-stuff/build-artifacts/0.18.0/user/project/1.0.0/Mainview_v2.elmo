@@ -1,0 +1,395 @@
+var _user$project$Mainview_v2$flexValue = function (flex) {
+	var _p0 = flex;
+	switch (_p0) {
+		case 6:
+			return '6 5 50%';
+		case 5:
+			return '5 4 47%';
+		case 4:
+			return '4 3 32%';
+		case 3:
+			return '3 2 25%';
+		case 2:
+			return '2 2 12%';
+		case 1:
+			return '1 1 7%';
+		case 0:
+			return '0 0 0%';
+		default:
+			return '1 1 100%';
+	}
+};
+var _user$project$Mainview_v2$viewOrEmptyFlex = F2(
+	function (condition, view) {
+		return condition ? view : A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$css,
+					'flex',
+					_user$project$Mainview_v2$flexValue(0)),
+				_1: {ctor: '[]'}
+			},
+			{ctor: '[]'});
+	});
+var _user$project$Mainview_v2$slot = F3(
+	function (slotId, view, model) {
+		var _p1 = view;
+		switch (_p1.ctor) {
+			case 'TopicsView':
+				return A3(
+					_user$project$Topicsview$view,
+					model,
+					_user$project$Mainview_v2$flexValue(2),
+					slotId);
+			case 'WordlistView':
+				return A3(
+					_user$project$Wordlistview$view,
+					model,
+					_user$project$Mainview_v2$flexValue(2),
+					slotId);
+			case 'ArticlesView':
+				return A3(
+					_user$project$Articlesview$view,
+					model,
+					_user$project$Mainview_v2$flexValue(2),
+					slotId);
+			default:
+				return A2(
+					_debois$elm_mdl$Material_Options$div,
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Options$css,
+							'flex',
+							_user$project$Mainview_v2$flexValue(1)),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Elevation$e2,
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$center,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$ChoseSlotDialoge),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Icon$view,
+							'add',
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					});
+		}
+	});
+var _user$project$Mainview_v2$viewBody = function (model) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-ms-flex'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-webkit-flex'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, '-ms-flex-direction', 'column'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, '-webkit-flex-direction', 'column'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100%'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_Options$div,
+				{
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-ms-flex'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-webkit-flex'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'row'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, '-ms-flex-direction', 'row'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, '-webkit-flex-direction', 'row'),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_debois$elm_mdl$Material_Options$css,
+												'flex',
+												_user$project$Mainview_v2$flexValue(3)),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A3(_user$project$Mainview_v2$slot, 1, model.slots.s1, model),
+					_1: {
+						ctor: '::',
+						_0: A3(_user$project$Mainview_v2$slot, 2, model.slots.s2, model),
+						_1: {
+							ctor: '::',
+							_0: A3(_user$project$Mainview_v2$slot, 3, model.slots.s3, model),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_user$project$Tabsview$view,
+									model,
+									_user$project$Mainview_v2$flexValue(6)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_user$project$Savedview$view,
+					model,
+					_user$project$Mainview_v2$flexValue(1)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Mainview_v2$viewSwitch = function (model) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h3,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Einstellungen'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A5(
+					_debois$elm_mdl$Material_Toggles$switch,
+					_user$project$Model$Mdl,
+					{
+						ctor: '::',
+						_0: 0,
+						_1: {ctor: '[]'}
+					},
+					model.mdl,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleBottom),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Toggles$value(model.settings.bottom),
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Topics at bottom'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A5(
+						_debois$elm_mdl$Material_Toggles$switch,
+						_user$project$Model$Mdl,
+						{
+							ctor: '::',
+							_0: 0,
+							_1: {ctor: '[]'}
+						},
+						model.mdl,
+						{
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleView2),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Toggles$value(model.settings.view2),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Mainview 2'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A5(
+							_debois$elm_mdl$Material_Toggles$switch,
+							_user$project$Model$Mdl,
+							{
+								ctor: '::',
+								_0: 0,
+								_1: {ctor: '[]'}
+							},
+							model.mdl,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleShowSaved),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Toggles$value(model.settings.showSaved),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('show Saved'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_debois$elm_mdl$Material_Toggles$switch,
+								_user$project$Model$Mdl,
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {ctor: '[]'}
+								},
+								model.mdl,
+								{
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleShowArticles),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Toggles$value(model.settings.showArticles),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('show Articles'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		});
+};
+var _user$project$Mainview_v2$viewSearch = function (model) {
+	return A5(
+		_debois$elm_mdl$Material_Textfield$render,
+		_user$project$Model$Mdl,
+		{
+			ctor: '::',
+			_0: 7,
+			_1: {ctor: '[]'}
+		},
+		model.mdl,
+		{
+			ctor: '::',
+			_0: _debois$elm_mdl$Material_Textfield$label('Expandable'),
+			_1: {
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Textfield$floatingLabel,
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Textfield$expandable('id-of-expandable-1'),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Textfield$expandableIcon('search'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '20px 50px 10px'),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		},
+		{ctor: '[]'});
+};
+var _user$project$Mainview_v2$view = function (model) {
+	return A3(
+		_debois$elm_mdl$Material_Scheme$topWithScheme,
+		_debois$elm_mdl$Material_Color$LightGreen,
+		_debois$elm_mdl$Material_Color$Lime,
+		A4(
+			_debois$elm_mdl$Material_Layout$render,
+			_user$project$Model$Mdl,
+			model.mdl,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Layout$fixedHeader,
+				_1: {ctor: '[]'}
+			},
+			{
+				header: {
+					ctor: '::',
+					_0: _user$project$Mainview_v2$viewSearch(model),
+					_1: {ctor: '[]'}
+				},
+				drawer: {
+					ctor: '::',
+					_0: _user$project$Mainview_v2$viewSwitch(model),
+					_1: {ctor: '[]'}
+				},
+				tabs: {
+					ctor: '_Tuple2',
+					_0: {ctor: '[]'},
+					_1: {ctor: '[]'}
+				},
+				main: {
+					ctor: '::',
+					_0: _user$project$Mainview_v2$viewBody(model),
+					_1: {ctor: '[]'}
+				}
+			}));
+};

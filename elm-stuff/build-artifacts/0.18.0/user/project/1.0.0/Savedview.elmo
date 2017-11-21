@@ -1,0 +1,116 @@
+var _user$project$Savedview$currentTopic2Chip = F2(
+	function (settings, topic) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('mdl-chip'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: settings.bottom ? {ctor: '_Tuple2', _0: 'width', _1: 'calc(100% - 40px)'} : {ctor: '_Tuple2', _0: 'width', _1: '200px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'margin', _1: '6px 10px'},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Chip$button,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'left'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 30px)'),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ShowWordList(topic.words)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Chip$content,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(topic.topicName),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Chip$button,
+						{
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Chip$deleteIcon('cancel'),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Chip$deleteClick(
+												_user$project$Model$RemoveTopic(topic.topicID)),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Savedview$view = F2(
+	function (model, flex) {
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Elevation$e6,
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			A2(
+				_elm_lang$core$List$append,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Platzhalter für ausgewählte Topics'),
+					_1: {ctor: '[]'}
+				},
+				A2(
+					_elm_lang$core$List$map,
+					_user$project$Savedview$currentTopic2Chip(model.settings),
+					model.currentTopics)));
+	});

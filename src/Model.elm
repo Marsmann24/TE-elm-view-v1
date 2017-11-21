@@ -1,6 +1,22 @@
 module Model exposing (..)
 
 import Material
+import Html exposing (Html)
+
+type Msg
+    = SelectTab Int
+    | Raise Int
+    | ChangeCurrentArticle Int Article
+    | RemoveTopic Int
+    | ShowWordList (List String)
+    | HideWordList Int
+    | ToggleBottom
+    | ToggleView2
+    | ToggleShowSaved
+    | ToggleShowArticles
+    | ChoseSlotDialoge
+    | Mdl (Material.Msg Msg)
+    | None -- zum Testen, damit update _ -> immer haben kann
 
 type alias Model =
     { topics : List Topic           -- all topics
@@ -11,10 +27,11 @@ type alias Model =
         , article : Article
         }
     , raised : Int                  -- ID of raised card
-    , row : Bool                    -- if word list is shown
     , wordList : List String        -- current word list
     , tabs : List Tab               -- all tabs
     , currentTab : Int              -- active tab
+    , settings : Settings           -- which views are shown
+    , slots : Slots
     , mdl : Material.Model
     }
 
@@ -32,16 +49,29 @@ type alias Article =
     , text : String
     }
 
+type alias Settings =
+    { showTopics : Bool
+    , showArticles : Bool
+    , showWordlist : Bool
+    , showSaved : Bool
+    , bottom : Bool
+    , view2 : Bool
+    , showSlotDialoge : Bool
+    }
+
+type alias Slots =
+    { s1 : View
+    , s2 : View
+    , s3 : View
+    }
+
+type View
+    = WordlistView
+    | TopicsView
+    | ArticlesView
+    | Empty
+
 type Tab
     = PreviewTab
     | ArticleTab String Article
     | ErrorTab String String
-type Msg
-    = SelectTab Int
-    | Raise Int
-    | ChangeCurrentArticle Int Article
-    | RemoveTopic Int
-    | ShowWordList (List String)
-    | HideWordList
-    | None
-    | Mdl (Material.Msg Msg)

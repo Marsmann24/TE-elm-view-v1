@@ -1,16 +1,44 @@
-var _user$project$Designdummy$subscriptions = function (model) {
+var _user$project$TE_elm_v1$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Designdummy$update = F2(
+var _user$project$TE_elm_v1$slotChangeTo = F3(
+	function (oldSlots, id, value) {
+		var _p0 = id;
+		switch (_p0) {
+			case 1:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s1: value});
+			case 2:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s2: value});
+			case 3:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s3: value});
+			default:
+				return oldSlots;
+		}
+	});
+var _user$project$TE_elm_v1$slotRemove = F2(
+	function (oldSlots, id) {
+		return A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, id, _user$project$Model$Empty);
+	});
+var _user$project$TE_elm_v1$slotFromTo = F3(
+	function (oldSlots, from, to) {
+		return _elm_lang$core$Native_Utils.eq(oldSlots.s1, from) ? A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, 1, to) : (_elm_lang$core$Native_Utils.eq(oldSlots.s2, from) ? A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, 2, to) : A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, 3, to));
+	});
+var _user$project$TE_elm_v1$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
 			case 'SelectTab':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{currentTab: _p0._0}),
+						{currentTab: _p1._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Raise':
@@ -18,11 +46,11 @@ var _user$project$Designdummy$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{raised: _p0._0}),
+						{raised: _p1._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ChangeCurrentArticle':
-				var newCurrentArticle = {cardID: _p0._0, article: _p0._1};
+				var newCurrentArticle = {cardID: _p1._0, article: _p1._1};
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -34,7 +62,7 @@ var _user$project$Designdummy$update = F2(
 				var newCurrentTopis = A2(
 					_elm_lang$core$List$filter,
 					function (x) {
-						return !_elm_lang$core$Native_Utils.eq(x.topicID, _p0._0);
+						return !_elm_lang$core$Native_Utils.eq(x.topicID, _p1._0);
 					},
 					model.currentTopics);
 				return {
@@ -45,6 +73,7 @@ var _user$project$Designdummy$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ShowWordList':
+				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
 					ctor: '_Tuple2',
@@ -54,11 +83,13 @@ var _user$project$Designdummy$update = F2(
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
 								{showWordlist: true}),
-							wordList: _p0._0
+							wordList: _p1._0,
+							slots: A3(_user$project$TE_elm_v1$slotFromTo, oldSlots, _user$project$Model$Empty, _user$project$Model$WordlistView)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'HideWordList':
+				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
 					ctor: '_Tuple2',
@@ -67,7 +98,8 @@ var _user$project$Designdummy$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showWordlist: false})
+								{showWordlist: false}),
+							slots: A2(_user$project$TE_elm_v1$slotRemove, oldSlots, _p1._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -81,6 +113,19 @@ var _user$project$Designdummy$update = F2(
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
 								{bottom: !model.settings.bottom})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleView2':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{view2: !model.settings.view2})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -110,11 +155,24 @@ var _user$project$Designdummy$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'ChoseSlotDialoge':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{showSlotDialoge: true})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
+				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p1._0, model);
 			default:
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
-var _user$project$Designdummy$main = _elm_lang$html$Html$program(
-	{init: _user$project$Init$init, update: _user$project$Designdummy$update, view: _user$project$Mainview$view, subscriptions: _user$project$Designdummy$subscriptions})();
+var _user$project$TE_elm_v1$main = _elm_lang$html$Html$program(
+	{init: _user$project$Init$init, update: _user$project$TE_elm_v1$update, view: _user$project$Mainview_v2$view, subscriptions: _user$project$TE_elm_v1$subscriptions})();

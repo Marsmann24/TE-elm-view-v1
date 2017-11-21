@@ -8,7 +8,9 @@ var _user$project$Model$Model = function (a) {
 							return function (h) {
 								return function (i) {
 									return function (j) {
-										return {topics: a, currentTopics: b, articles: c, currentArticle: d, raised: e, row: f, wordList: g, tabs: h, currentTab: i, mdl: j};
+										return function (k) {
+											return {topics: a, currentTopics: b, articles: c, currentArticle: d, raised: e, wordList: f, tabs: g, currentTab: h, settings: i, slots: j, mdl: k};
+										};
 									};
 								};
 							};
@@ -27,20 +29,26 @@ var _user$project$Model$Article = F5(
 	function (a, b, c, d, e) {
 		return {articleID: a, rankedTopics: b, title: c, date: d, text: e};
 	});
-var _user$project$Model$ErrorTab = F2(
-	function (a, b) {
-		return {ctor: 'ErrorTab', _0: a, _1: b};
+var _user$project$Model$Settings = F7(
+	function (a, b, c, d, e, f, g) {
+		return {showTopics: a, showArticles: b, showWordlist: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g};
 	});
-var _user$project$Model$ArticleTab = F2(
-	function (a, b) {
-		return {ctor: 'ArticleTab', _0: a, _1: b};
+var _user$project$Model$Slots = F3(
+	function (a, b, c) {
+		return {s1: a, s2: b, s3: c};
 	});
-var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
+var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
-var _user$project$Model$None = {ctor: 'None'};
-var _user$project$Model$HideWordList = {ctor: 'HideWordList'};
+var _user$project$Model$ChoseSlotDialoge = {ctor: 'ChoseSlotDialoge'};
+var _user$project$Model$ToggleShowArticles = {ctor: 'ToggleShowArticles'};
+var _user$project$Model$ToggleShowSaved = {ctor: 'ToggleShowSaved'};
+var _user$project$Model$ToggleView2 = {ctor: 'ToggleView2'};
+var _user$project$Model$ToggleBottom = {ctor: 'ToggleBottom'};
+var _user$project$Model$HideWordList = function (a) {
+	return {ctor: 'HideWordList', _0: a};
+};
 var _user$project$Model$ShowWordList = function (a) {
 	return {ctor: 'ShowWordList', _0: a};
 };
@@ -57,3 +65,16 @@ var _user$project$Model$Raise = function (a) {
 var _user$project$Model$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
+var _user$project$Model$Empty = {ctor: 'Empty'};
+var _user$project$Model$ArticlesView = {ctor: 'ArticlesView'};
+var _user$project$Model$TopicsView = {ctor: 'TopicsView'};
+var _user$project$Model$WordlistView = {ctor: 'WordlistView'};
+var _user$project$Model$ErrorTab = F2(
+	function (a, b) {
+		return {ctor: 'ErrorTab', _0: a, _1: b};
+	});
+var _user$project$Model$ArticleTab = F2(
+	function (a, b) {
+		return {ctor: 'ArticleTab', _0: a, _1: b};
+	});
+var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};

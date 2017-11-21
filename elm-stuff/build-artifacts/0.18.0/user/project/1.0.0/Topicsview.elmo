@@ -1,42 +1,3 @@
-var _user$project$Topicsview$currentTopic2Chip = function (topic) {
-	return A2(
-		_debois$elm_mdl$Material_Chip$button,
-		{
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 20px)'),
-			_1: {
-				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '6px 10px'),
-				_1: {
-					ctor: '::',
-					_0: _debois$elm_mdl$Material_Options$onClick(
-						_user$project$Model$ShowWordList(topic.words)),
-					_1: {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Chip$deleteIcon('cancel'),
-						_1: {
-							ctor: '::',
-							_0: _debois$elm_mdl$Material_Chip$deleteClick(
-								_user$project$Model$RemoveTopic(topic.topicID)),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_debois$elm_mdl$Material_Chip$content,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(topic.topicName),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
-};
 var _user$project$Topicsview$topic2Chip = function (topic) {
 	return A2(
 		_debois$elm_mdl$Material_Chip$button,
@@ -67,70 +28,22 @@ var _user$project$Topicsview$topic2Chip = function (topic) {
 			_1: {ctor: '[]'}
 		});
 };
-var _user$project$Topicsview$view = function (model) {
-	return A2(
-		_debois$elm_mdl$Material_Options$div,
-		{
-			ctor: '::',
-			_0: _debois$elm_mdl$Material_Elevation$e6,
-			_1: {
+var _user$project$Topicsview$view = F3(
+	function (model, flex, slotId) {
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
 				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+				_0: _debois$elm_mdl$Material_Elevation$e6,
 				_1: {
 					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-ms-flex'),
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 					_1: {
 						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-webkit-flex'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'row'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 25%'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
+						_1: {ctor: '[]'}
 					}
 				}
-			}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_debois$elm_mdl$Material_Options$div,
-				{
-					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'border-right', '1px solid grey'),
-					_1: {
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 20%'),
-						_1: {ctor: '[]'}
-					}
-				},
-				A2(
-					_elm_lang$core$List$append,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('Platzhalter für ausgewählte Topics'),
-						_1: {ctor: '[]'}
-					},
-					A2(_elm_lang$core$List$map, _user$project$Topicsview$currentTopic2Chip, model.currentTopics))),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Options$div,
-					{
-						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '4 3 80%'),
-						_1: {ctor: '[]'}
-					},
-					A2(_elm_lang$core$List$map, _user$project$Topicsview$topic2Chip, model.topics)),
-				_1: {ctor: '[]'}
-			}
-		});
-};
+			},
+			A2(_elm_lang$core$List$map, _user$project$Topicsview$topic2Chip, model.topics));
+	});

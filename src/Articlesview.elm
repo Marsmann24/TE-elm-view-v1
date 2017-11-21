@@ -9,8 +9,8 @@ import Material.Color as Color
 import Material.Card as Card
 
 
-view : Model -> String -> Html Msg
-view model flex =
+view : Model -> String -> Int -> Html Msg
+view model flex slotId =
     div
         [ css "flex" flex
         , css "margin" "3px 0px"

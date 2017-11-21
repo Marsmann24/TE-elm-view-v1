@@ -118,8 +118,8 @@ var _user$project$Articlesview$article2CardView = F3(
 				}
 			});
 	});
-var _user$project$Articlesview$view = F2(
-	function (model, flex) {
+var _user$project$Articlesview$view = F3(
+	function (model, flex, slotId) {
 		return A2(
 			_debois$elm_mdl$Material_Options$div,
 			{
