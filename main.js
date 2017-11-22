@@ -15900,6 +15900,30 @@ var _debois$elm_mdl$Material_Scheme$top = function (content) {
 	return A3(_debois$elm_mdl$Material_Scheme$topWithScheme, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$Grey, content);
 };
 
+var _user$project$Model$slotChangeTo = F3(
+	function (oldSlots, id, value) {
+		var _p0 = id;
+		switch (_p0) {
+			case 1:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s1: value});
+			case 2:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s2: value});
+			case 3:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s3: value});
+			default:
+				return oldSlots;
+		}
+	});
+var _user$project$Model$slotFromTo = F3(
+	function (oldSlots, from, to) {
+		return _elm_lang$core$Native_Utils.eq(oldSlots.s1, from) ? A3(_user$project$Model$slotChangeTo, oldSlots, 1, to) : (_elm_lang$core$Native_Utils.eq(oldSlots.s2, from) ? A3(_user$project$Model$slotChangeTo, oldSlots, 2, to) : A3(_user$project$Model$slotChangeTo, oldSlots, 3, to));
+	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
 		return function (c) {
@@ -15911,7 +15935,9 @@ var _user$project$Model$Model = function (a) {
 								return function (i) {
 									return function (j) {
 										return function (k) {
-											return {topics: a, currentTopics: b, articles: c, currentArticle: d, raised: e, wordList: f, tabs: g, currentTab: h, settings: i, slots: j, mdl: k};
+											return function (l) {
+												return {topics: a, currentTopics: b, articles: c, currentArticle: d, wordList: e, currentWord: f, tabs: g, currentTab: h, raised: i, settings: j, slots: k, mdl: l};
+											};
 										};
 									};
 								};
@@ -15927,9 +15953,9 @@ var _user$project$Model$Topic = F3(
 	function (a, b, c) {
 		return {topicID: a, topicName: b, words: c};
 	});
-var _user$project$Model$Article = F5(
-	function (a, b, c, d, e) {
-		return {articleID: a, rankedTopics: b, title: c, date: d, text: e};
+var _user$project$Model$Article = F6(
+	function (a, b, c, d, e, f) {
+		return {articleID: a, rankedTopics: b, words: c, title: d, date: e, text: f};
 	});
 var _user$project$Model$Settings = F7(
 	function (a, b, c, d, e, f, g) {
@@ -15943,16 +15969,33 @@ var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
-var _user$project$Model$ChoseSlotDialoge = {ctor: 'ChoseSlotDialoge'};
-var _user$project$Model$ToggleShowArticles = {ctor: 'ToggleShowArticles'};
 var _user$project$Model$ToggleShowSaved = {ctor: 'ToggleShowSaved'};
 var _user$project$Model$ToggleView2 = {ctor: 'ToggleView2'};
 var _user$project$Model$ToggleBottom = {ctor: 'ToggleBottom'};
+var _user$project$Model$UpdateSlot = F2(
+	function (a, b) {
+		return {ctor: 'UpdateSlot', _0: a, _1: b};
+	});
+var _user$project$Model$ChoseSlotDialog = function (a) {
+	return {ctor: 'ChoseSlotDialog', _0: a};
+};
+var _user$project$Model$HideArticles = function (a) {
+	return {ctor: 'HideArticles', _0: a};
+};
+var _user$project$Model$ShowArticles = function (a) {
+	return {ctor: 'ShowArticles', _0: a};
+};
 var _user$project$Model$HideWordList = function (a) {
 	return {ctor: 'HideWordList', _0: a};
 };
 var _user$project$Model$ShowWordList = function (a) {
 	return {ctor: 'ShowWordList', _0: a};
+};
+var _user$project$Model$HideTopics = function (a) {
+	return {ctor: 'HideTopics', _0: a};
+};
+var _user$project$Model$ShowTopics = function (a) {
+	return {ctor: 'ShowTopics', _0: a};
 };
 var _user$project$Model$RemoveTopic = function (a) {
 	return {ctor: 'RemoveTopic', _0: a};
@@ -15967,10 +16010,6 @@ var _user$project$Model$Raise = function (a) {
 var _user$project$Model$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
-var _user$project$Model$Empty = {ctor: 'Empty'};
-var _user$project$Model$ArticlesView = {ctor: 'ArticlesView'};
-var _user$project$Model$TopicsView = {ctor: 'TopicsView'};
-var _user$project$Model$WordlistView = {ctor: 'WordlistView'};
 var _user$project$Model$ErrorTab = F2(
 	function (a, b) {
 		return {ctor: 'ErrorTab', _0: a, _1: b};
@@ -15980,6 +16019,40 @@ var _user$project$Model$ArticleTab = F2(
 		return {ctor: 'ArticleTab', _0: a, _1: b};
 	});
 var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
+var _user$project$Model$Empty = {ctor: 'Empty'};
+var _user$project$Model$slotRemove = F2(
+	function (oldSlots, id) {
+		slotRemove:
+		while (true) {
+			var _p1 = id;
+			switch (_p1) {
+				case 1:
+					var _v2 = A3(_user$project$Model$slotChangeTo, oldSlots, 1, oldSlots.s2),
+						_v3 = 2;
+					oldSlots = _v2;
+					id = _v3;
+					continue slotRemove;
+				case 2:
+					var _v4 = A3(_user$project$Model$slotChangeTo, oldSlots, 2, oldSlots.s3),
+						_v5 = 3;
+					oldSlots = _v4;
+					id = _v5;
+					continue slotRemove;
+				default:
+					return A3(_user$project$Model$slotChangeTo, oldSlots, id, _user$project$Model$Empty);
+			}
+		}
+	});
+var _user$project$Model$Dialog = {ctor: 'Dialog'};
+var _user$project$Model$ArticlesView = function (a) {
+	return {ctor: 'ArticlesView', _0: a};
+};
+var _user$project$Model$TopicsView = function (a) {
+	return {ctor: 'TopicsView', _0: a};
+};
+var _user$project$Model$WordlistView = function (a) {
+	return {ctor: 'WordlistView', _0: a};
+};
 
 var _user$project$Articlesview$article2CardView = F3(
 	function (model, article, cardID) {
@@ -16127,15 +16200,54 @@ var _user$project$Articlesview$view = F3(
 						{
 							ctor: '::',
 							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'border-bottom', '1px solid #e0e0e0'),
-								_1: {ctor: '[]'}
-							}
+							_1: {ctor: '[]'}
 						},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text('Platzhalter für Einstellungen'),
+							_0: A5(
+								_debois$elm_mdl$Material_Button$render,
+								_user$project$Model$Mdl,
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {ctor: '[]'}
+								},
+								model.mdl,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Button$fab,
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$minifab,
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$raised,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Button$ripple,
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														_user$project$Model$HideWordList(slotId)),
+													_1: {
+														ctor: '::',
+														_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '2px 4px'),
+														_1: {
+															ctor: '::',
+															_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Icon$i('close'),
+									_1: {ctor: '[]'}
+								}),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
@@ -16242,6 +16354,19 @@ var _user$project$Init$initArticle = function (id) {
 						}
 					}
 				},
+				words: {
+					ctor: '::',
+					_0: 'Some',
+					_1: {
+						ctor: '::',
+						_0: 'Any',
+						_1: {
+							ctor: '::',
+							_0: 'Stuff',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
 				title: 'Hallo',
 				date: '11.11.2011',
 				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
@@ -16262,6 +16387,19 @@ var _user$project$Init$initArticle = function (id) {
 						}
 					}
 				},
+				words: {
+					ctor: '::',
+					_0: 'two',
+					_1: {
+						ctor: '::',
+						_0: 'time',
+						_1: {
+							ctor: '::',
+							_0: 'Item',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
 				title: 'Article 0',
 				date: '13.07.1999',
 				text: 'Hallo, ich habe hier nur einen Dummytext.'
@@ -16270,6 +16408,11 @@ var _user$project$Init$initArticle = function (id) {
 			return {
 				articleID: id,
 				rankedTopics: {ctor: '[]'},
+				words: {
+					ctor: '::',
+					_0: 'test',
+					_1: {ctor: '[]'}
+				},
 				title: '0',
 				date: '0.0.0',
 				text: ''
@@ -16284,29 +16427,11 @@ var _user$project$Init$initTabs = {
 		_0: A2(
 			_user$project$Model$ArticleTab,
 			'Article 0',
-			{
-				articleID: 1,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Article 0',
-				date: '13.07.1999',
-				text: 'Hallo, ich habe hier nur einen Dummytext.'
-			}),
+			_user$project$Init$initArticle(1)),
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: false, showSlotDialoge: false};
+var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false};
 var _user$project$Init$init = {
 	ctor: '_Tuple2',
 	_0: {
@@ -16336,12 +16461,21 @@ var _user$project$Init$init = {
 			cardID: 0,
 			article: _user$project$Init$initArticle(0)
 		},
-		raised: -1,
 		wordList: {ctor: '[]'},
+		currentWord: '',
 		tabs: _user$project$Init$initTabs,
 		currentTab: 0,
+		raised: -1,
 		settings: _user$project$Init$initSettings,
-		slots: {s1: _user$project$Model$TopicsView, s2: _user$project$Model$Empty, s3: _user$project$Model$Empty},
+		slots: {
+			s1: _user$project$Model$TopicsView(
+				A2(
+					_elm_lang$core$List$map,
+					_user$project$Init$initTopic,
+					A2(_elm_lang$core$List$range, 0, 3))),
+			s2: _user$project$Model$Empty,
+			s3: _user$project$Model$Empty
+		},
 		mdl: _debois$elm_mdl$Material$model
 	},
 	_1: _elm_lang$core$Platform_Cmd$none
@@ -16550,7 +16684,68 @@ var _user$project$Topicsview$view = F3(
 					}
 				}
 			},
-			A2(_elm_lang$core$List$map, _user$project$Topicsview$topic2Chip, model.topics));
+			A2(
+				_elm_lang$core$List$append,
+				{
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$div,
+						{
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A5(
+								_debois$elm_mdl$Material_Button$render,
+								_user$project$Model$Mdl,
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {ctor: '[]'}
+								},
+								model.mdl,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Button$fab,
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$minifab,
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$raised,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Button$ripple,
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														_user$project$Model$HideTopics(slotId)),
+													_1: {
+														ctor: '::',
+														_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '2px 4px'),
+														_1: {
+															ctor: '::',
+															_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Icon$i('close'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				A2(_elm_lang$core$List$map, _user$project$Topicsview$topic2Chip, model.topics)));
 	});
 
 var _user$project$Savedview$currentTopic2Chip = F2(
@@ -16670,23 +16865,34 @@ var _user$project$Savedview$view = F2(
 					model.currentTopics)));
 	});
 
-var _user$project$Wordlistview$topic2WordList = function (word) {
-	return A2(
-		_debois$elm_mdl$Material_List$li,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: A2(
-				_debois$elm_mdl$Material_List$content,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(word),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
-};
+var _user$project$Wordlistview$topic2WordList = F2(
+	function (selected, word) {
+		return A2(
+			_debois$elm_mdl$Material_List$li,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_List$content,
+					_elm_lang$core$Native_Utils.eq(word, selected) ? {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Elevation$e0,
+						_1: {ctor: '[]'}
+					} : {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$attribute(
+							_elm_lang$html$Html_Events$onClick(
+								_user$project$Model$ShowArticles(word))),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(word),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
 var _user$project$Wordlistview$view = F3(
 	function (model, flex, slotId) {
 		return A2(
@@ -16711,11 +16917,7 @@ var _user$project$Wordlistview$view = F3(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'border-bottom', '1px solid #e0e0e0'),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
@@ -16730,21 +16932,37 @@ var _user$project$Wordlistview$view = F3(
 							model.mdl,
 							{
 								ctor: '::',
-								_0: _debois$elm_mdl$Material_Button$raised,
+								_0: _debois$elm_mdl$Material_Button$fab,
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Button$ripple,
+									_0: _debois$elm_mdl$Material_Button$minifab,
 									_1: {
 										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$HideWordList(slotId)),
-										_1: {ctor: '[]'}
+										_0: _debois$elm_mdl$Material_Button$raised,
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$ripple,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$HideWordList(slotId)),
+												_1: {
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '2px 4px'),
+													_1: {
+														ctor: '::',
+														_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
 									}
 								}
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Hide'),
+								_0: _debois$elm_mdl$Material_Icon$i('close'),
 								_1: {ctor: '[]'}
 							}),
 						_1: {ctor: '[]'}
@@ -16754,7 +16972,10 @@ var _user$project$Wordlistview$view = F3(
 					_0: A2(
 						_debois$elm_mdl$Material_List$ul,
 						{ctor: '[]'},
-						A2(_elm_lang$core$List$map, _user$project$Wordlistview$topic2WordList, model.wordList)),
+						A2(
+							_elm_lang$core$List$map,
+							_user$project$Wordlistview$topic2WordList(model.currentWord),
+							model.wordList)),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -17244,37 +17465,7 @@ var _user$project$Mainview_v1$viewSwitch = function (model) {
 								_0: _elm_lang$html$Html$text('show Saved'),
 								_1: {ctor: '[]'}
 							}),
-						_1: {
-							ctor: '::',
-							_0: A5(
-								_debois$elm_mdl$Material_Toggles$switch,
-								_user$project$Model$Mdl,
-								{
-									ctor: '::',
-									_0: 0,
-									_1: {ctor: '[]'}
-								},
-								model.mdl,
-								{
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleShowArticles),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Toggles$value(model.settings.showArticles),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('show Articles'),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					}
 				}
 			}
@@ -17393,21 +17584,185 @@ var _user$project$Mainview_v2$slot = F3(
 			case 'TopicsView':
 				return A3(
 					_user$project$Topicsview$view,
-					model,
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{topics: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'WordlistView':
 				return A3(
 					_user$project$Wordlistview$view,
-					model,
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{wordList: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'ArticlesView':
 				return A3(
 					_user$project$Articlesview$view,
-					model,
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{articles: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
+			case 'Dialog':
+				return A2(
+					_debois$elm_mdl$Material_Options$div,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-ms-flex'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-webkit-flex'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, '-ms-flex-direction', 'column'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, '-webkit-flex-direction', 'column'),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_Options$css,
+													'flex',
+													_user$project$Mainview_v2$flexValue(2)),
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Elevation$e2,
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Options$center,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A5(
+							_debois$elm_mdl$Material_Button$render,
+							_user$project$Model$Mdl,
+							{
+								ctor: '::',
+								_0: 0,
+								_1: {ctor: '[]'}
+							},
+							model.mdl,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Button$ripple,
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', 'flexValue 1'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '70px 0'),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(
+												A2(
+													_user$project$Model$UpdateSlot,
+													_user$project$Model$TopicsView(model.topics),
+													slotId)),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Topics'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_debois$elm_mdl$Material_Button$render,
+								_user$project$Model$Mdl,
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {ctor: '[]'}
+								},
+								model.mdl,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Button$ripple,
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', 'flexValue 1'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '70px 0'),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													A2(
+														_user$project$Model$UpdateSlot,
+														_user$project$Model$WordlistView(model.wordList),
+														slotId)),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Wordlist'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Model$Mdl,
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {ctor: '[]'}
+									},
+									model.mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$ripple,
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', 'flexValue 1'),
+											_1: {
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '70px 0'),
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														A2(
+															_user$project$Model$UpdateSlot,
+															_user$project$Model$ArticlesView(model.articles),
+															slotId)),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Articles'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					});
 			default:
 				return A2(
 					_debois$elm_mdl$Material_Options$div,
@@ -17425,7 +17780,8 @@ var _user$project$Mainview_v2$slot = F3(
 								_0: _debois$elm_mdl$Material_Options$center,
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$ChoseSlotDialoge),
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ChoseSlotDialog(slotId)),
 									_1: {ctor: '[]'}
 								}
 							}
@@ -17640,37 +17996,7 @@ var _user$project$Mainview_v2$viewSwitch = function (model) {
 								_0: _elm_lang$html$Html$text('show Saved'),
 								_1: {ctor: '[]'}
 							}),
-						_1: {
-							ctor: '::',
-							_0: A5(
-								_debois$elm_mdl$Material_Toggles$switch,
-								_user$project$Model$Mdl,
-								{
-									ctor: '::',
-									_0: 0,
-									_1: {ctor: '[]'}
-								},
-								model.mdl,
-								{
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleShowArticles),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Toggles$value(model.settings.showArticles),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('show Articles'),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					}
 				}
 			}
@@ -17750,44 +18076,16 @@ var _user$project$Mainview_v2$view = function (model) {
 var _user$project$TE_elm_v1$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$TE_elm_v1$slotChangeTo = F3(
-	function (oldSlots, id, value) {
-		var _p0 = id;
-		switch (_p0) {
-			case 1:
-				return _elm_lang$core$Native_Utils.update(
-					oldSlots,
-					{s1: value});
-			case 2:
-				return _elm_lang$core$Native_Utils.update(
-					oldSlots,
-					{s2: value});
-			case 3:
-				return _elm_lang$core$Native_Utils.update(
-					oldSlots,
-					{s3: value});
-			default:
-				return oldSlots;
-		}
-	});
-var _user$project$TE_elm_v1$slotRemove = F2(
-	function (oldSlots, id) {
-		return A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, id, _user$project$Model$Empty);
-	});
-var _user$project$TE_elm_v1$slotFromTo = F3(
-	function (oldSlots, from, to) {
-		return _elm_lang$core$Native_Utils.eq(oldSlots.s1, from) ? A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, 1, to) : (_elm_lang$core$Native_Utils.eq(oldSlots.s2, from) ? A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, 2, to) : A3(_user$project$TE_elm_v1$slotChangeTo, oldSlots, 3, to));
-	});
 var _user$project$TE_elm_v1$update = F2(
 	function (msg, model) {
-		var _p1 = msg;
-		switch (_p1.ctor) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
 			case 'SelectTab':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{currentTab: _p1._0}),
+						{currentTab: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Raise':
@@ -17795,11 +18093,11 @@ var _user$project$TE_elm_v1$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{raised: _p1._0}),
+						{raised: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ChangeCurrentArticle':
-				var newCurrentArticle = {cardID: _p1._0, article: _p1._1};
+				var newCurrentArticle = {cardID: _p0._0, article: _p0._1};
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -17811,7 +18109,7 @@ var _user$project$TE_elm_v1$update = F2(
 				var newCurrentTopis = A2(
 					_elm_lang$core$List$filter,
 					function (x) {
-						return !_elm_lang$core$Native_Utils.eq(x.topicID, _p1._0);
+						return !_elm_lang$core$Native_Utils.eq(x.topicID, _p0._0);
 					},
 					model.currentTopics);
 				return {
@@ -17821,7 +18119,42 @@ var _user$project$TE_elm_v1$update = F2(
 						{currentTopics: newCurrentTopis}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'ShowTopics':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{showTopics: true}),
+							slots: A3(
+								_user$project$Model$slotFromTo,
+								oldSlots,
+								_user$project$Model$Empty,
+								_user$project$Model$TopicsView(_p0._0))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'HideTopics':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{showTopics: false}),
+							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'ShowWordList':
+				var _p1 = _p0._0;
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -17832,8 +18165,12 @@ var _user$project$TE_elm_v1$update = F2(
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
 								{showWordlist: true}),
-							wordList: _p1._0,
-							slots: A3(_user$project$TE_elm_v1$slotFromTo, oldSlots, _user$project$Model$Empty, _user$project$Model$WordlistView)
+							wordList: _p1,
+							slots: A3(
+								_user$project$Model$slotFromTo,
+								oldSlots,
+								_user$project$Model$Empty,
+								_user$project$Model$WordlistView(_p1))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -17848,7 +18185,76 @@ var _user$project$TE_elm_v1$update = F2(
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
 								{showWordlist: false}),
-							slots: A2(_user$project$TE_elm_v1$slotRemove, oldSlots, _p1._0)
+							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ShowArticles':
+				var contains = F2(
+					function (word, article) {
+						return A2(_elm_lang$core$List$member, word, article.words);
+					});
+				var articles = model.articles;
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{showArticles: true}),
+							slots: A3(
+								_user$project$Model$slotFromTo,
+								oldSlots,
+								_user$project$Model$Empty,
+								_user$project$Model$ArticlesView(
+									A2(
+										_elm_lang$core$List$filter,
+										contains(_p0._0),
+										articles)))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'HideArticles':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{showArticles: false}),
+							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ChoseSlotDialog':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{showSlotDialoge: true}),
+							slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._0, _user$project$Model$Dialog)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'UpdateSlot':
+				var oldSlots = model.slots;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._1, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -17891,40 +18297,17 @@ var _user$project$TE_elm_v1$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ToggleShowArticles':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showArticles: !model.settings.showArticles})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ChoseSlotDialoge':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showSlotDialoge: true})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
 			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p1._0, model);
+				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
 			default:
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
+var _user$project$TE_elm_v1$view = function (model) {
+	return model.settings.view2 ? _user$project$Mainview_v2$view(model) : _user$project$Mainview_v1$view(model);
+};
 var _user$project$TE_elm_v1$main = _elm_lang$html$Html$program(
-	{init: _user$project$Init$init, update: _user$project$TE_elm_v1$update, view: _user$project$Mainview_v2$view, subscriptions: _user$project$TE_elm_v1$subscriptions})();
+	{init: _user$project$Init$init, update: _user$project$TE_elm_v1$update, view: _user$project$TE_elm_v1$view, subscriptions: _user$project$TE_elm_v1$subscriptions})();
 
 var Elm = {};
 Elm['Articlesview'] = Elm['Articlesview'] || {};

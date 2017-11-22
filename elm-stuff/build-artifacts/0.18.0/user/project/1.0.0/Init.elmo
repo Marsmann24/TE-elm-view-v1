@@ -90,6 +90,19 @@ var _user$project$Init$initArticle = function (id) {
 						}
 					}
 				},
+				words: {
+					ctor: '::',
+					_0: 'Some',
+					_1: {
+						ctor: '::',
+						_0: 'Any',
+						_1: {
+							ctor: '::',
+							_0: 'Stuff',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
 				title: 'Hallo',
 				date: '11.11.2011',
 				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
@@ -110,6 +123,19 @@ var _user$project$Init$initArticle = function (id) {
 						}
 					}
 				},
+				words: {
+					ctor: '::',
+					_0: 'two',
+					_1: {
+						ctor: '::',
+						_0: 'time',
+						_1: {
+							ctor: '::',
+							_0: 'Item',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
 				title: 'Article 0',
 				date: '13.07.1999',
 				text: 'Hallo, ich habe hier nur einen Dummytext.'
@@ -118,6 +144,11 @@ var _user$project$Init$initArticle = function (id) {
 			return {
 				articleID: id,
 				rankedTopics: {ctor: '[]'},
+				words: {
+					ctor: '::',
+					_0: 'test',
+					_1: {ctor: '[]'}
+				},
 				title: '0',
 				date: '0.0.0',
 				text: ''
@@ -132,29 +163,11 @@ var _user$project$Init$initTabs = {
 		_0: A2(
 			_user$project$Model$ArticleTab,
 			'Article 0',
-			{
-				articleID: 1,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Article 0',
-				date: '13.07.1999',
-				text: 'Hallo, ich habe hier nur einen Dummytext.'
-			}),
+			_user$project$Init$initArticle(1)),
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: false, showSlotDialoge: false};
+var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false};
 var _user$project$Init$init = {
 	ctor: '_Tuple2',
 	_0: {
@@ -184,12 +197,21 @@ var _user$project$Init$init = {
 			cardID: 0,
 			article: _user$project$Init$initArticle(0)
 		},
-		raised: -1,
 		wordList: {ctor: '[]'},
+		currentWord: '',
 		tabs: _user$project$Init$initTabs,
 		currentTab: 0,
+		raised: -1,
 		settings: _user$project$Init$initSettings,
-		slots: {s1: _user$project$Model$TopicsView, s2: _user$project$Model$Empty, s3: _user$project$Model$Empty},
+		slots: {
+			s1: _user$project$Model$TopicsView(
+				A2(
+					_elm_lang$core$List$map,
+					_user$project$Init$initTopic,
+					A2(_elm_lang$core$List$range, 0, 3))),
+			s2: _user$project$Model$Empty,
+			s3: _user$project$Model$Empty
+		},
 		mdl: _debois$elm_mdl$Material$model
 	},
 	_1: _elm_lang$core$Platform_Cmd$none

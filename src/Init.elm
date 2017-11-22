@@ -18,13 +18,14 @@ init =
         { cardID = 0
         , article = initArticle 0
         }
-    , raised = -1
     , wordList = []
+    , currentWord = ""
     , tabs = initTabs
     , currentTab = 0
+    , raised = -1
     , settings = initSettings
     , slots =
-        { s1 = TopicsView
+        { s1 = TopicsView (List.map initTopic (List.range 0 3))
         , s2 = Empty
         , s3 = Empty
         }
@@ -38,20 +39,14 @@ initSettings =
     , showWordlist = False
     , showSaved = True
     , bottom = False
-    , view2 = False
+    , view2 = True
     , showSlotDialoge = False
     }
 
 initTabs : List Tab
 initTabs =
     [ PreviewTab
-    , ArticleTab  "Article 0"
-        { articleID = 1
-        , rankedTopics = [0, 1, 2]
-        , title = "Article 0"
-        , date = "13.07.1999"
-        , text = "Hallo, ich habe hier nur einen Dummytext."
-        }
+    , ArticleTab  "Article 0" (initArticle 1)
     ]
 
 initArticle : Int -> Article
@@ -60,6 +55,7 @@ initArticle id =
         0 ->
             { articleID = 0
             , rankedTopics = [0, 1, 2]
+            , words = ["Some", "Any", "Stuff"]
             , title = "Hallo"
             , date = "11.11.2011"
             , text = "Dieser Artikel ist der, der gerade an der Seite ausgewählt ist."
@@ -67,6 +63,7 @@ initArticle id =
         1 ->
             { articleID = 1
             , rankedTopics = [0, 1, 2]
+            , words = ["two", "time", "Item"]
             , title = "Article 0"
             , date = "13.07.1999"
             , text = "Hallo, ich habe hier nur einen Dummytext."
@@ -74,6 +71,7 @@ initArticle id =
         _ ->
             {articleID = id
             , rankedTopics = []
+            , words = ["test"]
             , title = "0"
             , date = "0.0.0"
             , text = ""

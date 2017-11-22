@@ -482,37 +482,7 @@ var _user$project$Mainview_v1$viewSwitch = function (model) {
 								_0: _elm_lang$html$Html$text('show Saved'),
 								_1: {ctor: '[]'}
 							}),
-						_1: {
-							ctor: '::',
-							_0: A5(
-								_debois$elm_mdl$Material_Toggles$switch,
-								_user$project$Model$Mdl,
-								{
-									ctor: '::',
-									_0: 0,
-									_1: {ctor: '[]'}
-								},
-								model.mdl,
-								{
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleShowArticles),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Toggles$value(model.settings.showArticles),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('show Articles'),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					}
 				}
 			}

@@ -15,6 +15,7 @@ import Material.Scheme as Scheme
 import Material.Layout as Layout
 import Material.Textfield as Textfield
 import Material.Toggles as Toggles
+import Material.Button as Button
 import Material.Elevation as Elevation
 
 view : Model -> Html Msg
@@ -64,12 +65,6 @@ viewSwitch model =
             , Toggles.value model.settings.showSaved
             ]
             [ text "show Saved"]
-        , Toggles.switch Mdl [0] model.mdl
-            [ css "margin" "5px"
-            , onToggle ToggleShowArticles
-            , Toggles.value model.settings.showArticles
-            ]
-            [ text "show Articles"]
         ]
 
 viewBody : Model -> Html Msg
@@ -102,18 +97,52 @@ viewBody model =
 slot : Int -> View -> Model -> Html Msg
 slot slotId view model =
     case view of
-        TopicsView ->
-            Topicsview.view model (flexValue 2) slotId
-        WordlistView ->
-            Wordlistview.view model (flexValue 2) slotId
-        ArticlesView ->
-            Articlesview.view model (flexValue 2) slotId
+        TopicsView topics->
+            Topicsview.view { model | topics = topics} (flexValue 2) slotId
+        WordlistView wordList->
+            Wordlistview.view { model | wordList = wordList} (flexValue 2) slotId
+        ArticlesView articles->
+            Articlesview.view { model | articles = articles} (flexValue 2) slotId
+        Dialog ->
+            div
+                [ css "display" "flex"
+                , css "display" "-ms-flex"
+                , css "display" "-webkit-flex"
+                , css "flex-direction" "column"
+                , css "-ms-flex-direction" "column"
+                , css "-webkit-flex-direction" "column"
+                , css "flex" (flexValue 2)
+                , Elevation.e2
+                , center
+                ]
+                [ Button.render Mdl [0] model.mdl
+                    [ Button.ripple
+                    , css "flex" "flexValue 1"
+                    , css "margin" "70px 0"
+                    , onClick (UpdateSlot (TopicsView model.topics) slotId)
+                    ]
+                    [ text "Topics"]
+                , Button.render Mdl [0] model.mdl
+                    [ Button.ripple
+                    , css "flex" "flexValue 1"
+                    , css "margin" "70px 0"
+                    , onClick (UpdateSlot (WordlistView model.wordList) slotId)
+                    ]
+                    [ text "Wordlist"]
+                , Button.render Mdl [0] model.mdl
+                    [ Button.ripple
+                    , css "flex" "flexValue 1"
+                    , css "margin" "70px 0"
+                    , onClick (UpdateSlot (ArticlesView model.articles) slotId)
+                    ]
+                    [ text "Articles"]
+                ]
         _ ->
             div
                 [ css "flex" (flexValue 1)
                 , Elevation.e2
                 , center
-                , onClick ChoseSlotDialoge
+                , onClick (ChoseSlotDialog slotId)
                 ]
                 [ Icon.view "add" []
                 ]

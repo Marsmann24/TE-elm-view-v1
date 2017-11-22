@@ -5,9 +5,10 @@ import Model exposing (..)
 import Html exposing (Html, text)
 import Material.Options exposing (css, div, span, onClick, onMouseEnter, onMouseLeave)
 import Material.Elevation as Elevation
+import Material.Icon as Icon
+import Material.Button as Button
 import Material.Color as Color
 import Material.Card as Card
-
 
 view : Model -> String -> Int -> Html Msg
 view model flex slotId =
@@ -19,9 +20,18 @@ view model flex slotId =
         (List.append
             [ div
                 [ css "height" "45px"
-                , css "border-bottom" "1px solid #e0e0e0"
                 ]
-                [ text "Platzhalter für Einstellungen"]
+                [ Button.render Mdl [0] model.mdl
+                    [ Button.fab
+                    , Button.minifab
+                    , Button.raised
+                    , Button.ripple
+                    , onClick (HideWordList slotId)
+                    , css "margin" "2px 4px"
+                    , css "float" "right"
+                    ]
+                    [ Icon.i "close" ]
+                ]
             ]
             (List.map2 (article2CardView model) model.articles (List.range 1 (List.length model.articles))))
 

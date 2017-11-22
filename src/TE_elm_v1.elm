@@ -3,7 +3,8 @@ module TE_elm_v1 exposing (..)
 import Model exposing (..)
 import Init exposing (init)
 --import Mainview_v1 exposing (view)
-import Mainview_v2 exposing (view)
+import Mainview_v1
+import Mainview_v2
 
 import Html
 import Material
@@ -16,6 +17,13 @@ main =
         , view = view
         , subscriptions = subscriptions
         }
+
+view model =
+    if model.settings.view2
+        then
+            Mainview_v2.view model
+        else
+            Mainview_v1.view model
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -32,6 +40,24 @@ update msg model =
             let newCurrentTopis = List.filter (\x -> x.topicID /= topicID) model.currentTopics
             in
             ({ model | currentTopics = newCurrentTopis}, Cmd.none)
+        ShowTopics topics ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+            in
+            ({ model
+                | settings = { oldSettings | showTopics = True}
+                , slots = slotFromTo oldSlots Empty (TopicsView topics)
+                }
+            , Cmd.none)
+        HideTopics slotId ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+            in
+            ({ model
+                | settings = { oldSettings | showTopics = False}
+                , slots =  slotRemove oldSlots slotId
+                }
+            , Cmd.none)
         ShowWordList words ->
             let oldSettings = model.settings
                 oldSlots = model.slots
@@ -39,7 +65,7 @@ update msg model =
             ({ model
                 | settings = { oldSettings | showWordlist = True}
                 , wordList = words
-                , slots = slotFromTo oldSlots Empty WordlistView
+                , slots = slotFromTo oldSlots Empty (WordlistView words)
                 }
             , Cmd.none)
         HideWordList slotId ->
@@ -51,6 +77,39 @@ update msg model =
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)
+        ShowArticles word ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+                articles = model.articles
+                contains word article = List.member word article.words
+            in
+            ({ model
+                | settings = { oldSettings | showArticles = True}
+                , slots = slotFromTo oldSlots Empty (ArticlesView (List.filter (contains word) articles))
+                }
+            , Cmd.none)
+        HideArticles slotId ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+            in
+            ({ model
+                | settings = { oldSettings | showArticles = False}
+                , slots =  slotRemove oldSlots slotId
+                }
+            , Cmd.none)
+        ChoseSlotDialog slotId ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+            in
+            ({ model
+                | settings = { oldSettings | showSlotDialoge = True}
+                , slots =  slotChangeTo oldSlots slotId Dialog
+                }
+            , Cmd.none)
+        UpdateSlot view slotId ->
+            let oldSlots = model.slots
+            in
+            ({ model | slots =  slotChangeTo oldSlots slotId view}, Cmd.none)
         ToggleBottom ->
             let oldSettings = model.settings
             in
@@ -63,45 +122,10 @@ update msg model =
             let oldSettings = model.settings
             in
             ({ model | settings = { oldSettings | showSaved = not (model.settings.showSaved)}}, Cmd.none)
-        ToggleShowArticles ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | showArticles = not (model.settings.showArticles)}}, Cmd.none)
-        ChoseSlotDialoge ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | showSlotDialoge = True}}, Cmd.none)
         Mdl msgmdl ->
             (Material.update Mdl msgmdl model)
         _ ->
             ( model, Cmd.none)
-
-slotFromTo : Slots -> View -> View -> Slots
-slotFromTo oldSlots from to =
-    if (oldSlots.s1 == from)
-        then
-            slotChangeTo oldSlots 1 to
-        else if (oldSlots.s2 == from)
-            then
-                slotChangeTo oldSlots 2 to
-            else
-                slotChangeTo oldSlots 3 to
-
-slotChangeTo : Slots -> Int -> View -> Slots
-slotChangeTo oldSlots id value =
-    case id of
-        1 ->
-            { oldSlots | s1 = value}
-        2 ->
-            { oldSlots | s2 = value}
-        3 ->
-            { oldSlots | s3 = value}
-        _ ->
-            oldSlots
-
-slotRemove : Slots -> Int -> Slots
-slotRemove oldSlots id =
-    slotChangeTo oldSlots id Empty
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

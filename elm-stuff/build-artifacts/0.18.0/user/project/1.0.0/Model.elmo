@@ -1,3 +1,27 @@
+var _user$project$Model$slotChangeTo = F3(
+	function (oldSlots, id, value) {
+		var _p0 = id;
+		switch (_p0) {
+			case 1:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s1: value});
+			case 2:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s2: value});
+			case 3:
+				return _elm_lang$core$Native_Utils.update(
+					oldSlots,
+					{s3: value});
+			default:
+				return oldSlots;
+		}
+	});
+var _user$project$Model$slotFromTo = F3(
+	function (oldSlots, from, to) {
+		return _elm_lang$core$Native_Utils.eq(oldSlots.s1, from) ? A3(_user$project$Model$slotChangeTo, oldSlots, 1, to) : (_elm_lang$core$Native_Utils.eq(oldSlots.s2, from) ? A3(_user$project$Model$slotChangeTo, oldSlots, 2, to) : A3(_user$project$Model$slotChangeTo, oldSlots, 3, to));
+	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
 		return function (c) {
@@ -9,7 +33,9 @@ var _user$project$Model$Model = function (a) {
 								return function (i) {
 									return function (j) {
 										return function (k) {
-											return {topics: a, currentTopics: b, articles: c, currentArticle: d, raised: e, wordList: f, tabs: g, currentTab: h, settings: i, slots: j, mdl: k};
+											return function (l) {
+												return {topics: a, currentTopics: b, articles: c, currentArticle: d, wordList: e, currentWord: f, tabs: g, currentTab: h, raised: i, settings: j, slots: k, mdl: l};
+											};
 										};
 									};
 								};
@@ -25,9 +51,9 @@ var _user$project$Model$Topic = F3(
 	function (a, b, c) {
 		return {topicID: a, topicName: b, words: c};
 	});
-var _user$project$Model$Article = F5(
-	function (a, b, c, d, e) {
-		return {articleID: a, rankedTopics: b, title: c, date: d, text: e};
+var _user$project$Model$Article = F6(
+	function (a, b, c, d, e, f) {
+		return {articleID: a, rankedTopics: b, words: c, title: d, date: e, text: f};
 	});
 var _user$project$Model$Settings = F7(
 	function (a, b, c, d, e, f, g) {
@@ -41,16 +67,33 @@ var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
-var _user$project$Model$ChoseSlotDialoge = {ctor: 'ChoseSlotDialoge'};
-var _user$project$Model$ToggleShowArticles = {ctor: 'ToggleShowArticles'};
 var _user$project$Model$ToggleShowSaved = {ctor: 'ToggleShowSaved'};
 var _user$project$Model$ToggleView2 = {ctor: 'ToggleView2'};
 var _user$project$Model$ToggleBottom = {ctor: 'ToggleBottom'};
+var _user$project$Model$UpdateSlot = F2(
+	function (a, b) {
+		return {ctor: 'UpdateSlot', _0: a, _1: b};
+	});
+var _user$project$Model$ChoseSlotDialog = function (a) {
+	return {ctor: 'ChoseSlotDialog', _0: a};
+};
+var _user$project$Model$HideArticles = function (a) {
+	return {ctor: 'HideArticles', _0: a};
+};
+var _user$project$Model$ShowArticles = function (a) {
+	return {ctor: 'ShowArticles', _0: a};
+};
 var _user$project$Model$HideWordList = function (a) {
 	return {ctor: 'HideWordList', _0: a};
 };
 var _user$project$Model$ShowWordList = function (a) {
 	return {ctor: 'ShowWordList', _0: a};
+};
+var _user$project$Model$HideTopics = function (a) {
+	return {ctor: 'HideTopics', _0: a};
+};
+var _user$project$Model$ShowTopics = function (a) {
+	return {ctor: 'ShowTopics', _0: a};
 };
 var _user$project$Model$RemoveTopic = function (a) {
 	return {ctor: 'RemoveTopic', _0: a};
@@ -65,10 +108,6 @@ var _user$project$Model$Raise = function (a) {
 var _user$project$Model$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
-var _user$project$Model$Empty = {ctor: 'Empty'};
-var _user$project$Model$ArticlesView = {ctor: 'ArticlesView'};
-var _user$project$Model$TopicsView = {ctor: 'TopicsView'};
-var _user$project$Model$WordlistView = {ctor: 'WordlistView'};
 var _user$project$Model$ErrorTab = F2(
 	function (a, b) {
 		return {ctor: 'ErrorTab', _0: a, _1: b};
@@ -78,3 +117,37 @@ var _user$project$Model$ArticleTab = F2(
 		return {ctor: 'ArticleTab', _0: a, _1: b};
 	});
 var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
+var _user$project$Model$Empty = {ctor: 'Empty'};
+var _user$project$Model$slotRemove = F2(
+	function (oldSlots, id) {
+		slotRemove:
+		while (true) {
+			var _p1 = id;
+			switch (_p1) {
+				case 1:
+					var _v2 = A3(_user$project$Model$slotChangeTo, oldSlots, 1, oldSlots.s2),
+						_v3 = 2;
+					oldSlots = _v2;
+					id = _v3;
+					continue slotRemove;
+				case 2:
+					var _v4 = A3(_user$project$Model$slotChangeTo, oldSlots, 2, oldSlots.s3),
+						_v5 = 3;
+					oldSlots = _v4;
+					id = _v5;
+					continue slotRemove;
+				default:
+					return A3(_user$project$Model$slotChangeTo, oldSlots, id, _user$project$Model$Empty);
+			}
+		}
+	});
+var _user$project$Model$Dialog = {ctor: 'Dialog'};
+var _user$project$Model$ArticlesView = function (a) {
+	return {ctor: 'ArticlesView', _0: a};
+};
+var _user$project$Model$TopicsView = function (a) {
+	return {ctor: 'TopicsView', _0: a};
+};
+var _user$project$Model$WordlistView = function (a) {
+	return {ctor: 'WordlistView', _0: a};
+};

@@ -40,21 +40,185 @@ var _user$project$Mainview_v2$slot = F3(
 			case 'TopicsView':
 				return A3(
 					_user$project$Topicsview$view,
-					model,
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{topics: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'WordlistView':
 				return A3(
 					_user$project$Wordlistview$view,
-					model,
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{wordList: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'ArticlesView':
 				return A3(
 					_user$project$Articlesview$view,
-					model,
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{articles: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
+			case 'Dialog':
+				return A2(
+					_debois$elm_mdl$Material_Options$div,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'flex'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-ms-flex'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'display', '-webkit-flex'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-direction', 'column'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, '-ms-flex-direction', 'column'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, '-webkit-flex-direction', 'column'),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_Options$css,
+													'flex',
+													_user$project$Mainview_v2$flexValue(2)),
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Elevation$e2,
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Options$center,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A5(
+							_debois$elm_mdl$Material_Button$render,
+							_user$project$Model$Mdl,
+							{
+								ctor: '::',
+								_0: 0,
+								_1: {ctor: '[]'}
+							},
+							model.mdl,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Button$ripple,
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', 'flexValue 1'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '70px 0'),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(
+												A2(
+													_user$project$Model$UpdateSlot,
+													_user$project$Model$TopicsView(model.topics),
+													slotId)),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Topics'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_debois$elm_mdl$Material_Button$render,
+								_user$project$Model$Mdl,
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {ctor: '[]'}
+								},
+								model.mdl,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Button$ripple,
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', 'flexValue 1'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '70px 0'),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													A2(
+														_user$project$Model$UpdateSlot,
+														_user$project$Model$WordlistView(model.wordList),
+														slotId)),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Wordlist'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A5(
+									_debois$elm_mdl$Material_Button$render,
+									_user$project$Model$Mdl,
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {ctor: '[]'}
+									},
+									model.mdl,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$ripple,
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', 'flexValue 1'),
+											_1: {
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '70px 0'),
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														A2(
+															_user$project$Model$UpdateSlot,
+															_user$project$Model$ArticlesView(model.articles),
+															slotId)),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Articles'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					});
 			default:
 				return A2(
 					_debois$elm_mdl$Material_Options$div,
@@ -72,7 +236,8 @@ var _user$project$Mainview_v2$slot = F3(
 								_0: _debois$elm_mdl$Material_Options$center,
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$ChoseSlotDialoge),
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ChoseSlotDialog(slotId)),
 									_1: {ctor: '[]'}
 								}
 							}
@@ -287,37 +452,7 @@ var _user$project$Mainview_v2$viewSwitch = function (model) {
 								_0: _elm_lang$html$Html$text('show Saved'),
 								_1: {ctor: '[]'}
 							}),
-						_1: {
-							ctor: '::',
-							_0: A5(
-								_debois$elm_mdl$Material_Toggles$switch,
-								_user$project$Model$Mdl,
-								{
-									ctor: '::',
-									_0: 0,
-									_1: {ctor: '[]'}
-								},
-								model.mdl,
-								{
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onToggle(_user$project$Model$ToggleShowArticles),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Toggles$value(model.settings.showArticles),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('show Articles'),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					}
 				}
 			}

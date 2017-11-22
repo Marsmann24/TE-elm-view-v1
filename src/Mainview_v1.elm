@@ -66,12 +66,6 @@ viewSwitch model =
             , Toggles.value model.settings.showSaved
             ]
             [ text "show Saved"]
-        , Toggles.switch Mdl [0] model.mdl
-            [ css "margin" "5px"
-            , onToggle ToggleShowArticles
-            , Toggles.value model.settings.showArticles
-            ]
-            [ text "show Articles"]
         ]
 
 viewBody : Model -> Html Msg
