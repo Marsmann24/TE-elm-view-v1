@@ -137,15 +137,23 @@ slot slotId view model =
                     ]
                     [ text "Articles"]
                 ]
+        Empty ->
+            let previouseSlot = (slotGet model.slots (slotId - 1))
+            in
+            if ((previouseSlot /= Empty) && (previouseSlot /= Dialog))
+                then
+                    div
+                        [ css "flex" (flexValue 1)
+                        , Elevation.e2
+                        , center
+                        , onClick (ChoseSlotDialog slotId)
+                        ]
+                        [ Icon.view "add" []
+                        ]
+                else
+                    div [] []
         _ ->
-            div
-                [ css "flex" (flexValue 1)
-                , Elevation.e2
-                , center
-                , onClick (ChoseSlotDialog slotId)
-                ]
-                [ Icon.view "add" []
-                ]
+            div [][ text "Error"]
 
 viewOrEmptyFlex : Bool -> Html Msg -> Html Msg
 viewOrEmptyFlex condition view =

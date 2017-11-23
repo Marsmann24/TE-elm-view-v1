@@ -219,8 +219,9 @@ var _user$project$Mainview_v2$slot = F3(
 							}
 						}
 					});
-			default:
-				return A2(
+			case 'Empty':
+				var previouseSlot = A2(_user$project$Model$slotGet, model.slots, slotId - 1);
+				return ((!_elm_lang$core$Native_Utils.eq(previouseSlot, _user$project$Model$Empty)) && (!_elm_lang$core$Native_Utils.eq(previouseSlot, _user$project$Model$Dialog))) ? A2(
 					_debois$elm_mdl$Material_Options$div,
 					{
 						ctor: '::',
@@ -249,6 +250,18 @@ var _user$project$Mainview_v2$slot = F3(
 							_debois$elm_mdl$Material_Icon$view,
 							'add',
 							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}) : A2(
+					_debois$elm_mdl$Material_Options$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			default:
+				return A2(
+					_debois$elm_mdl$Material_Options$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Error'),
 						_1: {ctor: '[]'}
 					});
 		}

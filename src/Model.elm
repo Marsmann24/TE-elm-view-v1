@@ -83,6 +83,7 @@ type View
     | ArticlesView (List Article)
     | Dialog
     | Empty
+    | ErrorSlot
 
 slotFromTo : Slots -> View -> View -> Slots
 slotFromTo oldSlots from to =
@@ -94,6 +95,18 @@ slotFromTo oldSlots from to =
                 slotChangeTo oldSlots 2 to
             else
                 slotChangeTo oldSlots 3 to
+
+slotGet : Slots -> Int -> View
+slotGet slots slotId =
+    case slotId of
+        1 ->
+            slots.s1
+        2 ->
+                slots.s2
+        3 ->
+            slots.s3
+        _ ->
+            ErrorSlot
 
 slotChangeTo : Slots -> Int -> View -> Slots
 slotChangeTo oldSlots id value =

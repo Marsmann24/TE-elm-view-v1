@@ -16019,24 +16019,39 @@ var _user$project$Model$ArticleTab = F2(
 		return {ctor: 'ArticleTab', _0: a, _1: b};
 	});
 var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
+var _user$project$Model$ErrorSlot = {ctor: 'ErrorSlot'};
+var _user$project$Model$slotGet = F2(
+	function (slots, slotId) {
+		var _p1 = slotId;
+		switch (_p1) {
+			case 1:
+				return slots.s1;
+			case 2:
+				return slots.s2;
+			case 3:
+				return slots.s3;
+			default:
+				return _user$project$Model$ErrorSlot;
+		}
+	});
 var _user$project$Model$Empty = {ctor: 'Empty'};
 var _user$project$Model$slotRemove = F2(
 	function (oldSlots, id) {
 		slotRemove:
 		while (true) {
-			var _p1 = id;
-			switch (_p1) {
+			var _p2 = id;
+			switch (_p2) {
 				case 1:
-					var _v2 = A3(_user$project$Model$slotChangeTo, oldSlots, 1, oldSlots.s2),
-						_v3 = 2;
-					oldSlots = _v2;
-					id = _v3;
+					var _v3 = A3(_user$project$Model$slotChangeTo, oldSlots, 1, oldSlots.s2),
+						_v4 = 2;
+					oldSlots = _v3;
+					id = _v4;
 					continue slotRemove;
 				case 2:
-					var _v4 = A3(_user$project$Model$slotChangeTo, oldSlots, 2, oldSlots.s3),
-						_v5 = 3;
-					oldSlots = _v4;
-					id = _v5;
+					var _v5 = A3(_user$project$Model$slotChangeTo, oldSlots, 2, oldSlots.s3),
+						_v6 = 3;
+					oldSlots = _v5;
+					id = _v6;
 					continue slotRemove;
 				default:
 					return A3(_user$project$Model$slotChangeTo, oldSlots, id, _user$project$Model$Empty);
@@ -17763,8 +17778,9 @@ var _user$project$Mainview_v2$slot = F3(
 							}
 						}
 					});
-			default:
-				return A2(
+			case 'Empty':
+				var previouseSlot = A2(_user$project$Model$slotGet, model.slots, slotId - 1);
+				return ((!_elm_lang$core$Native_Utils.eq(previouseSlot, _user$project$Model$Empty)) && (!_elm_lang$core$Native_Utils.eq(previouseSlot, _user$project$Model$Dialog))) ? A2(
 					_debois$elm_mdl$Material_Options$div,
 					{
 						ctor: '::',
@@ -17793,6 +17809,18 @@ var _user$project$Mainview_v2$slot = F3(
 							_debois$elm_mdl$Material_Icon$view,
 							'add',
 							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}) : A2(
+					_debois$elm_mdl$Material_Options$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+			default:
+				return A2(
+					_debois$elm_mdl$Material_Options$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Error'),
 						_1: {ctor: '[]'}
 					});
 		}
