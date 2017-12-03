@@ -5,7 +5,7 @@ import Model exposing (..)
 
 init : (Model, Cmd Msg)
 init =
-    ({ topics = List.map initTopic (List.range 0 3)
+    ({ topics = List.map initTopic (List.range 0 8)
     , currentTopics =
         [ initTopic 0
         , initTopic 5
@@ -25,9 +25,10 @@ init =
     , raised = -1
     , settings = initSettings
     , slots =
-        { s1 = TopicsView (List.map initTopic (List.range 0 3))
+        { s1 = TopicsView (List.map initTopic (List.range 0 8))
         , s2 = Empty
         , s3 = Empty
+        , more = [] 
         }
     , mdl = Material.model
     } , Cmd.none)
@@ -83,20 +84,20 @@ initTopic id =
         0 ->
             { topicID = id
             , topicName = "Stuff"
-            , words = [ "Stuff", "Things", "Items"]
+            , words = [ "Stuff", "Things", "Items", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
             }
         1 ->
             { topicID = id
             , topicName = "Other"
-            , words = [ "Some", "Any", "Other"]
+            , words = [ "Some", "Any", "Other", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
             }
         2 ->
             { topicID = 2
             , topicName = "Tryout"
-            , words = [ "test", "time"]
+            , words = [ "test", "time", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
             }
         _ ->
             { topicID = id
             , topicName = "Dummy"
-            , words = [ "one", "two", "three"]
+            , words = [ "one", "two", "three", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
             }

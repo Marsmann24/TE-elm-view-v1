@@ -5,6 +5,7 @@ import Model exposing (..)
 import Html exposing (Html, text)
 import Html.Attributes exposing (style, class)
 import Material.Options exposing (css, div, span, onClick)
+import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Chip as Chip
 
@@ -12,12 +13,13 @@ import Material.Chip as Chip
 view : Model -> String-> Html Msg
 view model flex =
     div
-        [ Elevation.e6
-        , css "flex" flex
+        [ css "flex" flex
         , css "margin" "3px 0px"
+        , Elevation.e6
+        , Color.background (Color.color Color.Grey Color.S500)
         ]
         (List.append
-            [ text "Platzhalter für ausgewählte Topics"]
+            [ ]
             (List.map (currentTopic2Chip model.settings) model.currentTopics))
 
 currentTopic2Chip : Settings -> Topic -> Html Msg

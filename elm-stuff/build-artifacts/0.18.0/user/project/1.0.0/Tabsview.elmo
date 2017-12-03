@@ -97,8 +97,21 @@ var _user$project$Tabsview$view = F2(
 			_debois$elm_mdl$Material_Options$div,
 			{
 				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
-				_1: {ctor: '[]'}
+				_0: _debois$elm_mdl$Material_Options$cs('slot'),
+				_1: {
+					ctor: '::',
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+					_1: {
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0px 10px'),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Color$background(
+								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
 			},
 			{
 				ctor: '::',

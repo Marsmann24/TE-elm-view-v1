@@ -4,7 +4,8 @@ import Model exposing (..)
 
 import Html exposing (Html, text)
 import Html.Attributes exposing (style, class)
-import Material.Options exposing (css, div, span, onClick)
+import Material.Options exposing (css, cs, div, span, onClick)
+import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Icon as Icon
 import Material.Button as Button
@@ -13,32 +14,33 @@ import Material.Chip as Chip
 
 view : Model -> String -> Int -> Html Msg
 view model flex slotId =
-    div [ Elevation.e6
+    div [ cs "slot"
         , css "flex" flex
-        , css "margin" "3px 0px"
+        , Elevation.e0
+        , Color.background (Color.color Color.Grey Color.S500)
         ]
-        (List.append
-            [ div
-                [ css "height" "45px"
-                ]
-                [ Button.render Mdl [0] model.mdl
-                    [ Button.fab
-                    , Button.minifab
-                    , Button.raised
-                    , Button.ripple
-                    , onClick (HideTopics slotId)
-                    , css "margin" "2px 4px"
-                    , css "float" "right"
-                    ]
-                    [ Icon.i "close" ]
-                ]
+        [ div
+            [ css "height" "45px"
             ]
-            (List.map topic2Chip model.topics))
+            [ Button.render Mdl [slotId] model.mdl
+                [ cs "slot__close_button"
+                , Button.fab
+                , Button.minifab
+                , Button.raised
+                , onClick (HideTopics slotId)
+                ]
+                [ Icon.i "close" ]
+            ]
+        , div
+            [ cs "slot__content"
+            ]
+            (List.map topic2Chip model.topics)
+        ]
 
 topic2Chip : Topic -> Html Msg
 topic2Chip topic =
     Chip.button
-        [ css "width" "150px"
+        [ css "width" "calc(100% - 4px)"
         , css "margin" "6px 2px"
         , onClick (ShowWordList topic.words)
         ]

@@ -124,40 +124,46 @@ var _user$project$Articlesview$view = F3(
 			_debois$elm_mdl$Material_Options$div,
 			{
 				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+				_0: _debois$elm_mdl$Material_Options$cs('slot'),
 				_1: {
 					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e4,
-						_1: {ctor: '[]'}
+						_0: _debois$elm_mdl$Material_Elevation$e0,
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Color$background(
+								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			},
-			A2(
-				_elm_lang$core$List$append,
-				{
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Options$div,
-						{
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: A5(
-								_debois$elm_mdl$Material_Button$render,
-								_user$project$Model$Mdl,
-								{
-									ctor: '::',
-									_0: 0,
-									_1: {ctor: '[]'}
-								},
-								model.mdl,
-								{
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$div,
+					{
+						ctor: '::',
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A5(
+							_debois$elm_mdl$Material_Button$render,
+							_user$project$Model$Mdl,
+							{
+								ctor: '::',
+								_0: slotId,
+								_1: {ctor: '[]'}
+							},
+							model.mdl,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
+								_1: {
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Button$fab,
 									_1: {
@@ -173,35 +179,38 @@ var _user$project$Articlesview$view = F3(
 													ctor: '::',
 													_0: _debois$elm_mdl$Material_Options$onClick(
 														_user$project$Model$HideWordList(slotId)),
-													_1: {
-														ctor: '::',
-														_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '2px 4px'),
-														_1: {
-															ctor: '::',
-															_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-															_1: {ctor: '[]'}
-														}
-													}
+													_1: {ctor: '[]'}
 												}
 											}
 										}
 									}
-								},
-								{
-									ctor: '::',
-									_0: _debois$elm_mdl$Material_Icon$i('close'),
-									_1: {ctor: '[]'}
-								}),
+								}
+							},
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Icon$i('close'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$div,
+						{
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('slot__content'),
 							_1: {ctor: '[]'}
-						}),
+						},
+						A3(
+							_elm_lang$core$List$map2,
+							_user$project$Articlesview$article2CardView(model),
+							model.articles,
+							A2(
+								_elm_lang$core$List$range,
+								1,
+								_elm_lang$core$List$length(model.articles)))),
 					_1: {ctor: '[]'}
-				},
-				A3(
-					_elm_lang$core$List$map2,
-					_user$project$Articlesview$article2CardView(model),
-					model.articles,
-					A2(
-						_elm_lang$core$List$range,
-						1,
-						_elm_lang$core$List$length(model.articles)))));
+				}
+			});
 	});

@@ -1,5 +1,5 @@
-var _user$project$Wordlistview$topic2WordList = F2(
-	function (selected, word) {
+var _user$project$Wordlistview$topic2WordList = F3(
+	function (model, word, id) {
 		return A2(
 			_debois$elm_mdl$Material_List$li,
 			{ctor: '[]'},
@@ -7,9 +7,9 @@ var _user$project$Wordlistview$topic2WordList = F2(
 				ctor: '::',
 				_0: A2(
 					_debois$elm_mdl$Material_List$content,
-					_elm_lang$core$Native_Utils.eq(word, selected) ? {
+					_elm_lang$core$Native_Utils.eq(word, model.currentWord) ? {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e0,
+						_0: _debois$elm_mdl$Material_Elevation$e2,
 						_1: {ctor: '[]'}
 					} : {
 						ctor: '::',
@@ -20,7 +20,29 @@ var _user$project$Wordlistview$topic2WordList = F2(
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(word),
+						_0: A5(
+							_debois$elm_mdl$Material_Button$render,
+							_user$project$Model$Mdl,
+							{
+								ctor: '::',
+								_0: id,
+								_1: {ctor: '[]'}
+							},
+							model.mdl,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Button$ripple,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Button$raised,
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(word),
+								_1: {ctor: '[]'}
+							}),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
@@ -32,14 +54,19 @@ var _user$project$Wordlistview$view = F3(
 			_debois$elm_mdl$Material_Options$div,
 			{
 				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+				_0: _debois$elm_mdl$Material_Options$cs('slot'),
 				_1: {
 					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e4,
-						_1: {ctor: '[]'}
+						_0: _debois$elm_mdl$Material_Elevation$e0,
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Color$background(
+								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			},
@@ -59,34 +86,30 @@ var _user$project$Wordlistview$view = F3(
 							_user$project$Model$Mdl,
 							{
 								ctor: '::',
-								_0: 0,
+								_0: slotId,
 								_1: {ctor: '[]'}
 							},
 							model.mdl,
 							{
 								ctor: '::',
-								_0: _debois$elm_mdl$Material_Button$fab,
+								_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Button$minifab,
+									_0: _debois$elm_mdl$Material_Button$fab,
 									_1: {
 										ctor: '::',
-										_0: _debois$elm_mdl$Material_Button$raised,
+										_0: _debois$elm_mdl$Material_Button$minifab,
 										_1: {
 											ctor: '::',
-											_0: _debois$elm_mdl$Material_Button$ripple,
+											_0: _debois$elm_mdl$Material_Button$raised,
 											_1: {
 												ctor: '::',
-												_0: _debois$elm_mdl$Material_Options$onClick(
-													_user$project$Model$HideWordList(slotId)),
+												_0: _debois$elm_mdl$Material_Button$ripple,
 												_1: {
 													ctor: '::',
-													_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '2px 4px'),
-													_1: {
-														ctor: '::',
-														_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-														_1: {ctor: '[]'}
-													}
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														_user$project$Model$HideWordList(slotId)),
+													_1: {ctor: '[]'}
 												}
 											}
 										}
@@ -104,11 +127,24 @@ var _user$project$Wordlistview$view = F3(
 					ctor: '::',
 					_0: A2(
 						_debois$elm_mdl$Material_List$ul,
-						{ctor: '[]'},
-						A2(
-							_elm_lang$core$List$map,
-							_user$project$Wordlistview$topic2WordList(model.currentWord),
-							model.wordList)),
+						{
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('slot__content'),
+							_1: {ctor: '[]'}
+						},
+						A3(
+							_elm_lang$core$List$map2,
+							_user$project$Wordlistview$topic2WordList(model),
+							model.wordList,
+							A2(
+								_elm_lang$core$List$map,
+								function (x) {
+									return x + (10 * slotId);
+								},
+								A2(
+									_elm_lang$core$List$range,
+									1,
+									_elm_lang$core$List$length(model.wordList))))),
 					_1: {ctor: '[]'}
 				}
 			});

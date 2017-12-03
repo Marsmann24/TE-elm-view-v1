@@ -3,13 +3,17 @@ module Tabsview exposing (view)
 import Model exposing (..)
 
 import Html exposing (Html, text, h1, br)
-import Material.Options exposing (css, div, span)
+import Material.Options exposing (css, cs, div, span)
+import Material.Color as Color
 import Material.Tabs as Tabs
 
 view : Model -> String -> Html Msg
 view model flex =
     div
-        [ css "flex" flex
+        [ cs "slot"
+        , css "flex" flex
+        , css "padding" "0px 10px"
+        , Color.background (Color.color Color.Grey Color.S500)
         ]
         [ Tabs.render Mdl [0] model.mdl
             [ Tabs.ripple

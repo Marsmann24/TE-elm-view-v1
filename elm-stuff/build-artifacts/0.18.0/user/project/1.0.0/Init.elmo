@@ -14,7 +14,39 @@ var _user$project$Init$initTopic = function (id) {
 						_1: {
 							ctor: '::',
 							_0: 'Items',
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: 'Stuff',
+								_1: {
+									ctor: '::',
+									_0: 'Stuff',
+									_1: {
+										ctor: '::',
+										_0: 'Stuff',
+										_1: {
+											ctor: '::',
+											_0: 'Stuff',
+											_1: {
+												ctor: '::',
+												_0: 'Stuff',
+												_1: {
+													ctor: '::',
+													_0: 'Stuff',
+													_1: {
+														ctor: '::',
+														_0: 'Stuff',
+														_1: {
+															ctor: '::',
+															_0: 'Stuff',
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -32,7 +64,39 @@ var _user$project$Init$initTopic = function (id) {
 						_1: {
 							ctor: '::',
 							_0: 'Other',
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: 'Stuff',
+								_1: {
+									ctor: '::',
+									_0: 'Stuff',
+									_1: {
+										ctor: '::',
+										_0: 'Stuff',
+										_1: {
+											ctor: '::',
+											_0: 'Stuff',
+											_1: {
+												ctor: '::',
+												_0: 'Stuff',
+												_1: {
+													ctor: '::',
+													_0: 'Stuff',
+													_1: {
+														ctor: '::',
+														_0: 'Stuff',
+														_1: {
+															ctor: '::',
+															_0: 'Stuff',
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -47,7 +111,39 @@ var _user$project$Init$initTopic = function (id) {
 					_1: {
 						ctor: '::',
 						_0: 'time',
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: 'Stuff',
+							_1: {
+								ctor: '::',
+								_0: 'Stuff',
+								_1: {
+									ctor: '::',
+									_0: 'Stuff',
+									_1: {
+										ctor: '::',
+										_0: 'Stuff',
+										_1: {
+											ctor: '::',
+											_0: 'Stuff',
+											_1: {
+												ctor: '::',
+												_0: 'Stuff',
+												_1: {
+													ctor: '::',
+													_0: 'Stuff',
+													_1: {
+														ctor: '::',
+														_0: 'Stuff',
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			};
@@ -64,7 +160,39 @@ var _user$project$Init$initTopic = function (id) {
 						_1: {
 							ctor: '::',
 							_0: 'three',
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: 'Stuff',
+								_1: {
+									ctor: '::',
+									_0: 'Stuff',
+									_1: {
+										ctor: '::',
+										_0: 'Stuff',
+										_1: {
+											ctor: '::',
+											_0: 'Stuff',
+											_1: {
+												ctor: '::',
+												_0: 'Stuff',
+												_1: {
+													ctor: '::',
+													_0: 'Stuff',
+													_1: {
+														ctor: '::',
+														_0: 'Stuff',
+														_1: {
+															ctor: '::',
+															_0: 'Stuff',
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -174,7 +302,7 @@ var _user$project$Init$init = {
 		topics: A2(
 			_elm_lang$core$List$map,
 			_user$project$Init$initTopic,
-			A2(_elm_lang$core$List$range, 0, 3)),
+			A2(_elm_lang$core$List$range, 0, 8)),
 		currentTopics: {
 			ctor: '::',
 			_0: _user$project$Init$initTopic(0),
@@ -208,9 +336,10 @@ var _user$project$Init$init = {
 				A2(
 					_elm_lang$core$List$map,
 					_user$project$Init$initTopic,
-					A2(_elm_lang$core$List$range, 0, 3))),
+					A2(_elm_lang$core$List$range, 0, 8))),
 			s2: _user$project$Model$Empty,
-			s3: _user$project$Model$Empty
+			s3: _user$project$Model$Empty,
+			more: {ctor: '[]'}
 		},
 		mdl: _debois$elm_mdl$Material$model
 	},

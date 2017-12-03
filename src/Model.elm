@@ -70,12 +70,7 @@ type Tab
     | ArticleTab String Article
     | ErrorTab String String
 
--- slots
-type alias Slots =
-    { s1 : View
-    , s2 : View
-    , s3 : View
-    }
+--Slots
 
 type View
     = WordlistView (List String)
@@ -85,16 +80,44 @@ type View
     | Empty
     | ErrorSlot
 
+type alias Slots =
+    { s1 : View
+    , s2 : View
+    , s3 : View
+    , more : List View
+    }
+
 slotFromTo : Slots -> View -> View -> Slots
 slotFromTo oldSlots from to =
-    if (oldSlots.s1 == from)
-        then
+    case (slotGetFirstId oldSlots from) of
+        1 ->
             slotChangeTo oldSlots 1 to
-        else if (oldSlots.s2 == from)
-            then
-                slotChangeTo oldSlots 2 to
-            else
-                slotChangeTo oldSlots 3 to
+        2 ->
+            slotChangeTo oldSlots 2 to
+        3 ->
+            slotChangeTo oldSlots 3 to
+        _ ->
+            let slots = oldSlots
+            in
+            slotChangeTo
+                (slotChangeTo
+                    (slotChangeTo
+                        { oldSlots | more = (slots.s1::slots.more)}
+                        1 slots.s2)
+                    2 slots.s3)
+                3 to
+
+slotGetFirstId : Slots -> View -> Int
+slotGetFirstId slots view =
+    if (slots.s1 == view)
+    then 1
+    else
+        if (slots.s2 == view)
+        then 2
+        else
+            if (slots.s3 == view)
+            then 3
+            else 0
 
 slotGet : Slots -> Int -> View
 slotGet slots slotId =
@@ -102,7 +125,7 @@ slotGet slots slotId =
         1 ->
             slots.s1
         2 ->
-                slots.s2
+            slots.s2
         3 ->
             slots.s3
         _ ->
@@ -121,11 +144,38 @@ slotChangeTo oldSlots id value =
             oldSlots
 
 slotRemove : Slots -> Int -> Slots
-slotRemove oldSlots id =
-    case id of
-        1 ->
-            slotRemove (slotChangeTo oldSlots 1 oldSlots.s2) 2
-        2 ->
-            slotRemove (slotChangeTo oldSlots 2 oldSlots.s3) 3
-        _ ->
-            slotChangeTo oldSlots id Empty
+slotRemove slots id =
+    if (slots.more == [])
+    then
+        case id of
+            1 ->
+                slotRemove (slotChangeTo slots 1 slots.s2) 2
+            2 ->
+                slotRemove (slotChangeTo slots 2 slots.s3) 3
+            3 ->
+                slotChangeTo slots id Empty
+            _ ->
+                slots
+    else
+        case id of
+            1 ->
+                let moreHead =
+                        case (List.head slots.more) of
+                            Just a ->
+                                a
+                            Nothing ->
+                                ErrorSlot
+                    moreTail =
+                        case (List.tail slots.more) of
+                            Just a ->
+                                a
+                            Nothing ->
+                                [ErrorSlot]
+                in
+                slotChangeTo { slots | more = moreTail} 1 moreHead
+            2 ->
+                slotRemove (slotChangeTo slots 2 slots.s1) 1
+            3 ->
+                slotRemove (slotChangeTo slots 3 slots.s2) 2
+            _ ->
+                slots
