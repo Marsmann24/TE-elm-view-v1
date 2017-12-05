@@ -114,7 +114,7 @@ var _user$project$Mainview_v2$hiddenSlot = function (id) {
 		});
 };
 var _user$project$Mainview_v2$slot = F3(
-	function (slotId, view, model) {
+	function (model, slotId, view) {
 		var _p1 = view;
 		switch (_p1.ctor) {
 			case 'TopicsView':
@@ -282,44 +282,39 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 						}
 					}
 				},
-				{
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Options$div,
-						{
-							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$cs('flex__row'),
-							_1: {ctor: '[]'}
-						},
-						A2(
-							_elm_lang$core$List$map,
-							_user$project$Mainview_v2$hiddenSlot,
-							_elm_lang$core$List$reverse(
-								A2(
-									_elm_lang$core$List$range,
-									1,
-									_elm_lang$core$List$length(model.slots.more))))),
-					_1: {
+				A2(
+					_elm_lang$core$List$append,
+					{
 						ctor: '::',
-						_0: A3(_user$project$Mainview_v2$slot, 1, model.slots.s1, model),
-						_1: {
-							ctor: '::',
-							_0: A3(_user$project$Mainview_v2$slot, 2, model.slots.s2, model),
-							_1: {
+						_0: A2(
+							_debois$elm_mdl$Material_Options$div,
+							{
 								ctor: '::',
-								_0: A3(_user$project$Mainview_v2$slot, 3, model.slots.s3, model),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_user$project$Tabsview$view,
-										model,
-										_user$project$Mainview_v2$flexValue(6)),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}),
+								_0: _debois$elm_mdl$Material_Options$cs('flex__row'),
+								_1: {ctor: '[]'}
+							},
+							A2(
+								_elm_lang$core$List$map,
+								_user$project$Mainview_v2$hiddenSlot,
+								_elm_lang$core$List$reverse(
+									A2(
+										_elm_lang$core$List$range,
+										1,
+										_elm_lang$core$List$length(model.slots.more))))),
+						_1: _elm_lang$core$Array$toList(
+							A2(
+								_elm_lang$core$Array$indexedMap,
+								_user$project$Mainview_v2$slot(model),
+								model.slots.main))
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_user$project$Tabsview$view,
+							model,
+							_user$project$Mainview_v2$flexValue(6)),
+						_1: {ctor: '[]'}
+					})),
 			_1: {
 				ctor: '::',
 				_0: A2(

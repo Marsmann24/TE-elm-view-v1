@@ -2,6 +2,7 @@ module Init exposing (init)
 
 import Material
 import Model exposing (..)
+import Array
 
 init : (Model, Cmd Msg)
 init =
@@ -25,10 +26,13 @@ init =
     , raised = -1
     , settings = initSettings
     , slots =
-        { s1 = TopicsView (List.map initTopic (List.range 0 8))
-        , s2 = Empty
-        , s3 = Empty
-        , more = [] 
+        { main =
+            Array.fromList
+                [ TopicsView (List.map initTopic (List.range 0 8))
+                , Empty
+                , Empty
+                ]
+        , more = []
         }
     , mdl = Material.model
     } , Cmd.none)

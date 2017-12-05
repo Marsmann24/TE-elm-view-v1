@@ -1,57 +1,10 @@
 var _user$project$Model$slotChangeTo = F3(
 	function (oldSlots, id, value) {
-		var _p0 = id;
-		switch (_p0) {
-			case 1:
-				return _elm_lang$core$Native_Utils.update(
-					oldSlots,
-					{s1: value});
-			case 2:
-				return _elm_lang$core$Native_Utils.update(
-					oldSlots,
-					{s2: value});
-			case 3:
-				return _elm_lang$core$Native_Utils.update(
-					oldSlots,
-					{s3: value});
-			default:
-				return oldSlots;
-		}
-	});
-var _user$project$Model$slotGetFirstId = F2(
-	function (slots, view) {
-		return _elm_lang$core$Native_Utils.eq(slots.s1, view) ? 1 : (_elm_lang$core$Native_Utils.eq(slots.s2, view) ? 2 : (_elm_lang$core$Native_Utils.eq(slots.s3, view) ? 3 : 0));
-	});
-var _user$project$Model$slotFromTo = F3(
-	function (oldSlots, from, to) {
-		var _p1 = A2(_user$project$Model$slotGetFirstId, oldSlots, from);
-		switch (_p1) {
-			case 1:
-				return A3(_user$project$Model$slotChangeTo, oldSlots, 1, to);
-			case 2:
-				return A3(_user$project$Model$slotChangeTo, oldSlots, 2, to);
-			case 3:
-				return A3(_user$project$Model$slotChangeTo, oldSlots, 3, to);
-			default:
-				var slots = oldSlots;
-				return A3(
-					_user$project$Model$slotChangeTo,
-					A3(
-						_user$project$Model$slotChangeTo,
-						A3(
-							_user$project$Model$slotChangeTo,
-							_elm_lang$core$Native_Utils.update(
-								oldSlots,
-								{
-									more: {ctor: '::', _0: slots.s1, _1: slots.more}
-								}),
-							1,
-							slots.s2),
-						2,
-						slots.s3),
-					3,
-					to);
-		}
+		return _elm_lang$core$Native_Utils.update(
+			oldSlots,
+			{
+				main: A3(_elm_lang$core$Array$set, id, value, oldSlots.main)
+			});
 	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
@@ -90,9 +43,9 @@ var _user$project$Model$Settings = F7(
 	function (a, b, c, d, e, f, g) {
 		return {showTopics: a, showArticles: b, showWordlist: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g};
 	});
-var _user$project$Model$Slots = F4(
-	function (a, b, c, d) {
-		return {s1: a, s2: b, s3: c, more: d};
+var _user$project$Model$Slots = F2(
+	function (a, b) {
+		return {main: a, more: b};
 	});
 var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
@@ -149,93 +102,110 @@ var _user$project$Model$ArticleTab = F2(
 	});
 var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
 var _user$project$Model$ErrorSlot = {ctor: 'ErrorSlot'};
+var _user$project$Model$slotGetFirstIdSince = F3(
+	function (slots, view, id) {
+		slotGetFirstIdSince:
+		while (true) {
+			var getView = function () {
+				var _p0 = A2(_elm_lang$core$Array$get, id, slots.main);
+				if (_p0.ctor === 'Just') {
+					return _p0._0;
+				} else {
+					return _user$project$Model$ErrorSlot;
+				}
+			}();
+			if (_elm_lang$core$Native_Utils.eq(getView, _user$project$Model$ErrorSlot)) {
+				return -1;
+			} else {
+				if (_elm_lang$core$Native_Utils.eq(getView, view)) {
+					return id;
+				} else {
+					var _v1 = slots,
+						_v2 = view,
+						_v3 = id + 1;
+					slots = _v1;
+					view = _v2;
+					id = _v3;
+					continue slotGetFirstIdSince;
+				}
+			}
+		}
+	});
+var _user$project$Model$slotGetFirstId = F2(
+	function (slots, view) {
+		return A3(_user$project$Model$slotGetFirstIdSince, slots, view, 0);
+	});
 var _user$project$Model$slotGet = F2(
 	function (slots, slotId) {
-		var _p2 = slotId;
-		switch (_p2) {
-			case 1:
-				return slots.s1;
-			case 2:
-				return slots.s2;
-			case 3:
-				return slots.s3;
-			default:
-				return _user$project$Model$ErrorSlot;
+		var _p1 = A2(_elm_lang$core$Array$get, slotId, slots.main);
+		if (_p1.ctor === 'Just') {
+			return _p1._0;
+		} else {
+			return _user$project$Model$ErrorSlot;
 		}
+	});
+var _user$project$Model$slotFromTo = F3(
+	function (slots, from, to) {
+		var findSlot = A2(_user$project$Model$slotGetFirstId, slots, from);
+		return _elm_lang$core$Native_Utils.eq(findSlot, -1) ? A3(
+			_user$project$Model$slotChangeTo,
+			A3(
+				_user$project$Model$slotChangeTo,
+				A3(
+					_user$project$Model$slotChangeTo,
+					_elm_lang$core$Native_Utils.update(
+						slots,
+						{
+							more: {
+								ctor: '::',
+								_0: A2(_user$project$Model$slotGet, slots, 0),
+								_1: slots.more
+							}
+						}),
+					0,
+					A2(_user$project$Model$slotGet, slots, 1)),
+				1,
+				A2(_user$project$Model$slotGet, slots, 2)),
+			2,
+			to) : A3(_user$project$Model$slotChangeTo, slots, findSlot, to);
 	});
 var _user$project$Model$Empty = {ctor: 'Empty'};
 var _user$project$Model$slotRemove = F2(
 	function (slots, id) {
 		slotRemove:
 		while (true) {
-			if (_elm_lang$core$Native_Utils.eq(
-				slots.more,
-				{ctor: '[]'})) {
-				var _p3 = id;
-				switch (_p3) {
-					case 1:
-						var _v4 = A3(_user$project$Model$slotChangeTo, slots, 1, slots.s2),
-							_v5 = 2;
-						slots = _v4;
-						id = _v5;
-						continue slotRemove;
-					case 2:
-						var _v6 = A3(_user$project$Model$slotChangeTo, slots, 2, slots.s3),
-							_v7 = 3;
-						slots = _v6;
-						id = _v7;
-						continue slotRemove;
-					case 3:
-						return A3(_user$project$Model$slotChangeTo, slots, id, _user$project$Model$Empty);
-					default:
-						return slots;
+			var moreTail = function () {
+				var _p2 = _elm_lang$core$List$tail(slots.more);
+				if (_p2.ctor === 'Just') {
+					return _p2._0;
+				} else {
+					return {ctor: '[]'};
 				}
+			}();
+			var moreHead = function () {
+				var _p3 = _elm_lang$core$List$head(slots.more);
+				if (_p3.ctor === 'Just') {
+					return _p3._0;
+				} else {
+					return _user$project$Model$Empty;
+				}
+			}();
+			var nextId = _elm_lang$core$Native_Utils.eq(moreHead, _user$project$Model$Empty) ? (id + 1) : (id - 1);
+			var nextSlot = A2(_user$project$Model$slotGet, slots, nextId);
+			if (_elm_lang$core$Native_Utils.eq(nextSlot, _user$project$Model$ErrorSlot)) {
+				return A3(
+					_user$project$Model$slotChangeTo,
+					_elm_lang$core$Native_Utils.update(
+						slots,
+						{more: moreTail}),
+					id,
+					moreHead);
 			} else {
-				var _p4 = id;
-				switch (_p4) {
-					case 1:
-						var moreTail = function () {
-							var _p5 = _elm_lang$core$List$tail(slots.more);
-							if (_p5.ctor === 'Just') {
-								return _p5._0;
-							} else {
-								return {
-									ctor: '::',
-									_0: _user$project$Model$ErrorSlot,
-									_1: {ctor: '[]'}
-								};
-							}
-						}();
-						var moreHead = function () {
-							var _p6 = _elm_lang$core$List$head(slots.more);
-							if (_p6.ctor === 'Just') {
-								return _p6._0;
-							} else {
-								return _user$project$Model$ErrorSlot;
-							}
-						}();
-						return A3(
-							_user$project$Model$slotChangeTo,
-							_elm_lang$core$Native_Utils.update(
-								slots,
-								{more: moreTail}),
-							1,
-							moreHead);
-					case 2:
-						var _v11 = A3(_user$project$Model$slotChangeTo, slots, 2, slots.s1),
-							_v12 = 1;
-						slots = _v11;
-						id = _v12;
-						continue slotRemove;
-					case 3:
-						var _v13 = A3(_user$project$Model$slotChangeTo, slots, 3, slots.s2),
-							_v14 = 2;
-						slots = _v13;
-						id = _v14;
-						continue slotRemove;
-					default:
-						return slots;
-				}
+				var _v7 = A3(_user$project$Model$slotChangeTo, slots, id, nextSlot),
+					_v8 = nextId;
+				slots = _v7;
+				id = _v8;
+				continue slotRemove;
 			}
 		}
 	});

@@ -332,13 +332,24 @@ var _user$project$Init$init = {
 		raised: -1,
 		settings: _user$project$Init$initSettings,
 		slots: {
-			s1: _user$project$Model$TopicsView(
-				A2(
-					_elm_lang$core$List$map,
-					_user$project$Init$initTopic,
-					A2(_elm_lang$core$List$range, 0, 8))),
-			s2: _user$project$Model$Empty,
-			s3: _user$project$Model$Empty,
+			main: _elm_lang$core$Array$fromList(
+				{
+					ctor: '::',
+					_0: _user$project$Model$TopicsView(
+						A2(
+							_elm_lang$core$List$map,
+							_user$project$Init$initTopic,
+							A2(_elm_lang$core$List$range, 0, 8))),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Model$Empty,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Model$Empty,
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
 			more: {ctor: '[]'}
 		},
 		mdl: _debois$elm_mdl$Material$model

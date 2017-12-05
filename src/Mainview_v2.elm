@@ -7,6 +7,7 @@ import Savedview
 import Articlesview
 import Wordlistview
 
+import Array
 import Html exposing (Html, text, h3)
 import Material.Options exposing (css, cs, center, div, span, onToggle, onClick)
 import Material.Icon as Icon
@@ -79,20 +80,17 @@ viewBody model =
             , css "flex" (flexValue 3)
             , css "height" "100%"
             ]
-            [ div
-                [ cs "flex__row"
-                ]
-                (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more))))
-            , slot 1 model.slots.s1 model
-            , slot 2 model.slots.s2 model
-            , slot 3 model.slots.s3 model
-            , Tabsview.view model (flexValue 6)
-            ]
+            (List.append
+                ((div
+                    [ cs "flex__row"]
+                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
+                :: (Array.toList (Array.indexedMap (slot model) model.slots.main)))
+                [ Tabsview.view model (flexValue 6)])
         , Savedview.view model (flexValue 1)
         ]
 
-slot : Int -> View -> Model -> Html Msg
-slot slotId view model =
+slot : Model -> Int -> View -> Html Msg
+slot model slotId view =
     case view of
         TopicsView topics->
             Topicsview.view { model | topics = topics} (flexValue 2) slotId
