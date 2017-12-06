@@ -295,10 +295,52 @@ var _user$project$Init$initTabs = {
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false};
+var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false};
+var _user$project$Init$initResult = {
+	ctor: '::',
+	_0: 'test',
+	_1: {
+		ctor: '::',
+		_0: 'time',
+		_1: {
+			ctor: '::',
+			_0: 'Stuff',
+			_1: {
+				ctor: '::',
+				_0: 'Stuff',
+				_1: {
+					ctor: '::',
+					_0: 'Stuff',
+					_1: {
+						ctor: '::',
+						_0: 'Stuff',
+						_1: {
+							ctor: '::',
+							_0: 'Stuff',
+							_1: {
+								ctor: '::',
+								_0: 'Stuff',
+								_1: {
+									ctor: '::',
+									_0: 'Stuff',
+									_1: {
+										ctor: '::',
+										_0: 'Stuff',
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+};
 var _user$project$Init$init = {
 	ctor: '_Tuple2',
 	_0: {
+		result: _user$project$Init$initResult,
 		topics: A2(
 			_elm_lang$core$List$map,
 			_user$project$Init$initTopic,

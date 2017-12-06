@@ -40,6 +40,23 @@ update msg model =
             let newCurrentTopis = List.filter (\x -> x.topicID /= topicID) model.currentTopics
             in
             ({ model | currentTopics = newCurrentTopis}, Cmd.none)
+        Search term ->
+                let oldSettings = model.settings
+                in
+                ({ model
+                    | settings = { oldSettings | search = True}
+                    --, result = List.filter (\x -> (x == term)) []
+                    }
+                , Cmd.none)
+        Found view ->
+                let oldSettings = model.settings
+                    oldSlots = model.slots
+                in
+                ({ model
+                    | settings = { oldSettings | search = False}
+                    , slots = slotFromTo oldSlots Empty view
+                    }
+                , Cmd.none)
         ShowTopics topics ->
             let oldSettings = model.settings
                 oldSlots = model.slots

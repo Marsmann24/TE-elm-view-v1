@@ -6,7 +6,8 @@ import Array
 
 init : (Model, Cmd Msg)
 init =
-    ({ topics = List.map initTopic (List.range 0 8)
+    ({ result = initResult
+    , topics = List.map initTopic (List.range 0 8)
     , currentTopics =
         [ initTopic 0
         , initTopic 5
@@ -37,6 +38,10 @@ init =
     , mdl = Material.model
     } , Cmd.none)
 
+initResult : List String
+initResult =
+    [ "test", "time", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
+
 initSettings : Settings
 initSettings =
     { showTopics = True
@@ -46,6 +51,7 @@ initSettings =
     , bottom = False
     , view2 = True
     , showSlotDialoge = False
+    , search = False
     }
 
 initTabs : List Tab

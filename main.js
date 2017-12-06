@@ -15920,7 +15920,9 @@ var _user$project$Model$Model = function (a) {
 									return function (j) {
 										return function (k) {
 											return function (l) {
-												return {topics: a, currentTopics: b, articles: c, currentArticle: d, wordList: e, currentWord: f, tabs: g, currentTab: h, raised: i, settings: j, slots: k, mdl: l};
+												return function (m) {
+													return {result: a, topics: b, currentTopics: c, articles: d, currentArticle: e, wordList: f, currentWord: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, mdl: m};
+												};
 											};
 										};
 									};
@@ -15941,9 +15943,9 @@ var _user$project$Model$Article = F6(
 	function (a, b, c, d, e, f) {
 		return {articleID: a, rankedTopics: b, words: c, title: d, date: e, text: f};
 	});
-var _user$project$Model$Settings = F7(
-	function (a, b, c, d, e, f, g) {
-		return {showTopics: a, showArticles: b, showWordlist: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g};
+var _user$project$Model$Settings = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {showTopics: a, showArticles: b, showWordlist: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h};
 	});
 var _user$project$Model$Slots = F2(
 	function (a, b) {
@@ -15993,6 +15995,12 @@ var _user$project$Model$Raise = function (a) {
 };
 var _user$project$Model$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
+};
+var _user$project$Model$Found = function (a) {
+	return {ctor: 'Found', _0: a};
+};
+var _user$project$Model$Search = function (a) {
+	return {ctor: 'Search', _0: a};
 };
 var _user$project$Model$ErrorTab = F2(
 	function (a, b) {
@@ -16636,10 +16644,52 @@ var _user$project$Init$initTabs = {
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false};
+var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false};
+var _user$project$Init$initResult = {
+	ctor: '::',
+	_0: 'test',
+	_1: {
+		ctor: '::',
+		_0: 'time',
+		_1: {
+			ctor: '::',
+			_0: 'Stuff',
+			_1: {
+				ctor: '::',
+				_0: 'Stuff',
+				_1: {
+					ctor: '::',
+					_0: 'Stuff',
+					_1: {
+						ctor: '::',
+						_0: 'Stuff',
+						_1: {
+							ctor: '::',
+							_0: 'Stuff',
+							_1: {
+								ctor: '::',
+								_0: 'Stuff',
+								_1: {
+									ctor: '::',
+									_0: 'Stuff',
+									_1: {
+										ctor: '::',
+										_0: 'Stuff',
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+};
 var _user$project$Init$init = {
 	ctor: '_Tuple2',
 	_0: {
+		result: _user$project$Init$initResult,
 		topics: A2(
 			_elm_lang$core$List$map,
 			_user$project$Init$initTopic,
@@ -17814,6 +17864,51 @@ var _user$project$Mainview_v1$view = function (model) {
 			}));
 };
 
+var _user$project$Searchview$string2ListItem = function (string) {
+	return A2(
+		_debois$elm_mdl$Material_List$li,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_List$content,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$onClick(
+						_user$project$Model$Found(_user$project$Model$Empty)),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(string),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Searchview$view = F2(
+	function (model, flex) {
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$center,
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_List$ul,
+					{ctor: '[]'},
+					A2(_elm_lang$core$List$map, _user$project$Searchview$string2ListItem, model.result)),
+				_1: {ctor: '[]'}
+			});
+	});
+
 var _user$project$Mainview_v2$flexValue = function (flex) {
 	var _p0 = flex;
 	switch (_p0) {
@@ -18078,7 +18173,14 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 				}
 			}
 		},
-		{
+		model.settings.search ? {
+			ctor: '::',
+			_0: A2(
+				_user$project$Searchview$view,
+				model,
+				_user$project$Mainview_v2$flexValue(-1)),
+			_1: {ctor: '[]'}
+		} : {
 			ctor: '::',
 			_0: A2(
 				_debois$elm_mdl$Material_Options$div,
@@ -18273,7 +18375,11 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 						_1: {
 							ctor: '::',
 							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '20px 50px 10px'),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
@@ -18363,6 +18469,34 @@ var _user$project$TE_elm_v1$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{currentTopics: newCurrentTopis}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Search':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{search: true})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Found':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{search: false}),
+							slots: A3(_user$project$Model$slotFromTo, oldSlots, _user$project$Model$Empty, _p0._0)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ShowTopics':
@@ -18579,6 +18713,10 @@ if (typeof _user$project$Model$main !== 'undefined') {
 Elm['Savedview'] = Elm['Savedview'] || {};
 if (typeof _user$project$Savedview$main !== 'undefined') {
     _user$project$Savedview$main(Elm['Savedview'], 'Savedview', undefined);
+}
+Elm['Searchview'] = Elm['Searchview'] || {};
+if (typeof _user$project$Searchview$main !== 'undefined') {
+    _user$project$Searchview$main(Elm['Searchview'], 'Searchview', undefined);
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {

@@ -18,7 +18,9 @@ var _user$project$Model$Model = function (a) {
 									return function (j) {
 										return function (k) {
 											return function (l) {
-												return {topics: a, currentTopics: b, articles: c, currentArticle: d, wordList: e, currentWord: f, tabs: g, currentTab: h, raised: i, settings: j, slots: k, mdl: l};
+												return function (m) {
+													return {result: a, topics: b, currentTopics: c, articles: d, currentArticle: e, wordList: f, currentWord: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, mdl: m};
+												};
 											};
 										};
 									};
@@ -39,9 +41,9 @@ var _user$project$Model$Article = F6(
 	function (a, b, c, d, e, f) {
 		return {articleID: a, rankedTopics: b, words: c, title: d, date: e, text: f};
 	});
-var _user$project$Model$Settings = F7(
-	function (a, b, c, d, e, f, g) {
-		return {showTopics: a, showArticles: b, showWordlist: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g};
+var _user$project$Model$Settings = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {showTopics: a, showArticles: b, showWordlist: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h};
 	});
 var _user$project$Model$Slots = F2(
 	function (a, b) {
@@ -91,6 +93,12 @@ var _user$project$Model$Raise = function (a) {
 };
 var _user$project$Model$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
+};
+var _user$project$Model$Found = function (a) {
+	return {ctor: 'Found', _0: a};
+};
+var _user$project$Model$Search = function (a) {
+	return {ctor: 'Search', _0: a};
 };
 var _user$project$Model$ErrorTab = F2(
 	function (a, b) {

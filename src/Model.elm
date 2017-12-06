@@ -5,7 +5,9 @@ import Html exposing (Html)
 import Array exposing (Array)
 
 type Msg
-    = SelectTab Int
+    = Search String
+    | Found View
+    | SelectTab Int
     | Raise Int
     | ChangeCurrentArticle Int Article
     | RemoveTopic Int
@@ -24,7 +26,8 @@ type Msg
     | None -- zum Testen, damit update _ -> immer haben kann
 
 type alias Model =
-    { topics : List Topic           -- all topics
+    { result : List String          -- search result
+    , topics : List Topic           -- all topics
     , currentTopics : List Topic    -- list of topics for the ranking
     , articles : List Article       -- ranked articles
     , currentArticle :              -- active card and preview article
@@ -64,6 +67,7 @@ type alias Settings =
     , bottom : Bool
     , view2 : Bool
     , showSlotDialoge : Bool
+    , search : Bool
     }
 
 type Tab

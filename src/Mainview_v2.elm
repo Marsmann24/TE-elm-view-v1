@@ -6,10 +6,11 @@ import Topicsview
 import Savedview
 import Articlesview
 import Wordlistview
+import Searchview
 
 import Array
 import Html exposing (Html, text, h3)
-import Material.Options exposing (css, cs, center, div, span, onToggle, onClick)
+import Material.Options exposing (css, cs, center, div, span, onToggle, onClick, onInput)
 import Material.Icon as Icon
 import Material.Color as Color
 import Material.Scheme as Scheme
@@ -41,6 +42,7 @@ viewSearch model =
         , Textfield.expandable "id-of-expandable-1"
         , Textfield.expandableIcon "search"
         , css "padding" "20px 50px 10px"
+        , onInput Search
         ]
         []
 
@@ -75,19 +77,24 @@ viewBody model =
         , cs "flex__column"
         , css "height" "100%"
         ]
-        [ div
-            [ cs "flex__row"
-            , css "flex" (flexValue 3)
-            , css "height" "100%"
+        (if model.settings.search
+        then
+            [ Searchview.view model (flexValue (-1))]
+        else
+            [ div
+                [ cs "flex__row"
+                , css "flex" (flexValue 3)
+                , css "height" "100%"
+                ]
+                (List.append
+                    ((div
+                        [ cs "flex__row"]
+                        (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
+                        :: (Array.toList (Array.indexedMap (slot model) model.slots.main)))
+                    [ Tabsview.view model (flexValue 6)])
+            , Savedview.view model (flexValue 1)
             ]
-            (List.append
-                ((div
-                    [ cs "flex__row"]
-                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
-                :: (Array.toList (Array.indexedMap (slot model) model.slots.main)))
-                [ Tabsview.view model (flexValue 6)])
-        , Savedview.view model (flexValue 1)
-        ]
+        )
 
 slot : Model -> Int -> View -> Html Msg
 slot model slotId view =

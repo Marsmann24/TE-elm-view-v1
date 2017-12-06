@@ -1,0 +1,44 @@
+var _user$project$Searchview$string2ListItem = function (string) {
+	return A2(
+		_debois$elm_mdl$Material_List$li,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_debois$elm_mdl$Material_List$content,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$onClick(
+						_user$project$Model$Found(_user$project$Model$Empty)),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(string),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Searchview$view = F2(
+	function (model, flex) {
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$center,
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_List$ul,
+					{ctor: '[]'},
+					A2(_elm_lang$core$List$map, _user$project$Searchview$string2ListItem, model.result)),
+				_1: {ctor: '[]'}
+			});
+	});

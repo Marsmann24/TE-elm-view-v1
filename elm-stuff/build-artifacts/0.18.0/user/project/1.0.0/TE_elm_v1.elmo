@@ -44,6 +44,34 @@ var _user$project$TE_elm_v1$update = F2(
 						{currentTopics: newCurrentTopis}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'Search':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{search: true})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Found':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{search: false}),
+							slots: A3(_user$project$Model$slotFromTo, oldSlots, _user$project$Model$Empty, _p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'ShowTopics':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
