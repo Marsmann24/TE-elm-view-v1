@@ -109,6 +109,15 @@ var _user$project$Model$ArticleTab = F2(
 		return {ctor: 'ArticleTab', _0: a, _1: b};
 	});
 var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
+var _user$project$Model$Articleresult = function (a) {
+	return {ctor: 'Articleresult', _0: a};
+};
+var _user$project$Model$Wordresult = function (a) {
+	return {ctor: 'Wordresult', _0: a};
+};
+var _user$project$Model$Topicresult = function (a) {
+	return {ctor: 'Topicresult', _0: a};
+};
 var _user$project$Model$ErrorSlot = {ctor: 'ErrorSlot'};
 var _user$project$Model$slotGetFirstIdSince = F3(
 	function (slots, view, id) {

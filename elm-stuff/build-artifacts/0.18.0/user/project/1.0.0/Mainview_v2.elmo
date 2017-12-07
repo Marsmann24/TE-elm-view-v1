@@ -229,7 +229,11 @@ var _user$project$Mainview_v2$slot = F3(
 						_0: A2(
 							_debois$elm_mdl$Material_Icon$view,
 							'add',
-							{ctor: '[]'}),
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Icon$size48,
+								_1: {ctor: '[]'}
+							}),
 						_1: {ctor: '[]'}
 					}) : A2(
 					_debois$elm_mdl$Material_Options$div,

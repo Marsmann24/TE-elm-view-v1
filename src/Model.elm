@@ -26,7 +26,7 @@ type Msg
     | None -- zum Testen, damit update _ -> immer haben kann
 
 type alias Model =
-    { result : List String          -- search result
+    { result : List Searchresult          -- search result
     , topics : List Topic           -- all topics
     , currentTopics : List Topic    -- list of topics for the ranking
     , articles : List Article       -- ranked articles
@@ -74,6 +74,11 @@ type Tab
     = PreviewTab
     | ArticleTab String Article
     | ErrorTab String String
+
+type Searchresult
+    = Topicresult Topic
+    | Wordresult String
+    | Articleresult Article
 
 --Slots
 

@@ -1,22 +1,98 @@
-var _user$project$Searchview$string2ListItem = function (string) {
+var _user$project$Searchview$searchresult2ListItem = function (result) {
 	return A2(
 		_debois$elm_mdl$Material_List$li,
 		{ctor: '[]'},
 		{
 			ctor: '::',
-			_0: A2(
-				_debois$elm_mdl$Material_List$content,
-				{
-					ctor: '::',
-					_0: _debois$elm_mdl$Material_Options$onClick(
-						_user$project$Model$Found(_user$project$Model$Empty)),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(string),
-					_1: {ctor: '[]'}
-				}),
+			_0: function () {
+				var _p0 = result;
+				switch (_p0.ctor) {
+					case 'Wordresult':
+						var _p1 = _p0._0;
+						return A2(
+							_debois$elm_mdl$Material_List$content,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onClick(
+									_user$project$Model$Found(
+										_user$project$Model$WordlistView(
+											{
+												ctor: '::',
+												_0: _p1,
+												_1: {ctor: '[]'}
+											}))),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_List$icon,
+									'list',
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(_p1),
+									_1: {ctor: '[]'}
+								}
+							});
+					case 'Topicresult':
+						var _p2 = _p0._0;
+						return A2(
+							_debois$elm_mdl$Material_List$content,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onClick(
+									_user$project$Model$Found(
+										_user$project$Model$TopicsView(
+											{
+												ctor: '::',
+												_0: _p2,
+												_1: {ctor: '[]'}
+											}))),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_List$icon,
+									'bubble_chart',
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(_p2.topicName),
+									_1: {ctor: '[]'}
+								}
+							});
+					default:
+						var _p3 = _p0._0;
+						return A2(
+							_debois$elm_mdl$Material_List$content,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onClick(
+									_user$project$Model$Found(
+										_user$project$Model$ArticlesView(
+											{
+												ctor: '::',
+												_0: _p3,
+												_1: {ctor: '[]'}
+											}))),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_List$icon,
+									'art_track',
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(_p3.title),
+									_1: {ctor: '[]'}
+								}
+							});
+				}
+			}(),
 			_1: {ctor: '[]'}
 		});
 };
@@ -38,7 +114,7 @@ var _user$project$Searchview$view = F2(
 				_0: A2(
 					_debois$elm_mdl$Material_List$ul,
 					{ctor: '[]'},
-					A2(_elm_lang$core$List$map, _user$project$Searchview$string2ListItem, model.result)),
+					A2(_elm_lang$core$List$map, _user$project$Searchview$searchresult2ListItem, model.result)),
 				_1: {ctor: '[]'}
 			});
 	});

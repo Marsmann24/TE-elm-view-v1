@@ -298,38 +298,30 @@ var _user$project$Init$initTabs = {
 var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false};
 var _user$project$Init$initResult = {
 	ctor: '::',
-	_0: 'test',
+	_0: _user$project$Model$Wordresult('test'),
 	_1: {
 		ctor: '::',
-		_0: 'time',
+		_0: _user$project$Model$Wordresult('time'),
 		_1: {
 			ctor: '::',
-			_0: 'Stuff',
+			_0: _user$project$Model$Wordresult('Stuff'),
 			_1: {
 				ctor: '::',
-				_0: 'Stuff',
+				_0: _user$project$Model$Articleresult(
+					_user$project$Init$initArticle(0)),
 				_1: {
 					ctor: '::',
-					_0: 'Stuff',
+					_0: _user$project$Model$Articleresult(
+						_user$project$Init$initArticle(1)),
 					_1: {
 						ctor: '::',
-						_0: 'Stuff',
+						_0: _user$project$Model$Topicresult(
+							_user$project$Init$initTopic(0)),
 						_1: {
 							ctor: '::',
-							_0: 'Stuff',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {ctor: '[]'}
-									}
-								}
-							}
+							_0: _user$project$Model$Topicresult(
+								_user$project$Init$initTopic(1)),
+							_1: {ctor: '[]'}
 						}
 					}
 				}

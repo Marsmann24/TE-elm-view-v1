@@ -22,7 +22,8 @@ view model flex slotId =
         [ div
             [ css "height" "45px"
             ]
-            [ Button.render Mdl [slotId] model.mdl
+            [ Icon.view "art_track" [ css "margin" "5px"]
+            , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab
                 , Button.minifab

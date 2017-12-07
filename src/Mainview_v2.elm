@@ -150,7 +150,7 @@ slot model slotId view =
                         , center
                         , onClick (ChoseSlotDialog slotId)
                         ]
-                        [ Icon.view "add" []
+                        [ Icon.view "add" [Icon.size48]
                         ]
                 else
                     div [] []

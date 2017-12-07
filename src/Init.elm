@@ -38,9 +38,16 @@ init =
     , mdl = Material.model
     } , Cmd.none)
 
-initResult : List String
+initResult : List Searchresult
 initResult =
-    [ "test", "time", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
+    [ Wordresult "test"
+    , Wordresult "time"
+    , Wordresult "Stuff"
+    , Articleresult (initArticle 0)
+    , Articleresult (initArticle 1)
+    , Topicresult (initTopic 0)
+    , Topicresult (initTopic 1)
+    ]
 
 initSettings : Settings
 initSettings =

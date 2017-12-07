@@ -14,14 +14,30 @@ view model flex =
         ]
         [ Lists.ul
             []
-            (List.map string2ListItem model.result)
+            (List.map searchresult2ListItem model.result)
         ]
 
-string2ListItem : String -> Html Msg
-string2ListItem string =
+searchresult2ListItem : Searchresult -> Html Msg
+searchresult2ListItem result =
     Lists.li
         []
-        [ Lists.content
-            [ onClick (Found Empty)]
-            [ text string]
-        ]
+        [( case result of
+            Wordresult word ->
+                Lists.content
+                    [ onClick (Found (WordlistView [word]))]
+                    [ Lists.icon "list" []
+                    , text word
+                    ]
+            Topicresult topic ->
+                Lists.content
+                    [ onClick (Found (TopicsView [topic]))]
+                    [ Lists.icon "bubble_chart" []
+                    , text topic.topicName
+                    ]
+            Articleresult article ->
+                Lists.content
+                    [ onClick (Found (ArticlesView [article]))]
+                    [ Lists.icon "art_track" []
+                    , text article.title
+                    ]
+        )]

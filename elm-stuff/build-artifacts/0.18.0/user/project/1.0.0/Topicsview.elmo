@@ -61,43 +61,54 @@ var _user$project$Topicsview$view = F3(
 					},
 					{
 						ctor: '::',
-						_0: A5(
-							_debois$elm_mdl$Material_Button$render,
-							_user$project$Model$Mdl,
+						_0: A2(
+							_debois$elm_mdl$Material_Icon$view,
+							'bubble_chart',
 							{
 								ctor: '::',
-								_0: slotId,
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
 								_1: {ctor: '[]'}
-							},
-							model.mdl,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
-								_1: {
+							}),
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_debois$elm_mdl$Material_Button$render,
+								_user$project$Model$Mdl,
+								{
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Button$fab,
+									_0: slotId,
+									_1: {ctor: '[]'}
+								},
+								model.mdl,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
 									_1: {
 										ctor: '::',
-										_0: _debois$elm_mdl$Material_Button$minifab,
+										_0: _debois$elm_mdl$Material_Button$fab,
 										_1: {
 											ctor: '::',
-											_0: _debois$elm_mdl$Material_Button$raised,
+											_0: _debois$elm_mdl$Material_Button$minifab,
 											_1: {
 												ctor: '::',
-												_0: _debois$elm_mdl$Material_Options$onClick(
-													_user$project$Model$HideTopics(slotId)),
-												_1: {ctor: '[]'}
+												_0: _debois$elm_mdl$Material_Button$raised,
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														_user$project$Model$HideTopics(slotId)),
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Icon$i('close'),
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Icon$i('close'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					}),
 				_1: {
 					ctor: '::',
