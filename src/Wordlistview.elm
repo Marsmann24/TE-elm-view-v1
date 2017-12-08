@@ -4,7 +4,7 @@ import Model exposing (..)
 
 import Html exposing (Html, text)
 import Html.Events
-import Material.Options exposing (css, cs, div, attribute, onClick)
+import Material.Options exposing (css, cs, div, center, onClick)
 import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Icon as Icon
@@ -51,13 +51,35 @@ topic2WordList model word id=
         [ Lists.content
             (if (word == model.currentWord)
                 then
-                    [ Elevation.e2]
+                    [ cs "mdl-button"
+                    , cs "mdl-button--raised"
+                    , center
+                    , Elevation.e2
+                    ]
                 else
-                    [ attribute <| Html.Events.onClick (ShowArticles word)])
-            [ Button.render Mdl [ id ] model.mdl
-                [ Button.ripple
-                , Button.raised
+                    [ cs "mdl-button"
+                    , cs "mdl-button--raised"
+                    , center
+                    ]
+            )
+            [ text word
+            , Icon.view "bubble_chart"
+                [ onClick
+                    (ShowTopics
+                        (List.filter
+                            (wordInTopic word)
+                            model.topics
+                        )
+                    )
                 ]
-                [ text word]
+            , Icon.view "art_track"
+                [ onClick
+                    (ShowArticles
+                        (List.filter
+                            (wordInArticle word)
+                            model.articles
+                        )
+                    )
+                ]
             ]
         ]

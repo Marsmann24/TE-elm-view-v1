@@ -94,7 +94,7 @@ update msg model =
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)
-        ShowArticles word ->
+        ShowArticles articles ->
             let oldSettings = model.settings
                 oldSlots = model.slots
                 articles = model.articles
@@ -102,7 +102,7 @@ update msg model =
             in
             ({ model
                 | settings = { oldSettings | showArticles = True}
-                , slots = slotFromTo oldSlots Empty (ArticlesView (List.filter (contains word) articles))
+                , slots = slotFromTo oldSlots Empty (ArticlesView articles)
                 }
             , Cmd.none)
         HideArticles slotId ->

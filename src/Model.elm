@@ -3,6 +3,7 @@ module Model exposing (..)
 import Material
 import Html exposing (Html)
 import Array exposing (Array)
+import Maybe exposing (Maybe, withDefault)
 
 type Msg
     = Search String
@@ -15,7 +16,7 @@ type Msg
     | HideTopics Int
     | ShowWordList (List String)
     | HideWordList Int
-    | ShowArticles String
+    | ShowArticles (List Article)
     | HideArticles Int
     | ChoseSlotDialog Int
     | UpdateSlot View Int
@@ -50,6 +51,19 @@ type alias Topic =
     , words : List String
     }
 
+wordInTopic : String -> Topic -> Bool
+wordInTopic word topic =
+    List.member word topic.words
+
+topicIDToTopic : List Topic -> Int -> Topic
+topicIDToTopic topics id =
+    withDefault
+        { topicID = id
+        , topicName = "ERROR"
+        , words = []
+        }
+        (List.head (List.filter (\x -> x.topicID == id) topics))
+
 type alias Article =
     { articleID : Int
     , rankedTopics : List Int
@@ -58,6 +72,14 @@ type alias Article =
     , date : String
     , text : String
     }
+
+topicInArticle : Topic -> Article -> Bool
+topicInArticle topic article =
+    List.member topic.topicID article.rankedTopics
+
+wordInArticle : String -> Article -> Bool
+wordInArticle word article =
+    List.member word article.words
 
 type alias Settings =
     { showTopics : Bool

@@ -61,7 +61,21 @@ article2CardView model article cardID =
             ]
             [ Card.head
                 [ Color.text Color.white ]
-                [ text article.title ]
+                [ text article.title
+                , Icon.view "bubble_chart"
+                    [ onClick
+                        (ShowTopics
+                            (List.map
+                                (topicIDToTopic model.topics)
+                                article.rankedTopics
+                            )
+                        )
+                    ]
+                , Icon.view "list"
+                    [ onClick
+                        (ShowWordList article.words)
+                    ]
+                ]
             , span
                 [ Color.text (Color.color Color.Grey Color.S200)
                 , css "padding" "2px"

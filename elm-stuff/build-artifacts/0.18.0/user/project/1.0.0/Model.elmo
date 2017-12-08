@@ -6,6 +6,35 @@ var _user$project$Model$slotChangeTo = F3(
 				main: A3(_elm_lang$core$Array$set, id, value, oldSlots.main)
 			});
 	});
+var _user$project$Model$wordInArticle = F2(
+	function (word, article) {
+		return A2(_elm_lang$core$List$member, word, article.words);
+	});
+var _user$project$Model$topicInArticle = F2(
+	function (topic, article) {
+		return A2(_elm_lang$core$List$member, topic.topicID, article.rankedTopics);
+	});
+var _user$project$Model$topicIDToTopic = F2(
+	function (topics, id) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{
+				topicID: id,
+				topicName: 'ERROR',
+				words: {ctor: '[]'}
+			},
+			_elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (x) {
+						return _elm_lang$core$Native_Utils.eq(x.topicID, id);
+					},
+					topics)));
+	});
+var _user$project$Model$wordInTopic = F2(
+	function (word, topic) {
+		return A2(_elm_lang$core$List$member, word, topic.words);
+	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
 		return function (c) {

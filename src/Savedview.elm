@@ -3,9 +3,9 @@ module Savedview exposing (view)
 import Model exposing (..)
 
 import Html exposing (Html, text)
-import Html.Attributes exposing (style, class)
-import Material.Options exposing (css, div, span, onClick)
+import Material.Options exposing (css, div, span, onClick, center)
 import Material.Color as Color
+import Material.Icon as Icon
 import Material.Elevation as Elevation
 import Material.Chip as Chip
 
@@ -20,36 +20,37 @@ view model flex =
         ]
         (List.append
             [ ]
-            (List.map (currentTopic2Chip model.settings) model.currentTopics))
+            (List.map (currentTopic2Chip model) model.currentTopics))
 
-currentTopic2Chip : Settings -> Topic -> Html Msg
-currentTopic2Chip settings topic =
-    Html.div
-        [ class "mdl-chip"
-        , style
-            [ if settings.bottom
-                then
-                    ("width", "calc(100% - 40px)")
-                else
-                    ("width", "200px")
-            , ("margin", "6px 10px")
-            ]
+currentTopic2Chip : Model -> Topic -> Html Msg
+currentTopic2Chip model topic =
+    Chip.span
+        [ if model.settings.bottom
+            then
+                css "width" "calc(100% - 40px)"
+            else
+                css "width" "200px"
+        , center
         ]
-        [ Chip.button
-            [ css "margin" "0"
-            , css "float" "left"
-            , css "width" "calc(100% - 30px)"
-            , onClick (ShowWordList topic.words)
+        [ Chip.content
+            [ center]
+            [ text topic.topicName
+            , Icon.view "list"
+                [ onClick
+                    (ShowWordList topic.words)
+                ]
+            , Icon.view "art_track"
+                [ onClick
+                    (ShowArticles
+                        (List.filter
+                            (topicInArticle topic)
+                            model.articles
+                        )
+                    )
+                ]
+            , Icon.view "cancel"
+                [ onClick
+                    (RemoveTopic topic.topicID)
+                ]
             ]
-            [ Chip.content []
-                [ text topic.topicName]
-            ]
-        , Chip.button
-            [ css "margin" "0"
-            , css "padding" "0"
-            , css "float" "right"
-            , Chip.deleteIcon "cancel"
-            , Chip.deleteClick (RemoveTopic topic.topicID)
-            ]
-            []
         ]

@@ -15908,6 +15908,35 @@ var _user$project$Model$slotChangeTo = F3(
 				main: A3(_elm_lang$core$Array$set, id, value, oldSlots.main)
 			});
 	});
+var _user$project$Model$wordInArticle = F2(
+	function (word, article) {
+		return A2(_elm_lang$core$List$member, word, article.words);
+	});
+var _user$project$Model$topicInArticle = F2(
+	function (topic, article) {
+		return A2(_elm_lang$core$List$member, topic.topicID, article.rankedTopics);
+	});
+var _user$project$Model$topicIDToTopic = F2(
+	function (topics, id) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{
+				topicID: id,
+				topicName: 'ERROR',
+				words: {ctor: '[]'}
+			},
+			_elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (x) {
+						return _elm_lang$core$Native_Utils.eq(x.topicID, id);
+					},
+					topics)));
+	});
+var _user$project$Model$wordInTopic = F2(
+	function (word, topic) {
+		return A2(_elm_lang$core$List$member, word, topic.words);
+	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
 		return function (c) {
@@ -16205,7 +16234,35 @@ var _user$project$Articlesview$article2CardView = F3(
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html$text(article.title),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Icon$view,
+										'bubble_chart',
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(
+												_user$project$Model$ShowTopics(
+													A2(
+														_elm_lang$core$List$map,
+														_user$project$Model$topicIDToTopic(model.topics),
+														article.rankedTopics))),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Icon$view,
+											'list',
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$ShowWordList(article.words)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -16929,36 +16986,68 @@ var _user$project$Tabsview$view = F2(
 			});
 	});
 
-var _user$project$Topicsview$topic2Chip = function (topic) {
-	return A2(
-		_debois$elm_mdl$Material_Chip$button,
-		{
-			ctor: '::',
-			_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 4px)'),
-			_1: {
+var _user$project$Topicsview$topic2Chip = F2(
+	function (model, topic) {
+		return A2(
+			_debois$elm_mdl$Material_Chip$span,
+			{
 				ctor: '::',
-				_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '6px 2px'),
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 40px)'),
 				_1: {
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Options$onClick(
-						_user$project$Model$ShowWordList(topic.words)),
-					_1: {ctor: '[]'}
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '6px 4px'),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$center,
+						_1: {ctor: '[]'}
+					}
 				}
-			}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_debois$elm_mdl$Material_Chip$content,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(topic.topicName),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		});
-};
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Chip$content,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$center,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(topic.topicName),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Icon$view,
+								'list',
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ShowWordList(topic.words)),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Icon$view,
+									'art_track',
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ShowArticles(
+												A2(
+													_elm_lang$core$List$filter,
+													_user$project$Model$topicInArticle(topic),
+													model.articles))),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
 var _user$project$Topicsview$view = F3(
 	function (model, flex, slotId) {
 		return A2(
@@ -17050,97 +17139,83 @@ var _user$project$Topicsview$view = F3(
 							_0: _debois$elm_mdl$Material_Options$cs('slot__content'),
 							_1: {ctor: '[]'}
 						},
-						A2(_elm_lang$core$List$map, _user$project$Topicsview$topic2Chip, model.topics)),
+						A2(
+							_elm_lang$core$List$map,
+							_user$project$Topicsview$topic2Chip(model),
+							model.topics)),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
 
 var _user$project$Savedview$currentTopic2Chip = F2(
-	function (settings, topic) {
+	function (model, topic) {
 		return A2(
-			_elm_lang$html$Html$div,
+			_debois$elm_mdl$Material_Chip$span,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('mdl-chip'),
+				_0: model.settings.bottom ? A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 40px)') : A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$style(
-						{
-							ctor: '::',
-							_0: settings.bottom ? {ctor: '_Tuple2', _0: 'width', _1: 'calc(100% - 40px)'} : {ctor: '_Tuple2', _0: 'width', _1: '200px'},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'margin', _1: '6px 10px'},
-								_1: {ctor: '[]'}
-							}
-						}),
+					_0: _debois$elm_mdl$Material_Options$center,
 					_1: {ctor: '[]'}
 				}
 			},
 			{
 				ctor: '::',
 				_0: A2(
-					_debois$elm_mdl$Material_Chip$button,
+					_debois$elm_mdl$Material_Chip$content,
 					{
 						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
+						_0: _debois$elm_mdl$Material_Options$center,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(topic.topicName),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'left'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 30px)'),
-								_1: {
+							_0: A2(
+								_debois$elm_mdl$Material_Icon$view,
+								'list',
+								{
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
 										_user$project$Model$ShowWordList(topic.words)),
 									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Icon$view,
+									'art_track',
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ShowArticles(
+												A2(
+													_elm_lang$core$List$filter,
+													_user$project$Model$topicInArticle(topic),
+													model.articles))),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Icon$view,
+										'cancel',
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(
+												_user$project$Model$RemoveTopic(topic.topicID)),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
 								}
 							}
 						}
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Chip$content,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(topic.topicName),
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
 					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Chip$button,
-						{
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Chip$deleteIcon('cancel'),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Chip$deleteClick(
-												_user$project$Model$RemoveTopic(topic.topicID)),
-											_1: {ctor: '[]'}
-										}
-									}
-								}
-							}
-						},
-						{ctor: '[]'}),
-					_1: {ctor: '[]'}
-				}
+				_1: {ctor: '[]'}
 			});
 	});
 var _user$project$Savedview$view = F2(
@@ -17170,7 +17245,7 @@ var _user$project$Savedview$view = F2(
 				{ctor: '[]'},
 				A2(
 					_elm_lang$core$List$map,
-					_user$project$Savedview$currentTopic2Chip(model.settings),
+					_user$project$Savedview$currentTopic2Chip(model),
 					model.currentTopics)));
 	});
 
@@ -17185,41 +17260,69 @@ var _user$project$Wordlistview$topic2WordList = F3(
 					_debois$elm_mdl$Material_List$content,
 					_elm_lang$core$Native_Utils.eq(word, model.currentWord) ? {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e2,
-						_1: {ctor: '[]'}
+						_0: _debois$elm_mdl$Material_Options$cs('mdl-button'),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('mdl-button--raised'),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$center,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Elevation$e2,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
 					} : {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$attribute(
-							_elm_lang$html$Html_Events$onClick(
-								_user$project$Model$ShowArticles(word))),
-						_1: {ctor: '[]'}
+						_0: _debois$elm_mdl$Material_Options$cs('mdl-button'),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('mdl-button--raised'),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$center,
+								_1: {ctor: '[]'}
+							}
+						}
 					},
 					{
 						ctor: '::',
-						_0: A5(
-							_debois$elm_mdl$Material_Button$render,
-							_user$project$Model$Mdl,
-							{
-								ctor: '::',
-								_0: id,
-								_1: {ctor: '[]'}
-							},
-							model.mdl,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Button$ripple,
-								_1: {
+						_0: _elm_lang$html$Html$text(word),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Icon$view,
+								'bubble_chart',
+								{
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Button$raised,
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ShowTopics(
+											A2(
+												_elm_lang$core$List$filter,
+												_user$project$Model$wordInTopic(word),
+												model.topics))),
 									_1: {ctor: '[]'}
-								}
-							},
-							{
+								}),
+							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(word),
+								_0: A2(
+									_debois$elm_mdl$Material_Icon$view,
+									'art_track',
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ShowArticles(
+												A2(
+													_elm_lang$core$List$filter,
+													_user$project$Model$wordInArticle(word),
+													model.articles))),
+										_1: {ctor: '[]'}
+									}),
 								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
+							}
+						}
 					}),
 				_1: {ctor: '[]'}
 			});
@@ -18703,11 +18806,7 @@ var _user$project$TE_elm_v1$update = F2(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$ArticlesView(
-									A2(
-										_elm_lang$core$List$filter,
-										contains(_p0._0),
-										articles)))
+								_user$project$Model$ArticlesView(articles))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};

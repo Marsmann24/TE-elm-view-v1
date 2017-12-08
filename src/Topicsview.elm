@@ -4,7 +4,7 @@ import Model exposing (..)
 
 import Html exposing (Html, text)
 import Html.Attributes exposing (style, class)
-import Material.Options exposing (css, cs, div, span, onClick)
+import Material.Options exposing (css, cs, div, span, onClick, center)
 import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Icon as Icon
@@ -35,16 +35,31 @@ view model flex slotId =
         , div
             [ cs "slot__content"
             ]
-            (List.map topic2Chip model.topics)
+            (List.map (topic2Chip model) model.topics)
         ]
 
-topic2Chip : Topic -> Html Msg
-topic2Chip topic =
-    Chip.button
-        [ css "width" "calc(100% - 4px)"
-        , css "margin" "6px 2px"
-        , onClick (ShowWordList topic.words)
+topic2Chip : Model -> Topic -> Html Msg
+topic2Chip model topic =
+    Chip.span
+        [ css "width" "calc(100% - 40px)"
+        , css "margin" "6px 4px"
+        , center
         ]
-        [ Chip.content []
-            [ text topic.topicName]
+        [ Chip.content
+            [ center]
+            [ text topic.topicName
+            , Icon.view "list"
+                [ onClick
+                    (ShowWordList topic.words)
+                ]
+            , Icon.view "art_track"
+                [ onClick
+                    (ShowArticles
+                        (List.filter
+                            (topicInArticle topic)
+                            model.articles
+                        )
+                    )
+                ]
+            ]
         ]

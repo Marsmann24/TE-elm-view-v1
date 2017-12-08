@@ -9,41 +9,69 @@ var _user$project$Wordlistview$topic2WordList = F3(
 					_debois$elm_mdl$Material_List$content,
 					_elm_lang$core$Native_Utils.eq(word, model.currentWord) ? {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e2,
-						_1: {ctor: '[]'}
+						_0: _debois$elm_mdl$Material_Options$cs('mdl-button'),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('mdl-button--raised'),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$center,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Elevation$e2,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
 					} : {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$attribute(
-							_elm_lang$html$Html_Events$onClick(
-								_user$project$Model$ShowArticles(word))),
-						_1: {ctor: '[]'}
+						_0: _debois$elm_mdl$Material_Options$cs('mdl-button'),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('mdl-button--raised'),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$center,
+								_1: {ctor: '[]'}
+							}
+						}
 					},
 					{
 						ctor: '::',
-						_0: A5(
-							_debois$elm_mdl$Material_Button$render,
-							_user$project$Model$Mdl,
-							{
-								ctor: '::',
-								_0: id,
-								_1: {ctor: '[]'}
-							},
-							model.mdl,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Button$ripple,
-								_1: {
+						_0: _elm_lang$html$Html$text(word),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_Icon$view,
+								'bubble_chart',
+								{
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Button$raised,
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ShowTopics(
+											A2(
+												_elm_lang$core$List$filter,
+												_user$project$Model$wordInTopic(word),
+												model.topics))),
 									_1: {ctor: '[]'}
-								}
-							},
-							{
+								}),
+							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(word),
+								_0: A2(
+									_debois$elm_mdl$Material_Icon$view,
+									'art_track',
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ShowArticles(
+												A2(
+													_elm_lang$core$List$filter,
+													_user$project$Model$wordInArticle(word),
+													model.articles))),
+										_1: {ctor: '[]'}
+									}),
 								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
+							}
+						}
 					}),
 				_1: {ctor: '[]'}
 			});

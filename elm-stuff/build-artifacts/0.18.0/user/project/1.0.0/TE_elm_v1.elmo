@@ -162,11 +162,7 @@ var _user$project$TE_elm_v1$update = F2(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$ArticlesView(
-									A2(
-										_elm_lang$core$List$filter,
-										contains(_p0._0),
-										articles)))
+								_user$project$Model$ArticlesView(articles))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};

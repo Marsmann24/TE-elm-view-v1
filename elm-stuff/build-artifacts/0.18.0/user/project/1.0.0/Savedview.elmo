@@ -1,88 +1,71 @@
 var _user$project$Savedview$currentTopic2Chip = F2(
-	function (settings, topic) {
+	function (model, topic) {
 		return A2(
-			_elm_lang$html$Html$div,
+			_debois$elm_mdl$Material_Chip$span,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('mdl-chip'),
+				_0: model.settings.bottom ? A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 40px)') : A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$style(
-						{
-							ctor: '::',
-							_0: settings.bottom ? {ctor: '_Tuple2', _0: 'width', _1: 'calc(100% - 40px)'} : {ctor: '_Tuple2', _0: 'width', _1: '200px'},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'margin', _1: '6px 10px'},
-								_1: {ctor: '[]'}
-							}
-						}),
+					_0: _debois$elm_mdl$Material_Options$center,
 					_1: {ctor: '[]'}
 				}
 			},
 			{
 				ctor: '::',
 				_0: A2(
-					_debois$elm_mdl$Material_Chip$button,
+					_debois$elm_mdl$Material_Chip$content,
 					{
 						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
+						_0: _debois$elm_mdl$Material_Options$center,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(topic.topicName),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'left'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 30px)'),
-								_1: {
+							_0: A2(
+								_debois$elm_mdl$Material_Icon$view,
+								'list',
+								{
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
 										_user$project$Model$ShowWordList(topic.words)),
 									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Icon$view,
+									'art_track',
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ShowArticles(
+												A2(
+													_elm_lang$core$List$filter,
+													_user$project$Model$topicInArticle(topic),
+													model.articles))),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_Icon$view,
+										'cancel',
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(
+												_user$project$Model$RemoveTopic(topic.topicID)),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
 								}
 							}
 						}
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Chip$content,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(topic.topicName),
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
 					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Chip$button,
-						{
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Chip$deleteIcon('cancel'),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Chip$deleteClick(
-												_user$project$Model$RemoveTopic(topic.topicID)),
-											_1: {ctor: '[]'}
-										}
-									}
-								}
-							}
-						},
-						{ctor: '[]'}),
-					_1: {ctor: '[]'}
-				}
+				_1: {ctor: '[]'}
 			});
 	});
 var _user$project$Savedview$view = F2(
@@ -112,6 +95,6 @@ var _user$project$Savedview$view = F2(
 				{ctor: '[]'},
 				A2(
 					_elm_lang$core$List$map,
-					_user$project$Savedview$currentTopic2Chip(model.settings),
+					_user$project$Savedview$currentTopic2Chip(model),
 					model.currentTopics)));
 	});
