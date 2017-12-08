@@ -16085,12 +16085,10 @@ var _user$project$Model$slotGetFirstId = F2(
 	});
 var _user$project$Model$slotGet = F2(
 	function (slots, slotId) {
-		var _p1 = A2(_elm_lang$core$Array$get, slotId, slots.main);
-		if (_p1.ctor === 'Just') {
-			return _p1._0;
-		} else {
-			return _user$project$Model$ErrorSlot;
-		}
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			_user$project$Model$ErrorSlot,
+			A2(_elm_lang$core$Array$get, slotId, slots.main));
 	});
 var _user$project$Model$slotFromTo = F3(
 	function (slots, from, to) {
@@ -16122,22 +16120,14 @@ var _user$project$Model$slotRemove = F2(
 	function (slots, id) {
 		slotRemove:
 		while (true) {
-			var moreTail = function () {
-				var _p2 = _elm_lang$core$List$tail(slots.more);
-				if (_p2.ctor === 'Just') {
-					return _p2._0;
-				} else {
-					return {ctor: '[]'};
-				}
-			}();
-			var moreHead = function () {
-				var _p3 = _elm_lang$core$List$head(slots.more);
-				if (_p3.ctor === 'Just') {
-					return _p3._0;
-				} else {
-					return _user$project$Model$Empty;
-				}
-			}();
+			var moreTail = A2(
+				_elm_lang$core$Maybe$withDefault,
+				{ctor: '[]'},
+				_elm_lang$core$List$tail(slots.more));
+			var moreHead = A2(
+				_elm_lang$core$Maybe$withDefault,
+				_user$project$Model$Empty,
+				_elm_lang$core$List$head(slots.more));
 			var nextId = _elm_lang$core$Native_Utils.eq(moreHead, _user$project$Model$Empty) ? (id + 1) : (id - 1);
 			var nextSlot = A2(_user$project$Model$slotGet, slots, nextId);
 			if (_elm_lang$core$Native_Utils.eq(nextSlot, _user$project$Model$ErrorSlot)) {
@@ -16149,10 +16139,10 @@ var _user$project$Model$slotRemove = F2(
 					id,
 					moreHead);
 			} else {
-				var _v7 = A3(_user$project$Model$slotChangeTo, slots, id, nextSlot),
-					_v8 = nextId;
-				slots = _v7;
-				id = _v8;
+				var _v4 = A3(_user$project$Model$slotChangeTo, slots, id, nextSlot),
+					_v5 = nextId;
+				slots = _v4;
+				id = _v5;
 				continue slotRemove;
 			}
 		}

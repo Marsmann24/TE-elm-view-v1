@@ -153,11 +153,7 @@ slotGetFirstIdSince slots view id =
 
 slotGet : Slots -> Int -> View
 slotGet slots slotId =
-    case (Array.get slotId slots.main) of
-        Just a ->
-            a
-        Nothing ->
-            ErrorSlot
+    withDefault ErrorSlot (Array.get slotId slots.main)
 
 slotChangeTo : Slots -> Int -> View -> Slots
 slotChangeTo oldSlots id value =
@@ -166,17 +162,9 @@ slotChangeTo oldSlots id value =
 slotRemove : Slots -> Int -> Slots
 slotRemove slots id =
     let moreHead =
-            case (List.head slots.more) of
-                Just a ->
-                    a
-                Nothing ->
-                    Empty
+            withDefault Empty (List.head slots.more)
         moreTail =
-            case (List.tail slots.more) of
-                Just a ->
-                    a
-                Nothing ->
-                    []
+            withDefault [] (List.tail slots.more)
         nextId =
             if (moreHead == Empty)
             then id + 1
