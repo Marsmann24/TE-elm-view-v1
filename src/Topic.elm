@@ -109,10 +109,10 @@ decodeTopics =
     let convert : Value -> Result Topic
         convert value =
             succeed
-                { topic : List Topic
-                , topic_sorting : List Int
-                , terms : List Term
-                , topicBestItemLimit : Int
+                { topic = []
+                , topic_sorting = []
+                , terms = []
+                , topicBestItemLimit = 0
                 }
                 |> decodeField "Topic" (pseudolist decodeTopic) setTopics value
                 |> decodeField "TOPIC_SORTING" (list int) setSorting value
