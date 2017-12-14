@@ -60,6 +60,23 @@ Command=getBestTerms Command=getBestFrames
 Command=getTerms
     &TopicId=1
     &offset=30
+{ Topic :
+    { <id> :
+        { Top_Terms :
+            List
+                { TermId : Int
+                , relevance : Int
+                }
+        }
+    }
+, Term :
+    { ? :
+        { TERM_ID : Int
+        , TERM_NAME : String
+        , WORDTYPE$WORDTYPE : Int
+        }
+    }
+}
 
 Command=getDoc
     &DocId=362725
@@ -92,7 +109,7 @@ Command=getTopics
         , color_topic$color : String
         , top_terms :
             List
-                { termid : Int
+                { TermId : Int
                 , relevance : Int
                 }
         }
