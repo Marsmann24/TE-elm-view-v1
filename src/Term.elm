@@ -1,6 +1,6 @@
 module Term exposing (..)
 
-import Json.Decode exposing (Decoder, string, int, list, map, map2, map3, field, keyValuePairs)
+import Json.Decode exposing (Decoder, string, int, list, map, map2, map4, field, keyValuePairs, succeede)
 import Dict
 import Tuple
 
@@ -8,32 +8,41 @@ type alias Term =
     { id : Int
     , name : String
     , wordtype : Maybe Int
+    , count : Maybe Int
     }
 
 type alias TermSorting =
     List { id : Int, relevance : Int}
 
-type alias GetTermsResult =
+type alias TermsResult =
     { topic : (Int, TermSorting)
     , terms : Dict Int Term
     }
 
 -- decoder
-intDictDecoder : Decoder a -> Decoder (Dict Int a)
-intDictDecoder decoder =
+intDictDecoder : Decoder a -> a -> Decoder (Dict Int a)
+intDictDecoder decoder default=
+    let makeInt (key, value) =
+            case (toInt key) of
+                OK result ->
+                    (result, value)
+                _ ->
+                    (-1, default)
+    in
     map
         Dict.fromList
         (map
-            (List.map (Tuple.mapFirst toInt))
+            (List.map makeInt)
             (keyValuePairs decoder)
         )
 
 termDecoder : Decoder Term
 termDecoder =
-    map3 Term
+    map4 Term
         (field "TERM_ID" int)
         (field "TERM_NAME" string)
         (maybe (field "WORDTYPE$WORDTYPE" int))
+        (succeede Nothing)
 
 termSortingDecoder : Decoder TermSorting
 termSortingDecoder =
@@ -43,8 +52,8 @@ termSortingDecoder =
             (field "relevance" int)
         )
 
-getTermsDecoder : Decoder GetTermsResult
-getTermsDecoder =
+termsDecoder : Decoder TermsResult
+termsDecoder =
     map2 GetTermsResult
         (field "Topic"
             (map
@@ -55,4 +64,24 @@ getTermsDecoder =
                 )
             )
         )
-        (field "Term" (intDictDecoder termDecoder))
+        (field "Term" (intDictDecoder termDecoder (Term -1 "" Nothing Nothing))
+
+bestTermsDecoder : Decoder
+bestTermsDecoder =
+    pseudolist
+        (field "ITEMS"
+            (keyValuePairs
+                (map2 (/x y->{ sorting = x, items = y})
+                    (field "SORTING" (list int))
+                    (intDictDecoder
+                        (map4 Term
+                                (field "ITEM_ID" int)
+                                (field "ITEM_NAME" string)
+                                (succeede Nothing)
+                                (maybe (field "ITEM_COUNT" int))
+                        )
+                        (Term -1 "" Nothing Nothing)
+                    )
+                )
+            )
+        )

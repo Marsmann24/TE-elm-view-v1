@@ -6,22 +6,22 @@ Command=bestDocs
     &TopicId=1
     &term=Jahrhundert
     &sorting=RELEVANCE
-    { document :
-        { ? (document_ids) :
-            { document_id : Int
-            , topic_id : Int
-            , document_count : Int
-            , keyword_snippet : String
-            , keyword_title : String
-            , top_topic : List Int
-            , link$url : String
-            , text$time_stamp : Int
-            , text$title : String
-            , text$snipet : String
-            }
+{ document :
+    { ? (document_ids) :
+        { document_id : Int
+        , topic_id : Int
+        , document_count : Int
+        , keyword_snippet : String
+        , keyword_title : String
+        , top_topic : List Int
+        , link$url : String
+        , text$time_stamp : Int
+        , text$title : String
+        , text$snipet : String
         }
-    , document_sorting : List Int
     }
+, document_sorting : List Int
+}
 
 Command=bestDocs
     &TopicId=27

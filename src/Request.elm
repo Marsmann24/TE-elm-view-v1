@@ -1,6 +1,8 @@
 module Request exposing (..)
 
 import Topic
+import Term
+import Document
 
 import Http
 import Json.Decode exposing (Decoder)
@@ -8,12 +10,12 @@ import Json.Decode exposing (Decoder)
 baseURL : String
 baseURL = "http://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command="
 
-loadData : Command -> Cmd Msg
-loadData command =
-    let url = baseURL ++ (toString command)
+loadData : Msg -> Command -> String -> Cmd Msg
+loadData command arguments =
+    let url = baseURL ++ (toString command) ++ arguments
         request = Http.get url (getDecoder command)
     in
-    Http.send JsonLoaded request
+    Http.send msg request
 
 type Command
     = GetTopics
@@ -29,17 +31,12 @@ getDecoder command =
         GetTopics ->
             Topic.decodeTopics
         GetDoc ->
-            getDocDecoder
+            Document.documentDecoder
         GetBestDocs ->
-            getBestDocsDecoder
-        GetBestTerms ->
-            getBestTermsDecoder
+            Document.bestDocsDecoder
         GetTerms ->
-            getTermsDecoder
+            Term.termsDecoder
+        GetBestTerms ->
+            Term.bestTermsDecoder
         GetBestFrames ->
-            getBestFramesDecoder
-
-getDocDecoder : Decoder a
-getBestDocsDecoder : Decoder a
-getBestTermsDecoder : Decoder a
-getBestFramesDecoder : Decoder a
+            Term.bestTermsDecoder
