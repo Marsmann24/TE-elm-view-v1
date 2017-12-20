@@ -1,5 +1,9 @@
 module Model exposing (..)
 
+import Term exposing (..)
+import Topic exposing (..)
+import Document exposing (..)
+
 import Material
 import Html exposing (Html)
 import Array exposing (Array)
@@ -45,11 +49,11 @@ type alias Model =
     , mdl : Material.Model
     }
 
-type alias Topic =
-    { topicID : Int
-    , topicName : String
-    , words : List String
-    }
+--type alias Topic =
+--    { topicID : Int
+--    , topicName : String
+--    , words : List String
+--    }
 
 wordInTopic : String -> Topic -> Bool
 wordInTopic word topic =

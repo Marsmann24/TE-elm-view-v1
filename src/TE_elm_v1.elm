@@ -81,7 +81,7 @@ update msg model =
             in
             ({ model
                 | settings = { oldSettings | showWordlist = True}
-                , wordList = words
+        --        , wordList = words
                 , slots = slotFromTo oldSlots Empty (WordlistView words)
                 }
             , Cmd.none)

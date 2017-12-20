@@ -19,10 +19,16 @@ type alias TermsResult =
     , terms : Dict Int Term
     }
 
--- decoder
+-- Mapper and Checker
+termId2Term : List Term -> Int -> Maybe Term
+termId2Term terms termId =
+    (List.head (List.filter (\x -> x.id == termId) terms))
+
+-- Decoders
 intDictDecoder : Decoder a -> a -> Decoder (Dict Int a)
 intDictDecoder decoder default=
-    let makeInt (key, value) =
+    let makeInt : (String, b) -> (Int, b)
+        makeInt (key, value) =
             case (toInt key) of
                 OK result ->
                     (result, value)

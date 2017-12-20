@@ -25,7 +25,16 @@ type alias TopicResult =
     , topicsBestItemLimit : Int
     }
 
--- decoder
+-- Mapper and Checker
+termInTopic : Term -> Topic -> Bool
+termInTopic term topic =
+    List.member term.id (List.map (\x -> x.id) topic.top_terms)
+
+topicId2Topic : List Topic -> Int -> Maybe Topic
+topicId2Topic topics topicId =
+    (List.head (List.filter (\x -> x.id == topicId) topics))
+
+-- Decoders
 pseudolist : Decoder a -> Decoder (List a)
 pseudolist decoder =
     map Tupple.second (keyValuePairs decoder)
