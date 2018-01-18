@@ -1,0 +1,145 @@
+var _user$project$Document$docId2Doc = F2(
+	function (docs, docId) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (x) {
+					return _elm_lang$core$Native_Utils.eq(x.document_id, docId);
+				},
+				docs));
+	});
+var _user$project$Document$documentId2Document = F2(
+	function (documents, documentId) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (x) {
+					return _elm_lang$core$Native_Utils.eq(x.id, documentId);
+				},
+				documents));
+	});
+var _user$project$Document$topicInDoc = F2(
+	function (topic, doc) {
+		return _elm_lang$core$Native_Utils.eq(topic.id, doc.topic_id) ? true : false;
+	});
+var _user$project$Document$termInDocument = F2(
+	function (term, document) {
+		return A2(
+			_elm_lang$core$List$member,
+			term.name,
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.term;
+				},
+				document.word_list));
+	});
+var _user$project$Document$docInTopic = F2(
+	function (doc, topic) {
+		return _elm_lang$core$Native_Utils.eq(doc.topic_id, topic.id) ? true : A2(_elm_lang$core$List$member, topic.id, doc.top_topic);
+	});
+var _user$project$Document$Document = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {id: a, linkurl: b, time_stamp: c, title: d, fulltext: e, search_test: f, frame_list: g, word_list: h};
+	});
+var _user$project$Document$Token = F4(
+	function (a, b, c, d) {
+		return {topic_id: a, posintion_in_document: b, term: c, parent_topic_ids: d};
+	});
+var _user$project$Document$tokenDecoder = A5(
+	_elm_lang$core$Json_Decode$map4,
+	_user$project$Document$Token,
+	A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'POSITION_OF_TOKEN_IN_DOCUMENT', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TOKEN', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'HIRARCHICAL_TOPIC$PARENT_IDS',
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)));
+var _user$project$Document$documentDecoder = A2(
+	_elm_lang$core$Json_Decode$field,
+	'DOCUMENT',
+	A9(
+		_elm_lang$core$Json_Decode$map8,
+		_user$project$Document$Document,
+		A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode$field, 'TEXT$FULLTEXT', _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode$field, 'SEARCH_TEXT', _elm_lang$core$Json_Decode$string),
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'FRAME_LIST',
+			A2(
+				_user$project$Decoderhelper$listheadwithdefault,
+				{ctor: '[]'},
+				_user$project$Decoderhelper$pseudolist(
+					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)))),
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'WORD_LIST',
+			_elm_lang$core$Json_Decode$list(_user$project$Document$tokenDecoder))));
+var _user$project$Document$Doc = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return {document_id: a, topic_id: b, document_count: c, keyword_snipet: d, keyword_title: e, top_topic: f, linkurl: g, time_stamp: h, title: i, snipet: j};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _user$project$Document$bestDocsDecoder = function () {
+	var getDoc = F2(
+		function (docs, docId) {
+			return _elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (a) {
+						return _elm_lang$core$Native_Utils.eq(a.document_id, docId);
+					},
+					docs));
+		});
+	var applySorting = F2(
+		function (docs, order) {
+			return A2(
+				_elm_lang$core$List$filterMap,
+				getDoc(docs),
+				order);
+		});
+	var sorting = A2(
+		_elm_lang$core$Json_Decode$field,
+		'DOCUMENT_SORTING',
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int));
+	var documents = A2(
+		_elm_lang$core$Json_Decode$field,
+		'DOCUMENT',
+		_user$project$Decoderhelper$pseudolist(
+			_user$project$Decoderhelper$map10(_user$project$Document$Doc)(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_COUNT', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_SNIPET', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_TITLE', _elm_lang$core$Json_Decode$string))(
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'TOP_TOPIC',
+					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)))(
+				A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TIME_STAMP', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$SNIPET', _elm_lang$core$Json_Decode$string))));
+	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
+}();

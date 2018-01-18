@@ -1,8 +1,8 @@
 module Term exposing (..)
 
-import Json.Decode exposing (Decoder, string, int, list, map, map2, map4, field, keyValuePairs, succeede)
-import Dict
-import Tuple
+import Json.Decode exposing (Decoder, string, int, list, map, map2, map4, field, keyValuePairs, succeed, maybe)
+import Decoderhelper exposing (..)
+import Dict exposing (Dict)
 
 type alias Term =
     { id : Int
@@ -25,68 +25,62 @@ termId2Term terms termId =
     (List.head (List.filter (\x -> x.id == termId) terms))
 
 -- Decoders
-intDictDecoder : Decoder a -> a -> Decoder (Dict Int a)
-intDictDecoder decoder default=
-    let makeInt : (String, b) -> (Int, b)
-        makeInt (key, value) =
-            case (toInt key) of
-                OK result ->
-                    (result, value)
-                _ ->
-                    (-1, default)
-    in
-    map
-        Dict.fromList
-        (map
-            (List.map makeInt)
-            (keyValuePairs decoder)
-        )
-
 termDecoder : Decoder Term
 termDecoder =
     map4 Term
         (field "TERM_ID" int)
         (field "TERM_NAME" string)
         (maybe (field "WORDTYPE$WORDTYPE" int))
-        (succeede Nothing)
+        (succeed Nothing)
 
 termSortingDecoder : Decoder TermSorting
 termSortingDecoder =
     list
-        (map2 TermSorting
+        (map2 (\x y -> {id = x, relevance = y})
             (field "TermId" int)
             (field "relevance" int)
         )
 
 termsDecoder : Decoder TermsResult
 termsDecoder =
-    map2 GetTermsResult
+    map2 TermsResult
         (field "Topic"
             (map
-                (Tuple.mapFirst toInt)
-                (map
-                    (Maybe.withDefault (0, {id = 0, relevance = 0}) List.head)
+                (Tuple.mapFirst (\x -> Result.withDefault -1 (String.toInt x)))
+                (listheadwithdefault
+                    ("0", [{id = 0, relevance = 0}])
                     (keyValuePairs (field "Top_Terms" termSortingDecoder))
                 )
             )
         )
-        (field "Term" (intDictDecoder termDecoder (Term -1 "" Nothing Nothing))
+        (field "Term" (intDictDecoder (Term -1 "" Nothing Nothing) termDecoder))
 
-bestTermsDecoder : Decoder
+matchTermsById : { items : Dict Int Term, sorting : List Int} -> List Term
+matchTermsById termsorting =
+    List.map
+        (\x -> Maybe.withDefault (Term -1 "Error: Not matching." Nothing Nothing) (Dict.get x termsorting.items))
+        termsorting.sorting
+
+bestTermsDecoder : Decoder (List Term)
 bestTermsDecoder =
-    pseudolist
-        (field "ITEMS"
-            (keyValuePairs
-                (map2 (/x y->{ sorting = x, items = y})
-                    (field "SORTING" (list int))
-                    (intDictDecoder
-                        (map4 Term
-                                (field "ITEM_ID" int)
-                                (field "ITEM_NAME" string)
-                                (succeede Nothing)
-                                (maybe (field "ITEM_COUNT" int))
+    --pseudolist
+    map matchTermsById
+        (field "61"
+            (listheadwithdefault { sorting = [], items = Dict.empty}
+                (field "ITEMS"
+                    (pseudolist
+                        (map2 (\x y->{ sorting = x, items = y})
+                            (field "SORTING" (list int))
+                            (intDictDecoder
+                                (Term -1 "" Nothing Nothing)
+                                (map4 Term
+                                        (field "ITEM_ID" int)
+                                        (field "ITEM_NAME" string)
+                                        (succeed Nothing)
+                                        (maybe (field "ITEM_COUNT" int))
+                                )
+                            )
                         )
-                        (Term -1 "" Nothing Nothing)
                     )
                 )
             )

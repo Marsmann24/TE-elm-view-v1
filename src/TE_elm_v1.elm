@@ -19,11 +19,11 @@ main =
         }
 
 view model =
-    if model.settings.view2
-        then
+    --if model.settings.view2
+    --    then
             Mainview_v2.view model
-        else
-            Mainview_v1.view model
+    --    else
+    --        Mainview_v1.view model
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -32,12 +32,12 @@ update msg model =
             ({ model | currentTab = tabNumber}, Cmd.none)
         Raise cardNumber ->
             ({ model | raised = cardNumber}, Cmd.none)
-        ChangeCurrentArticle cardNumber newArticle->
-            let newCurrentArticle = { cardID = cardNumber, article = newArticle}
-            in
-            ({ model | currentArticle = newCurrentArticle}, Cmd.none)
+        --ChangeCurrentDocument cardNumber newDocument->
+        --    let newCurrentDocument = { cardID = cardNumber, document = newDocument}
+        --    in
+        --    ({ model | currentDocument = newCurrentDocument}, Cmd.none)
         RemoveTopic topicID ->
-            let newCurrentTopis = List.filter (\x -> x.topicID /= topicID) model.currentTopics
+            let newCurrentTopis = List.filter (\x -> x.id /= topicID) model.currentTopics
             in
             ({ model | currentTopics = newCurrentTopis}, Cmd.none)
         Search term ->
@@ -75,42 +75,42 @@ update msg model =
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)
-        ShowWordList words ->
+        ShowTerms terms ->
             let oldSettings = model.settings
                 oldSlots = model.slots
             in
             ({ model
-                | settings = { oldSettings | showWordlist = True}
-        --        , wordList = words
-                , slots = slotFromTo oldSlots Empty (WordlistView words)
+                | settings = { oldSettings | showTerms = True}
+        --        , termList = terms
+                , slots = slotFromTo oldSlots Empty (TermsView terms)
                 }
             , Cmd.none)
-        HideWordList slotId ->
+        HideTerms slotId ->
             let oldSettings = model.settings
                 oldSlots = model.slots
             in
             ({ model
-                | settings = { oldSettings | showWordlist = False}
+                | settings = { oldSettings | showTerms = False}
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)
-        ShowArticles articles ->
+        ShowDocuments documents ->
             let oldSettings = model.settings
                 oldSlots = model.slots
-                articles = model.articles
-                contains word article = List.member word article.words
+                docs = model.docs
+                contains term document = List.member term document.terms
             in
             ({ model
-                | settings = { oldSettings | showArticles = True}
-                , slots = slotFromTo oldSlots Empty (ArticlesView articles)
+                | settings = { oldSettings | showDocuments = True}
+                , slots = slotFromTo oldSlots Empty (DocumentsView docs)
                 }
             , Cmd.none)
-        HideArticles slotId ->
+        HideDocuments slotId ->
             let oldSettings = model.settings
                 oldSlots = model.slots
             in
             ({ model
-                | settings = { oldSettings | showArticles = False}
+                | settings = { oldSettings | showDocuments = False}
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)

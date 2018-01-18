@@ -7,7 +7,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 			_0: function () {
 				var _p0 = result;
 				switch (_p0.ctor) {
-					case 'Wordresult':
+					case 'Termresult':
 						var _p1 = _p0._0;
 						return A2(
 							_debois$elm_mdl$Material_List$content,
@@ -15,7 +15,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
 									_user$project$Model$Found(
-										_user$project$Model$WordlistView(
+										_user$project$Model$TermsView(
 											{
 												ctor: '::',
 												_0: _p1,
@@ -31,7 +31,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 									{ctor: '[]'}),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(_p1),
+									_0: _elm_lang$html$Html$text(_p1.name),
 									_1: {ctor: '[]'}
 								}
 							});
@@ -59,7 +59,8 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 									{ctor: '[]'}),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(_p2.topicName),
+									_0: _elm_lang$html$Html$text(
+										_elm_lang$core$Basics$toString(_p2.id)),
 									_1: {ctor: '[]'}
 								}
 							});
@@ -71,7 +72,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
 									_user$project$Model$Found(
-										_user$project$Model$ArticlesView(
+										_user$project$Model$DocumentsView(
 											{
 												ctor: '::',
 												_0: _p3,

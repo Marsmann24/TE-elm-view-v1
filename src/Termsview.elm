@@ -1,6 +1,9 @@
-module Wordlistview exposing (view)
+module Termsview exposing (view)
 
 import Model exposing (..)
+import Term exposing (..)
+import Document
+import Topic
 
 import Html exposing (Html, text)
 import Html.Events
@@ -29,27 +32,27 @@ view model flex slotId =
                 , Button.minifab
                 , Button.raised
                 , Button.ripple
-                , onClick (HideWordList slotId)
+                , onClick (HideTerms slotId)
                 ]
                 [ Icon.i "close" ]
             ]
         , Lists.ul
             [ cs "slot__content"
             ]
-            (List.map2 (topic2WordList model)
-                model.wordList
-                (List.map (\x -> x+10*slotId)
-                    (List.range 1 (List.length model.wordList))
+            (List.map2 (topic2Terms model)
+                model.terms
+                (List.map (\x -> x + 10 * slotId)
+                    (List.range 1 (List.length model.terms))
                 )
             )
         ]
 
-topic2WordList : Model -> String -> Int -> Html Msg
-topic2WordList model word id=
+topic2Terms : Model -> Term -> Int -> Html Msg
+topic2Terms model term id=
     Lists.li
         []
         [ Lists.content
-            (if (word == model.currentWord)
+            (if (term.id == model.currentTerm.id)
                 then
                     [ cs "mdl-button"
                     , cs "mdl-button--raised"
@@ -62,24 +65,24 @@ topic2WordList model word id=
                     , center
                     ]
             )
-            [ text word
+            [ text (term.name ++ " (" ++ (toString term.id) ++ ")")
             , Icon.view "bubble_chart"
                 [ onClick
+                    --(Request GetBestDocs "")
                     (ShowTopics
                         (List.filter
-                            (wordInTopic word)
+                            (Topic.termInTopic term)
                             model.topics
-                        )
-                    )
+                        ))
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ShowArticles
-                        (List.filter
-                            (wordInArticle word)
-                            model.articles
-                        )
-                    )
+                    (Request GetBestDocs "")
+                    --(ShowDocuments
+                    --    (List.filter
+                    --        (Document.termInDocument term)
+                    --        model.docs
+                    --    ))
                 ]
             ]
         ]

@@ -21,20 +21,11 @@ var _user$project$TE_elm_v1$update = F2(
 						{raised: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ChangeCurrentArticle':
-				var newCurrentArticle = {cardID: _p0._0, article: _p0._1};
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{currentArticle: newCurrentArticle}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
 			case 'RemoveTopic':
 				var newCurrentTopis = A2(
 					_elm_lang$core$List$filter,
 					function (x) {
-						return !_elm_lang$core$Native_Utils.eq(x.topicID, _p0._0);
+						return !_elm_lang$core$Native_Utils.eq(x.id, _p0._0);
 					},
 					model.currentTopics);
 				return {
@@ -106,8 +97,7 @@ var _user$project$TE_elm_v1$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ShowWordList':
-				var _p1 = _p0._0;
+			case 'ShowTerms':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -117,17 +107,16 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showWordlist: true}),
-							wordList: _p1,
+								{showTerms: true}),
 							slots: A3(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$WordlistView(_p1))
+								_user$project$Model$TermsView(_p0._0))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'HideWordList':
+			case 'HideTerms':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -137,17 +126,17 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showWordlist: false}),
+								{showTerms: false}),
 							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ShowArticles':
+			case 'ShowDocuments':
 				var contains = F2(
-					function (word, article) {
-						return A2(_elm_lang$core$List$member, word, article.words);
+					function (term, document) {
+						return A2(_elm_lang$core$List$member, term, document.terms);
 					});
-				var articles = model.articles;
+				var docs = model.docs;
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -157,16 +146,16 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showArticles: true}),
+								{showDocuments: true}),
 							slots: A3(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$ArticlesView(articles))
+								_user$project$Model$DocumentsView(docs))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'HideArticles':
+			case 'HideDocuments':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -176,7 +165,7 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showArticles: false}),
+								{showDocuments: false}),
 							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
@@ -253,7 +242,7 @@ var _user$project$TE_elm_v1$update = F2(
 		}
 	});
 var _user$project$TE_elm_v1$view = function (model) {
-	return model.settings.view2 ? _user$project$Mainview_v2$view(model) : _user$project$Mainview_v1$view(model);
+	return _user$project$Mainview_v2$view(model);
 };
 var _user$project$TE_elm_v1$main = _elm_lang$html$Html$program(
 	{init: _user$project$Init$init, update: _user$project$TE_elm_v1$update, view: _user$project$TE_elm_v1$view, subscriptions: _user$project$TE_elm_v1$subscriptions})();

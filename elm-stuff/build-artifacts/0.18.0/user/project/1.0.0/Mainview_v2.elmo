@@ -125,20 +125,20 @@ var _user$project$Mainview_v2$slot = F3(
 						{topics: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
-			case 'WordlistView':
+			case 'TermsView':
 				return A3(
-					_user$project$Wordlistview$view,
+					_user$project$Termsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{wordList: _p1._0}),
+						{terms: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
-			case 'ArticlesView':
+			case 'DocumentsView':
 				return A3(
-					_user$project$Articlesview$view,
+					_user$project$Documentsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{articles: _p1._0}),
+						{docs: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'Dialog':
@@ -180,15 +180,15 @@ var _user$project$Mainview_v2$slot = F3(
 							ctor: '::',
 							_0: A3(
 								_user$project$Mainview_v2$slotDialogCard,
-								'Wordlist',
-								_user$project$Model$WordlistView(model.wordList),
+								'Terms',
+								_user$project$Model$TermsView(model.terms),
 								slotId),
 							_1: {
 								ctor: '::',
 								_0: A3(
 									_user$project$Mainview_v2$slotDialogCard,
-									'Articles',
-									_user$project$Model$ArticlesView(model.articles),
+									'Documents',
+									_user$project$Model$DocumentsView(model.docs),
 									slotId),
 								_1: {ctor: '[]'}
 							}

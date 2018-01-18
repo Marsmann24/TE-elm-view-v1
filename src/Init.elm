@@ -1,7 +1,11 @@
 module Init exposing (init)
 
-import Material
 import Model exposing (..)
+import Term exposing (Term)
+import Topic exposing (Topic)
+import Document exposing (Document, Doc)
+
+import Material
 import Array
 
 init : (Model, Cmd Msg)
@@ -12,16 +16,16 @@ init =
         [ initTopic 0
         , initTopic 5
         ]
-    , articles =
-        [ initArticle 0
-        , initArticle 1
+    , docs =
+        [ initDoc 0
+        , initDoc 1
         ]
-    , currentArticle =
+    , currentDocument =
         { cardID = 0
-        , article = initArticle 0
+        , document = initDocument 0
         }
-    , wordList = []
-    , currentWord = ""
+    , terms = []
+    , currentTerm = initTerm 0
     , tabs = initTabs
     , currentTab = 0
     , raised = -1
@@ -40,11 +44,11 @@ init =
 
 initResult : List Searchresult
 initResult =
-    [ Wordresult "test"
-    , Wordresult "time"
-    , Wordresult "Stuff"
-    , Articleresult (initArticle 0)
-    , Articleresult (initArticle 1)
+    [ Termresult (initTerm 0)
+    , Termresult (initTerm 1)
+    , Termresult (initTerm 2)
+    , Documentresult (initDoc 0)
+    , Documentresult (initDoc 1)
     , Topicresult (initTopic 0)
     , Topicresult (initTopic 1)
     ]
@@ -52,8 +56,8 @@ initResult =
 initSettings : Settings
 initSettings =
     { showTopics = True
-    , showArticles = True
-    , showWordlist = False
+    , showDocuments = True
+    , showTerms = False
     , showSaved = True
     , bottom = False
     , view2 = True
@@ -64,57 +68,67 @@ initSettings =
 initTabs : List Tab
 initTabs =
     [ PreviewTab
-    , ArticleTab  "Article 0" (initArticle 1)
+    , DocumentTab  "Document 0" (initDocument 1)
     ]
 
-initArticle : Int -> Article
-initArticle id =
+initDocument : Int -> Document
+initDocument id =
     case id of
-        0 ->
-            { articleID = 0
-            , rankedTopics = [0, 1, 2]
-            , words = ["Some", "Any", "Stuff"]
-            , title = "Hallo"
-            , date = "11.11.2011"
-            , text = "Dieser Artikel ist der, der gerade an der Seite ausgewählt ist."
-            }
-        1 ->
-            { articleID = 1
-            , rankedTopics = [0, 1, 2]
-            , words = ["two", "time", "Item"]
-            , title = "Article 0"
-            , date = "13.07.1999"
-            , text = "Hallo, ich habe hier nur einen Dummytext."
-            }
         _ ->
-            {articleID = id
-            , rankedTopics = []
-            , words = ["test"]
-            , title = "0"
-            , date = "0.0.0"
-            , text = ""
+            { id = id
+            , linkurl = "http://example.com/Docunment"
+            , time_stamp = 0
+            , title = "document"
+            , fulltext = "This is a test document. Further content is not available."
+            , search_test = "whatever"
+            , frame_list = []
+            , word_list =
+                [
+                { topic_id = 0
+                , posintion_in_document = 0
+                , term = "term"
+                , parent_topic_ids = []
+                }
+                ]
+            }
+
+initDoc : Int -> Doc
+initDoc id =
+    case id of
+        _ ->
+            { document_id = id
+            , topic_id = 0
+            , document_count = 0
+            , keyword_snipet = "key snipet"
+            , keyword_title = "key title"
+            , top_topic = [0]
+            , linkurl = "http://example.com/Docunment"
+            , time_stamp = 0
+            , title = "title"
+            , snipet = "snipet"
             }
 
 initTopic : Int -> Topic
 initTopic id =
     case id of
-        0 ->
-            { topicID = id
-            , topicName = "Stuff"
-            , words = [ "Stuff", "Things", "Items", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
-            }
-        1 ->
-            { topicID = id
-            , topicName = "Other"
-            , words = [ "Some", "Any", "Other", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
-            }
-        2 ->
-            { topicID = 2
-            , topicName = "Tryout"
-            , words = [ "test", "time", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
-            }
         _ ->
-            { topicID = id
-            , topicName = "Dummy"
-            , words = [ "one", "two", "three", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff", "Stuff"]
+            { id = id
+            , hirarchical_topic =
+                { start = 0
+                , end = 0
+                , depth = 0
+                , cluster = "0;1;1;1"
+                }
+            , color_topic = "#ffffff"
+            , top_terms = [{ id = 0, relevance = 0}]
+            }
+
+initTerm : Int -> Term
+initTerm id =
+    case id of
+        _ ->
+            { id = id
+            , name = "term"
+            , wordtype = Just 0
+            , count = Just 0
             }

@@ -4,8 +4,8 @@ import Model exposing (..)
 import Tabsview
 import Topicsview
 import Savedview
-import Articlesview
-import Wordlistview
+import Documentsview
+import Termsview
 import Searchview
 
 import Array
@@ -101,10 +101,10 @@ slot model slotId view =
     case view of
         TopicsView topics->
             Topicsview.view { model | topics = topics} (flexValue 2) slotId
-        WordlistView wordList->
-            Wordlistview.view { model | wordList = wordList} (flexValue 2) slotId
-        ArticlesView articles->
-            Articlesview.view { model | articles = articles} (flexValue 2) slotId
+        TermsView terms->
+            Termsview.view { model | terms = terms} (flexValue 2) slotId
+        DocumentsView docs->
+            Documentsview.view { model | docs = docs} (flexValue 2) slotId
         Dialog ->
             div
                 [ cs "slot"
@@ -114,8 +114,8 @@ slot model slotId view =
                 , center
                 ]
                 [ slotDialogCard "Topics" (TopicsView model.topics) slotId
-                , slotDialogCard "Wordlist" (WordlistView model.wordList) slotId
-                , slotDialogCard "Articles" (ArticlesView model.articles) slotId
+                , slotDialogCard "Terms" (TermsView model.terms) slotId
+                , slotDialogCard "Documents" (DocumentsView model.docs) slotId
                 --, Button.render Mdl [5] model.mdl
                 --    [ Button.ripple
                 --    , css "flex" "flexValue 1"
@@ -127,16 +127,16 @@ slot model slotId view =
                 --    [ Button.ripple
                 --    , css "flex" "flexValue 1"
                 --    , css "margin" "70px 0"
-                --    , onClick (UpdateSlot (WordlistView model.wordList) slotId)
+                --    , onClick (UpdateSlot (WordlistView model.terms) slotId)
                 --    ]
-                --    [ text "Wordlist"]
+                --    [ text "Terms"]
                 --, Button.render Mdl [6] model.mdl
                 --    [ Button.ripple
                 --    , css "flex" "flexValue 1"
                 --    , css "margin" "70px 0"
-                --    , onClick (UpdateSlot (ArticlesView model.articles) slotId)
+                --    , onClick (UpdateSlot (DocumentsView model.docs) slotId)
                 --    ]
-                --    [ text "Articles"]
+                --    [ text "Documents"]
                 ]
         Empty ->
             let previouseSlot = (slotGet model.slots (slotId - 1))

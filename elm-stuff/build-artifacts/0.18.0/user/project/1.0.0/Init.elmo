@@ -1,287 +1,65 @@
-var _user$project$Init$initTopic = function (id) {
+var _user$project$Init$initTerm = function (id) {
 	var _p0 = id;
-	switch (_p0) {
-		case 0:
-			return {
-				topicID: id,
-				topicName: 'Stuff',
-				words: {
-					ctor: '::',
-					_0: 'Stuff',
-					_1: {
-						ctor: '::',
-						_0: 'Things',
-						_1: {
-							ctor: '::',
-							_0: 'Items',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {
-															ctor: '::',
-															_0: 'Stuff',
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-		case 1:
-			return {
-				topicID: id,
-				topicName: 'Other',
-				words: {
-					ctor: '::',
-					_0: 'Some',
-					_1: {
-						ctor: '::',
-						_0: 'Any',
-						_1: {
-							ctor: '::',
-							_0: 'Other',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {
-															ctor: '::',
-															_0: 'Stuff',
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-		case 2:
-			return {
-				topicID: 2,
-				topicName: 'Tryout',
-				words: {
-					ctor: '::',
-					_0: 'test',
-					_1: {
-						ctor: '::',
-						_0: 'time',
-						_1: {
-							ctor: '::',
-							_0: 'Stuff',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {ctor: '[]'}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-		default:
-			return {
-				topicID: id,
-				topicName: 'Dummy',
-				words: {
-					ctor: '::',
-					_0: 'one',
-					_1: {
-						ctor: '::',
-						_0: 'two',
-						_1: {
-							ctor: '::',
-							_0: 'three',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {
-															ctor: '::',
-															_0: 'Stuff',
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-	}
+	return {
+		id: id,
+		name: 'term',
+		wordtype: _elm_lang$core$Maybe$Just(0),
+		count: _elm_lang$core$Maybe$Just(0)
+	};
 };
-var _user$project$Init$initArticle = function (id) {
+var _user$project$Init$initTopic = function (id) {
 	var _p1 = id;
-	switch (_p1) {
-		case 0:
-			return {
-				articleID: 0,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				words: {
-					ctor: '::',
-					_0: 'Some',
-					_1: {
-						ctor: '::',
-						_0: 'Any',
-						_1: {
-							ctor: '::',
-							_0: 'Stuff',
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Hallo',
-				date: '11.11.2011',
-				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
-			};
-		case 1:
-			return {
-				articleID: 1,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				words: {
-					ctor: '::',
-					_0: 'two',
-					_1: {
-						ctor: '::',
-						_0: 'time',
-						_1: {
-							ctor: '::',
-							_0: 'Item',
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Article 0',
-				date: '13.07.1999',
-				text: 'Hallo, ich habe hier nur einen Dummytext.'
-			};
-		default:
-			return {
-				articleID: id,
-				rankedTopics: {ctor: '[]'},
-				words: {
-					ctor: '::',
-					_0: 'test',
-					_1: {ctor: '[]'}
-				},
-				title: '0',
-				date: '0.0.0',
-				text: ''
-			};
-	}
+	return {
+		id: id,
+		hirarchical_topic: {start: 0, end: 0, depth: 0, cluster: '0;1;1;1'},
+		color_topic: '#ffffff',
+		top_terms: {
+			ctor: '::',
+			_0: {id: 0, relevance: 0},
+			_1: {ctor: '[]'}
+		}
+	};
+};
+var _user$project$Init$initDoc = function (id) {
+	var _p2 = id;
+	return {
+		document_id: id,
+		topic_id: 0,
+		document_count: 0,
+		keyword_snipet: 'key snipet',
+		keyword_title: 'key title',
+		top_topic: {
+			ctor: '::',
+			_0: 0,
+			_1: {ctor: '[]'}
+		},
+		linkurl: 'http://example.com/Docunment',
+		time_stamp: 0,
+		title: 'title',
+		snipet: 'snipet'
+	};
+};
+var _user$project$Init$initDocument = function (id) {
+	var _p3 = id;
+	return {
+		id: id,
+		linkurl: 'http://example.com/Docunment',
+		time_stamp: 0,
+		title: 'document',
+		fulltext: 'This is a test document. Further content is not available.',
+		search_test: 'whatever',
+		frame_list: {ctor: '[]'},
+		word_list: {
+			ctor: '::',
+			_0: {
+				topic_id: 0,
+				posintion_in_document: 0,
+				term: 'term',
+				parent_topic_ids: {ctor: '[]'}
+			},
+			_1: {ctor: '[]'}
+		}
+	};
 };
 var _user$project$Init$initTabs = {
 	ctor: '::',
@@ -289,30 +67,33 @@ var _user$project$Init$initTabs = {
 	_1: {
 		ctor: '::',
 		_0: A2(
-			_user$project$Model$ArticleTab,
-			'Article 0',
-			_user$project$Init$initArticle(1)),
+			_user$project$Model$DocumentTab,
+			'Document 0',
+			_user$project$Init$initDocument(1)),
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false};
+var _user$project$Init$initSettings = {showTopics: true, showDocuments: true, showTerms: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false};
 var _user$project$Init$initResult = {
 	ctor: '::',
-	_0: _user$project$Model$Wordresult('test'),
+	_0: _user$project$Model$Termresult(
+		_user$project$Init$initTerm(0)),
 	_1: {
 		ctor: '::',
-		_0: _user$project$Model$Wordresult('time'),
+		_0: _user$project$Model$Termresult(
+			_user$project$Init$initTerm(1)),
 		_1: {
 			ctor: '::',
-			_0: _user$project$Model$Wordresult('Stuff'),
+			_0: _user$project$Model$Termresult(
+				_user$project$Init$initTerm(2)),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Model$Articleresult(
-					_user$project$Init$initArticle(0)),
+				_0: _user$project$Model$Documentresult(
+					_user$project$Init$initDoc(0)),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Model$Articleresult(
-						_user$project$Init$initArticle(1)),
+					_0: _user$project$Model$Documentresult(
+						_user$project$Init$initDoc(1)),
 					_1: {
 						ctor: '::',
 						_0: _user$project$Model$Topicresult(
@@ -346,21 +127,21 @@ var _user$project$Init$init = {
 				_1: {ctor: '[]'}
 			}
 		},
-		articles: {
+		docs: {
 			ctor: '::',
-			_0: _user$project$Init$initArticle(0),
+			_0: _user$project$Init$initDoc(0),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Init$initArticle(1),
+				_0: _user$project$Init$initDoc(1),
 				_1: {ctor: '[]'}
 			}
 		},
-		currentArticle: {
+		currentDocument: {
 			cardID: 0,
-			article: _user$project$Init$initArticle(0)
+			document: _user$project$Init$initDocument(0)
 		},
-		wordList: {ctor: '[]'},
-		currentWord: '',
+		terms: {ctor: '[]'},
+		currentTerm: _user$project$Init$initTerm(0),
 		tabs: _user$project$Init$initTabs,
 		currentTab: 0,
 		raised: -1,

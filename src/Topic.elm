@@ -3,6 +3,7 @@ module Topic exposing (..)
 import Term exposing (..)
 
 import Json.Decode exposing (Decoder, string, int, list, map, map4, field, keyValuePairs)
+import Decoderhelper exposing (pseudolist)
 
 type alias Topic =
     { id : Int
@@ -35,10 +36,6 @@ topicId2Topic topics topicId =
     (List.head (List.filter (\x -> x.id == topicId) topics))
 
 -- Decoders
-pseudolist : Decoder a -> Decoder (List a)
-pseudolist decoder =
-    map Tupple.second (keyValuePairs decoder)
-
 topicDecoder : Decoder Topic
 topicDecoder =
     map4 Topic
@@ -55,7 +52,7 @@ topicDecoder =
 decodeTopics : Decoder TopicResult
 decodeTopics =
     map4 TopicResult
-        (field "Topic" (pseudolist topicDecoder)
+        (field "Topic" (pseudolist topicDecoder))
         (field "TOPIC_SORTING" (list int))
-        (field "Term" (pseudolist termDecoder)
+        (field "Term" (pseudolist termDecoder))
         (field "TopicBestItemLimit" int)

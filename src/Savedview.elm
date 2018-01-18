@@ -1,6 +1,7 @@
 module Savedview exposing (view)
 
 import Model exposing (..)
+import Topic exposing (Topic)
 
 import Html exposing (Html, text)
 import Material.Options exposing (css, div, span, onClick, center)
@@ -34,23 +35,24 @@ currentTopic2Chip model topic =
         ]
         [ Chip.content
             [ center]
-            [ text topic.topicName
+            [ text (toString topic.id)
             , Icon.view "list"
                 [ onClick
-                    (ShowWordList topic.words)
+                    (Request GetTerms "")
+                    --(ShowTerms topic.words)
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ShowArticles
-                        (List.filter
-                            (topicInArticle topic)
-                            model.articles
-                        )
-                    )
+                    (Request GetBestDocs "")
+                    --(ShowDocuments
+                    --    (List.filter
+                    --        (Document.topicInDocument topic)
+                    --        model.docs
+                    --    ))
                 ]
             , Icon.view "cancel"
                 [ onClick
-                    (RemoveTopic topic.topicID)
+                    (RemoveTopic topic.id)
                 ]
             ]
         ]

@@ -4,8 +4,8 @@ import Model exposing (..)
 import Tabsview
 import Topicsview
 import Savedview
-import Articlesview
-import Wordlistview
+import Documentsview
+import Termsview
 
 import Html exposing (Html, text, h3)
 import Material.Options exposing (css, div, onToggle)
@@ -88,8 +88,8 @@ viewBody model =
             , css "flex" (flexValue 3)
             ]
             [ viewOrEmptyFlex (not model.settings.bottom) (Topicsview.view model (flexValue 1) 1)
-            , viewOrEmptyFlex model.settings.showWordlist (Wordlistview.view model (flexValue 1) 2)
-            , viewOrEmptyFlex model.settings.showArticles (Articlesview.view model (flexValue 1) 3)
+            , viewOrEmptyFlex model.settings.showTerms (Termsview.view model (flexValue 1) 2)
+            , viewOrEmptyFlex model.settings.showDocuments (Documentsview.view model (flexValue 1) 3)
             , Tabsview.view model (flexValue (5 - (countOther model.settings)))
             ]
         , viewOrEmptyFlex model.settings.bottom (bottomView model (flexValue 1))
@@ -125,8 +125,8 @@ viewBody2 model =
                 , css "flex" (flexValue 3)
                 ]
                 [ viewOrEmptyFlex (not model.settings.bottom) (Topicsview.view model (flexValue 1) 1)
-                , viewOrEmptyFlex model.settings.showWordlist (Wordlistview.view model (flexValue 1) 2)
-                , viewOrEmptyFlex model.settings.showArticles (Articlesview.view model (flexValue 1) 3)
+                , viewOrEmptyFlex model.settings.showTerms (Termsview.view model (flexValue 1) 2)
+                , viewOrEmptyFlex model.settings.showDocuments (Documentsview.view model (flexValue 1) 3)
                 ]
             , viewOrEmptyFlex (model.settings.showSaved) (Savedview.view model (flexValue 1))
             ]
@@ -149,7 +149,7 @@ bottomView model flex =
 
 countOther : Settings -> Int
 countOther settings =
-    (bool2Int settings.showArticles) + (bool2Int (not settings.bottom)) + (bool2Int settings.showWordlist)
+    (bool2Int settings.showDocuments) + (bool2Int (not settings.bottom)) + (bool2Int settings.showTerms)
 
 bool2Int : Bool -> Int
 bool2Int bool =

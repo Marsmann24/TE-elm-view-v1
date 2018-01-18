@@ -22,22 +22,22 @@ searchresult2ListItem result =
     Lists.li
         []
         [( case result of
-            Wordresult word ->
+            Termresult term ->
                 Lists.content
-                    [ onClick (Found (WordlistView [word]))]
+                    [ onClick (Found (TermsView [term]))]
                     [ Lists.icon "list" []
-                    , text word
+                    , text term.name
                     ]
             Topicresult topic ->
                 Lists.content
                     [ onClick (Found (TopicsView [topic]))]
                     [ Lists.icon "bubble_chart" []
-                    , text topic.topicName
+                    , text (toString topic.id)
                     ]
-            Articleresult article ->
+            Documentresult doc ->
                 Lists.content
-                    [ onClick (Found (ArticlesView [article]))]
+                    [ onClick (Found (DocumentsView [doc]))]
                     [ Lists.icon "art_track" []
-                    , text article.title
+                    , text doc.title
                     ]
         )]

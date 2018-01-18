@@ -14,33 +14,42 @@ type Msg
     | Found View
     | SelectTab Int
     | Raise Int
-    | ChangeCurrentArticle Int Article
+    | ChangeCurrentDoc Int Doc
     | RemoveTopic Int
     | ShowTopics (List Topic)
     | HideTopics Int
-    | ShowWordList (List String)
-    | HideWordList Int
-    | ShowArticles (List Article)
-    | HideArticles Int
+    | ShowTerms (List Term)
+    | HideTerms Int
+    | ShowDocuments (List Doc)
+    | HideDocuments Int
     | ChoseSlotDialog Int
     | UpdateSlot View Int
     | ToggleBottom
     | ToggleView2
     | ToggleShowSaved
+    | Request Command String
     | Mdl (Material.Msg Msg)
     | None -- zum Testen, damit update _ -> immer haben kann
 
+type Command
+    = GetTopics
+    | GetDoc
+    | GetBestDocs
+    | GetBestTerms
+    | GetTerms
+    | GetBestFrames
+
 type alias Model =
-    { result : List Searchresult          -- search result
+    { result : List Searchresult    -- search result
     , topics : List Topic           -- all topics
     , currentTopics : List Topic    -- list of topics for the ranking
-    , articles : List Article       -- ranked articles
-    , currentArticle :              -- active card and preview article
+    , docs : List Doc          -- ranked articles
+    , currentDocument :              -- active card and preview article
         { cardID : Int
-        , article : Article
+        , document : Document
         }
-    , wordList : List String        -- current word list
-    , currentWord : String          -- current word
+    , terms : List Term        -- current term list
+    , currentTerm : Term          -- current term
     , tabs : List Tab               -- all tabs
     , currentTab : Int              -- active tab
     , raised : Int                  -- ID of raised card
@@ -52,43 +61,43 @@ type alias Model =
 --type alias Topic =
 --    { topicID : Int
 --    , topicName : String
---    , words : List String
+--    , terms : List String
 --    }
 
-wordInTopic : String -> Topic -> Bool
-wordInTopic word topic =
-    List.member word topic.words
+--termInTopic : String -> Topic -> Bool
+--termInTopic term topic =
+--    List.member term topic.terms
 
-topicIDToTopic : List Topic -> Int -> Topic
-topicIDToTopic topics id =
-    withDefault
-        { topicID = id
-        , topicName = "ERROR"
-        , words = []
-        }
-        (List.head (List.filter (\x -> x.topicID == id) topics))
+--topicIDToTopic : List Topic -> Int -> Topic
+--topicIDToTopic topics id =
+--    withDefault
+--        { topicID = id
+--        , topicName = "ERROR"
+--        , terms = []
+--        }
+--        (List.head (List.filter (\x -> x.topicID == id) topics))
 
-type alias Article =
-    { articleID : Int
-    , rankedTopics : List Int
-    , words : List String
-    , title : String
-    , date : String
-    , text : String
-    }
+--type alias Document =
+--    { articleID : Int
+--    , rankedTopics : List Int
+--    , terms : List String
+--    , title : String
+--    , date : String
+--    , text : String
+--    }
 
-topicInArticle : Topic -> Article -> Bool
-topicInArticle topic article =
-    List.member topic.topicID article.rankedTopics
+--topicInDocument : Topic -> Document -> Bool
+--topicInDocument topic article =
+--    List.member topic.topicID article.rankedTopics
 
-wordInArticle : String -> Article -> Bool
-wordInArticle word article =
-    List.member word article.words
+--termInDocument : String -> Document -> Bool
+--termInDocument term article =
+--    List.member term article.terms
 
 type alias Settings =
     { showTopics : Bool
-    , showArticles : Bool
-    , showWordlist : Bool
+    , showDocuments : Bool
+    , showTerms : Bool
     , showSaved : Bool
     , bottom : Bool
     , view2 : Bool
@@ -98,20 +107,23 @@ type alias Settings =
 
 type Tab
     = PreviewTab
-    | ArticleTab String Article
+    | DocumentTab String Document
     | ErrorTab String String
 
 type Searchresult
     = Topicresult Topic
-    | Wordresult String
-    | Articleresult Article
+--    | Wordresult String
+    | Termresult Term
+    | Documentresult Doc
 
 --Slots
 
 type View
-    = WordlistView (List String)
+    = TermsView (List Term)
+    -- WordlistView (List String)
     | TopicsView (List Topic)
-    | ArticlesView (List Article)
+    --| DocumentsView (List Document)
+    | DocumentsView (List Doc)
     | Dialog
     | Empty
     | ErrorSlot
@@ -164,19 +176,31 @@ slotChangeTo oldSlots id value =
     { oldSlots | main = Array.set id value oldSlots.main}
 
 slotRemove : Slots -> Int -> Slots
-slotRemove slots id =
-    let moreHead =
+slotRemove slots removeId =
+    let
+        nextResult : Int -> View -> View
+        nextResult id view =
+            if ((nextSlot id) == ErrorSlot)
+            then moreHead
+            else if ((id * dir) >= (removeId * dir))
+                then nextSlot id
+                else view
+        nextSlot : Int -> View
+        nextSlot id =
+            slotGet slots (id + dir)
+        dir : Int
+        dir =
+            if (moreHead == Empty)
+            then 1
+            else (-1)
+        moreHead : View
+        moreHead =
             withDefault Empty (List.head slots.more)
+        moreTail : List (View)
         moreTail =
             withDefault [] (List.tail slots.more)
-        nextId =
-            if (moreHead == Empty)
-            then id + 1
-            else id - 1
-        nextSlot = slotGet slots nextId
     in
-    if (nextSlot == ErrorSlot)
-    then
-        slotChangeTo { slots | more = moreTail} id moreHead
-    else
-        slotRemove (slotChangeTo slots id nextSlot) nextId
+    { slots
+        | main = Array.indexedMap nextResult slots.main
+        , more = moreTail
+    }

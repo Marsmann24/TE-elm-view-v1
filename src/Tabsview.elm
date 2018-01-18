@@ -1,6 +1,7 @@
 module Tabsview exposing (view)
 
 import Model exposing (..)
+import Document exposing (Document)
 
 import Html exposing (Html, text, h1, br)
 import Material.Options exposing (css, cs, div, span)
@@ -31,9 +32,9 @@ view model flex =
               in
               case tab of
                   PreviewTab ->
-                      article2ArticleView model.currentArticle.article
-                  ArticleTab _ article ->
-                      article2ArticleView article
+                      document2DocumentView model.currentDocument.document
+                  DocumentTab _ document ->
+                      document2DocumentView document
                   ErrorTab _ errormessage ->
                       text errormessage
             ]
@@ -49,23 +50,23 @@ tab2TabView tab =
         , case tab of
             PreviewTab ->
                 text "Vorschau"
-            ArticleTab tabID _ ->
+            DocumentTab tabID _ ->
                 text tabID
             ErrorTab tabID _ ->
                 text tabID
         ]
 
-article2ArticleView : Article -> Html Msg
-article2ArticleView article =
+document2DocumentView : Document -> Html Msg
+document2DocumentView document =
     div [ css "margin" "0px 6px"]
         [ span
             [ css "float" "right"
             , css "margin" "4px"
             , css "color" "grey"
             ]
-            [ text article.date
+            [ text (toString document.time_stamp)
             , br [][]
             ]
-        , h1 [] [ text article.title]
-        , span [] [ text article.text]
+        , h1 [] [ text document.title]
+        , span [] [ text document.fulltext]
         ]

@@ -1,4 +1,4 @@
-var _user$project$Tabsview$article2ArticleView = function (article) {
+var _user$project$Tabsview$document2DocumentView = function (document) {
 	return A2(
 		_debois$elm_mdl$Material_Options$div,
 		{
@@ -25,7 +25,8 @@ var _user$project$Tabsview$article2ArticleView = function (article) {
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(article.date),
+					_0: _elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(document.time_stamp)),
 					_1: {
 						ctor: '::',
 						_0: A2(
@@ -42,7 +43,7 @@ var _user$project$Tabsview$article2ArticleView = function (article) {
 					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(article.title),
+						_0: _elm_lang$html$Html$text(document.title),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -52,7 +53,7 @@ var _user$project$Tabsview$article2ArticleView = function (article) {
 						{ctor: '[]'},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(article.text),
+							_0: _elm_lang$html$Html$text(document.fulltext),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
@@ -81,7 +82,7 @@ var _user$project$Tabsview$tab2TabView = function (tab) {
 					switch (_p0.ctor) {
 						case 'PreviewTab':
 							return _elm_lang$html$Html$text('Vorschau');
-						case 'ArticleTab':
+						case 'DocumentTab':
 							return _elm_lang$html$Html$text(_p0._0);
 						default:
 							return _elm_lang$html$Html$text(_p0._0);
@@ -154,9 +155,9 @@ var _user$project$Tabsview$view = F2(
 							var _p2 = tab;
 							switch (_p2.ctor) {
 								case 'PreviewTab':
-									return _user$project$Tabsview$article2ArticleView(model.currentArticle.article);
-								case 'ArticleTab':
-									return _user$project$Tabsview$article2ArticleView(_p2._1);
+									return _user$project$Tabsview$document2DocumentView(model.currentDocument.document);
+								case 'DocumentTab':
+									return _user$project$Tabsview$document2DocumentView(_p2._1);
 								default:
 									return _elm_lang$html$Html$text(_p2._1);
 							}

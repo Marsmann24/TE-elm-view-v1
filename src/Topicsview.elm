@@ -1,6 +1,8 @@
 module Topicsview exposing (view)
 
 import Model exposing (..)
+import Topic exposing (..)
+import Document
 
 import Html exposing (Html, text)
 import Html.Attributes exposing (style, class)
@@ -47,19 +49,20 @@ topic2Chip model topic =
         ]
         [ Chip.content
             [ center]
-            [ text topic.topicName
+            [ text (toString topic.id)
             , Icon.view "list"
                 [ onClick
-                    (ShowWordList topic.words)
+                    (Request GetTerms (("&TopicId=" ++ (toString topic.id)) ++ "&offset=30"))
+                    --(ShowTermList topic.top_terms)
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ShowArticles
-                        (List.filter
-                            (topicInArticle topic)
-                            model.articles
-                        )
-                    )
+                    (Request GetTerms "&TopicId=1&offset=30")
+                    --ShowDocuments
+                    --    (List.filter
+                    --        (Document.topicInDoc topic)
+                    --        model.docs
+                    --    ))
                 ]
             ]
         ]

@@ -1,6 +1,8 @@
-module Articlesview exposing (view)
+module Documentsview exposing (view)
 
 import Model exposing (..)
+import Document exposing (..)
+import Topic
 
 import Html exposing (Html, text)
 import Material.Options exposing (css, cs, div, span, onClick, onMouseEnter, onMouseLeave)
@@ -29,24 +31,24 @@ view model flex slotId =
                 , Button.minifab
                 , Button.raised
                 , Button.ripple
-                , onClick (HideWordList slotId)
+                , onClick (HideTerms slotId)
                 ]
                 [ Icon.i "close" ]
             ]
         , div
             [ cs "slot__content"
             ]
-            (List.map2 (article2CardView model) model.articles (List.range 1 (List.length model.articles)))
+            (List.map2 (doc2CardView model) model.docs (List.range 1 (List.length model.docs)))
         ]
 
-article2CardView : Model -> Article -> Int -> Html Msg
-article2CardView model article cardID =
+doc2CardView : Model -> Doc -> Int -> Html Msg
+doc2CardView model doc cardID =
     Card.view
         [ css "height" "100px"
         , css "width" "94%"
         , css "margin" "4% 3%"
         , Color.background (Color.color Color.Brown Color.S500)
-        , if (cardID == model.currentArticle.cardID)
+        , if (cardID == model.currentDocument.cardID)
             then Elevation.e0
           else if (cardID == model.raised)
             then Elevation.e16
@@ -54,26 +56,26 @@ article2CardView model article cardID =
         , Elevation.transition 250
         , onMouseEnter (Raise cardID)
         , onMouseLeave (Raise -1)
-        , onClick (ChangeCurrentArticle cardID article)
+        , onClick (ChangeCurrentDoc cardID doc)
         ]
         [ Card.title
             [ css "padding" "4px"
             ]
             [ Card.head
                 [ Color.text Color.white ]
-                [ text article.title
+                [ text doc.title
                 , Icon.view "bubble_chart"
                     [ onClick
                         (ShowTopics
-                            (List.map
-                                (topicIDToTopic model.topics)
-                                article.rankedTopics
+                            (List.filterMap
+                                (Topic.topicId2Topic model.topics)
+                                doc.top_topic
                             )
                         )
                     ]
                 , Icon.view "list"
                     [ onClick
-                        (ShowWordList article.words)
+                        (Request GetDoc ("&DocId=" ++ (toString doc.document_id)))
                     ]
                 ]
             , span
@@ -82,11 +84,11 @@ article2CardView model article cardID =
                 , css "font-size" "8px"
                 , css "align-self" "right"
                 ]
-                [ text article.date ]
+                [ text (toString doc.time_stamp) ]
             ]
         , Card.text
             [ Color.text (Color.white)
             , css "padding" "4px"
             ]
-            [ text article.text ]
+            [ text doc.snipet ]
         ]

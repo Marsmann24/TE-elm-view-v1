@@ -33,7 +33,7 @@ var _user$project$Mainview_v1$bool2Int = function (bool) {
 	return bool ? 1 : 0;
 };
 var _user$project$Mainview_v1$countOther = function (settings) {
-	return (_user$project$Mainview_v1$bool2Int(settings.showArticles) + _user$project$Mainview_v1$bool2Int(!settings.bottom)) + _user$project$Mainview_v1$bool2Int(settings.showWordlist);
+	return (_user$project$Mainview_v1$bool2Int(settings.showDocuments) + _user$project$Mainview_v1$bool2Int(!settings.bottom)) + _user$project$Mainview_v1$bool2Int(settings.showTerms);
 };
 var _user$project$Mainview_v1$bottomView = F2(
 	function (model, flex) {
@@ -205,9 +205,9 @@ var _user$project$Mainview_v1$viewBody2 = function (model) {
 								ctor: '::',
 								_0: A2(
 									_user$project$Mainview_v1$viewOrEmptyFlex,
-									model.settings.showWordlist,
+									model.settings.showTerms,
 									A3(
-										_user$project$Wordlistview$view,
+										_user$project$Termsview$view,
 										model,
 										_user$project$Mainview_v1$flexValue(1),
 										2)),
@@ -215,9 +215,9 @@ var _user$project$Mainview_v1$viewBody2 = function (model) {
 									ctor: '::',
 									_0: A2(
 										_user$project$Mainview_v1$viewOrEmptyFlex,
-										model.settings.showArticles,
+										model.settings.showDocuments,
 										A3(
-											_user$project$Articlesview$view,
+											_user$project$Documentsview$view,
 											model,
 											_user$project$Mainview_v1$flexValue(1),
 											3)),
@@ -330,9 +330,9 @@ var _user$project$Mainview_v1$viewBody = function (model) {
 						ctor: '::',
 						_0: A2(
 							_user$project$Mainview_v1$viewOrEmptyFlex,
-							model.settings.showWordlist,
+							model.settings.showTerms,
 							A3(
-								_user$project$Wordlistview$view,
+								_user$project$Termsview$view,
 								model,
 								_user$project$Mainview_v1$flexValue(1),
 								2)),
@@ -340,9 +340,9 @@ var _user$project$Mainview_v1$viewBody = function (model) {
 							ctor: '::',
 							_0: A2(
 								_user$project$Mainview_v1$viewOrEmptyFlex,
-								model.settings.showArticles,
+								model.settings.showDocuments,
 								A3(
-									_user$project$Articlesview$view,
+									_user$project$Documentsview$view,
 									model,
 									_user$project$Mainview_v1$flexValue(1),
 									3)),

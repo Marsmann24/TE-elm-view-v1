@@ -1,0 +1,87 @@
+var _user$project$Decoderhelper$map10 = function ($function) {
+	return function (decoder0) {
+		return function (decoder1) {
+			return function (decoder2) {
+				return function (decoder3) {
+					return function (decoder4) {
+						return function (decoder5) {
+							return function (decoder6) {
+								return function (decoder7) {
+									return function (decoder8) {
+										return function (decoder9) {
+											return A3(
+												_elm_lang$core$Json_Decode$map2,
+												F2(
+													function (a, b) {
+														return $function(a.a1)(a.a2)(a.a3)(a.a4)(a.a5)(b.b1)(b.b2)(b.b3)(b.b4)(b.b5);
+													}),
+												A6(
+													_elm_lang$core$Json_Decode$map5,
+													F5(
+														function (a, b, c, d, e) {
+															return {a1: a, a2: b, a3: c, a4: d, a5: e};
+														}),
+													decoder0,
+													decoder1,
+													decoder2,
+													decoder3,
+													decoder4),
+												A6(
+													_elm_lang$core$Json_Decode$map5,
+													F5(
+														function (a, b, c, d, e) {
+															return {b1: a, b2: b, b3: c, b4: d, b5: e};
+														}),
+													decoder5,
+													decoder6,
+													decoder7,
+													decoder8,
+													decoder9));
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _user$project$Decoderhelper$intDictDecoder = F2(
+	function ($default, decoder) {
+		var makeInt = function (_p0) {
+			var _p1 = _p0;
+			var _p2 = _elm_lang$core$String$toInt(_p1._0);
+			if (_p2.ctor === 'Ok') {
+				return {ctor: '_Tuple2', _0: _p2._0, _1: _p1._1};
+			} else {
+				return {ctor: '_Tuple2', _0: -1, _1: $default};
+			}
+		};
+		return A2(
+			_elm_lang$core$Json_Decode$map,
+			_elm_lang$core$Dict$fromList,
+			A2(
+				_elm_lang$core$Json_Decode$map,
+				_elm_lang$core$List$map(makeInt),
+				_elm_lang$core$Json_Decode$keyValuePairs(decoder)));
+	});
+var _user$project$Decoderhelper$listheadwithdefault = F2(
+	function ($default, decoder) {
+		return A2(
+			_elm_lang$core$Json_Decode$map,
+			function (x) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					$default,
+					_elm_lang$core$List$head(x));
+			},
+			decoder);
+	});
+var _user$project$Decoderhelper$pseudolist = function (decoder) {
+	return A2(
+		_elm_lang$core$Json_Decode$map,
+		_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
+		_elm_lang$core$Json_Decode$keyValuePairs(decoder));
+};
