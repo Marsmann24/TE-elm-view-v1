@@ -36,16 +36,8 @@ var _user$project$Topicsview$topic2Chip = F2(
 								{
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
-										A2(
-											_user$project$Model$Request,
-											_user$project$Model$GetTerms,
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													'&TopicId=',
-													_elm_lang$core$Basics$toString(topic.id)),
-												'&offset=30'))),
+										_user$project$Model$ExecCmd(
+											A2(_user$project$Request$loadTerms, topic.id, 30))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -56,7 +48,8 @@ var _user$project$Topicsview$topic2Chip = F2(
 									{
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
-											A2(_user$project$Model$Request, _user$project$Model$GetTerms, '&TopicId=1&offset=30')),
+											_user$project$Model$ExecCmd(
+												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}

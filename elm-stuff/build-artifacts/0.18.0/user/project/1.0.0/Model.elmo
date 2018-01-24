@@ -45,10 +45,24 @@ var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
-var _user$project$Model$Request = F2(
-	function (a, b) {
-		return {ctor: 'Request', _0: a, _1: b};
-	});
+var _user$project$Model$ExecCmd = function (a) {
+	return {ctor: 'ExecCmd', _0: a};
+};
+var _user$project$Model$NewFrames = function (a) {
+	return {ctor: 'NewFrames', _0: a};
+};
+var _user$project$Model$NewTerms = function (a) {
+	return {ctor: 'NewTerms', _0: a};
+};
+var _user$project$Model$NewDocs = function (a) {
+	return {ctor: 'NewDocs', _0: a};
+};
+var _user$project$Model$NewDocument = function (a) {
+	return {ctor: 'NewDocument', _0: a};
+};
+var _user$project$Model$NewTopics = function (a) {
+	return {ctor: 'NewTopics', _0: a};
+};
 var _user$project$Model$ToggleShowSaved = {ctor: 'ToggleShowSaved'};
 var _user$project$Model$ToggleView2 = {ctor: 'ToggleView2'};
 var _user$project$Model$ToggleBottom = {ctor: 'ToggleBottom'};
@@ -96,12 +110,6 @@ var _user$project$Model$Found = function (a) {
 var _user$project$Model$Search = function (a) {
 	return {ctor: 'Search', _0: a};
 };
-var _user$project$Model$GetBestFrames = {ctor: 'GetBestFrames'};
-var _user$project$Model$GetTerms = {ctor: 'GetTerms'};
-var _user$project$Model$GetBestTerms = {ctor: 'GetBestTerms'};
-var _user$project$Model$GetBestDocs = {ctor: 'GetBestDocs'};
-var _user$project$Model$GetDoc = {ctor: 'GetDoc'};
-var _user$project$Model$GetTopics = {ctor: 'GetTopics'};
 var _user$project$Model$ErrorTab = F2(
 	function (a, b) {
 		return {ctor: 'ErrorTab', _0: a, _1: b};

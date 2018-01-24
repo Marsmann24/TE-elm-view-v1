@@ -32,7 +32,8 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 								{
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
-										A2(_user$project$Model$Request, _user$project$Model$GetTerms, '')),
+										_user$project$Model$ExecCmd(
+											A2(_user$project$Request$loadTerms, topic.id, 30))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -43,7 +44,8 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 									{
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
-											A2(_user$project$Model$Request, _user$project$Model$GetBestDocs, '')),
+											_user$project$Model$ExecCmd(
+												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {

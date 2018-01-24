@@ -2,6 +2,7 @@ module Savedview exposing (view)
 
 import Model exposing (..)
 import Topic exposing (Topic)
+import Request
 
 import Html exposing (Html, text)
 import Material.Options exposing (css, div, span, onClick, center)
@@ -38,12 +39,12 @@ currentTopic2Chip model topic =
             [ text (toString topic.id)
             , Icon.view "list"
                 [ onClick
-                    (Request GetTerms "")
+                    (ExecCmd (Request.loadTerms topic.id 30))
                     --(ShowTerms topic.words)
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (Request GetBestDocs "")
+                    (ExecCmd (Request.loadBestDocs topic.id -1 "relevance"))
                     --(ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDocument topic)

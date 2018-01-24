@@ -3,6 +3,7 @@ module Documentsview exposing (view)
 import Model exposing (..)
 import Document exposing (..)
 import Topic
+import Request
 
 import Html exposing (Html, text)
 import Material.Options exposing (css, cs, div, span, onClick, onMouseEnter, onMouseLeave)
@@ -75,7 +76,7 @@ doc2CardView model doc cardID =
                     ]
                 , Icon.view "list"
                     [ onClick
-                        (Request GetDoc ("&DocId=" ++ (toString doc.document_id)))
+                        (ExecCmd (Request.loadDoc doc.document_id))
                     ]
                 ]
             , span

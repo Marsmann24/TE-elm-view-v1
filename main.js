@@ -15900,6 +15900,804 @@ var _debois$elm_mdl$Material_Scheme$top = function (content) {
 	return A3(_debois$elm_mdl$Material_Scheme$topWithScheme, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$Grey, content);
 };
 
+var _elm_lang$http$Native_Http = function() {
+
+
+// ENCODING AND DECODING
+
+function encodeUri(string)
+{
+	return encodeURIComponent(string);
+}
+
+function decodeUri(string)
+{
+	try
+	{
+		return _elm_lang$core$Maybe$Just(decodeURIComponent(string));
+	}
+	catch(e)
+	{
+		return _elm_lang$core$Maybe$Nothing;
+	}
+}
+
+
+// SEND REQUEST
+
+function toTask(request, maybeProgress)
+{
+	return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+	{
+		var xhr = new XMLHttpRequest();
+
+		configureProgress(xhr, maybeProgress);
+
+		xhr.addEventListener('error', function() {
+			callback(_elm_lang$core$Native_Scheduler.fail({ ctor: 'NetworkError' }));
+		});
+		xhr.addEventListener('timeout', function() {
+			callback(_elm_lang$core$Native_Scheduler.fail({ ctor: 'Timeout' }));
+		});
+		xhr.addEventListener('load', function() {
+			callback(handleResponse(xhr, request.expect.responseToResult));
+		});
+
+		try
+		{
+			xhr.open(request.method, request.url, true);
+		}
+		catch (e)
+		{
+			return callback(_elm_lang$core$Native_Scheduler.fail({ ctor: 'BadUrl', _0: request.url }));
+		}
+
+		configureRequest(xhr, request);
+		send(xhr, request.body);
+
+		return function() { xhr.abort(); };
+	});
+}
+
+function configureProgress(xhr, maybeProgress)
+{
+	if (maybeProgress.ctor === 'Nothing')
+	{
+		return;
+	}
+
+	xhr.addEventListener('progress', function(event) {
+		if (!event.lengthComputable)
+		{
+			return;
+		}
+		_elm_lang$core$Native_Scheduler.rawSpawn(maybeProgress._0({
+			bytes: event.loaded,
+			bytesExpected: event.total
+		}));
+	});
+}
+
+function configureRequest(xhr, request)
+{
+	function setHeader(pair)
+	{
+		xhr.setRequestHeader(pair._0, pair._1);
+	}
+
+	A2(_elm_lang$core$List$map, setHeader, request.headers);
+	xhr.responseType = request.expect.responseType;
+	xhr.withCredentials = request.withCredentials;
+
+	if (request.timeout.ctor === 'Just')
+	{
+		xhr.timeout = request.timeout._0;
+	}
+}
+
+function send(xhr, body)
+{
+	switch (body.ctor)
+	{
+		case 'EmptyBody':
+			xhr.send();
+			return;
+
+		case 'StringBody':
+			xhr.setRequestHeader('Content-Type', body._0);
+			xhr.send(body._1);
+			return;
+
+		case 'FormDataBody':
+			xhr.send(body._0);
+			return;
+	}
+}
+
+
+// RESPONSES
+
+function handleResponse(xhr, responseToResult)
+{
+	var response = toResponse(xhr);
+
+	if (xhr.status < 200 || 300 <= xhr.status)
+	{
+		response.body = xhr.responseText;
+		return _elm_lang$core$Native_Scheduler.fail({
+			ctor: 'BadStatus',
+			_0: response
+		});
+	}
+
+	var result = responseToResult(response);
+
+	if (result.ctor === 'Ok')
+	{
+		return _elm_lang$core$Native_Scheduler.succeed(result._0);
+	}
+	else
+	{
+		response.body = xhr.responseText;
+		return _elm_lang$core$Native_Scheduler.fail({
+			ctor: 'BadPayload',
+			_0: result._0,
+			_1: response
+		});
+	}
+}
+
+function toResponse(xhr)
+{
+	return {
+		status: { code: xhr.status, message: xhr.statusText },
+		headers: parseHeaders(xhr.getAllResponseHeaders()),
+		url: xhr.responseURL,
+		body: xhr.response
+	};
+}
+
+function parseHeaders(rawHeaders)
+{
+	var headers = _elm_lang$core$Dict$empty;
+
+	if (!rawHeaders)
+	{
+		return headers;
+	}
+
+	var headerPairs = rawHeaders.split('\u000d\u000a');
+	for (var i = headerPairs.length; i--; )
+	{
+		var headerPair = headerPairs[i];
+		var index = headerPair.indexOf('\u003a\u0020');
+		if (index > 0)
+		{
+			var key = headerPair.substring(0, index);
+			var value = headerPair.substring(index + 2);
+
+			headers = A3(_elm_lang$core$Dict$update, key, function(oldValue) {
+				if (oldValue.ctor === 'Just')
+				{
+					return _elm_lang$core$Maybe$Just(value + ', ' + oldValue._0);
+				}
+				return _elm_lang$core$Maybe$Just(value);
+			}, headers);
+		}
+	}
+
+	return headers;
+}
+
+
+// EXPECTORS
+
+function expectStringResponse(responseToResult)
+{
+	return {
+		responseType: 'text',
+		responseToResult: responseToResult
+	};
+}
+
+function mapExpect(func, expect)
+{
+	return {
+		responseType: expect.responseType,
+		responseToResult: function(response) {
+			var convertedResponse = expect.responseToResult(response);
+			return A2(_elm_lang$core$Result$map, func, convertedResponse);
+		}
+	};
+}
+
+
+// BODY
+
+function multipart(parts)
+{
+	var formData = new FormData();
+
+	while (parts.ctor !== '[]')
+	{
+		var part = parts._0;
+		formData.append(part._0, part._1);
+		parts = parts._1;
+	}
+
+	return { ctor: 'FormDataBody', _0: formData };
+}
+
+return {
+	toTask: F2(toTask),
+	expectStringResponse: expectStringResponse,
+	mapExpect: F2(mapExpect),
+	multipart: multipart,
+	encodeUri: encodeUri,
+	decodeUri: decodeUri
+};
+
+}();
+
+var _elm_lang$http$Http_Internal$map = F2(
+	function (func, request) {
+		return _elm_lang$core$Native_Utils.update(
+			request,
+			{
+				expect: A2(_elm_lang$http$Native_Http.mapExpect, func, request.expect)
+			});
+	});
+var _elm_lang$http$Http_Internal$RawRequest = F7(
+	function (a, b, c, d, e, f, g) {
+		return {method: a, headers: b, url: c, body: d, expect: e, timeout: f, withCredentials: g};
+	});
+var _elm_lang$http$Http_Internal$Request = function (a) {
+	return {ctor: 'Request', _0: a};
+};
+var _elm_lang$http$Http_Internal$Expect = {ctor: 'Expect'};
+var _elm_lang$http$Http_Internal$FormDataBody = {ctor: 'FormDataBody'};
+var _elm_lang$http$Http_Internal$StringBody = F2(
+	function (a, b) {
+		return {ctor: 'StringBody', _0: a, _1: b};
+	});
+var _elm_lang$http$Http_Internal$EmptyBody = {ctor: 'EmptyBody'};
+var _elm_lang$http$Http_Internal$Header = F2(
+	function (a, b) {
+		return {ctor: 'Header', _0: a, _1: b};
+	});
+
+var _elm_lang$http$Http$decodeUri = _elm_lang$http$Native_Http.decodeUri;
+var _elm_lang$http$Http$encodeUri = _elm_lang$http$Native_Http.encodeUri;
+var _elm_lang$http$Http$expectStringResponse = _elm_lang$http$Native_Http.expectStringResponse;
+var _elm_lang$http$Http$expectJson = function (decoder) {
+	return _elm_lang$http$Http$expectStringResponse(
+		function (response) {
+			return A2(_elm_lang$core$Json_Decode$decodeString, decoder, response.body);
+		});
+};
+var _elm_lang$http$Http$expectString = _elm_lang$http$Http$expectStringResponse(
+	function (response) {
+		return _elm_lang$core$Result$Ok(response.body);
+	});
+var _elm_lang$http$Http$multipartBody = _elm_lang$http$Native_Http.multipart;
+var _elm_lang$http$Http$stringBody = _elm_lang$http$Http_Internal$StringBody;
+var _elm_lang$http$Http$jsonBody = function (value) {
+	return A2(
+		_elm_lang$http$Http_Internal$StringBody,
+		'application/json',
+		A2(_elm_lang$core$Json_Encode$encode, 0, value));
+};
+var _elm_lang$http$Http$emptyBody = _elm_lang$http$Http_Internal$EmptyBody;
+var _elm_lang$http$Http$header = _elm_lang$http$Http_Internal$Header;
+var _elm_lang$http$Http$request = _elm_lang$http$Http_Internal$Request;
+var _elm_lang$http$Http$post = F3(
+	function (url, body, decoder) {
+		return _elm_lang$http$Http$request(
+			{
+				method: 'POST',
+				headers: {ctor: '[]'},
+				url: url,
+				body: body,
+				expect: _elm_lang$http$Http$expectJson(decoder),
+				timeout: _elm_lang$core$Maybe$Nothing,
+				withCredentials: false
+			});
+	});
+var _elm_lang$http$Http$get = F2(
+	function (url, decoder) {
+		return _elm_lang$http$Http$request(
+			{
+				method: 'GET',
+				headers: {ctor: '[]'},
+				url: url,
+				body: _elm_lang$http$Http$emptyBody,
+				expect: _elm_lang$http$Http$expectJson(decoder),
+				timeout: _elm_lang$core$Maybe$Nothing,
+				withCredentials: false
+			});
+	});
+var _elm_lang$http$Http$getString = function (url) {
+	return _elm_lang$http$Http$request(
+		{
+			method: 'GET',
+			headers: {ctor: '[]'},
+			url: url,
+			body: _elm_lang$http$Http$emptyBody,
+			expect: _elm_lang$http$Http$expectString,
+			timeout: _elm_lang$core$Maybe$Nothing,
+			withCredentials: false
+		});
+};
+var _elm_lang$http$Http$toTask = function (_p0) {
+	var _p1 = _p0;
+	return A2(_elm_lang$http$Native_Http.toTask, _p1._0, _elm_lang$core$Maybe$Nothing);
+};
+var _elm_lang$http$Http$send = F2(
+	function (resultToMessage, request) {
+		return A2(
+			_elm_lang$core$Task$attempt,
+			resultToMessage,
+			_elm_lang$http$Http$toTask(request));
+	});
+var _elm_lang$http$Http$Response = F4(
+	function (a, b, c, d) {
+		return {url: a, status: b, headers: c, body: d};
+	});
+var _elm_lang$http$Http$BadPayload = F2(
+	function (a, b) {
+		return {ctor: 'BadPayload', _0: a, _1: b};
+	});
+var _elm_lang$http$Http$BadStatus = function (a) {
+	return {ctor: 'BadStatus', _0: a};
+};
+var _elm_lang$http$Http$NetworkError = {ctor: 'NetworkError'};
+var _elm_lang$http$Http$Timeout = {ctor: 'Timeout'};
+var _elm_lang$http$Http$BadUrl = function (a) {
+	return {ctor: 'BadUrl', _0: a};
+};
+var _elm_lang$http$Http$StringPart = F2(
+	function (a, b) {
+		return {ctor: 'StringPart', _0: a, _1: b};
+	});
+var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
+
+var _user$project$Decoderhelper$map10 = function ($function) {
+	return function (decoder0) {
+		return function (decoder1) {
+			return function (decoder2) {
+				return function (decoder3) {
+					return function (decoder4) {
+						return function (decoder5) {
+							return function (decoder6) {
+								return function (decoder7) {
+									return function (decoder8) {
+										return function (decoder9) {
+											return A3(
+												_elm_lang$core$Json_Decode$map2,
+												F2(
+													function (a, b) {
+														return $function(a.a1)(a.a2)(a.a3)(a.a4)(a.a5)(b.b1)(b.b2)(b.b3)(b.b4)(b.b5);
+													}),
+												A6(
+													_elm_lang$core$Json_Decode$map5,
+													F5(
+														function (a, b, c, d, e) {
+															return {a1: a, a2: b, a3: c, a4: d, a5: e};
+														}),
+													decoder0,
+													decoder1,
+													decoder2,
+													decoder3,
+													decoder4),
+												A6(
+													_elm_lang$core$Json_Decode$map5,
+													F5(
+														function (a, b, c, d, e) {
+															return {b1: a, b2: b, b3: c, b4: d, b5: e};
+														}),
+													decoder5,
+													decoder6,
+													decoder7,
+													decoder8,
+													decoder9));
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _user$project$Decoderhelper$intDictDecoder = F2(
+	function ($default, decoder) {
+		var makeInt = function (_p0) {
+			var _p1 = _p0;
+			var _p2 = _elm_lang$core$String$toInt(_p1._0);
+			if (_p2.ctor === 'Ok') {
+				return {ctor: '_Tuple2', _0: _p2._0, _1: _p1._1};
+			} else {
+				return {ctor: '_Tuple2', _0: -1, _1: $default};
+			}
+		};
+		return A2(
+			_elm_lang$core$Json_Decode$map,
+			_elm_lang$core$Dict$fromList,
+			A2(
+				_elm_lang$core$Json_Decode$map,
+				_elm_lang$core$List$map(makeInt),
+				_elm_lang$core$Json_Decode$keyValuePairs(decoder)));
+	});
+var _user$project$Decoderhelper$listheadwithdefault = F2(
+	function ($default, decoder) {
+		return A2(
+			_elm_lang$core$Json_Decode$map,
+			function (x) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					$default,
+					_elm_lang$core$List$head(x));
+			},
+			decoder);
+	});
+var _user$project$Decoderhelper$pseudolist = function (decoder) {
+	return A2(
+		_elm_lang$core$Json_Decode$map,
+		_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
+		_elm_lang$core$Json_Decode$keyValuePairs(decoder));
+};
+
+var _user$project$Term$termSortingDecoder = _elm_lang$core$Json_Decode$list(
+	A3(
+		_elm_lang$core$Json_Decode$map2,
+		F2(
+			function (x, y) {
+				return {id: x, relevance: y};
+			}),
+		A2(_elm_lang$core$Json_Decode$field, 'TermId', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'relevance', _elm_lang$core$Json_Decode$int)));
+var _user$project$Term$termId2Term = F2(
+	function (terms, termId) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (x) {
+					return _elm_lang$core$Native_Utils.eq(x.id, termId);
+				},
+				terms));
+	});
+var _user$project$Term$Term = F4(
+	function (a, b, c, d) {
+		return {id: a, name: b, wordtype: c, count: d};
+	});
+var _user$project$Term$matchTermsById = function (termsorting) {
+	return A2(
+		_elm_lang$core$List$map,
+		function (x) {
+			return A2(
+				_elm_lang$core$Maybe$withDefault,
+				A4(_user$project$Term$Term, -1, 'Error: Not matching.', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
+				A2(_elm_lang$core$Dict$get, x, termsorting.items));
+		},
+		termsorting.sorting);
+};
+var _user$project$Term$matchTermsortingById = function (termsresult) {
+	var termsorting = {
+		items: termsresult.terms,
+		sorting: A2(
+			_elm_lang$core$List$map,
+			function (_) {
+				return _.id;
+			},
+			A2(
+				_elm_lang$core$List$sortBy,
+				function (_) {
+					return _.relevance;
+				},
+				_elm_lang$core$Tuple$second(termsresult.topic)))
+	};
+	return _user$project$Term$matchTermsById(termsorting);
+};
+var _user$project$Term$termDecoder = A5(
+	_elm_lang$core$Json_Decode$map4,
+	_user$project$Term$Term,
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_NAME', _elm_lang$core$Json_Decode$string),
+	_elm_lang$core$Json_Decode$maybe(
+		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _elm_lang$core$Json_Decode$int)),
+	_elm_lang$core$Json_Decode$succeed(_elm_lang$core$Maybe$Nothing));
+var _user$project$Term$bestTermsDecoder = A2(
+	_elm_lang$core$Json_Decode$map,
+	_user$project$Term$matchTermsById,
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'61',
+		A2(
+			_user$project$Decoderhelper$listheadwithdefault,
+			{
+				sorting: {ctor: '[]'},
+				items: _elm_lang$core$Dict$empty
+			},
+			A2(
+				_elm_lang$core$Json_Decode$field,
+				'ITEMS',
+				_user$project$Decoderhelper$pseudolist(
+					A3(
+						_elm_lang$core$Json_Decode$map2,
+						F2(
+							function (x, y) {
+								return {sorting: x, items: y};
+							}),
+						A2(
+							_elm_lang$core$Json_Decode$field,
+							'SORTING',
+							_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)),
+						A2(
+							_user$project$Decoderhelper$intDictDecoder,
+							A4(_user$project$Term$Term, -1, '', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
+							A5(
+								_elm_lang$core$Json_Decode$map4,
+								_user$project$Term$Term,
+								A2(_elm_lang$core$Json_Decode$field, 'ITEM_ID', _elm_lang$core$Json_Decode$int),
+								A2(_elm_lang$core$Json_Decode$field, 'ITEM_NAME', _elm_lang$core$Json_Decode$string),
+								_elm_lang$core$Json_Decode$succeed(_elm_lang$core$Maybe$Nothing),
+								_elm_lang$core$Json_Decode$maybe(
+									A2(_elm_lang$core$Json_Decode$field, 'ITEM_COUNT', _elm_lang$core$Json_Decode$int))))))))));
+var _user$project$Term$TermsResult = F2(
+	function (a, b) {
+		return {topic: a, terms: b};
+	});
+var _user$project$Term$termsDecoder = A2(
+	_elm_lang$core$Json_Decode$map,
+	_user$project$Term$matchTermsortingById,
+	A3(
+		_elm_lang$core$Json_Decode$map2,
+		_user$project$Term$TermsResult,
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'Topic',
+			A2(
+				_elm_lang$core$Json_Decode$map,
+				_elm_lang$core$Tuple$mapFirst(
+					function (x) {
+						return A2(
+							_elm_lang$core$Result$withDefault,
+							-1,
+							_elm_lang$core$String$toInt(x));
+					}),
+				A2(
+					_user$project$Decoderhelper$listheadwithdefault,
+					{
+						ctor: '_Tuple2',
+						_0: '0',
+						_1: {
+							ctor: '::',
+							_0: {id: 0, relevance: 0},
+							_1: {ctor: '[]'}
+						}
+					},
+					_elm_lang$core$Json_Decode$keyValuePairs(
+						A2(_elm_lang$core$Json_Decode$field, 'Top_Terms', _user$project$Term$termSortingDecoder))))),
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'Term',
+			A2(
+				_user$project$Decoderhelper$intDictDecoder,
+				A4(_user$project$Term$Term, -1, '', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
+				_user$project$Term$termDecoder))));
+
+var _user$project$Topic$topicId2Topic = F2(
+	function (topics, topicId) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (x) {
+					return _elm_lang$core$Native_Utils.eq(x.id, topicId);
+				},
+				topics));
+	});
+var _user$project$Topic$termInTopic = F2(
+	function (term, topic) {
+		return A2(
+			_elm_lang$core$List$member,
+			term.id,
+			A2(
+				_elm_lang$core$List$map,
+				function (x) {
+					return x.id;
+				},
+				topic.top_terms));
+	});
+var _user$project$Topic$Topic = F4(
+	function (a, b, c, d) {
+		return {id: a, hirarchical_topic: b, color_topic: c, top_terms: d};
+	});
+var _user$project$Topic$TopicHirarchie = F4(
+	function (a, b, c, d) {
+		return {start: a, end: b, depth: c, cluster: d};
+	});
+var _user$project$Topic$topicDecoder = A5(
+	_elm_lang$core$Json_Decode$map4,
+	_user$project$Topic$Topic,
+	A2(_elm_lang$core$Json_Decode$field, 'topic_id', _elm_lang$core$Json_Decode$int),
+	A5(
+		_elm_lang$core$Json_Decode$map4,
+		_user$project$Topic$TopicHirarchie,
+		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$start', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$end', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$depth', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$cluster', _elm_lang$core$Json_Decode$string)),
+	A2(_elm_lang$core$Json_Decode$field, 'color_topic$color', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'top_terms', _user$project$Term$termSortingDecoder));
+var _user$project$Topic$TopicResult = F4(
+	function (a, b, c, d) {
+		return {topics: a, sorting: b, terms: c, topicsBestItemLimit: d};
+	});
+var _user$project$Topic$decodeTopics = A5(
+	_elm_lang$core$Json_Decode$map4,
+	_user$project$Topic$TopicResult,
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'Topic',
+		_user$project$Decoderhelper$pseudolist(_user$project$Topic$topicDecoder)),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'TOPIC_SORTING',
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'Term',
+		_user$project$Decoderhelper$pseudolist(_user$project$Term$termDecoder)),
+	A2(_elm_lang$core$Json_Decode$field, 'TopicBestItemLimit', _elm_lang$core$Json_Decode$int));
+
+var _user$project$Document$docId2Doc = F2(
+	function (docs, docId) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (x) {
+					return _elm_lang$core$Native_Utils.eq(x.document_id, docId);
+				},
+				docs));
+	});
+var _user$project$Document$documentId2Document = F2(
+	function (documents, documentId) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (x) {
+					return _elm_lang$core$Native_Utils.eq(x.id, documentId);
+				},
+				documents));
+	});
+var _user$project$Document$topicInDoc = F2(
+	function (topic, doc) {
+		return _elm_lang$core$Native_Utils.eq(topic.id, doc.topic_id) ? true : false;
+	});
+var _user$project$Document$termInDocument = F2(
+	function (term, document) {
+		return A2(
+			_elm_lang$core$List$member,
+			term.name,
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.term;
+				},
+				document.word_list));
+	});
+var _user$project$Document$docInTopic = F2(
+	function (doc, topic) {
+		return _elm_lang$core$Native_Utils.eq(doc.topic_id, topic.id) ? true : A2(_elm_lang$core$List$member, topic.id, doc.top_topic);
+	});
+var _user$project$Document$Document = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {id: a, linkurl: b, time_stamp: c, title: d, fulltext: e, search_test: f, frame_list: g, word_list: h};
+	});
+var _user$project$Document$Token = F4(
+	function (a, b, c, d) {
+		return {topic_id: a, posintion_in_document: b, term: c, parent_topic_ids: d};
+	});
+var _user$project$Document$tokenDecoder = A5(
+	_elm_lang$core$Json_Decode$map4,
+	_user$project$Document$Token,
+	A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'POSITION_OF_TOKEN_IN_DOCUMENT', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TOKEN', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'HIRARCHICAL_TOPIC$PARENT_IDS',
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)));
+var _user$project$Document$documentDecoder = A2(
+	_elm_lang$core$Json_Decode$field,
+	'DOCUMENT',
+	A9(
+		_elm_lang$core$Json_Decode$map8,
+		_user$project$Document$Document,
+		A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode$field, 'TEXT$FULLTEXT', _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode$field, 'SEARCH_TEXT', _elm_lang$core$Json_Decode$string),
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'FRAME_LIST',
+			A2(
+				_user$project$Decoderhelper$listheadwithdefault,
+				{ctor: '[]'},
+				_user$project$Decoderhelper$pseudolist(
+					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)))),
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'WORD_LIST',
+			_elm_lang$core$Json_Decode$list(_user$project$Document$tokenDecoder))));
+var _user$project$Document$Doc = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return {document_id: a, topic_id: b, document_count: c, keyword_snipet: d, keyword_title: e, top_topic: f, linkurl: g, time_stamp: h, title: i, snipet: j};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _user$project$Document$bestDocsDecoder = function () {
+	var getDoc = F2(
+		function (docs, docId) {
+			return _elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (a) {
+						return _elm_lang$core$Native_Utils.eq(a.document_id, docId);
+					},
+					docs));
+		});
+	var applySorting = F2(
+		function (docs, order) {
+			return A2(
+				_elm_lang$core$List$filterMap,
+				getDoc(docs),
+				order);
+		});
+	var sorting = A2(
+		_elm_lang$core$Json_Decode$field,
+		'DOCUMENT_SORTING',
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int));
+	var documents = A2(
+		_elm_lang$core$Json_Decode$field,
+		'DOCUMENT',
+		_user$project$Decoderhelper$pseudolist(
+			_user$project$Decoderhelper$map10(_user$project$Document$Doc)(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_COUNT', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_SNIPET', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_TITLE', _elm_lang$core$Json_Decode$string))(
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'TOP_TOPIC',
+					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)))(
+				A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TIME_STAMP', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$SNIPET', _elm_lang$core$Json_Decode$string))));
+	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
+}();
+
 var _user$project$Model$slotChangeTo = F3(
 	function (oldSlots, id, value) {
 		return _elm_lang$core$Native_Utils.update(
@@ -15907,35 +16705,6 @@ var _user$project$Model$slotChangeTo = F3(
 			{
 				main: A3(_elm_lang$core$Array$set, id, value, oldSlots.main)
 			});
-	});
-var _user$project$Model$wordInArticle = F2(
-	function (word, article) {
-		return A2(_elm_lang$core$List$member, word, article.words);
-	});
-var _user$project$Model$topicInArticle = F2(
-	function (topic, article) {
-		return A2(_elm_lang$core$List$member, topic.topicID, article.rankedTopics);
-	});
-var _user$project$Model$topicIDToTopic = F2(
-	function (topics, id) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			{
-				topicID: id,
-				topicName: 'ERROR',
-				words: {ctor: '[]'}
-			},
-			_elm_lang$core$List$head(
-				A2(
-					_elm_lang$core$List$filter,
-					function (x) {
-						return _elm_lang$core$Native_Utils.eq(x.topicID, id);
-					},
-					topics)));
-	});
-var _user$project$Model$wordInTopic = F2(
-	function (word, topic) {
-		return A2(_elm_lang$core$List$member, word, topic.words);
 	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
@@ -15950,7 +16719,7 @@ var _user$project$Model$Model = function (a) {
 										return function (k) {
 											return function (l) {
 												return function (m) {
-													return {result: a, topics: b, currentTopics: c, articles: d, currentArticle: e, wordList: f, currentWord: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, mdl: m};
+													return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, mdl: m};
 												};
 											};
 										};
@@ -15964,17 +16733,9 @@ var _user$project$Model$Model = function (a) {
 		};
 	};
 };
-var _user$project$Model$Topic = F3(
-	function (a, b, c) {
-		return {topicID: a, topicName: b, words: c};
-	});
-var _user$project$Model$Article = F6(
-	function (a, b, c, d, e, f) {
-		return {articleID: a, rankedTopics: b, words: c, title: d, date: e, text: f};
-	});
 var _user$project$Model$Settings = F8(
 	function (a, b, c, d, e, f, g, h) {
-		return {showTopics: a, showArticles: b, showWordlist: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h};
+		return {showTopics: a, showDocuments: b, showTerms: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h};
 	});
 var _user$project$Model$Slots = F2(
 	function (a, b) {
@@ -15983,6 +16744,24 @@ var _user$project$Model$Slots = F2(
 var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
+};
+var _user$project$Model$ExecCmd = function (a) {
+	return {ctor: 'ExecCmd', _0: a};
+};
+var _user$project$Model$NewFrames = function (a) {
+	return {ctor: 'NewFrames', _0: a};
+};
+var _user$project$Model$NewTerms = function (a) {
+	return {ctor: 'NewTerms', _0: a};
+};
+var _user$project$Model$NewDocs = function (a) {
+	return {ctor: 'NewDocs', _0: a};
+};
+var _user$project$Model$NewDocument = function (a) {
+	return {ctor: 'NewDocument', _0: a};
+};
+var _user$project$Model$NewTopics = function (a) {
+	return {ctor: 'NewTopics', _0: a};
 };
 var _user$project$Model$ToggleShowSaved = {ctor: 'ToggleShowSaved'};
 var _user$project$Model$ToggleView2 = {ctor: 'ToggleView2'};
@@ -15994,17 +16773,17 @@ var _user$project$Model$UpdateSlot = F2(
 var _user$project$Model$ChoseSlotDialog = function (a) {
 	return {ctor: 'ChoseSlotDialog', _0: a};
 };
-var _user$project$Model$HideArticles = function (a) {
-	return {ctor: 'HideArticles', _0: a};
+var _user$project$Model$HideDocuments = function (a) {
+	return {ctor: 'HideDocuments', _0: a};
 };
-var _user$project$Model$ShowArticles = function (a) {
-	return {ctor: 'ShowArticles', _0: a};
+var _user$project$Model$ShowDocuments = function (a) {
+	return {ctor: 'ShowDocuments', _0: a};
 };
-var _user$project$Model$HideWordList = function (a) {
-	return {ctor: 'HideWordList', _0: a};
+var _user$project$Model$HideTerms = function (a) {
+	return {ctor: 'HideTerms', _0: a};
 };
-var _user$project$Model$ShowWordList = function (a) {
-	return {ctor: 'ShowWordList', _0: a};
+var _user$project$Model$ShowTerms = function (a) {
+	return {ctor: 'ShowTerms', _0: a};
 };
 var _user$project$Model$HideTopics = function (a) {
 	return {ctor: 'HideTopics', _0: a};
@@ -16015,9 +16794,9 @@ var _user$project$Model$ShowTopics = function (a) {
 var _user$project$Model$RemoveTopic = function (a) {
 	return {ctor: 'RemoveTopic', _0: a};
 };
-var _user$project$Model$ChangeCurrentArticle = F2(
+var _user$project$Model$ChangeCurrentDoc = F2(
 	function (a, b) {
-		return {ctor: 'ChangeCurrentArticle', _0: a, _1: b};
+		return {ctor: 'ChangeCurrentDoc', _0: a, _1: b};
 	});
 var _user$project$Model$Raise = function (a) {
 	return {ctor: 'Raise', _0: a};
@@ -16035,16 +16814,16 @@ var _user$project$Model$ErrorTab = F2(
 	function (a, b) {
 		return {ctor: 'ErrorTab', _0: a, _1: b};
 	});
-var _user$project$Model$ArticleTab = F2(
+var _user$project$Model$DocumentTab = F2(
 	function (a, b) {
-		return {ctor: 'ArticleTab', _0: a, _1: b};
+		return {ctor: 'DocumentTab', _0: a, _1: b};
 	});
 var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
-var _user$project$Model$Articleresult = function (a) {
-	return {ctor: 'Articleresult', _0: a};
+var _user$project$Model$Documentresult = function (a) {
+	return {ctor: 'Documentresult', _0: a};
 };
-var _user$project$Model$Wordresult = function (a) {
-	return {ctor: 'Wordresult', _0: a};
+var _user$project$Model$Termresult = function (a) {
+	return {ctor: 'Termresult', _0: a};
 };
 var _user$project$Model$Topicresult = function (a) {
 	return {ctor: 'Topicresult', _0: a};
@@ -16117,49 +16896,118 @@ var _user$project$Model$slotFromTo = F3(
 	});
 var _user$project$Model$Empty = {ctor: 'Empty'};
 var _user$project$Model$slotRemove = F2(
-	function (slots, id) {
-		slotRemove:
-		while (true) {
-			var moreTail = A2(
-				_elm_lang$core$Maybe$withDefault,
-				{ctor: '[]'},
-				_elm_lang$core$List$tail(slots.more));
-			var moreHead = A2(
-				_elm_lang$core$Maybe$withDefault,
-				_user$project$Model$Empty,
-				_elm_lang$core$List$head(slots.more));
-			var nextId = _elm_lang$core$Native_Utils.eq(moreHead, _user$project$Model$Empty) ? (id + 1) : (id - 1);
-			var nextSlot = A2(_user$project$Model$slotGet, slots, nextId);
-			if (_elm_lang$core$Native_Utils.eq(nextSlot, _user$project$Model$ErrorSlot)) {
-				return A3(
-					_user$project$Model$slotChangeTo,
-					_elm_lang$core$Native_Utils.update(
-						slots,
-						{more: moreTail}),
-					id,
-					moreHead);
-			} else {
-				var _v4 = A3(_user$project$Model$slotChangeTo, slots, id, nextSlot),
-					_v5 = nextId;
-				slots = _v4;
-				id = _v5;
-				continue slotRemove;
-			}
-		}
+	function (slots, removeId) {
+		var moreTail = A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			_elm_lang$core$List$tail(slots.more));
+		var moreHead = A2(
+			_elm_lang$core$Maybe$withDefault,
+			_user$project$Model$Empty,
+			_elm_lang$core$List$head(slots.more));
+		var dir = _elm_lang$core$Native_Utils.eq(moreHead, _user$project$Model$Empty) ? 1 : -1;
+		var nextSlot = function (id) {
+			return A2(_user$project$Model$slotGet, slots, id + dir);
+		};
+		var nextResult = F2(
+			function (id, view) {
+				return _elm_lang$core$Native_Utils.eq(
+					nextSlot(id),
+					_user$project$Model$ErrorSlot) ? moreHead : ((_elm_lang$core$Native_Utils.cmp(id * dir, removeId * dir) > -1) ? nextSlot(id) : view);
+			});
+		return _elm_lang$core$Native_Utils.update(
+			slots,
+			{
+				main: A2(_elm_lang$core$Array$indexedMap, nextResult, slots.main),
+				more: moreTail
+			});
 	});
 var _user$project$Model$Dialog = {ctor: 'Dialog'};
-var _user$project$Model$ArticlesView = function (a) {
-	return {ctor: 'ArticlesView', _0: a};
+var _user$project$Model$DocumentsView = function (a) {
+	return {ctor: 'DocumentsView', _0: a};
 };
 var _user$project$Model$TopicsView = function (a) {
 	return {ctor: 'TopicsView', _0: a};
 };
-var _user$project$Model$WordlistView = function (a) {
-	return {ctor: 'WordlistView', _0: a};
+var _user$project$Model$TermsView = function (a) {
+	return {ctor: 'TermsView', _0: a};
 };
 
-var _user$project$Articlesview$article2CardView = F3(
-	function (model, article, cardID) {
+var _user$project$Request$baseURL = 'http://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command=';
+var _user$project$Request$loadData = F3(
+	function (decoder, msg, $arguments) {
+		var url = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$baseURL, $arguments);
+		var request = A2(_elm_lang$http$Http$get, url, decoder);
+		return A2(_elm_lang$http$Http$send, msg, request);
+	});
+var _user$project$Request$loadTopics = A3(_user$project$Request$loadData, _user$project$Topic$decodeTopics, _user$project$Model$NewTopics, 'GetTopics');
+var _user$project$Request$loadDoc = function (id) {
+	return A3(
+		_user$project$Request$loadData,
+		_user$project$Document$documentDecoder,
+		_user$project$Model$NewDocument,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'GetDoc&DocId=',
+			_elm_lang$core$Basics$toString(id)));
+};
+var _user$project$Request$loadBestDocs = F3(
+	function (id, term, sorting) {
+		var termArgument = (_elm_lang$core$Native_Utils.cmp(term, 0) > -1) ? A2(
+			_elm_lang$core$Basics_ops['++'],
+			'&term',
+			_elm_lang$core$Basics$toString(term)) : '';
+		var command = _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: 'GetBestDocs&TopicId=',
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Basics$toString(id),
+					_1: {
+						ctor: '::',
+						_0: termArgument,
+						_1: {
+							ctor: '::',
+							_0: '&sorting',
+							_1: {
+								ctor: '::',
+								_0: sorting,
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			});
+		return A3(_user$project$Request$loadData, _user$project$Document$bestDocsDecoder, _user$project$Model$NewDocs, command);
+	});
+var _user$project$Request$loadTerms = F2(
+	function (id, offset) {
+		var command = _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: 'GetTerms&TopicId=',
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Basics$toString(id),
+					_1: {
+						ctor: '::',
+						_0: '&offset=',
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Basics$toString(offset),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+		return A3(_user$project$Request$loadData, _user$project$Term$termsDecoder, _user$project$Model$NewTerms, command);
+	});
+var _user$project$Request$loadBestTerms = A3(_user$project$Request$loadData, _user$project$Term$bestTermsDecoder, _user$project$Model$NewTerms, 'GetBestTerms');
+var _user$project$Request$loadBestFrames = A3(_user$project$Request$loadData, _user$project$Term$bestTermsDecoder, _user$project$Model$NewFrames, 'GetBestFrames');
+
+var _user$project$Documentsview$doc2CardView = F3(
+	function (model, doc, cardID) {
 		return A2(
 			_debois$elm_mdl$Material_Card$view,
 			{
@@ -16177,7 +17025,7 @@ var _user$project$Articlesview$article2CardView = F3(
 								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Brown, _debois$elm_mdl$Material_Color$S500)),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$core$Native_Utils.eq(cardID, model.currentArticle.cardID) ? _debois$elm_mdl$Material_Elevation$e0 : (_elm_lang$core$Native_Utils.eq(cardID, model.raised) ? _debois$elm_mdl$Material_Elevation$e16 : _debois$elm_mdl$Material_Elevation$e8),
+								_0: _elm_lang$core$Native_Utils.eq(cardID, model.currentDocument.cardID) ? _debois$elm_mdl$Material_Elevation$e0 : (_elm_lang$core$Native_Utils.eq(cardID, model.raised) ? _debois$elm_mdl$Material_Elevation$e16 : _debois$elm_mdl$Material_Elevation$e8),
 								_1: {
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Elevation$transition(250),
@@ -16192,7 +17040,7 @@ var _user$project$Articlesview$article2CardView = F3(
 											_1: {
 												ctor: '::',
 												_0: _debois$elm_mdl$Material_Options$onClick(
-													A2(_user$project$Model$ChangeCurrentArticle, cardID, article)),
+													A2(_user$project$Model$ChangeCurrentDoc, cardID, doc)),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -16223,7 +17071,7 @@ var _user$project$Articlesview$article2CardView = F3(
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(article.title),
+								_0: _elm_lang$html$Html$text(doc.title),
 								_1: {
 									ctor: '::',
 									_0: A2(
@@ -16234,9 +17082,9 @@ var _user$project$Articlesview$article2CardView = F3(
 											_0: _debois$elm_mdl$Material_Options$onClick(
 												_user$project$Model$ShowTopics(
 													A2(
-														_elm_lang$core$List$map,
-														_user$project$Model$topicIDToTopic(model.topics),
-														article.rankedTopics))),
+														_elm_lang$core$List$filterMap,
+														_user$project$Topic$topicId2Topic(model.topics),
+														doc.top_topic))),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
@@ -16247,7 +17095,8 @@ var _user$project$Articlesview$article2CardView = F3(
 											{
 												ctor: '::',
 												_0: _debois$elm_mdl$Material_Options$onClick(
-													_user$project$Model$ShowWordList(article.words)),
+													_user$project$Model$ExecCmd(
+														_user$project$Request$loadDoc(doc.document_id))),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -16278,7 +17127,8 @@ var _user$project$Articlesview$article2CardView = F3(
 								},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(article.date),
+									_0: _elm_lang$html$Html$text(
+										_elm_lang$core$Basics$toString(doc.time_stamp)),
 									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
@@ -16299,14 +17149,14 @@ var _user$project$Articlesview$article2CardView = F3(
 						},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(article.text),
+							_0: _elm_lang$html$Html$text(doc.snipet),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
-var _user$project$Articlesview$view = F3(
+var _user$project$Documentsview$view = F3(
 	function (model, flex, slotId) {
 		return A2(
 			_debois$elm_mdl$Material_Options$div,
@@ -16376,7 +17226,7 @@ var _user$project$Articlesview$view = F3(
 													_1: {
 														ctor: '::',
 														_0: _debois$elm_mdl$Material_Options$onClick(
-															_user$project$Model$HideWordList(slotId)),
+															_user$project$Model$HideTerms(slotId)),
 														_1: {ctor: '[]'}
 													}
 												}
@@ -16403,301 +17253,79 @@ var _user$project$Articlesview$view = F3(
 						},
 						A3(
 							_elm_lang$core$List$map2,
-							_user$project$Articlesview$article2CardView(model),
-							model.articles,
+							_user$project$Documentsview$doc2CardView(model),
+							model.docs,
 							A2(
 								_elm_lang$core$List$range,
 								1,
-								_elm_lang$core$List$length(model.articles)))),
+								_elm_lang$core$List$length(model.docs)))),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
 
-var _user$project$Init$initTopic = function (id) {
+var _user$project$Init$initTerm = function (id) {
 	var _p0 = id;
-	switch (_p0) {
-		case 0:
-			return {
-				topicID: id,
-				topicName: 'Stuff',
-				words: {
-					ctor: '::',
-					_0: 'Stuff',
-					_1: {
-						ctor: '::',
-						_0: 'Things',
-						_1: {
-							ctor: '::',
-							_0: 'Items',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {
-															ctor: '::',
-															_0: 'Stuff',
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-		case 1:
-			return {
-				topicID: id,
-				topicName: 'Other',
-				words: {
-					ctor: '::',
-					_0: 'Some',
-					_1: {
-						ctor: '::',
-						_0: 'Any',
-						_1: {
-							ctor: '::',
-							_0: 'Other',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {
-															ctor: '::',
-															_0: 'Stuff',
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-		case 2:
-			return {
-				topicID: 2,
-				topicName: 'Tryout',
-				words: {
-					ctor: '::',
-					_0: 'test',
-					_1: {
-						ctor: '::',
-						_0: 'time',
-						_1: {
-							ctor: '::',
-							_0: 'Stuff',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {ctor: '[]'}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-		default:
-			return {
-				topicID: id,
-				topicName: 'Dummy',
-				words: {
-					ctor: '::',
-					_0: 'one',
-					_1: {
-						ctor: '::',
-						_0: 'two',
-						_1: {
-							ctor: '::',
-							_0: 'three',
-							_1: {
-								ctor: '::',
-								_0: 'Stuff',
-								_1: {
-									ctor: '::',
-									_0: 'Stuff',
-									_1: {
-										ctor: '::',
-										_0: 'Stuff',
-										_1: {
-											ctor: '::',
-											_0: 'Stuff',
-											_1: {
-												ctor: '::',
-												_0: 'Stuff',
-												_1: {
-													ctor: '::',
-													_0: 'Stuff',
-													_1: {
-														ctor: '::',
-														_0: 'Stuff',
-														_1: {
-															ctor: '::',
-															_0: 'Stuff',
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			};
-	}
+	return {
+		id: id,
+		name: 'term',
+		wordtype: _elm_lang$core$Maybe$Just(0),
+		count: _elm_lang$core$Maybe$Just(0)
+	};
 };
-var _user$project$Init$initArticle = function (id) {
+var _user$project$Init$initTopic = function (id) {
 	var _p1 = id;
-	switch (_p1) {
-		case 0:
-			return {
-				articleID: 0,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				words: {
-					ctor: '::',
-					_0: 'Some',
-					_1: {
-						ctor: '::',
-						_0: 'Any',
-						_1: {
-							ctor: '::',
-							_0: 'Stuff',
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Hallo',
-				date: '11.11.2011',
-				text: 'Dieser Artikel ist der, der gerade an der Seite ausgewählt ist.'
-			};
-		case 1:
-			return {
-				articleID: 1,
-				rankedTopics: {
-					ctor: '::',
-					_0: 0,
-					_1: {
-						ctor: '::',
-						_0: 1,
-						_1: {
-							ctor: '::',
-							_0: 2,
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				words: {
-					ctor: '::',
-					_0: 'two',
-					_1: {
-						ctor: '::',
-						_0: 'time',
-						_1: {
-							ctor: '::',
-							_0: 'Item',
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				title: 'Article 0',
-				date: '13.07.1999',
-				text: 'Hallo, ich habe hier nur einen Dummytext.'
-			};
-		default:
-			return {
-				articleID: id,
-				rankedTopics: {ctor: '[]'},
-				words: {
-					ctor: '::',
-					_0: 'test',
-					_1: {ctor: '[]'}
-				},
-				title: '0',
-				date: '0.0.0',
-				text: ''
-			};
-	}
+	return {
+		id: id,
+		hirarchical_topic: {start: 0, end: 0, depth: 0, cluster: '0;1;1;1'},
+		color_topic: '#ffffff',
+		top_terms: {
+			ctor: '::',
+			_0: {id: 0, relevance: 0},
+			_1: {ctor: '[]'}
+		}
+	};
+};
+var _user$project$Init$initDoc = function (id) {
+	var _p2 = id;
+	return {
+		document_id: id,
+		topic_id: 0,
+		document_count: 0,
+		keyword_snipet: 'key snipet',
+		keyword_title: 'key title',
+		top_topic: {
+			ctor: '::',
+			_0: 0,
+			_1: {ctor: '[]'}
+		},
+		linkurl: 'http://example.com/Docunment',
+		time_stamp: 0,
+		title: 'title',
+		snipet: 'snipet'
+	};
+};
+var _user$project$Init$initDocument = function (id) {
+	var _p3 = id;
+	return {
+		id: id,
+		linkurl: 'http://example.com/Docunment',
+		time_stamp: 0,
+		title: 'document',
+		fulltext: 'This is a test document. Further content is not available.',
+		search_test: 'whatever',
+		frame_list: {ctor: '[]'},
+		word_list: {
+			ctor: '::',
+			_0: {
+				topic_id: 0,
+				posintion_in_document: 0,
+				term: 'term',
+				parent_topic_ids: {ctor: '[]'}
+			},
+			_1: {ctor: '[]'}
+		}
+	};
 };
 var _user$project$Init$initTabs = {
 	ctor: '::',
@@ -16705,30 +17333,33 @@ var _user$project$Init$initTabs = {
 	_1: {
 		ctor: '::',
 		_0: A2(
-			_user$project$Model$ArticleTab,
-			'Article 0',
-			_user$project$Init$initArticle(1)),
+			_user$project$Model$DocumentTab,
+			'Document 0',
+			_user$project$Init$initDocument(1)),
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showArticles: true, showWordlist: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false};
+var _user$project$Init$initSettings = {showTopics: true, showDocuments: true, showTerms: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false};
 var _user$project$Init$initResult = {
 	ctor: '::',
-	_0: _user$project$Model$Wordresult('test'),
+	_0: _user$project$Model$Termresult(
+		_user$project$Init$initTerm(0)),
 	_1: {
 		ctor: '::',
-		_0: _user$project$Model$Wordresult('time'),
+		_0: _user$project$Model$Termresult(
+			_user$project$Init$initTerm(1)),
 		_1: {
 			ctor: '::',
-			_0: _user$project$Model$Wordresult('Stuff'),
+			_0: _user$project$Model$Termresult(
+				_user$project$Init$initTerm(2)),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Model$Articleresult(
-					_user$project$Init$initArticle(0)),
+				_0: _user$project$Model$Documentresult(
+					_user$project$Init$initDoc(0)),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Model$Articleresult(
-						_user$project$Init$initArticle(1)),
+					_0: _user$project$Model$Documentresult(
+						_user$project$Init$initDoc(1)),
 					_1: {
 						ctor: '::',
 						_0: _user$project$Model$Topicresult(
@@ -16762,21 +17393,21 @@ var _user$project$Init$init = {
 				_1: {ctor: '[]'}
 			}
 		},
-		articles: {
+		docs: {
 			ctor: '::',
-			_0: _user$project$Init$initArticle(0),
+			_0: _user$project$Init$initDoc(0),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Init$initArticle(1),
+				_0: _user$project$Init$initDoc(1),
 				_1: {ctor: '[]'}
 			}
 		},
-		currentArticle: {
+		currentDocument: {
 			cardID: 0,
-			article: _user$project$Init$initArticle(0)
+			document: _user$project$Init$initDocument(0)
 		},
-		wordList: {ctor: '[]'},
-		currentWord: '',
+		terms: {ctor: '[]'},
+		currentTerm: _user$project$Init$initTerm(0),
 		tabs: _user$project$Init$initTabs,
 		currentTab: 0,
 		raised: -1,
@@ -16807,7 +17438,7 @@ var _user$project$Init$init = {
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 
-var _user$project$Tabsview$article2ArticleView = function (article) {
+var _user$project$Tabsview$document2DocumentView = function (document) {
 	return A2(
 		_debois$elm_mdl$Material_Options$div,
 		{
@@ -16834,7 +17465,8 @@ var _user$project$Tabsview$article2ArticleView = function (article) {
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(article.date),
+					_0: _elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(document.time_stamp)),
 					_1: {
 						ctor: '::',
 						_0: A2(
@@ -16851,7 +17483,7 @@ var _user$project$Tabsview$article2ArticleView = function (article) {
 					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(article.title),
+						_0: _elm_lang$html$Html$text(document.title),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -16861,7 +17493,7 @@ var _user$project$Tabsview$article2ArticleView = function (article) {
 						{ctor: '[]'},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(article.text),
+							_0: _elm_lang$html$Html$text(document.fulltext),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
@@ -16890,7 +17522,7 @@ var _user$project$Tabsview$tab2TabView = function (tab) {
 					switch (_p0.ctor) {
 						case 'PreviewTab':
 							return _elm_lang$html$Html$text('Vorschau');
-						case 'ArticleTab':
+						case 'DocumentTab':
 							return _elm_lang$html$Html$text(_p0._0);
 						default:
 							return _elm_lang$html$Html$text(_p0._0);
@@ -16963,9 +17595,9 @@ var _user$project$Tabsview$view = F2(
 							var _p2 = tab;
 							switch (_p2.ctor) {
 								case 'PreviewTab':
-									return _user$project$Tabsview$article2ArticleView(model.currentArticle.article);
-								case 'ArticleTab':
-									return _user$project$Tabsview$article2ArticleView(_p2._1);
+									return _user$project$Tabsview$document2DocumentView(model.currentDocument.document);
+								case 'DocumentTab':
+									return _user$project$Tabsview$document2DocumentView(_p2._1);
 								default:
 									return _elm_lang$html$Html$text(_p2._1);
 							}
@@ -17004,7 +17636,8 @@ var _user$project$Topicsview$topic2Chip = F2(
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(topic.topicName),
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(topic.id)),
 						_1: {
 							ctor: '::',
 							_0: A2(
@@ -17013,7 +17646,8 @@ var _user$project$Topicsview$topic2Chip = F2(
 								{
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
-										_user$project$Model$ShowWordList(topic.words)),
+										_user$project$Model$ExecCmd(
+											A2(_user$project$Request$loadTerms, topic.id, 30))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -17024,11 +17658,8 @@ var _user$project$Topicsview$topic2Chip = F2(
 									{
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ShowArticles(
-												A2(
-													_elm_lang$core$List$filter,
-													_user$project$Model$topicInArticle(topic),
-													model.articles))),
+											_user$project$Model$ExecCmd(
+												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
@@ -17162,7 +17793,8 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(topic.topicName),
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(topic.id)),
 						_1: {
 							ctor: '::',
 							_0: A2(
@@ -17171,7 +17803,8 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 								{
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
-										_user$project$Model$ShowWordList(topic.words)),
+										_user$project$Model$ExecCmd(
+											A2(_user$project$Request$loadTerms, topic.id, 30))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -17182,11 +17815,8 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 									{
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ShowArticles(
-												A2(
-													_elm_lang$core$List$filter,
-													_user$project$Model$topicInArticle(topic),
-													model.articles))),
+											_user$project$Model$ExecCmd(
+												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -17197,7 +17827,7 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 										{
 											ctor: '::',
 											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$RemoveTopic(topic.topicID)),
+												_user$project$Model$RemoveTopic(topic.id)),
 											_1: {ctor: '[]'}
 										}),
 									_1: {ctor: '[]'}
@@ -17239,8 +17869,8 @@ var _user$project$Savedview$view = F2(
 					model.currentTopics)));
 	});
 
-var _user$project$Wordlistview$topic2WordList = F3(
-	function (model, word, id) {
+var _user$project$Termsview$topic2Terms = F3(
+	function (model, term, id) {
 		return A2(
 			_debois$elm_mdl$Material_List$li,
 			{ctor: '[]'},
@@ -17248,7 +17878,7 @@ var _user$project$Wordlistview$topic2WordList = F3(
 				ctor: '::',
 				_0: A2(
 					_debois$elm_mdl$Material_List$content,
-					_elm_lang$core$Native_Utils.eq(word, model.currentWord) ? {
+					_elm_lang$core$Native_Utils.eq(term.id, model.currentTerm.id) ? {
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Options$cs('mdl-button'),
 						_1: {
@@ -17279,7 +17909,17 @@ var _user$project$Wordlistview$topic2WordList = F3(
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(word),
+						_0: _elm_lang$html$Html$text(
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								term.name,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									' (',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(term.id),
+										')')))),
 						_1: {
 							ctor: '::',
 							_0: A2(
@@ -17291,7 +17931,7 @@ var _user$project$Wordlistview$topic2WordList = F3(
 										_user$project$Model$ShowTopics(
 											A2(
 												_elm_lang$core$List$filter,
-												_user$project$Model$wordInTopic(word),
+												_user$project$Topic$termInTopic(term),
 												model.topics))),
 									_1: {ctor: '[]'}
 								}),
@@ -17303,11 +17943,8 @@ var _user$project$Wordlistview$topic2WordList = F3(
 									{
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ShowArticles(
-												A2(
-													_elm_lang$core$List$filter,
-													_user$project$Model$wordInArticle(word),
-													model.articles))),
+											_user$project$Model$ExecCmd(
+												A3(_user$project$Request$loadBestDocs, 0, term.id, 'relevance'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
@@ -17317,7 +17954,7 @@ var _user$project$Wordlistview$topic2WordList = F3(
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Wordlistview$view = F3(
+var _user$project$Termsview$view = F3(
 	function (model, flex, slotId) {
 		return A2(
 			_debois$elm_mdl$Material_Options$div,
@@ -17387,7 +18024,7 @@ var _user$project$Wordlistview$view = F3(
 													_1: {
 														ctor: '::',
 														_0: _debois$elm_mdl$Material_Options$onClick(
-															_user$project$Model$HideWordList(slotId)),
+															_user$project$Model$HideTerms(slotId)),
 														_1: {ctor: '[]'}
 													}
 												}
@@ -17414,8 +18051,8 @@ var _user$project$Wordlistview$view = F3(
 						},
 						A3(
 							_elm_lang$core$List$map2,
-							_user$project$Wordlistview$topic2WordList(model),
-							model.wordList,
+							_user$project$Termsview$topic2Terms(model),
+							model.terms,
 							A2(
 								_elm_lang$core$List$map,
 								function (x) {
@@ -17424,7 +18061,7 @@ var _user$project$Wordlistview$view = F3(
 								A2(
 									_elm_lang$core$List$range,
 									1,
-									_elm_lang$core$List$length(model.wordList))))),
+									_elm_lang$core$List$length(model.terms))))),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -17465,7 +18102,7 @@ var _user$project$Mainview_v1$bool2Int = function (bool) {
 	return bool ? 1 : 0;
 };
 var _user$project$Mainview_v1$countOther = function (settings) {
-	return (_user$project$Mainview_v1$bool2Int(settings.showArticles) + _user$project$Mainview_v1$bool2Int(!settings.bottom)) + _user$project$Mainview_v1$bool2Int(settings.showWordlist);
+	return (_user$project$Mainview_v1$bool2Int(settings.showDocuments) + _user$project$Mainview_v1$bool2Int(!settings.bottom)) + _user$project$Mainview_v1$bool2Int(settings.showTerms);
 };
 var _user$project$Mainview_v1$bottomView = F2(
 	function (model, flex) {
@@ -17637,9 +18274,9 @@ var _user$project$Mainview_v1$viewBody2 = function (model) {
 								ctor: '::',
 								_0: A2(
 									_user$project$Mainview_v1$viewOrEmptyFlex,
-									model.settings.showWordlist,
+									model.settings.showTerms,
 									A3(
-										_user$project$Wordlistview$view,
+										_user$project$Termsview$view,
 										model,
 										_user$project$Mainview_v1$flexValue(1),
 										2)),
@@ -17647,9 +18284,9 @@ var _user$project$Mainview_v1$viewBody2 = function (model) {
 									ctor: '::',
 									_0: A2(
 										_user$project$Mainview_v1$viewOrEmptyFlex,
-										model.settings.showArticles,
+										model.settings.showDocuments,
 										A3(
-											_user$project$Articlesview$view,
+											_user$project$Documentsview$view,
 											model,
 											_user$project$Mainview_v1$flexValue(1),
 											3)),
@@ -17762,9 +18399,9 @@ var _user$project$Mainview_v1$viewBody = function (model) {
 						ctor: '::',
 						_0: A2(
 							_user$project$Mainview_v1$viewOrEmptyFlex,
-							model.settings.showWordlist,
+							model.settings.showTerms,
 							A3(
-								_user$project$Wordlistview$view,
+								_user$project$Termsview$view,
 								model,
 								_user$project$Mainview_v1$flexValue(1),
 								2)),
@@ -17772,9 +18409,9 @@ var _user$project$Mainview_v1$viewBody = function (model) {
 							ctor: '::',
 							_0: A2(
 								_user$project$Mainview_v1$viewOrEmptyFlex,
-								model.settings.showArticles,
+								model.settings.showDocuments,
 								A3(
-									_user$project$Articlesview$view,
+									_user$project$Documentsview$view,
 									model,
 									_user$project$Mainview_v1$flexValue(1),
 									3)),
@@ -18000,7 +18637,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 			_0: function () {
 				var _p0 = result;
 				switch (_p0.ctor) {
-					case 'Wordresult':
+					case 'Termresult':
 						var _p1 = _p0._0;
 						return A2(
 							_debois$elm_mdl$Material_List$content,
@@ -18008,7 +18645,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
 									_user$project$Model$Found(
-										_user$project$Model$WordlistView(
+										_user$project$Model$TermsView(
 											{
 												ctor: '::',
 												_0: _p1,
@@ -18024,7 +18661,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 									{ctor: '[]'}),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(_p1),
+									_0: _elm_lang$html$Html$text(_p1.name),
 									_1: {ctor: '[]'}
 								}
 							});
@@ -18052,7 +18689,8 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 									{ctor: '[]'}),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(_p2.topicName),
+									_0: _elm_lang$html$Html$text(
+										_elm_lang$core$Basics$toString(_p2.id)),
 									_1: {ctor: '[]'}
 								}
 							});
@@ -18064,7 +18702,7 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
 									_user$project$Model$Found(
-										_user$project$Model$ArticlesView(
+										_user$project$Model$DocumentsView(
 											{
 												ctor: '::',
 												_0: _p3,
@@ -18239,20 +18877,20 @@ var _user$project$Mainview_v2$slot = F3(
 						{topics: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
-			case 'WordlistView':
+			case 'TermsView':
 				return A3(
-					_user$project$Wordlistview$view,
+					_user$project$Termsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{wordList: _p1._0}),
+						{terms: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
-			case 'ArticlesView':
+			case 'DocumentsView':
 				return A3(
-					_user$project$Articlesview$view,
+					_user$project$Documentsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{articles: _p1._0}),
+						{docs: _p1._0}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'Dialog':
@@ -18294,15 +18932,15 @@ var _user$project$Mainview_v2$slot = F3(
 							ctor: '::',
 							_0: A3(
 								_user$project$Mainview_v2$slotDialogCard,
-								'Wordlist',
-								_user$project$Model$WordlistView(model.wordList),
+								'Terms',
+								_user$project$Model$TermsView(model.terms),
 								slotId),
 							_1: {
 								ctor: '::',
 								_0: A3(
 									_user$project$Mainview_v2$slotDialogCard,
-									'Articles',
-									_user$project$Model$ArticlesView(model.articles),
+									'Documents',
+									_user$project$Model$DocumentsView(model.docs),
 									slotId),
 								_1: {ctor: '[]'}
 							}
@@ -18655,20 +19293,11 @@ var _user$project$TE_elm_v1$update = F2(
 						{raised: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ChangeCurrentArticle':
-				var newCurrentArticle = {cardID: _p0._0, article: _p0._1};
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{currentArticle: newCurrentArticle}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
 			case 'RemoveTopic':
 				var newCurrentTopis = A2(
 					_elm_lang$core$List$filter,
 					function (x) {
-						return !_elm_lang$core$Native_Utils.eq(x.topicID, _p0._0);
+						return !_elm_lang$core$Native_Utils.eq(x.id, _p0._0);
 					},
 					model.currentTopics);
 				return {
@@ -18740,8 +19369,7 @@ var _user$project$TE_elm_v1$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ShowWordList':
-				var _p1 = _p0._0;
+			case 'ShowTerms':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -18751,17 +19379,16 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showWordlist: true}),
-							wordList: _p1,
+								{showTerms: true}),
 							slots: A3(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$WordlistView(_p1))
+								_user$project$Model$TermsView(_p0._0))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'HideWordList':
+			case 'HideTerms':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -18771,17 +19398,17 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showWordlist: false}),
+								{showTerms: false}),
 							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ShowArticles':
+			case 'ShowDocuments':
 				var contains = F2(
-					function (word, article) {
-						return A2(_elm_lang$core$List$member, word, article.words);
+					function (term, document) {
+						return A2(_elm_lang$core$List$member, term, document.terms);
 					});
-				var articles = model.articles;
+				var docs = model.docs;
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -18791,16 +19418,16 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showArticles: true}),
+								{showDocuments: true}),
 							slots: A3(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$ArticlesView(articles))
+								_user$project$Model$DocumentsView(docs))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'HideArticles':
+			case 'HideDocuments':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -18810,7 +19437,7 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showArticles: false}),
+								{showDocuments: false}),
 							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
@@ -18880,6 +19507,71 @@ var _user$project$TE_elm_v1$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'NewTopics':
+				var _p1 = _p0._0;
+				if (_p1.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{topics: _p1._0.topics}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'NewDocument':
+				var _p2 = _p0._0;
+				if (_p2.ctor === 'Ok') {
+					var _p3 = _p2._0;
+					var oldTabs = model.tabs;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								tabs: A2(
+									_elm_lang$core$List$append,
+									oldTabs,
+									{
+										ctor: '::',
+										_0: A2(_user$project$Model$DocumentTab, _p3.title, _p3),
+										_1: {ctor: '[]'}
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'NewDocs':
+				var _p4 = _p0._0;
+				if (_p4.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{docs: _p4._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'NewTerms':
+				var _p5 = _p0._0;
+				if (_p5.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{terms: _p5._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'NewFrames':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'Mdl':
 				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
 			default:
@@ -18887,15 +19579,23 @@ var _user$project$TE_elm_v1$update = F2(
 		}
 	});
 var _user$project$TE_elm_v1$view = function (model) {
-	return model.settings.view2 ? _user$project$Mainview_v2$view(model) : _user$project$Mainview_v1$view(model);
+	return _user$project$Mainview_v2$view(model);
 };
 var _user$project$TE_elm_v1$main = _elm_lang$html$Html$program(
 	{init: _user$project$Init$init, update: _user$project$TE_elm_v1$update, view: _user$project$TE_elm_v1$view, subscriptions: _user$project$TE_elm_v1$subscriptions})();
 
 var Elm = {};
-Elm['Articlesview'] = Elm['Articlesview'] || {};
-if (typeof _user$project$Articlesview$main !== 'undefined') {
-    _user$project$Articlesview$main(Elm['Articlesview'], 'Articlesview', undefined);
+Elm['Decoderhelper'] = Elm['Decoderhelper'] || {};
+if (typeof _user$project$Decoderhelper$main !== 'undefined') {
+    _user$project$Decoderhelper$main(Elm['Decoderhelper'], 'Decoderhelper', undefined);
+}
+Elm['Document'] = Elm['Document'] || {};
+if (typeof _user$project$Document$main !== 'undefined') {
+    _user$project$Document$main(Elm['Document'], 'Document', undefined);
+}
+Elm['Documentsview'] = Elm['Documentsview'] || {};
+if (typeof _user$project$Documentsview$main !== 'undefined') {
+    _user$project$Documentsview$main(Elm['Documentsview'], 'Documentsview', undefined);
 }
 Elm['Init'] = Elm['Init'] || {};
 if (typeof _user$project$Init$main !== 'undefined') {
@@ -18913,6 +19613,10 @@ Elm['Model'] = Elm['Model'] || {};
 if (typeof _user$project$Model$main !== 'undefined') {
     _user$project$Model$main(Elm['Model'], 'Model', undefined);
 }
+Elm['Request'] = Elm['Request'] || {};
+if (typeof _user$project$Request$main !== 'undefined') {
+    _user$project$Request$main(Elm['Request'], 'Request', undefined);
+}
 Elm['Savedview'] = Elm['Savedview'] || {};
 if (typeof _user$project$Savedview$main !== 'undefined') {
     _user$project$Savedview$main(Elm['Savedview'], 'Savedview', undefined);
@@ -18929,13 +19633,21 @@ Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {
     _user$project$Tabsview$main(Elm['Tabsview'], 'Tabsview', undefined);
 }
+Elm['Term'] = Elm['Term'] || {};
+if (typeof _user$project$Term$main !== 'undefined') {
+    _user$project$Term$main(Elm['Term'], 'Term', undefined);
+}
+Elm['Termsview'] = Elm['Termsview'] || {};
+if (typeof _user$project$Termsview$main !== 'undefined') {
+    _user$project$Termsview$main(Elm['Termsview'], 'Termsview', undefined);
+}
+Elm['Topic'] = Elm['Topic'] || {};
+if (typeof _user$project$Topic$main !== 'undefined') {
+    _user$project$Topic$main(Elm['Topic'], 'Topic', undefined);
+}
 Elm['Topicsview'] = Elm['Topicsview'] || {};
 if (typeof _user$project$Topicsview$main !== 'undefined') {
     _user$project$Topicsview$main(Elm['Topicsview'], 'Topicsview', undefined);
-}
-Elm['Wordlistview'] = Elm['Wordlistview'] || {};
-if (typeof _user$project$Wordlistview$main !== 'undefined') {
-    _user$project$Wordlistview$main(Elm['Wordlistview'], 'Wordlistview', undefined);
 }
 
 if (typeof define === "function" && define['amd'])

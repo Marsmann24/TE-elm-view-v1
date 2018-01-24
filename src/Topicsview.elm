@@ -3,6 +3,7 @@ module Topicsview exposing (view)
 import Model exposing (..)
 import Topic exposing (..)
 import Document
+import Request
 
 import Html exposing (Html, text)
 import Html.Attributes exposing (style, class)
@@ -52,12 +53,12 @@ topic2Chip model topic =
             [ text (toString topic.id)
             , Icon.view "list"
                 [ onClick
-                    (Request GetTerms (("&TopicId=" ++ (toString topic.id)) ++ "&offset=30"))
+                    (ExecCmd (Request.loadTerms topic.id 30))
                     --(ShowTermList topic.top_terms)
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (Request GetTerms "&TopicId=1&offset=30")
+                    (ExecCmd (Request.loadBestDocs topic.id -1 "relevance"))
                     --ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDoc topic)

@@ -5,6 +5,7 @@ import Topic exposing (..)
 import Document exposing (..)
 
 import Material
+import Http
 import Html exposing (Html)
 import Array exposing (Array)
 import Maybe exposing (Maybe, withDefault)
@@ -27,17 +28,23 @@ type Msg
     | ToggleBottom
     | ToggleView2
     | ToggleShowSaved
-    | Request Command String
+    | NewTopics (Result Http.Error TopicResult)
+    | NewDocument (Result Http.Error Document)
+    | NewDocs (Result Http.Error (List Doc))
+    | NewTerms (Result Http.Error (List Term))
+    | NewFrames (Result Http.Error (List Term))
+    | ExecCmd (Cmd Msg)
     | Mdl (Material.Msg Msg)
     | None -- zum Testen, damit update _ -> immer haben kann
 
-type Command
-    = GetTopics
-    | GetDoc
-    | GetBestDocs
-    | GetBestTerms
-    | GetTerms
-    | GetBestFrames
+-- Command type for Request
+--type Command
+--    = GetTopics
+--    | GetDoc
+--    | GetBestDocs
+--    | GetBestTerms
+--    | GetTerms
+--    | GetBestFrames
 
 type alias Model =
     { result : List Searchresult    -- search result

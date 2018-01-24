@@ -72,7 +72,8 @@ var _user$project$Termsview$topic2Terms = F3(
 									{
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
-											A2(_user$project$Model$Request, _user$project$Model$GetBestDocs, '')),
+											_user$project$Model$ExecCmd(
+												A3(_user$project$Request$loadBestDocs, 0, term.id, 'relevance'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}

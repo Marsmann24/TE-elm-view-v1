@@ -4,6 +4,7 @@ import Model exposing (..)
 import Term exposing (..)
 import Document
 import Topic
+import Request
 
 import Html exposing (Html, text)
 import Html.Events
@@ -77,7 +78,7 @@ topic2Terms model term id=
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (Request GetBestDocs "")
+                    (ExecCmd (Request.loadBestDocs 0 term.id "relevance"))
                     --(ShowDocuments
                     --    (List.filter
                     --        (Document.termInDocument term)

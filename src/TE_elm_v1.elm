@@ -139,6 +139,34 @@ update msg model =
             let oldSettings = model.settings
             in
             ({ model | settings = { oldSettings | showSaved = not (model.settings.showSaved)}}, Cmd.none)
+        NewTopics result ->
+            case result of
+                Ok topicsResult ->
+                    ({ model | topics = topicsResult.topics}, Cmd.none)
+                Err _ ->
+                    (model, Cmd.none)
+        NewDocument result ->
+            case result of
+                Ok document ->
+                    let oldTabs = model.tabs
+                    in
+                    ({ model | tabs = (List.append oldTabs [DocumentTab document.title document])}, Cmd.none)
+                Err _ ->
+                    (model, Cmd.none)
+        NewDocs result ->
+            case result of
+                Ok newDocs ->
+                    ({ model | docs = newDocs}, Cmd.none)
+                Err _ ->
+                    (model, Cmd.none)
+        NewTerms result ->
+            case result of
+                Ok newTerms ->
+                    ({ model |terms = newTerms}, Cmd.none)
+                Err _ ->
+                    (model, Cmd.none)
+        NewFrames result ->
+            (model, Cmd.none)
         Mdl msgmdl ->
             (Material.update Mdl msgmdl model)
         _ ->

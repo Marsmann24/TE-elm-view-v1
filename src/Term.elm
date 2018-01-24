@@ -24,6 +24,22 @@ termId2Term : List Term -> Int -> Maybe Term
 termId2Term terms termId =
     (List.head (List.filter (\x -> x.id == termId) terms))
 
+matchTermsById : { items : Dict Int Term, sorting : List Int} -> List Term
+matchTermsById termsorting =
+    List.map
+        (\x -> Maybe.withDefault (Term -1 "Error: Not matching." Nothing Nothing) (Dict.get x termsorting.items))
+        termsorting.sorting
+
+matchTermsortingById : TermsResult -> List Term
+matchTermsortingById termsresult =
+    let termsorting : { items : Dict Int Term, sorting : List Int}
+        termsorting =
+            { items = termsresult.terms
+            , sorting = List.map .id (List.sortBy .relevance (Tuple.second termsresult.topic))
+            }
+    in
+    matchTermsById termsorting
+
 -- Decoders
 termDecoder : Decoder Term
 termDecoder =
@@ -41,25 +57,21 @@ termSortingDecoder =
             (field "relevance" int)
         )
 
-termsDecoder : Decoder TermsResult
+termsDecoder : Decoder (List Term)
 termsDecoder =
-    map2 TermsResult
-        (field "Topic"
-            (map
-                (Tuple.mapFirst (\x -> Result.withDefault -1 (String.toInt x)))
-                (listheadwithdefault
-                    ("0", [{id = 0, relevance = 0}])
-                    (keyValuePairs (field "Top_Terms" termSortingDecoder))
+    map matchTermsortingById
+        (map2 TermsResult
+            (field "Topic"
+                (map
+                    (Tuple.mapFirst (\x -> Result.withDefault -1 (String.toInt x)))
+                    (listheadwithdefault
+                        ("0", [{id = 0, relevance = 0}])
+                        (keyValuePairs (field "Top_Terms" termSortingDecoder))
+                    )
                 )
             )
+            (field "Term" (intDictDecoder (Term -1 "" Nothing Nothing) termDecoder))
         )
-        (field "Term" (intDictDecoder (Term -1 "" Nothing Nothing) termDecoder))
-
-matchTermsById : { items : Dict Int Term, sorting : List Int} -> List Term
-matchTermsById termsorting =
-    List.map
-        (\x -> Maybe.withDefault (Term -1 "Error: Not matching." Nothing Nothing) (Dict.get x termsorting.items))
-        termsorting.sorting
 
 bestTermsDecoder : Decoder (List Term)
 bestTermsDecoder =
