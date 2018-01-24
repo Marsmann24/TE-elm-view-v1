@@ -167,6 +167,8 @@ update msg model =
                     (model, Cmd.none)
         NewFrames result ->
             (model, Cmd.none)
+        ExecCmd cmd ->
+            (model, cmd)
         Mdl msgmdl ->
             (Material.update Mdl msgmdl model)
         _ ->
