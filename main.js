@@ -19572,6 +19572,8 @@ var _user$project$TE_elm_v1$update = F2(
 				}
 			case 'NewFrames':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'ExecCmd':
+				return {ctor: '_Tuple2', _0: model, _1: _p0._0};
 			case 'Mdl':
 				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
 			default:
