@@ -20928,7 +20928,7 @@ var _user$project$Request$loadBestDocs = F3(
 						_0: termArgument,
 						_1: {
 							ctor: '::',
-							_0: '&sorting',
+							_0: '&sorting=',
 							_1: {
 								ctor: '::',
 								_0: sorting,
@@ -23481,7 +23481,20 @@ var _user$project$TE_elm_v1$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{
+										error: _elm_lang$core$Basics$toString(_p1._0)
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
 				}
 			case 'NewDocument':
 				var _p2 = _p0._0;
@@ -23505,7 +23518,20 @@ var _user$project$TE_elm_v1$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{
+										error: _elm_lang$core$Basics$toString(_p2._0)
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
 				}
 			case 'NewDocs':
 				var _p4 = _p0._0;
@@ -23544,7 +23570,20 @@ var _user$project$TE_elm_v1$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{
+										error: _elm_lang$core$Basics$toString(_p5._0)
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
 				}
 			case 'NewFrames':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};

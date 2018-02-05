@@ -143,16 +143,20 @@ update msg model =
             case result of
                 Ok topicsResult ->
                     ({ model | topics = topicsResult.topics}, Cmd.none)
-                Err _ ->
-                    (model, Cmd.none)
+                Err err ->
+                    let oldSettings = model.settings
+                    in
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocument result ->
             case result of
                 Ok document ->
                     let oldTabs = model.tabs
                     in
                     ({ model | tabs = (List.append oldTabs [DocumentTab document.title document])}, Cmd.none)
-                Err _ ->
-                    (model, Cmd.none)
+                Err err ->
+                    let oldSettings = model.settings
+                    in
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocs result ->
             case result of
                 Ok newDocs ->
@@ -165,8 +169,10 @@ update msg model =
             case result of
                 Ok newTerms ->
                     ({ model |terms = newTerms}, Cmd.none)
-                Err _ ->
-                    (model, Cmd.none)
+                Err err ->
+                    let oldSettings = model.settings
+                    in
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewFrames result ->
             (model, Cmd.none)
         ExecCmd cmd ->

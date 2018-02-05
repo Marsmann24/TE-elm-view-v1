@@ -34,7 +34,7 @@ var _user$project$Request$loadBestDocs = F3(
 						_0: termArgument,
 						_1: {
 							ctor: '::',
-							_0: '&sorting',
+							_0: '&sorting=',
 							_1: {
 								ctor: '::',
 								_0: sorting,

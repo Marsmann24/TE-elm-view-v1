@@ -16,7 +16,7 @@ baseURL = "http://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vq
 
 loadData : Decoder a -> (Result Http.Error a -> Msg) -> String -> Cmd Msg
 loadData decoder msg arguments =
-    let url = (baseURL  ++ arguments)
+    let url = (baseURL ++ arguments)
         request = Http.get url decoder
     in
     Http.send msg request
@@ -31,7 +31,7 @@ loadDoc id =
 
 loadBestDocs : Int -> Int -> String -> Cmd Msg
 loadBestDocs id term sorting =
-    let command = String.concat ["getBestDocs&TopicId=", (toString id), termArgument, "&sorting", sorting]
+    let command = String.concat ["getBestDocs&TopicId=", (toString id), termArgument, "&sorting=", sorting]
         termArgument =
             if (term >= 0)
             then ("&term" ++ (toString term))
