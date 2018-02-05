@@ -1,7 +1,7 @@
 module Term exposing (..)
 
 import Json.Decode exposing (Decoder, string, int, list, map, map2, map4, field, keyValuePairs, succeed, maybe)
-import Decoderhelper exposing (intDictDecoder, listheadwithdefault, pseudolist)
+import Decoderhelper exposing (intDictDecoder, listheadwithdefault, pseudolist, stringAsInt)
 import Dict exposing (Dict)
 
 type alias Term =
@@ -44,7 +44,7 @@ matchTermsortingById termsresult =
 termDecoder : Decoder Term
 termDecoder =
     map4 Term
-        (field "TERM_ID" int)
+        (field "TERM_ID" stringAsInt)
         (field "TERM_NAME" string)
         (maybe (field "WORDTYPE$WORDTYPE" int))
         (succeed Nothing)
