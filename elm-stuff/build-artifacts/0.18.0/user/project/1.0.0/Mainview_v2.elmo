@@ -498,7 +498,11 @@ var _user$project$Mainview_v2$view = function (model) {
 				header: {
 					ctor: '::',
 					_0: _user$project$Mainview_v2$viewSearch(model),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(model.settings.error),
+						_1: {ctor: '[]'}
+					}
 				},
 				drawer: {
 					ctor: '::',

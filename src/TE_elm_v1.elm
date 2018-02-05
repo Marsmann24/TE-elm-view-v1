@@ -157,8 +157,10 @@ update msg model =
             case result of
                 Ok newDocs ->
                     ({ model | docs = newDocs}, Cmd.none)
-                Err _ ->
-                    (model, Cmd.none)
+                Err err ->
+                    let oldSettings = model.settings
+                    in
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewTerms result ->
             case result of
                 Ok newTerms ->

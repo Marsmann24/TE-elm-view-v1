@@ -110,6 +110,7 @@ type alias Settings =
     , view2 : Bool
     , showSlotDialoge : Bool
     , search : Bool
+    , error : String
     }
 
 type Tab

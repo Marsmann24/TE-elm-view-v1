@@ -283,7 +283,20 @@ var _user$project$TE_elm_v1$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{
+										error: _elm_lang$core$Basics$toString(_p4._0)
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
 				}
 			case 'NewTerms':
 				var _p5 = _p0._0;

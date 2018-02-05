@@ -23,15 +23,15 @@ loadData decoder msg arguments =
 
 loadTopics : Cmd Msg
 loadTopics =
-    loadData Topic.decodeTopics (NewTopics) "GetTopics"
+    loadData Topic.decodeTopics (NewTopics) "getTopics"
 
 loadDoc : Int -> Cmd Msg
 loadDoc id =
-    loadData Document.documentDecoder (NewDocument) ("GetDoc&DocId=" ++ (toString id))
+    loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString id))
 
 loadBestDocs : Int -> Int -> String -> Cmd Msg
 loadBestDocs id term sorting =
-    let command = String.concat ["GetBestDocs&TopicId=", (toString id), termArgument, "&sorting", sorting]
+    let command = String.concat ["getBestDocs&TopicId=", (toString id), termArgument, "&sorting", sorting]
         termArgument =
             if (term >= 0)
             then ("&term" ++ (toString term))
@@ -41,17 +41,17 @@ loadBestDocs id term sorting =
 
 loadTerms : Int -> Int -> Cmd Msg
 loadTerms id offset =
-    let command = String.concat ["GetTerms&TopicId=", (toString id), "&offset=",(toString offset)]
+    let command = String.concat ["getTerms&TopicId=", (toString id), "&offset=",(toString offset)]
     in
     loadData Term.termsDecoder (NewTerms) command
 
 loadBestTerms : Cmd Msg
 loadBestTerms =
-    loadData Term.bestTermsDecoder (NewTerms) "GetBestTerms"
+    loadData Term.bestTermsDecoder (NewTerms) "getBestTerms"
 
 loadBestFrames : Cmd Msg
 loadBestFrames =
-    loadData Term.bestTermsDecoder (NewFrames) "GetBestFrames"
+    loadData Term.bestTermsDecoder (NewFrames) "getBestFrames"
 
 -- Command Struktur
 --loadData : Command -> String -> Cmd Msg

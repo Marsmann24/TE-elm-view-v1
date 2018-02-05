@@ -63,6 +63,7 @@ initSettings =
     , view2 = True
     , showSlotDialoge = False
     , search = False
+    , error = "Ok"
     }
 
 initTabs : List Tab

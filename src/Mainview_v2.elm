@@ -25,7 +25,7 @@ view : Model -> Html Msg
 view model =
         Layout.render Mdl model.mdl
             [ Layout.fixedHeader]
-            { header =[ viewSearch model]
+            { header =[ viewSearch model, text model.settings.error]
             , drawer = [ viewSwitch model]
             , tabs = ( [], [])
             , main =
@@ -44,7 +44,7 @@ viewSearch model =
         , css "padding" "20px 50px 10px"
         , onInput Search
         ]
-        []
+        [ ]
 
 viewSwitch : Model -> Html Msg
 viewSwitch model =

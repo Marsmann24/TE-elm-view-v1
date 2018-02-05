@@ -5,7 +5,7 @@ var _user$project$Request$loadData = F3(
 		var request = A2(_elm_lang$http$Http$get, url, decoder);
 		return A2(_elm_lang$http$Http$send, msg, request);
 	});
-var _user$project$Request$loadTopics = A3(_user$project$Request$loadData, _user$project$Topic$decodeTopics, _user$project$Model$NewTopics, 'GetTopics');
+var _user$project$Request$loadTopics = A3(_user$project$Request$loadData, _user$project$Topic$decodeTopics, _user$project$Model$NewTopics, 'getTopics');
 var _user$project$Request$loadDoc = function (id) {
 	return A3(
 		_user$project$Request$loadData,
@@ -13,7 +13,7 @@ var _user$project$Request$loadDoc = function (id) {
 		_user$project$Model$NewDocument,
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			'GetDoc&DocId=',
+			'getDoc&DocId=',
 			_elm_lang$core$Basics$toString(id)));
 };
 var _user$project$Request$loadBestDocs = F3(
@@ -25,7 +25,7 @@ var _user$project$Request$loadBestDocs = F3(
 		var command = _elm_lang$core$String$concat(
 			{
 				ctor: '::',
-				_0: 'GetBestDocs&TopicId=',
+				_0: 'getBestDocs&TopicId=',
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$core$Basics$toString(id),
@@ -51,7 +51,7 @@ var _user$project$Request$loadTerms = F2(
 		var command = _elm_lang$core$String$concat(
 			{
 				ctor: '::',
-				_0: 'GetTerms&TopicId=',
+				_0: 'getTerms&TopicId=',
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$core$Basics$toString(id),
@@ -68,5 +68,5 @@ var _user$project$Request$loadTerms = F2(
 			});
 		return A3(_user$project$Request$loadData, _user$project$Term$termsDecoder, _user$project$Model$NewTerms, command);
 	});
-var _user$project$Request$loadBestTerms = A3(_user$project$Request$loadData, _user$project$Term$bestTermsDecoder, _user$project$Model$NewTerms, 'GetBestTerms');
-var _user$project$Request$loadBestFrames = A3(_user$project$Request$loadData, _user$project$Term$bestTermsDecoder, _user$project$Model$NewFrames, 'GetBestFrames');
+var _user$project$Request$loadBestTerms = A3(_user$project$Request$loadData, _user$project$Term$bestTermsDecoder, _user$project$Model$NewTerms, 'getBestTerms');
+var _user$project$Request$loadBestFrames = A3(_user$project$Request$loadData, _user$project$Term$bestTermsDecoder, _user$project$Model$NewFrames, 'getBestFrames');

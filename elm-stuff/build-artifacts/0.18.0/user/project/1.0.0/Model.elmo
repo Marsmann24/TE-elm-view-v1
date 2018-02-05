@@ -33,9 +33,9 @@ var _user$project$Model$Model = function (a) {
 		};
 	};
 };
-var _user$project$Model$Settings = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {showTopics: a, showDocuments: b, showTerms: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h};
+var _user$project$Model$Settings = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {showTopics: a, showDocuments: b, showTerms: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h, error: i};
 	});
 var _user$project$Model$Slots = F2(
 	function (a, b) {
