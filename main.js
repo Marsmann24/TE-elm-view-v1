@@ -20408,7 +20408,7 @@ var _user$project$Term$bestTermsDecoder = A2(
 							A5(
 								_elm_lang$core$Json_Decode$map4,
 								_user$project$Term$Term,
-								A2(_elm_lang$core$Json_Decode$field, 'ITEM_ID', _elm_lang$core$Json_Decode$int),
+								A2(_elm_lang$core$Json_Decode$field, 'ITEM_ID', _user$project$Decoderhelper$stringAsInt),
 								A2(_elm_lang$core$Json_Decode$field, 'ITEM_NAME', _elm_lang$core$Json_Decode$string),
 								_elm_lang$core$Json_Decode$succeed(_elm_lang$core$Maybe$Nothing),
 								_elm_lang$core$Json_Decode$maybe(

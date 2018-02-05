@@ -86,7 +86,7 @@ bestTermsDecoder =
                             (intDictDecoder
                                 (Term -1 "" Nothing Nothing)
                                 (map4 Term
-                                        (field "ITEM_ID" int)
+                                        (field "ITEM_ID" stringAsInt)
                                         (field "ITEM_NAME" string)
                                         (succeed Nothing)
                                         (maybe (field "ITEM_COUNT" int))
