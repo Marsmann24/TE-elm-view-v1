@@ -12,7 +12,7 @@ import Http
 import Json.Decode exposing (Decoder)
 
 baseURL : String
-baseURL = "http://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command="
+baseURL = "https://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command="
 
 loadData : Decoder a -> (Result Http.Error a -> Msg) -> String -> Cmd Msg
 loadData decoder msg arguments =
