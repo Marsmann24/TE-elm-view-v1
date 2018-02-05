@@ -129,11 +129,19 @@ var _user$project$Init$init = {
 		},
 		docs: {
 			ctor: '::',
-			_0: _user$project$Init$initDoc(0),
+			_0: _user$project$Init$initDoc(362720),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Init$initDoc(1),
-				_1: {ctor: '[]'}
+				_0: _user$project$Init$initDoc(362243),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Init$initDoc(362723),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Init$initDoc(362725),
+						_1: {ctor: '[]'}
+					}
+				}
 			}
 		},
 		currentDocument: {

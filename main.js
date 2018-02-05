@@ -20892,7 +20892,7 @@ var _user$project$Model$TermsView = function (a) {
 	return {ctor: 'TermsView', _0: a};
 };
 
-var _user$project$Request$baseURL = 'http://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command=';
+var _user$project$Request$baseURL = 'https://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command=';
 var _user$project$Request$loadData = F3(
 	function (decoder, msg, $arguments) {
 		var url = A2(_elm_lang$core$Basics_ops['++'], _user$project$Request$baseURL, $arguments);
@@ -21354,11 +21354,19 @@ var _user$project$Init$init = {
 		},
 		docs: {
 			ctor: '::',
-			_0: _user$project$Init$initDoc(0),
+			_0: _user$project$Init$initDoc(362720),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Init$initDoc(1),
-				_1: {ctor: '[]'}
+				_0: _user$project$Init$initDoc(362243),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Init$initDoc(362723),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Init$initDoc(362725),
+						_1: {ctor: '[]'}
+					}
+				}
 			}
 		},
 		currentDocument: {
