@@ -3,8 +3,8 @@ module Document exposing (..)
 import Topic exposing (..)
 import Term exposing (..)
 
-import Json.Decode exposing (Decoder, string, list, map2, map4, map8, field, keyValuePairs)
-import Decoderhelper exposing (map10, pseudolist, listheadwithdefault, int)
+import Json.Decode exposing (Decoder, string, int, list, map2, map4, map8, field, keyValuePairs)
+import Decoderhelper exposing (map10, pseudolist, listheadwithdefault)
 
 -- Types
 type alias Document =

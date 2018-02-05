@@ -20324,8 +20324,8 @@ var _user$project$Term$termSortingDecoder = _elm_lang$core$Json_Decode$list(
 			function (x, y) {
 				return {id: x, relevance: y};
 			}),
-		A2(_elm_lang$core$Json_Decode$field, 'TermId', _user$project$Decoderhelper$int),
-		A2(_elm_lang$core$Json_Decode$field, 'relevance', _user$project$Decoderhelper$int)));
+		A2(_elm_lang$core$Json_Decode$field, 'TermId', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'relevance', _elm_lang$core$Json_Decode$int)));
 var _user$project$Term$termId2Term = F2(
 	function (terms, termId) {
 		return _elm_lang$core$List$head(
@@ -20371,10 +20371,10 @@ var _user$project$Term$matchTermsortingById = function (termsresult) {
 var _user$project$Term$termDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Term$Term,
-	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _user$project$Decoderhelper$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'TERM_NAME', _elm_lang$core$Json_Decode$string),
 	_elm_lang$core$Json_Decode$maybe(
-		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _user$project$Decoderhelper$int)),
+		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _elm_lang$core$Json_Decode$int)),
 	_elm_lang$core$Json_Decode$succeed(_elm_lang$core$Maybe$Nothing));
 var _user$project$Term$bestTermsDecoder = A2(
 	_elm_lang$core$Json_Decode$map,
@@ -20401,18 +20401,18 @@ var _user$project$Term$bestTermsDecoder = A2(
 						A2(
 							_elm_lang$core$Json_Decode$field,
 							'SORTING',
-							_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int)),
+							_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)),
 						A2(
 							_user$project$Decoderhelper$intDictDecoder,
 							A4(_user$project$Term$Term, -1, '', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
 							A5(
 								_elm_lang$core$Json_Decode$map4,
 								_user$project$Term$Term,
-								A2(_elm_lang$core$Json_Decode$field, 'ITEM_ID', _user$project$Decoderhelper$int),
+								A2(_elm_lang$core$Json_Decode$field, 'ITEM_ID', _elm_lang$core$Json_Decode$int),
 								A2(_elm_lang$core$Json_Decode$field, 'ITEM_NAME', _elm_lang$core$Json_Decode$string),
 								_elm_lang$core$Json_Decode$succeed(_elm_lang$core$Maybe$Nothing),
 								_elm_lang$core$Json_Decode$maybe(
-									A2(_elm_lang$core$Json_Decode$field, 'ITEM_COUNT', _user$project$Decoderhelper$int))))))))));
+									A2(_elm_lang$core$Json_Decode$field, 'ITEM_COUNT', _elm_lang$core$Json_Decode$int))))))))));
 var _user$project$Term$TermsResult = F2(
 	function (a, b) {
 		return {topic: a, terms: b};
@@ -20489,13 +20489,13 @@ var _user$project$Topic$TopicHirarchie = F4(
 var _user$project$Topic$topicDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Topic$Topic,
-	A2(_elm_lang$core$Json_Decode$field, 'topic_id', _user$project$Decoderhelper$int),
+	A2(_elm_lang$core$Json_Decode$field, 'topic_id', _elm_lang$core$Json_Decode$int),
 	A5(
 		_elm_lang$core$Json_Decode$map4,
 		_user$project$Topic$TopicHirarchie,
-		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$start', _user$project$Decoderhelper$int),
-		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$end', _user$project$Decoderhelper$int),
-		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$depth', _user$project$Decoderhelper$int),
+		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$start', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$end', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$depth', _elm_lang$core$Json_Decode$int),
 		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$cluster', _elm_lang$core$Json_Decode$string)),
 	A2(_elm_lang$core$Json_Decode$field, 'color_topic$color', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'top_terms', _user$project$Term$termSortingDecoder));
@@ -20513,12 +20513,12 @@ var _user$project$Topic$decodeTopics = A5(
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'TOPIC_SORTING',
-		_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int)),
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)),
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'Term',
 		_user$project$Decoderhelper$pseudolist(_user$project$Term$termDecoder)),
-	A2(_elm_lang$core$Json_Decode$field, 'TopicBestItemLimit', _user$project$Decoderhelper$int));
+	A2(_elm_lang$core$Json_Decode$field, 'TopicBestItemLimit', _elm_lang$core$Json_Decode$int));
 
 var _user$project$Document$docId2Doc = F2(
 	function (docs, docId) {
@@ -20571,22 +20571,22 @@ var _user$project$Document$Token = F4(
 var _user$project$Document$tokenDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Document$Token,
-	A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _user$project$Decoderhelper$int),
-	A2(_elm_lang$core$Json_Decode$field, 'POSITION_OF_TOKEN_IN_DOCUMENT', _user$project$Decoderhelper$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'POSITION_OF_TOKEN_IN_DOCUMENT', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'TOKEN', _elm_lang$core$Json_Decode$string),
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'HIRARCHICAL_TOPIC$PARENT_IDS',
-		_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int)));
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)));
 var _user$project$Document$documentDecoder = A2(
 	_elm_lang$core$Json_Decode$field,
 	'DOCUMENT',
 	A9(
 		_elm_lang$core$Json_Decode$map8,
 		_user$project$Document$Document,
-		A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _user$project$Decoderhelper$int),
+		A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int),
 		A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string),
-		A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _user$project$Decoderhelper$int),
+		A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _elm_lang$core$Json_Decode$int),
 		A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string),
 		A2(_elm_lang$core$Json_Decode$field, 'TEXT$FULLTEXT', _elm_lang$core$Json_Decode$string),
 		A2(_elm_lang$core$Json_Decode$field, 'SEARCH_TEXT', _elm_lang$core$Json_Decode$string),
@@ -20644,23 +20644,23 @@ var _user$project$Document$bestDocsDecoder = function () {
 	var sorting = A2(
 		_elm_lang$core$Json_Decode$field,
 		'DOCUMENT_SORTING',
-		_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int));
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int));
 	var documents = A2(
 		_elm_lang$core$Json_Decode$field,
 		'DOCUMENT',
 		_user$project$Decoderhelper$pseudolist(
 			_user$project$Decoderhelper$map10(_user$project$Document$Doc)(
-				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _user$project$Decoderhelper$int))(
-				A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _user$project$Decoderhelper$int))(
-				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_COUNT', _user$project$Decoderhelper$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_COUNT', _elm_lang$core$Json_Decode$int))(
 				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_SNIPET', _elm_lang$core$Json_Decode$string))(
 				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_TITLE', _elm_lang$core$Json_Decode$string))(
 				A2(
 					_elm_lang$core$Json_Decode$field,
 					'TOP_TOPIC',
-					_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int)))(
+					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)))(
 				A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string))(
-				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TIME_STAMP', _user$project$Decoderhelper$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TIME_STAMP', _elm_lang$core$Json_Decode$int))(
 				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string))(
 				A2(_elm_lang$core$Json_Decode$field, 'TEXT$SNIPET', _elm_lang$core$Json_Decode$string))));
 	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
