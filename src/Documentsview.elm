@@ -20,7 +20,7 @@ view model flex slotId =
         [ cs "slot"
         , css "flex" flex
         , Elevation.e0
-        , Color.background (Color.color Color.Grey Color.S500)
+        , primaryColor
         ]
         [ div
             [ css "height" "45px"
