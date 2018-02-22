@@ -479,8 +479,8 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 var _user$project$Mainview_v2$view = function (model) {
 	return A3(
 		_debois$elm_mdl$Material_Scheme$topWithScheme,
-		_debois$elm_mdl$Material_Color$LightGreen,
 		_debois$elm_mdl$Material_Color$Lime,
+		_debois$elm_mdl$Material_Color$Orange,
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
 			_user$project$Model$Mdl,

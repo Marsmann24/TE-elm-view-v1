@@ -20666,8 +20666,7 @@ var _user$project$Document$bestDocsDecoder = function () {
 	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
 }();
 
-var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Color$background(
-	A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$BlueGrey, _debois$elm_mdl$Material_Color$S500));
+var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Options$cs('primaryColor');
 var _user$project$Model$slotChangeTo = F3(
 	function (oldSlots, id, value) {
 		return _elm_lang$core$Native_Utils.update(
@@ -23205,8 +23204,8 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 var _user$project$Mainview_v2$view = function (model) {
 	return A3(
 		_debois$elm_mdl$Material_Scheme$topWithScheme,
-		_debois$elm_mdl$Material_Color$LightGreen,
 		_debois$elm_mdl$Material_Color$Lime,
+		_debois$elm_mdl$Material_Color$Orange,
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
 			_user$project$Model$Mdl,

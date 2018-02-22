@@ -32,7 +32,7 @@ view model =
                 [ viewBody model
                 ]
             }
-        |> Scheme.topWithScheme Color.LightGreen Color.Lime
+        |> Scheme.topWithScheme Color.Lime Color.Orange
 
 viewSearch : Model -> Html Msg
 viewSearch model =

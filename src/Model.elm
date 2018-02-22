@@ -5,7 +5,7 @@ import Topic exposing (..)
 import Document exposing (..)
 
 import Material
-import Material.Options exposing (Property)
+import Material.Options exposing (Property, cs)
 import Material.Color as Color
 import Http
 import Html exposing (Html)
@@ -216,4 +216,5 @@ slotRemove slots removeId =
     }
 
 primaryColor : Property c m
-primaryColor = Color.background (Color.color Color.BlueGrey Color.S500)
+--primaryColor = Color.background Color.primaryContrast
+primaryColor = cs "primaryColor"

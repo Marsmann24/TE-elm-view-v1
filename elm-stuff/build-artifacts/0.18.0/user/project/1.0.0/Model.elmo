@@ -1,5 +1,4 @@
-var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Color$background(
-	A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$BlueGrey, _debois$elm_mdl$Material_Color$S500));
+var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Options$cs('primaryColor');
 var _user$project$Model$slotChangeTo = F3(
 	function (oldSlots, id, value) {
 		return _elm_lang$core$Native_Utils.update(
