@@ -12,7 +12,7 @@ import Http
 import Json.Decode exposing (Decoder)
 
 baseURL : String
-baseURL = "http://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command="
+baseURL = "https://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command="
 
 loadData : Decoder a -> (Result Http.Error a -> Msg) -> String -> Cmd Msg
 loadData decoder msg arguments =
@@ -94,14 +94,40 @@ loadBestFrames =
     --        NewFrames a
 
 -- Chris Einbindung
---createGetTermRequest : DB.DBMeta TermsResult -> Int -> String -> DB.Page TermsResult
---createGetTermRequest meta offset arguments=
---    createRequest meta GetTerms arguments offset
---
---createRequest : DB.DBMeta a -> Command -> String -> Int -> DB.Page a
---createRequest meta command arguments offset =
---    let url = (baseURL ++ (toString command)) ++ arguments
---        request = Http.get url (getDecoder command)
+--createGetTopics : (DB.DBMeta TopicResult -> Int -> DB.Page TopicResult)
+--createGetTopics =
+--     "getTopics" Topic.decodeTopics
+
+--createGetDoc : Int -> (DB.DBMeta TopicResult -> Int -> DB.Page TopicResult)
+--createGetDoc docId =
+--    createRequest ("getDoc&DocId=" ++ (toString id)) Document.documentDecoder
+
+--createGetBestDocs : Int -> Int -> String -> (DB.DBMeta TopicResult -> Int -> DB.Page TopicResult)
+--createGetBestDocs topicId term sorting =
+--    let command = String.concat ["getBestDocs&TopicId=", (toString id), termArgument, "&sorting=", sorting]
+--        termArgument =
+--            if (term >= 0)
+--            then ("&term" ++ (toString term))
+--            else ""
+--    in
+--    createRequest command Document.bestDocsDecoder
+
+--createGetTermRequest : Int -> (DB.DBMeta TermsResult -> Int -> DB.Page TermsResult)
+--createGetTermRequest topicId =
+--    createRequest ("getTerms&TopicId=" ++ (toString topicId)) Term.termsDecoder
+
+--createGetBestTerms : (DB.DBMeta (List Term) -> Int -> DB.Page (List Term))
+--createGetBestTerms =
+--    createRequest "getBestTerms" Term.bestTermsDecoder
+
+--createGetBestFrames : (DB.DBMeta (List Term) -> Int -> DB.Page (List Term))
+--createGetBestFrames =
+--    createRequest "getBestFrames" Term.bestTermsDecoder
+
+--createRequest : String -> Decoder a -> DB.DBMeta a -> Int -> DB.Page a
+--createRequest arguments decoder meta offset =
+--    let url = baseURL ++ arguments
+--        request = Http.get url decoder
 --    in
 --    DB.ToLoad meta.identifier
 --        (Http.send (DB.LoadCheckPage meta offset)
