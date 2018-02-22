@@ -34,10 +34,27 @@ var _user$project$Model$Model = function (a) {
 		};
 	};
 };
-var _user$project$Model$Settings = F9(
-	function (a, b, c, d, e, f, g, h, i) {
-		return {showTopics: a, showDocuments: b, showTerms: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h, error: i};
-	});
+var _user$project$Model$Settings = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return {showTopics: a, showDocuments: b, showTerms: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h, error: i, slotToDelete: j};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
 var _user$project$Model$Slots = F2(
 	function (a, b) {
 		return {main: a, more: b};
@@ -92,6 +109,10 @@ var _user$project$Model$HideTopics = function (a) {
 var _user$project$Model$ShowTopics = function (a) {
 	return {ctor: 'ShowTopics', _0: a};
 };
+var _user$project$Model$DeleteSlot = F2(
+	function (a, b) {
+		return {ctor: 'DeleteSlot', _0: a, _1: b};
+	});
 var _user$project$Model$RemoveTopic = function (a) {
 	return {ctor: 'RemoveTopic', _0: a};
 };

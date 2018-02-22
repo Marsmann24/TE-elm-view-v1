@@ -66,6 +66,7 @@ initSettings =
     , showSlotDialoge = False
     , search = False
     , error = "Ok"
+    , slotToDelete = -1
     }
 
 initTabs : List Tab

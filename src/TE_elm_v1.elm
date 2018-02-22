@@ -8,6 +8,8 @@ import Mainview_v2
 
 import Html
 import Material
+import Delay
+import Time
 
 main : Program Never Model Msg
 main =
@@ -57,6 +59,13 @@ update msg model =
                     , slots = slotFromTo oldSlots Empty view
                     }
                 , Cmd.none)
+        DeleteSlot slotId msg->
+            let oldSettings = model.settings
+            in
+            ({ model
+                | settings = { oldSettings | slotToDelete = slotId}
+                }
+            , Delay.after 200 Time.millisecond msg)
         ShowTopics topics ->
             let oldSettings = model.settings
                 oldSlots = model.slots
@@ -71,7 +80,7 @@ update msg model =
                 oldSlots = model.slots
             in
             ({ model
-                | settings = { oldSettings | showTopics = False}
+                | settings = { oldSettings | showTopics = False, slotToDelete =-1}
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)
@@ -90,7 +99,7 @@ update msg model =
                 oldSlots = model.slots
             in
             ({ model
-                | settings = { oldSettings | showTerms = False}
+                | settings = { oldSettings | showTerms = False, slotToDelete =-1}
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)
@@ -110,7 +119,7 @@ update msg model =
                 oldSlots = model.slots
             in
             ({ model
-                | settings = { oldSettings | showDocuments = False}
+                | settings = { oldSettings | showDocuments = False, slotToDelete =-1}
                 , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)

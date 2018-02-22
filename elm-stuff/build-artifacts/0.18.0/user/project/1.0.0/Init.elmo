@@ -73,7 +73,7 @@ var _user$project$Init$initTabs = {
 		_1: {ctor: '[]'}
 	}
 };
-var _user$project$Init$initSettings = {showTopics: true, showDocuments: true, showTerms: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false, error: 'Ok'};
+var _user$project$Init$initSettings = {showTopics: true, showDocuments: true, showTerms: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false, error: 'Ok', slotToDelete: -1};
 var _user$project$Init$initResult = {
 	ctor: '::',
 	_0: _user$project$Model$Termresult(

@@ -19,6 +19,7 @@ type Msg
     | Raise Int
     | ChangeCurrentDoc Int Doc
     | RemoveTopic Int
+    | DeleteSlot Int Msg
     | ShowTopics (List Topic)
     | HideTopics Int
     | ShowTerms (List Term)
@@ -113,6 +114,7 @@ type alias Settings =
     , showSlotDialoge : Bool
     , search : Bool
     , error : String
+    , slotToDelete : Int
     }
 
 type Tab

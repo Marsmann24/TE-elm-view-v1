@@ -63,6 +63,19 @@ var _user$project$TE_elm_v1$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'DeleteSlot':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{slotToDelete: _p0._0})
+						}),
+					_1: A3(_andrewMacmurray$elm_delay$Delay$after, 200, _elm_lang$core$Time$millisecond, _p0._1)
+				};
 			case 'ShowTopics':
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
@@ -92,7 +105,7 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showTopics: false}),
+								{showTopics: false, slotToDelete: -1}),
 							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
@@ -126,7 +139,7 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showTerms: false}),
+								{showTerms: false, slotToDelete: -1}),
 							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
@@ -165,7 +178,7 @@ var _user$project$TE_elm_v1$update = F2(
 						{
 							settings: _elm_lang$core$Native_Utils.update(
 								oldSettings,
-								{showDocuments: false}),
+								{showDocuments: false, slotToDelete: -1}),
 							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none

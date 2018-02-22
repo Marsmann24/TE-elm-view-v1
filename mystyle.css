@@ -26,23 +26,23 @@
 
 .slot__new{
     flex: 1 1 7%;
-
     -webkit-animation: flexGrow 200ms ease forwards;
     -o-animation: flexGrow 200ms ease forwards;
     animation: flexGrow 200ms ease forwards;
 }
 
 .slot__half{
-    flex: 0 0 0%;
-
+    flex: 1 1 7%;
+    transition: all 200ms ease-in;
+/*    flex: 0 0 0%;
     -webkit-animation: flexHalf 100ms ease forwards;
     -o-animation: flexHalf 100ms ease forwards;
-    animation: flexHalf 100ms ease forwards;
+    animation: flexHalf 100ms ease forwards;*/
 }
 
 .slot__remove{
     flex: 2 2 12%;
-
+    overflow: hidden;
     -webkit-animation: flexShrink 200ms ease forwards;
     -o-animation: flexShrink 200ms ease forwards;
     animation: flexShrink 200ms ease forwards;

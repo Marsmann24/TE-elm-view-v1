@@ -157,7 +157,7 @@ var _user$project$Documentsview$view = F3(
 				_0: _debois$elm_mdl$Material_Options$cs('slot'),
 				_1: {
 					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+					_0: _elm_lang$core$Native_Utils.eq(slotId, model.settings.slotToDelete) ? _debois$elm_mdl$Material_Options$cs('slot__remove') : A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 					_1: {
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Elevation$e0,
@@ -217,7 +217,10 @@ var _user$project$Documentsview$view = F3(
 													_1: {
 														ctor: '::',
 														_0: _debois$elm_mdl$Material_Options$onClick(
-															_user$project$Model$HideTerms(slotId)),
+															A2(
+																_user$project$Model$DeleteSlot,
+																slotId,
+																_user$project$Model$HideTerms(slotId))),
 														_1: {ctor: '[]'}
 													}
 												}

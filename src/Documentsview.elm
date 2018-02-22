@@ -18,7 +18,9 @@ view : Model -> String -> Int -> Html Msg
 view model flex slotId =
     div
         [ cs "slot"
-        , css "flex" flex
+        , if (slotId == model.settings.slotToDelete)
+            then cs "slot__remove"
+            else css "flex" flex
         , Elevation.e0
         , primaryColor
         ]
@@ -32,7 +34,7 @@ view model flex slotId =
                 , Button.minifab
                 , Button.raised
                 , Button.ripple
-                , onClick (HideTerms slotId)
+                , onClick (DeleteSlot slotId (HideTerms slotId))
                 ]
                 [ Icon.i "close" ]
             ]

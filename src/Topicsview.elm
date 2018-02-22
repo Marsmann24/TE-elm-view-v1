@@ -17,7 +17,9 @@ import Material.Chip as Chip
 view : Model -> String -> Int -> Html Msg
 view model flex slotId =
     div [ cs "slot"
-        , css "flex" flex
+        , if (slotId == model.settings.slotToDelete)
+            then cs "slot__remove"
+            else css "flex" flex
         , Elevation.e0
         , primaryColor
         ]
@@ -30,7 +32,7 @@ view model flex slotId =
                 , Button.fab
                 , Button.minifab
                 , Button.raised
-                , onClick (HideTopics slotId)
+                , onClick (DeleteSlot slotId (HideTopics slotId))
                 ]
                 [ Icon.i "close" ]
             ]
