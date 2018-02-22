@@ -99,17 +99,17 @@ viewBody model =
 slot : Model -> Int -> View -> Html Msg
 slot model slotId view =
     case view of
-        TopicsView topics->
+        TopicsView topics ->
             Topicsview.view { model | topics = topics} (flexValue 2) slotId
-        TermsView terms->
+        TermsView terms ->
             Termsview.view { model | terms = terms} (flexValue 2) slotId
-        DocumentsView docs->
+        DocumentsView docs ->
             Documentsview.view { model | docs = docs} (flexValue 2) slotId
         Dialog ->
             div
                 [ cs "slot"
                 , cs "flex__column"
-                , css "flex" (flexValue 1)
+                , cs "slot__new"
                 , primaryColor
                 , center
                 ]
@@ -145,7 +145,7 @@ slot model slotId view =
                 then
                     div
                         [ cs "slot"
-                        , css "flex" (flexValue 1)
+                        , cs "slot__half"
                         , primaryColor
                         , center
                         , onClick (ChoseSlotDialog slotId)

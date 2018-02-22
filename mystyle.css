@@ -19,6 +19,84 @@
 .slot{
     margin: 3px;
     border-radius: 25px;
+
+/* Flextransition */
+    transition: all 200ms linear;
+}
+
+.slot__new{
+    flex: 1 1 7%;
+
+    -webkit-animation: flexGrow 200ms ease forwards;
+    -o-animation: flexGrow 200ms ease forwards;
+    animation: flexGrow 200ms ease forwards;
+}
+
+.slot__half{
+    flex: 0 0 0%;
+
+    -webkit-animation: flexHalf 100ms ease forwards;
+    -o-animation: flexHalf 100ms ease forwards;
+    animation: flexHalf 100ms ease forwards;
+}
+
+.slot__remove{
+    flex: 2 2 12%;
+
+    -webkit-animation: flexShrink 200ms ease forwards;
+    -o-animation: flexShrink 200ms ease forwards;
+    animation: flexShrink 200ms ease forwards;
+}
+
+@-webkit-keyframes flexGrow {
+  to {
+    flex: 2 2 12%;
+  }
+}
+@-o-keyframes flexGrow {
+  to {
+    flex: 2 2 12%;
+  }
+}
+@keyframes flexGrow {
+  to {
+    flex: 2 2 12%;
+  }
+}
+
+@-webkit-keyframes flexHalf {
+  to {
+    flex: 1 1 7%;
+  }
+}
+@-o-keyframes flexHalf {
+  to {
+    flex: 1 1 7%;
+  }
+}
+@keyframes flexHalf {
+  to {
+    flex: 1 1 7%;
+  }
+}
+
+@-webkit-keyframes flexShrink {
+  to {
+    flex: .01;
+    flex: .00001;
+  }
+}
+@-o-keyframes flexShrink {
+  to {
+    flex: .01;
+    flex: .00001;
+  }
+}
+@keyframes flexShrink {
+  to {
+    flex: .01;
+    flex: .00001;
+  }
 }
 
 .slot__close_button{
