@@ -20666,6 +20666,8 @@ var _user$project$Document$bestDocsDecoder = function () {
 	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
 }();
 
+var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Color$background(
+	A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$BlueGrey, _debois$elm_mdl$Material_Color$S500));
 var _user$project$Model$slotChangeTo = F3(
 	function (oldSlots, id, value) {
 		return _elm_lang$core$Native_Utils.update(
@@ -21523,8 +21525,7 @@ var _user$project$Tabsview$view = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '0px 10px'),
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(
-								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_0: _user$project$Model$primaryColor,
 							_1: {ctor: '[]'}
 						}
 					}
@@ -21660,8 +21661,7 @@ var _user$project$Topicsview$view = F3(
 						_0: _debois$elm_mdl$Material_Elevation$e0,
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(
-								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_0: _user$project$Model$primaryColor,
 							_1: {ctor: '[]'}
 						}
 					}
@@ -21829,8 +21829,7 @@ var _user$project$Savedview$view = F2(
 						_0: _debois$elm_mdl$Material_Elevation$e6,
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(
-								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_0: _user$project$Model$primaryColor,
 							_1: {ctor: '[]'}
 						}
 					}
@@ -21945,8 +21944,7 @@ var _user$project$Termsview$view = F3(
 						_0: _debois$elm_mdl$Material_Elevation$e0,
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(
-								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_0: _user$project$Model$primaryColor,
 							_1: {ctor: '[]'}
 						}
 					}
@@ -22776,8 +22774,7 @@ var _user$project$Mainview_v2$slotDialogCard = F3(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '15px 0'),
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(
-								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S600)),
+							_0: _user$project$Model$primaryColor,
 							_1: {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
@@ -22824,8 +22821,7 @@ var _user$project$Mainview_v2$hiddenSlot = function (id) {
 				_0: _debois$elm_mdl$Material_Options$center,
 				_1: {
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Color$background(
-						A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+					_0: _user$project$Model$primaryColor,
 					_1: {
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$None),
@@ -22886,8 +22882,7 @@ var _user$project$Mainview_v2$slot = F3(
 									_user$project$Mainview_v2$flexValue(1)),
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Color$background(
-										A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+									_0: _user$project$Model$primaryColor,
 									_1: {
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$center,
@@ -22937,8 +22932,7 @@ var _user$project$Mainview_v2$slot = F3(
 								_user$project$Mainview_v2$flexValue(1)),
 							_1: {
 								ctor: '::',
-								_0: _debois$elm_mdl$Material_Color$background(
-									A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+								_0: _user$project$Model$primaryColor,
 								_1: {
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$center,

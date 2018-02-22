@@ -6,7 +6,6 @@ import Request
 
 import Html exposing (Html, text)
 import Material.Options exposing (css, div, span, onClick, center)
-import Material.Color as Color
 import Material.Icon as Icon
 import Material.Elevation as Elevation
 import Material.Chip as Chip
@@ -18,7 +17,7 @@ view model flex =
         [ css "flex" flex
         , css "margin" "3px 0px"
         , Elevation.e6
-        , Color.background (Color.color Color.Grey Color.S500)
+        , primaryColor
         ]
         (List.append
             [ ]

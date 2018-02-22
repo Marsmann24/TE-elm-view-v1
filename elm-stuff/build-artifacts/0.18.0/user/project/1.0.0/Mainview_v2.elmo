@@ -48,8 +48,7 @@ var _user$project$Mainview_v2$slotDialogCard = F3(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '15px 0'),
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(
-								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S600)),
+							_0: _user$project$Model$primaryColor,
 							_1: {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
@@ -96,8 +95,7 @@ var _user$project$Mainview_v2$hiddenSlot = function (id) {
 				_0: _debois$elm_mdl$Material_Options$center,
 				_1: {
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Color$background(
-						A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+					_0: _user$project$Model$primaryColor,
 					_1: {
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$None),
@@ -158,8 +156,7 @@ var _user$project$Mainview_v2$slot = F3(
 									_user$project$Mainview_v2$flexValue(1)),
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Color$background(
-										A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+									_0: _user$project$Model$primaryColor,
 									_1: {
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$center,
@@ -209,8 +206,7 @@ var _user$project$Mainview_v2$slot = F3(
 								_user$project$Mainview_v2$flexValue(1)),
 							_1: {
 								ctor: '::',
-								_0: _debois$elm_mdl$Material_Color$background(
-									A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+								_0: _user$project$Model$primaryColor,
 								_1: {
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$center,

@@ -5,6 +5,8 @@ import Topic exposing (..)
 import Document exposing (..)
 
 import Material
+import Material.Options exposing (Property)
+import Material.Color as Color
 import Http
 import Html exposing (Html)
 import Array exposing (Array)
@@ -212,3 +214,6 @@ slotRemove slots removeId =
         | main = Array.indexedMap nextResult slots.main
         , more = moreTail
     }
+
+primaryColor : Property c m
+primaryColor = Color.background (Color.color Color.BlueGrey Color.S500)

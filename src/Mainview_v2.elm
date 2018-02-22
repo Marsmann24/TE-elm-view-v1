@@ -110,7 +110,7 @@ slot model slotId view =
                 [ cs "slot"
                 , cs "flex__column"
                 , css "flex" (flexValue 1)
-                , Color.background (Color.color Color.Grey Color.S500)
+                , primaryColor
                 , center
                 ]
                 [ slotDialogCard "Topics" (TopicsView model.topics) slotId
@@ -146,7 +146,7 @@ slot model slotId view =
                     div
                         [ cs "slot"
                         , css "flex" (flexValue 1)
-                        , Color.background (Color.color Color.Grey Color.S500)
+                        , primaryColor
                         , center
                         , onClick (ChoseSlotDialog slotId)
                         ]
@@ -162,7 +162,7 @@ hiddenSlot id =
     div
         [ cs "slot__hidden"
         , center
-        , Color.background (Color.color Color.Grey Color.S500)
+        , primaryColor
         , onClick None
         ]
         [ text (toString id)]
@@ -173,7 +173,7 @@ slotDialogCard title view slotId =
         [ css "height" "20%"
         , css "width" "100%"
         , css "margin" "15px 0"
-        , Color.background (Color.color Color.Grey Color.S600)
+        , primaryColor
         , onClick (UpdateSlot view slotId)
         ]
         [ Card.title

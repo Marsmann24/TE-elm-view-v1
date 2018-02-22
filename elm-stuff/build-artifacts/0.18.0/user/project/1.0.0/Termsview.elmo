@@ -98,8 +98,7 @@ var _user$project$Termsview$view = F3(
 						_0: _debois$elm_mdl$Material_Elevation$e0,
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(
-								A2(_debois$elm_mdl$Material_Color$color, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$S500)),
+							_0: _user$project$Model$primaryColor,
 							_1: {ctor: '[]'}
 						}
 					}

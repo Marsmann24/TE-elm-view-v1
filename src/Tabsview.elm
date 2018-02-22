@@ -5,7 +5,6 @@ import Document exposing (Document)
 
 import Html exposing (Html, text, h1, br)
 import Material.Options exposing (css, cs, div, span)
-import Material.Color as Color
 import Material.Tabs as Tabs
 
 view : Model -> String -> Html Msg
@@ -14,7 +13,7 @@ view model flex =
         [ cs "slot"
         , css "flex" flex
         , css "padding" "0px 10px"
-        , Color.background (Color.color Color.Grey Color.S500)
+        , primaryColor
         ]
         [ Tabs.render Mdl [0] model.mdl
             [ Tabs.ripple

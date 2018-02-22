@@ -9,7 +9,6 @@ import Request
 import Html exposing (Html, text)
 import Html.Events
 import Material.Options exposing (css, cs, div, center, onClick)
-import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Icon as Icon
 import Material.Button as Button
@@ -21,7 +20,7 @@ view model flex slotId =
         [ cs "slot"
         , css "flex" flex
         , Elevation.e0
-        , Color.background (Color.color Color.Grey Color.S500)
+        , primaryColor
         ]
         [ div
             [ css "height" "45px"
