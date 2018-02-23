@@ -32,7 +32,7 @@ view model =
                 [ viewBody model
                 ]
             }
-        |> Scheme.topWithScheme Color.Lime Color.Orange
+        |> Scheme.topWithScheme Color.Green Color.Orange
 
 viewSearch : Model -> Html Msg
 viewSearch model =
@@ -179,7 +179,7 @@ slotDialogCard title view slotId =
         [ Card.title
             [ css "height" "100%"
             , center
-            , Color.text Color.white
+            --, Color.text Color.white
             ]
             [ text title ]
         ]

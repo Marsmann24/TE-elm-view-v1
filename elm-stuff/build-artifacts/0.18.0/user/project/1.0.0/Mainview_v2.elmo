@@ -69,11 +69,7 @@ var _user$project$Mainview_v2$slotDialogCard = F3(
 						_1: {
 							ctor: '::',
 							_0: _debois$elm_mdl$Material_Options$center,
-							_1: {
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$white),
-								_1: {ctor: '[]'}
-							}
+							_1: {ctor: '[]'}
 						}
 					},
 					{
@@ -473,7 +469,7 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 var _user$project$Mainview_v2$view = function (model) {
 	return A3(
 		_debois$elm_mdl$Material_Scheme$topWithScheme,
-		_debois$elm_mdl$Material_Color$Lime,
+		_debois$elm_mdl$Material_Color$Green,
 		_debois$elm_mdl$Material_Color$Orange,
 		A4(
 			_debois$elm_mdl$Material_Layout$render,
