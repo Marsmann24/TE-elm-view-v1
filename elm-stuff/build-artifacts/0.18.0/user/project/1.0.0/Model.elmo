@@ -20,7 +20,11 @@ var _user$project$Model$Model = function (a) {
 										return function (k) {
 											return function (l) {
 												return function (m) {
-													return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, mdl: m};
+													return function (n) {
+														return function (o) {
+															return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, containerTopicModel: m, topicsContainer: n, mdl: o};
+														};
+													};
 												};
 											};
 										};
@@ -63,6 +67,10 @@ var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
+var _user$project$Model$ContainerCacheTopicMsg = F2(
+	function (a, b) {
+		return {ctor: 'ContainerCacheTopicMsg', _0: a, _1: b};
+	});
 var _user$project$Model$ExecCmd = function (a) {
 	return {ctor: 'ExecCmd', _0: a};
 };
@@ -248,9 +256,10 @@ var _user$project$Model$Dialog = {ctor: 'Dialog'};
 var _user$project$Model$DocumentsView = function (a) {
 	return {ctor: 'DocumentsView', _0: a};
 };
-var _user$project$Model$TopicsView = function (a) {
-	return {ctor: 'TopicsView', _0: a};
-};
+var _user$project$Model$TopicsView = F2(
+	function (a, b) {
+		return {ctor: 'TopicsView', _0: a, _1: b};
+	});
 var _user$project$Model$TermsView = function (a) {
 	return {ctor: 'TermsView', _0: a};
 };

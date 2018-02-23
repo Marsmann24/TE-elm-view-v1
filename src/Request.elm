@@ -6,8 +6,7 @@ import Topic
 import Term
 import Document
 
---import DB
---import ManageDBs
+import ContainerCache
 import Http
 import Json.Decode exposing (Decoder)
 
@@ -94,42 +93,42 @@ loadBestFrames =
     --        NewFrames a
 
 -- Chris Einbindung
---createGetTopics : (DB.DBMeta TopicResult -> Int -> DB.Page TopicResult)
+--createGetTopics : (ContainerCache.Meta TopicResult -> Int -> ContainerCache.Page TopicResult)
 --createGetTopics =
 --     "getTopics" Topic.decodeTopics
 
---createGetDoc : Int -> (DB.DBMeta TopicResult -> Int -> DB.Page TopicResult)
+--createGetDoc : Int -> (ContainerCache.Meta TopicResult -> Int -> ContainerCache.Page TopicResult)
 --createGetDoc docId =
 --    createRequest ("getDoc&DocId=" ++ (toString id)) Document.documentDecoder
 
---createGetBestDocs : Int -> Int -> String -> (DB.DBMeta TopicResult -> Int -> DB.Page TopicResult)
+--createGetBestDocs : Int -> Int -> String -> (ContainerCache.Meta TopicResult -> Int -> ContainerCache.Page TopicResult)
 --createGetBestDocs topicId term sorting =
 --    let command = String.concat ["getBestDocs&TopicId=", (toString id), termArgument, "&sorting=", sorting]
 --        termArgument =
---            if (term >= 0)
+--            if (term >= 0)git:
 --            then ("&term" ++ (toString term))
 --            else ""
 --    in
 --    createRequest command Document.bestDocsDecoder
 
---createGetTermRequest : Int -> (DB.DBMeta TermsResult -> Int -> DB.Page TermsResult)
+--createGetTermRequest : Int -> (ContainerCache.Meta TermsResult -> Int -> ContainerCache.Page TermsResult)
 --createGetTermRequest topicId =
 --    createRequest ("getTerms&TopicId=" ++ (toString topicId)) Term.termsDecoder
 
---createGetBestTerms : (DB.DBMeta (List Term) -> Int -> DB.Page (List Term))
+--createGetBestTerms : (ContainerCache.Meta (List Term) -> Int -> ContainerCache.Page (List Term))
 --createGetBestTerms =
 --    createRequest "getBestTerms" Term.bestTermsDecoder
 
---createGetBestFrames : (DB.DBMeta (List Term) -> Int -> DB.Page (List Term))
+--createGetBestFrames : (ContainerCache.Meta (List Term) -> Int -> ContainerCache.Page (List Term))
 --createGetBestFrames =
 --    createRequest "getBestFrames" Term.bestTermsDecoder
 
---createRequest : String -> Decoder a -> DB.DBMeta a -> Int -> DB.Page a
+--createRequest : String -> Decoder a -> ContainerCache.Meta a -> Int -> ContainerCache.Page a
 --createRequest arguments decoder meta offset =
 --    let url = baseURL ++ arguments
 --        request = Http.get url decoder
 --    in
---    DB.ToLoad meta.identifier
---        (Http.send (DB.LoadCheckPage meta offset)
+--    ContainerCache.ToLoad meta.identifier
+--        (Http.send (ContainerCache.LoadCheckPage meta offset)
 --            (Http.get url meta.decoder)
 --        )

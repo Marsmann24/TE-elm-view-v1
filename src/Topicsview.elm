@@ -12,7 +12,7 @@ import Material.Elevation as Elevation
 import Material.Icon as Icon
 import Material.Button as Button
 import Material.Chip as Chip
-
+import ContainerCache exposing (Page(..))
 
 view : Model -> String -> Int -> Html Msg
 view model flex slotId =

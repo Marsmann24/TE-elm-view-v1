@@ -30,7 +30,7 @@ searchresult2ListItem result =
                     ]
             Topicresult topic ->
                 Lists.content
-                    [ onClick (Found (TopicsView [topic]))]
+                    [ onClick (Found (TopicsView [topic] 0))]
                     [ Lists.icon "bubble_chart" []
                     , text (toString topic.id)
                     ]

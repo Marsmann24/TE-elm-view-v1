@@ -116,7 +116,7 @@ var _user$project$Mainview_v2$slot = F3(
 					_user$project$Topicsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{topics: _p1._0}),
+						{topics: _p1._0, topicsContainer: _p1._1}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'TermsView':
@@ -164,7 +164,7 @@ var _user$project$Mainview_v2$slot = F3(
 						_0: A3(
 							_user$project$Mainview_v2$slotDialogCard,
 							'Topics',
-							_user$project$Model$TopicsView(model.topics),
+							A2(_user$project$Model$TopicsView, model.topics, model.topicsContainer),
 							slotId),
 						_1: {
 							ctor: '::',

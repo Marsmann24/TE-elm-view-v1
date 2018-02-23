@@ -158,11 +158,13 @@ var _user$project$Init$init = {
 			main: _elm_lang$core$Array$fromList(
 				{
 					ctor: '::',
-					_0: _user$project$Model$TopicsView(
+					_0: A2(
+						_user$project$Model$TopicsView,
 						A2(
 							_elm_lang$core$List$map,
 							_user$project$Init$initTopic,
-							A2(_elm_lang$core$List$range, 0, 8))),
+							A2(_elm_lang$core$List$range, 0, 8)),
+						0),
 					_1: {
 						ctor: '::',
 						_0: _user$project$Model$Empty,
@@ -175,6 +177,8 @@ var _user$project$Init$init = {
 				}),
 			more: {ctor: '[]'}
 		},
+		containerTopicModel: A3(_user$project$ContainerCache$newContainerModel, _elm_lang$core$Array$empty, 3, _user$project$ContainerCache$defaultContainer),
+		topicsContainer: 0,
 		mdl: _debois$elm_mdl$Material$model
 	},
 	_1: _elm_lang$core$Platform_Cmd$none

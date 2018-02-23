@@ -1,6 +1,7 @@
 module TE_elm_v1 exposing (..)
 
 import Model exposing (..)
+import Topic exposing (Topic)
 import Init exposing (init)
 --import Mainview_v1 exposing (view)
 import Mainview_v1
@@ -10,6 +11,10 @@ import Html
 import Material
 import Delay
 import Time
+import ContainerCache exposing (Page(..))
+import Platform.Cmd
+import Maybe exposing (withDefault)
+import Array
 
 main : Program Never Model Msg
 main =
@@ -69,10 +74,11 @@ update msg model =
         ShowTopics topics ->
             let oldSettings = model.settings
                 oldSlots = model.slots
+                topicsContainer = model.topicsContainer
             in
             ({ model
                 | settings = { oldSettings | showTopics = True}
-                , slots = slotFromTo oldSlots Empty (TopicsView topics)
+                , slots = slotFromTo oldSlots Empty (TopicsView topics topicsContainer)
                 }
             , Cmd.none)
         HideTopics slotId ->
@@ -135,7 +141,7 @@ update msg model =
         UpdateSlot view slotId ->
             let oldSlots = model.slots
             in
-            ({ model | slots =  slotChangeTo oldSlots slotId view}, Cmd.none)
+            ({ model | slots = slotChangeTo oldSlots slotId view}, Cmd.none)
         ToggleBottom ->
             let oldSettings = model.settings
             in
@@ -186,6 +192,63 @@ update msg model =
             (model, Cmd.none)
         ExecCmd cmd ->
             (model, cmd)
+        ContainerCacheTopicMsg slotId submsg -> -- Chris Einbindung
+            let
+                (newdata, cmd ) =
+                    ContainerCache.update submsg model.containerTopicModel
+                currentPage : ContainerCache.Container (List Topic) -> ContainerCache.Page (List Topic)
+                currentPage cont =
+                    withDefault (HandleError "") (Array.get cont.meta.currPage cont.data)
+                topicList : ContainerCache.Container (List Topic) -> List Topic
+                topicList cont =
+                    case (currentPage cont) of
+                        Loaded topics ->
+                            topics
+                        _ ->
+                            []
+                newSlots =
+                    case submsg of
+                        ContainerCache.CreateNewContainer _ ->
+                            let index =
+                                    (Array.length newdata.arrayOfContainer) - 1
+                                newContainer =
+                                    (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
+                                newView =
+                                    TopicsView (topicList newContainer) index
+                            in
+                            slotFromTo model.slots Empty newView
+                        ContainerCache.PageUpdate _ _ ->
+                            let index =
+                                    case (slotGet model.slots slotId) of
+                                        TopicsView _ contId->
+                                            contId
+                                        _ ->
+                                            -1
+                                newContainer =
+                                    (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
+                                newView =
+                                    TopicsView (topicList newContainer) index
+                            in
+                            slotChangeTo model.slots slotId newView
+                        _ ->
+                            let index =
+                                    case (slotGet model.slots slotId) of
+                                        TopicsView _ contId->
+                                            contId
+                                        _ ->
+                                            -1
+                                newContainer =
+                                    (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
+                                newView =
+                                    TopicsView (topicList newContainer) index
+                            in
+                            slotChangeTo model.slots slotId newView
+            in
+            ({ model
+                | containerTopicModel = newdata
+                , slots = newSlots
+                }
+            , Platform.Cmd.map (ContainerCacheTopicMsg slotId) cmd )
         Mdl msgmdl ->
             (Material.update Mdl msgmdl model)
         _ ->

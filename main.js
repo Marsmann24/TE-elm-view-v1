@@ -20282,6 +20282,585 @@ var _elm_lang$http$Http$StringPart = F2(
 	});
 var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 
+var _lukewestby$lru_cache$LruCache$toDict = function (cache) {
+	return A2(
+		_elm_lang$core$Dict$map,
+		F2(
+			function (k, v) {
+				return _elm_lang$core$Tuple$first(v);
+			}),
+		cache.items);
+};
+var _lukewestby$lru_cache$LruCache$member = F2(
+	function (key, cache) {
+		return A2(_elm_lang$core$Dict$member, key, cache.items);
+	});
+var _lukewestby$lru_cache$LruCache$size = function (cache) {
+	return _elm_lang$core$Dict$size(cache.items);
+};
+var _lukewestby$lru_cache$LruCache$get = F2(
+	function (key, cache) {
+		var _p0 = A2(_elm_lang$core$Dict$get, key, cache.items);
+		if (_p0.ctor === 'Just') {
+			var _p1 = _p0._0._0;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					cache,
+					{
+						items: A3(
+							_elm_lang$core$Dict$insert,
+							key,
+							{ctor: '_Tuple2', _0: _p1, _1: cache.counter},
+							cache.items),
+						counter: cache.counter + 1
+					}),
+				_1: _elm_lang$core$Maybe$Just(_p1)
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: cache, _1: _elm_lang$core$Maybe$Nothing};
+		}
+	});
+var _lukewestby$lru_cache$LruCache$empty = function (maximum) {
+	return {items: _elm_lang$core$Dict$empty, maximum: maximum, counter: 0};
+};
+var _lukewestby$lru_cache$LruCache$minimumBy = F2(
+	function (f, ls) {
+		var minBy = F2(
+			function (x, _p2) {
+				var _p3 = _p2;
+				var _p4 = _p3._1;
+				var fx = f(x);
+				return (_elm_lang$core$Native_Utils.cmp(fx, _p4) < 0) ? {ctor: '_Tuple2', _0: x, _1: fx} : {ctor: '_Tuple2', _0: _p3._0, _1: _p4};
+			});
+		var _p5 = ls;
+		if (_p5.ctor === '::') {
+			if (_p5._1.ctor === '[]') {
+				return _elm_lang$core$Maybe$Just(_p5._0);
+			} else {
+				var _p6 = _p5._0;
+				return _elm_lang$core$Maybe$Just(
+					_elm_lang$core$Tuple$first(
+						A3(
+							_elm_lang$core$List$foldl,
+							minBy,
+							{
+								ctor: '_Tuple2',
+								_0: _p6,
+								_1: f(_p6)
+							},
+							_p5._1)));
+			}
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	});
+var _lukewestby$lru_cache$LruCache$insert = F3(
+	function (key, value, cache) {
+		var nextItems = function () {
+			if (_elm_lang$core$Native_Utils.cmp(
+				_elm_lang$core$Dict$size(cache.items),
+				cache.maximum) > -1) {
+				var keyToRemove = A2(
+					_elm_lang$core$Maybe$map,
+					_elm_lang$core$Tuple$first,
+					A2(
+						_lukewestby$lru_cache$LruCache$minimumBy,
+						function (_p7) {
+							var _p8 = _p7;
+							return _p8._1._1;
+						},
+						_elm_lang$core$Dict$toList(cache.items)));
+				var _p9 = keyToRemove;
+				if (_p9.ctor === 'Just') {
+					return A3(
+						_elm_lang$core$Dict$insert,
+						key,
+						{ctor: '_Tuple2', _0: value, _1: cache.counter},
+						A2(_elm_lang$core$Dict$remove, _p9._0, cache.items));
+				} else {
+					return A3(
+						_elm_lang$core$Dict$insert,
+						key,
+						{ctor: '_Tuple2', _0: value, _1: cache.counter},
+						cache.items);
+				}
+			} else {
+				return A3(
+					_elm_lang$core$Dict$insert,
+					key,
+					{ctor: '_Tuple2', _0: value, _1: cache.counter},
+					cache.items);
+			}
+		}();
+		return _elm_lang$core$Native_Utils.update(
+			cache,
+			{items: nextItems, counter: cache.counter + 1});
+	});
+var _lukewestby$lru_cache$LruCache$LruCache = F3(
+	function (a, b, c) {
+		return {items: a, maximum: b, counter: c};
+	});
+
+var _user$project$ContainerCache$fillcache = F3(
+	function (meta, index, page) {
+		var _p0 = page;
+		if (_p0.ctor === 'ToLoad') {
+			return (_elm_lang$core$Native_Utils.cmp(index, meta.windowSize) < 1) ? _p0._1 : _elm_lang$core$Platform_Cmd$none;
+		} else {
+			return _elm_lang$core$Platform_Cmd$none;
+		}
+	});
+var _user$project$ContainerCache$loadpage = F2(
+	function (targetpage, targetcontainer) {
+		var _p1 = targetpage;
+		if (_p1.ctor === 'ToLoad') {
+			return {ctor: '_Tuple2', _0: targetcontainer, _1: _p1._1};
+		} else {
+			return {ctor: '_Tuple2', _0: targetcontainer, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$ContainerCache$initializenewContainer = F2(
+	function (meta, requestmaker) {
+		return A2(
+			_elm_lang$core$Array$initialize,
+			meta.numOfPages,
+			function (n) {
+				if (_elm_lang$core$Native_Utils.cmp(n, meta.windowSize) > 0) {
+					var metanew = _elm_lang$core$Native_Utils.update(
+						meta,
+						{currPage: n - meta.windowSize});
+					return A2(requestmaker, metanew, n);
+				} else {
+					return A2(requestmaker, meta, n);
+				}
+			});
+	});
+var _user$project$ContainerCache$getpagetoload = F2(
+	function (container, msg) {
+		var _p2 = msg;
+		if (_p2.ctor === 'NextPage') {
+			return (container.meta.currPage + container.meta.windowSize) + 1;
+		} else {
+			return (container.meta.currPage - container.meta.windowSize) - 1;
+		}
+	});
+var _user$project$ContainerCache$createMetadata = F6(
+	function (name, numOfElem, ipp, cs, iden, decoder) {
+		return {
+			name: name,
+			numOfItemsInContainer: numOfElem,
+			itemsPerPage: ipp,
+			numOfPages: _elm_lang$core$Basics$ceiling(
+				_elm_lang$core$Basics$toFloat(numOfElem) / _elm_lang$core$Basics$toFloat(ipp)),
+			windowSize: cs,
+			currPage: 0,
+			identifier: iden,
+			decoder: decoder
+		};
+	});
+var _user$project$ContainerCache$ContainerModel = F4(
+	function (a, b, c, d) {
+		return {arrayOfContainer: a, cache: b, newcontainer: c, log: d};
+	});
+var _user$project$ContainerCache$Container = F4(
+	function (a, b, c, d) {
+		return {meta: a, data: b, requestmaker: c, log: d};
+	});
+var _user$project$ContainerCache$Meta = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {name: a, numOfItemsInContainer: b, itemsPerPage: c, numOfPages: d, identifier: e, windowSize: f, currPage: g, decoder: h};
+	});
+var _user$project$ContainerCache$HandleError = function (a) {
+	return {ctor: 'HandleError', _0: a};
+};
+var _user$project$ContainerCache$requestmaker = F2(
+	function (meta, pagenumtodelete) {
+		return _user$project$ContainerCache$HandleError('Default pagerequest');
+	});
+var _user$project$ContainerCache$ToLoad = F2(
+	function (a, b) {
+		return {ctor: 'ToLoad', _0: a, _1: b};
+	});
+var _user$project$ContainerCache$Loaded = function (a) {
+	return {ctor: 'Loaded', _0: a};
+};
+var _user$project$ContainerCache$LoadNewPage = F3(
+	function (a, b, c) {
+		return {ctor: 'LoadNewPage', _0: a, _1: b, _2: c};
+	});
+var _user$project$ContainerCache$PageUpdate = F2(
+	function (a, b) {
+		return {ctor: 'PageUpdate', _0: a, _1: b};
+	});
+var _user$project$ContainerCache$CreateNewContainer = function (a) {
+	return {ctor: 'CreateNewContainer', _0: a};
+};
+var _user$project$ContainerCache$UpdatePage = F2(
+	function (a, b) {
+		return {ctor: 'UpdatePage', _0: a, _1: b};
+	});
+var _user$project$ContainerCache$addpagetorequest = F2(
+	function (msg, page) {
+		return A2(_user$project$ContainerCache$UpdatePage, msg, page);
+	});
+var _user$project$ContainerCache$LoadCheckPage = F3(
+	function (a, b, c) {
+		return {ctor: 'LoadCheckPage', _0: a, _1: b, _2: c};
+	});
+var _user$project$ContainerCache$LoadNewContainer = F7(
+	function (a, b, c, d, e, f, g) {
+		return {ctor: 'LoadNewContainer', _0: a, _1: b, _2: c, _3: d, _4: e, _5: f, _6: g};
+	});
+var _user$project$ContainerCache$PrevPage = {ctor: 'PrevPage'};
+var _user$project$ContainerCache$NextPage = {ctor: 'NextPage'};
+var _user$project$ContainerCache$Container_Error = function (a) {
+	return {ctor: 'Container_Error', _0: a};
+};
+var _user$project$ContainerCache$ContainerError = function (a) {
+	return {ctor: 'ContainerError', _0: a};
+};
+var _user$project$ContainerCache$ManageContainer_Error = function (a) {
+	return {ctor: 'ManageContainer_Error', _0: a};
+};
+var _user$project$ContainerCache$NoError = {ctor: 'NoError'};
+var _user$project$ContainerCache$createContainer = F3(
+	function (meta, data, req) {
+		return {meta: meta, data: data, requestmaker: req, log: _user$project$ContainerCache$NoError};
+	});
+var _user$project$ContainerCache$defaultContainer = A3(
+	_user$project$ContainerCache$createContainer,
+	A6(
+		_user$project$ContainerCache$createMetadata,
+		'DefaultContainer - Error',
+		-1,
+		-1,
+		-1,
+		-1,
+		_elm_lang$core$Json_Decode$fail('DefaultContainer - Decoder Error')),
+	_elm_lang$core$Array$empty,
+	_user$project$ContainerCache$requestmaker);
+var _user$project$ContainerCache$updatecontainer = F2(
+	function (msg, model) {
+		var _p3 = msg;
+		switch (_p3.ctor) {
+			case 'LoadNewContainer':
+				var _p4 = _p3._6;
+				var newMeta = A6(_user$project$ContainerCache$createMetadata, _p3._0, _p3._1, _p3._2, _p3._3, _p3._4, _p3._5);
+				var loadedContainer = A2(_user$project$ContainerCache$initializenewContainer, newMeta, _p4);
+				return {
+					ctor: '_Tuple2',
+					_0: A3(_user$project$ContainerCache$createContainer, newMeta, loadedContainer, _p4),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						_elm_lang$core$Array$toList(
+							A2(
+								_elm_lang$core$Array$indexedMap,
+								_user$project$ContainerCache$fillcache(newMeta),
+								loadedContainer)))
+				};
+			case 'LoadCheckPage':
+				var _p5 = _p3._2;
+				if (_p5.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: A3(
+							_user$project$ContainerCache$createContainer,
+							_p3._0,
+							A3(
+								_elm_lang$core$Array$set,
+								_p3._1,
+								_user$project$ContainerCache$Loaded(_p5._0),
+								model.data),
+							model.requestmaker),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								log: _user$project$ContainerCache$ContainerError(_p5._0)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$ContainerCache$switchpage = F3(
+	function (factor, model, maybepage) {
+		var pagenumtoload = model.meta.currPage + ((model.meta.windowSize + 1) * factor);
+		var nextpage = A2(
+			_elm_lang$core$Maybe$withDefault,
+			_user$project$ContainerCache$HandleError('switchpage nextpage'),
+			A2(_elm_lang$core$Array$get, pagenumtoload, model.data));
+		var pagenumtodelete = model.meta.currPage - (model.meta.windowSize * factor);
+		var deletedpage = A2(
+			_elm_lang$core$Maybe$withDefault,
+			_user$project$ContainerCache$HandleError('switchpage deletedpage'),
+			A2(_elm_lang$core$Array$get, pagenumtodelete, model.data));
+		var metahelp = model.meta;
+		var newmeta = _elm_lang$core$Native_Utils.update(
+			metahelp,
+			{currPage: metahelp.currPage + (1 * factor)});
+		var newdeletemeta = _elm_lang$core$Native_Utils.update(
+			metahelp,
+			{currPage: pagenumtodelete + (metahelp.windowSize * factor)});
+		var pagetodelete = A2(model.requestmaker, newdeletemeta, pagenumtodelete);
+		var _p6 = nextpage;
+		if (_p6.ctor === 'ToLoad') {
+			var _p7 = maybepage;
+			if (_p7.ctor === 'Just') {
+				return {
+					ctor: '_Tuple3',
+					_0: A3(
+						_user$project$ContainerCache$createContainer,
+						newmeta,
+						A3(
+							_elm_lang$core$Array$set,
+							pagenumtoload,
+							_p7._0,
+							A3(_elm_lang$core$Array$set, pagenumtodelete, pagetodelete, model.data)),
+						model.requestmaker),
+					_1: _elm_lang$core$Platform_Cmd$none,
+					_2: {ctor: '_Tuple2', _0: pagenumtodelete, _1: deletedpage}
+				};
+			} else {
+				return {
+					ctor: '_Tuple3',
+					_0: A3(
+						_user$project$ContainerCache$createContainer,
+						newmeta,
+						A3(_elm_lang$core$Array$set, pagenumtodelete, pagetodelete, model.data),
+						model.requestmaker),
+					_1: _p6._1,
+					_2: {ctor: '_Tuple2', _0: pagenumtodelete, _1: deletedpage}
+				};
+			}
+		} else {
+			return {
+				ctor: '_Tuple3',
+				_0: A3(_user$project$ContainerCache$createContainer, newmeta, model.data, model.requestmaker),
+				_1: _elm_lang$core$Platform_Cmd$none,
+				_2: {
+					ctor: '_Tuple2',
+					_0: -1,
+					_1: _user$project$ContainerCache$HandleError('switchpage not ToLoad')
+				}
+			};
+		}
+	});
+var _user$project$ContainerCache$updatepage = F2(
+	function (msg, model) {
+		var _p8 = msg;
+		if (_p8.ctor === 'UpdatePage') {
+			if (_p8._0.ctor === 'NextPage') {
+				return (_elm_lang$core$Native_Utils.cmp(model.meta.currPage + 1, model.meta.numOfPages) < 0) ? A3(_user$project$ContainerCache$switchpage, 1, model, _p8._1) : {
+					ctor: '_Tuple3',
+					_0: model,
+					_1: _elm_lang$core$Platform_Cmd$none,
+					_2: {
+						ctor: '_Tuple2',
+						_0: -1,
+						_1: _user$project$ContainerCache$HandleError('updatepage NextPage')
+					}
+				};
+			} else {
+				return (_elm_lang$core$Native_Utils.cmp(0, model.meta.currPage) < 0) ? A3(_user$project$ContainerCache$switchpage, -1, model, _p8._1) : {
+					ctor: '_Tuple3',
+					_0: model,
+					_1: _elm_lang$core$Platform_Cmd$none,
+					_2: {
+						ctor: '_Tuple2',
+						_0: -1,
+						_1: _user$project$ContainerCache$HandleError('updatepage PrevPage')
+					}
+				};
+			}
+		} else {
+			return {
+				ctor: '_Tuple3',
+				_0: model,
+				_1: _elm_lang$core$Platform_Cmd$none,
+				_2: {
+					ctor: '_Tuple2',
+					_0: -1,
+					_1: _user$project$ContainerCache$HandleError('updatepage No UpdatePage')
+				}
+			};
+		}
+	});
+var _user$project$ContainerCache$newContainerModel = F3(
+	function (array, cachesize, newcontainer) {
+		return {
+			arrayOfContainer: array,
+			cache: _lukewestby$lru_cache$LruCache$empty(cachesize),
+			newcontainer: newcontainer,
+			log: _user$project$ContainerCache$NoError
+		};
+	});
+var _user$project$ContainerCache$update = F2(
+	function (msg, model) {
+		var _p9 = msg;
+		switch (_p9.ctor) {
+			case 'CreateNewContainer':
+				var _p10 = A2(_user$project$ContainerCache$updatecontainer, _p9._0, model.newcontainer);
+				var container = _p10._0;
+				var command = _p10._1;
+				var _p11 = A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$ContainerCache$HandleError('CreateNewContainer'),
+					A2(_elm_lang$core$Array$get, 0, container.data));
+				if (_p11.ctor === 'Loaded') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								arrayOfContainer: A2(_elm_lang$core$Array$push, container, model.arrayOfContainer)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{newcontainer: container}),
+						_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$ContainerCache$CreateNewContainer, command)
+					};
+				}
+			case 'PageUpdate':
+				var _p17 = _p9._1;
+				var _p16 = _p9._0;
+				var targetcontainer = A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$ContainerCache$defaultContainer,
+					A2(_elm_lang$core$Array$get, _p16, model.arrayOfContainer));
+				var pagetoload = A2(_user$project$ContainerCache$getpagetoload, targetcontainer, _p17);
+				var _p12 = A2(
+					_lukewestby$lru_cache$LruCache$get,
+					{ctor: '_Tuple2', _0: _p16, _1: pagetoload},
+					model.cache);
+				var newcache = _p12._0;
+				var maybepageincache = _p12._1;
+				var updateMsg = A2(_user$project$ContainerCache$addpagetorequest, _p17, maybepageincache);
+				var _p13 = A2(_user$project$ContainerCache$updatepage, updateMsg, targetcontainer);
+				var container = _p13._0;
+				var command = _p13._1;
+				var pageforcachenum = _p13._2._0;
+				var pageforcache = _p13._2._1;
+				var newcontainerarray = (_elm_lang$core$Native_Utils.cmp(pageforcachenum, 0) > -1) ? {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							arrayOfContainer: A3(_elm_lang$core$Array$set, _p16, container, model.arrayOfContainer),
+							cache: A3(
+								_lukewestby$lru_cache$LruCache$insert,
+								{ctor: '_Tuple2', _0: _p16, _1: pageforcachenum},
+								pageforcache,
+								newcache)
+						}),
+					_1: A2(
+						_elm_lang$core$Platform_Cmd$map,
+						A2(_user$project$ContainerCache$LoadNewPage, _p16, command),
+						command)
+				} : {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							arrayOfContainer: A3(_elm_lang$core$Array$set, _p16, container, model.arrayOfContainer)
+						}),
+					_1: A2(
+						_elm_lang$core$Platform_Cmd$map,
+						A2(_user$project$ContainerCache$LoadNewPage, _p16, command),
+						command)
+				};
+				var nextpagenum = _elm_lang$core$Native_Utils.eq(_p17, _user$project$ContainerCache$NextPage) ? (targetcontainer.meta.currPage + 1) : (targetcontainer.meta.currPage - 1);
+				var targetpage = A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$ContainerCache$HandleError('PageUpdate targetpage'),
+					A2(_elm_lang$core$Array$get, nextpagenum, targetcontainer.data));
+				var _p14 = targetpage;
+				if (_p14.ctor === 'ToLoad') {
+					if (_elm_lang$core$Native_Utils.cmp(targetcontainer.meta.windowSize, 0) > 0) {
+						var _p15 = A2(_user$project$ContainerCache$loadpage, targetpage, targetcontainer);
+						var newcontainer = _p15._0;
+						var reloadcommand = _p15._1;
+						return (_elm_lang$core$Native_Utils.cmp(pageforcachenum, 0) > -1) ? {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									arrayOfContainer: A3(_elm_lang$core$Array$set, _p16, newcontainer, model.arrayOfContainer),
+									cache: A3(
+										_lukewestby$lru_cache$LruCache$insert,
+										{ctor: '_Tuple2', _0: _p16, _1: pageforcachenum},
+										pageforcache,
+										newcache)
+								}),
+							_1: A2(
+								_elm_lang$core$Platform_Cmd$map,
+								A2(_user$project$ContainerCache$LoadNewPage, _p16, reloadcommand),
+								reloadcommand)
+						} : {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									arrayOfContainer: A3(_elm_lang$core$Array$set, _p16, newcontainer, model.arrayOfContainer)
+								}),
+							_1: A2(
+								_elm_lang$core$Platform_Cmd$map,
+								A2(_user$project$ContainerCache$LoadNewPage, _p16, reloadcommand),
+								reloadcommand)
+						};
+					} else {
+						return newcontainerarray;
+					}
+				} else {
+					return newcontainerarray;
+				}
+			default:
+				var _p20 = _p9._0;
+				var _p19 = _p9._1;
+				var _p18 = A2(
+					_user$project$ContainerCache$updatecontainer,
+					_p9._2,
+					A2(
+						_elm_lang$core$Maybe$withDefault,
+						_user$project$ContainerCache$defaultContainer,
+						A2(_elm_lang$core$Array$get, _p20, model.arrayOfContainer)));
+				var container = _p18._0;
+				var cmdnone = _p18._1;
+				return _elm_lang$core$Native_Utils.eq(container.log, _user$project$ContainerCache$NoError) ? {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							arrayOfContainer: A3(_elm_lang$core$Array$set, _p20, container, model.arrayOfContainer),
+							log: _user$project$ContainerCache$NoError
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				} : {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							log: _user$project$ContainerCache$Container_Error(container.log)
+						}),
+					_1: A2(
+						_elm_lang$core$Platform_Cmd$map,
+						A2(_user$project$ContainerCache$LoadNewPage, _p20, _p19),
+						_p19)
+				};
+		}
+	});
+
 var _user$project$Decoderhelper$map10 = function ($function) {
 	return function (decoder0) {
 		return function (decoder1) {
@@ -20750,7 +21329,11 @@ var _user$project$Model$Model = function (a) {
 										return function (k) {
 											return function (l) {
 												return function (m) {
-													return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, mdl: m};
+													return function (n) {
+														return function (o) {
+															return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, containerTopicModel: m, topicsContainer: n, mdl: o};
+														};
+													};
 												};
 											};
 										};
@@ -20793,6 +21376,10 @@ var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
+var _user$project$Model$ContainerCacheTopicMsg = F2(
+	function (a, b) {
+		return {ctor: 'ContainerCacheTopicMsg', _0: a, _1: b};
+	});
 var _user$project$Model$ExecCmd = function (a) {
 	return {ctor: 'ExecCmd', _0: a};
 };
@@ -20978,9 +21565,10 @@ var _user$project$Model$Dialog = {ctor: 'Dialog'};
 var _user$project$Model$DocumentsView = function (a) {
 	return {ctor: 'DocumentsView', _0: a};
 };
-var _user$project$Model$TopicsView = function (a) {
-	return {ctor: 'TopicsView', _0: a};
-};
+var _user$project$Model$TopicsView = F2(
+	function (a, b) {
+		return {ctor: 'TopicsView', _0: a, _1: b};
+	});
 var _user$project$Model$TermsView = function (a) {
 	return {ctor: 'TermsView', _0: a};
 };
@@ -21478,11 +22066,13 @@ var _user$project$Init$init = {
 			main: _elm_lang$core$Array$fromList(
 				{
 					ctor: '::',
-					_0: _user$project$Model$TopicsView(
+					_0: A2(
+						_user$project$Model$TopicsView,
 						A2(
 							_elm_lang$core$List$map,
 							_user$project$Init$initTopic,
-							A2(_elm_lang$core$List$range, 0, 8))),
+							A2(_elm_lang$core$List$range, 0, 8)),
+						0),
 					_1: {
 						ctor: '::',
 						_0: _user$project$Model$Empty,
@@ -21495,6 +22085,8 @@ var _user$project$Init$init = {
 				}),
 			more: {ctor: '[]'}
 		},
+		containerTopicModel: A3(_user$project$ContainerCache$newContainerModel, _elm_lang$core$Array$empty, 3, _user$project$ContainerCache$defaultContainer),
+		topicsContainer: 0,
 		mdl: _debois$elm_mdl$Material$model
 	},
 	_1: _elm_lang$core$Platform_Cmd$none
@@ -22737,12 +23329,14 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
 									_user$project$Model$Found(
-										_user$project$Model$TopicsView(
+										A2(
+											_user$project$Model$TopicsView,
 											{
 												ctor: '::',
 												_0: _p2,
 												_1: {ctor: '[]'}
-											}))),
+											},
+											0))),
 								_1: {ctor: '[]'}
 							},
 							{
@@ -22932,7 +23526,7 @@ var _user$project$Mainview_v2$slot = F3(
 					_user$project$Topicsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{topics: _p1._0}),
+						{topics: _p1._0, topicsContainer: _p1._1}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId);
 			case 'TermsView':
@@ -22980,7 +23574,7 @@ var _user$project$Mainview_v2$slot = F3(
 						_0: A3(
 							_user$project$Mainview_v2$slotDialogCard,
 							'Topics',
-							_user$project$Model$TopicsView(model.topics),
+							A2(_user$project$Model$TopicsView, model.topics, model.topicsContainer),
 							slotId),
 						_1: {
 							ctor: '::',
@@ -23403,6 +23997,7 @@ var _user$project$TE_elm_v1$update = F2(
 					_1: A3(_andrewMacmurray$elm_delay$Delay$after, 200, _elm_lang$core$Time$millisecond, _p0._1)
 				};
 			case 'ShowTopics':
+				var topicsContainer = model.topicsContainer;
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -23417,7 +24012,7 @@ var _user$project$TE_elm_v1$update = F2(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$TopicsView(_p0._0))
+								A2(_user$project$Model$TopicsView, _p0._0, topicsContainer))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -23693,6 +24288,88 @@ var _user$project$TE_elm_v1$update = F2(
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'ExecCmd':
 				return {ctor: '_Tuple2', _0: model, _1: _p0._0};
+			case 'ContainerCacheTopicMsg':
+				var _p12 = _p0._1;
+				var _p11 = _p0._0;
+				var currentPage = function (cont) {
+					return A2(
+						_elm_lang$core$Maybe$withDefault,
+						_user$project$ContainerCache$HandleError(''),
+						A2(_elm_lang$core$Array$get, cont.meta.currPage, cont.data));
+				};
+				var topicList = function (cont) {
+					var _p6 = currentPage(cont);
+					if (_p6.ctor === 'Loaded') {
+						return _p6._0;
+					} else {
+						return {ctor: '[]'};
+					}
+				};
+				var _p7 = A2(_user$project$ContainerCache$update, _p12, model.containerTopicModel);
+				var newdata = _p7._0;
+				var cmd = _p7._1;
+				var newSlots = function () {
+					var _p8 = _p12;
+					switch (_p8.ctor) {
+						case 'CreateNewContainer':
+							var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
+							var newContainer = A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$ContainerCache$defaultContainer,
+								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+							var newView = A2(
+								_user$project$Model$TopicsView,
+								topicList(newContainer),
+								index);
+							return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
+						case 'PageUpdate':
+							var index = function () {
+								var _p9 = A2(_user$project$Model$slotGet, model.slots, _p11);
+								if (_p9.ctor === 'TopicsView') {
+									return _p9._1;
+								} else {
+									return -1;
+								}
+							}();
+							var newContainer = A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$ContainerCache$defaultContainer,
+								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+							var newView = A2(
+								_user$project$Model$TopicsView,
+								topicList(newContainer),
+								index);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p11, newView);
+						default:
+							var index = function () {
+								var _p10 = A2(_user$project$Model$slotGet, model.slots, _p11);
+								if (_p10.ctor === 'TopicsView') {
+									return _p10._1;
+								} else {
+									return -1;
+								}
+							}();
+							var newContainer = A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$ContainerCache$defaultContainer,
+								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+							var newView = A2(
+								_user$project$Model$TopicsView,
+								topicList(newContainer),
+								index);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p11, newView);
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{containerTopicModel: newdata, slots: newSlots}),
+					_1: A2(
+						_elm_lang$core$Platform_Cmd$map,
+						_user$project$Model$ContainerCacheTopicMsg(_p11),
+						cmd)
+				};
 			case 'Mdl':
 				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
 			default:
@@ -23706,6 +24383,10 @@ var _user$project$TE_elm_v1$main = _elm_lang$html$Html$program(
 	{init: _user$project$Init$init, update: _user$project$TE_elm_v1$update, view: _user$project$TE_elm_v1$view, subscriptions: _user$project$TE_elm_v1$subscriptions})();
 
 var Elm = {};
+Elm['ContainerCache'] = Elm['ContainerCache'] || {};
+if (typeof _user$project$ContainerCache$main !== 'undefined') {
+    _user$project$ContainerCache$main(Elm['ContainerCache'], 'ContainerCache', {"types":null,"versions":{"elm":"0.18.0"}});
+}
 Elm['Decoderhelper'] = Elm['Decoderhelper'] || {};
 if (typeof _user$project$Decoderhelper$main !== 'undefined') {
     _user$project$Decoderhelper$main(Elm['Decoderhelper'], 'Decoderhelper', {"types":null,"versions":{"elm":"0.18.0"}});
@@ -23748,7 +24429,7 @@ if (typeof _user$project$Searchview$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["List Document.Doc"],"ErrorSlot":[],"TopicsView":["List Topic.Topic"],"Dialog":[],"TermsView":["List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error Topic.TopicResult"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Term.TermSorting":{"args":[],"type":"List { id : Int, relevance : Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : Term.TermSorting }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : Int , keyword_snipet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snipet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Topic.TopicResult":{"args":[],"type":"{ topics : List Topic.Topic , sorting : List Int , terms : List Term.Term , topicsBestItemLimit : Int }"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["List Document.Doc"],"ErrorSlot":[],"TopicsView":["List Topic.Topic","Int"],"Dialog":[],"TermsView":["List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error Topic.TopicResult"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Term.TermSorting":{"args":[],"type":"List { id : Int, relevance : Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : Term.TermSorting }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : Int , keyword_snipet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snipet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Topic.TopicResult":{"args":[],"type":"{ topics : List Topic.Topic , sorting : List Int , terms : List Term.Term , topicsBestItemLimit : Int }"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {

@@ -4,6 +4,7 @@ import Model exposing (..)
 import Term exposing (Term)
 import Topic exposing (Topic)
 import Document exposing (Document, Doc)
+import ContainerCache
 
 import Material
 import Array
@@ -35,12 +36,14 @@ init =
     , slots =
         { main =
             Array.fromList
-                [ TopicsView (List.map initTopic (List.range 0 8))
+                [ TopicsView (List.map initTopic (List.range 0 8)) 0
                 , Empty
                 , Empty
                 ]
         , more = []
         }
+    , containerTopicModel = ContainerCache.newContainerModel Array.empty 3 ContainerCache.defaultContainer
+    , topicsContainer = 0
     , mdl = Material.model
     } , Cmd.none)
 

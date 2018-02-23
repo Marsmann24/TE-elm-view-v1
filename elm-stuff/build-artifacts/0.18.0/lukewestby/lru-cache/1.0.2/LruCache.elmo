@@ -1,0 +1,119 @@
+var _lukewestby$lru_cache$LruCache$toDict = function (cache) {
+	return A2(
+		_elm_lang$core$Dict$map,
+		F2(
+			function (k, v) {
+				return _elm_lang$core$Tuple$first(v);
+			}),
+		cache.items);
+};
+var _lukewestby$lru_cache$LruCache$member = F2(
+	function (key, cache) {
+		return A2(_elm_lang$core$Dict$member, key, cache.items);
+	});
+var _lukewestby$lru_cache$LruCache$size = function (cache) {
+	return _elm_lang$core$Dict$size(cache.items);
+};
+var _lukewestby$lru_cache$LruCache$get = F2(
+	function (key, cache) {
+		var _p0 = A2(_elm_lang$core$Dict$get, key, cache.items);
+		if (_p0.ctor === 'Just') {
+			var _p1 = _p0._0._0;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					cache,
+					{
+						items: A3(
+							_elm_lang$core$Dict$insert,
+							key,
+							{ctor: '_Tuple2', _0: _p1, _1: cache.counter},
+							cache.items),
+						counter: cache.counter + 1
+					}),
+				_1: _elm_lang$core$Maybe$Just(_p1)
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: cache, _1: _elm_lang$core$Maybe$Nothing};
+		}
+	});
+var _lukewestby$lru_cache$LruCache$empty = function (maximum) {
+	return {items: _elm_lang$core$Dict$empty, maximum: maximum, counter: 0};
+};
+var _lukewestby$lru_cache$LruCache$minimumBy = F2(
+	function (f, ls) {
+		var minBy = F2(
+			function (x, _p2) {
+				var _p3 = _p2;
+				var _p4 = _p3._1;
+				var fx = f(x);
+				return (_elm_lang$core$Native_Utils.cmp(fx, _p4) < 0) ? {ctor: '_Tuple2', _0: x, _1: fx} : {ctor: '_Tuple2', _0: _p3._0, _1: _p4};
+			});
+		var _p5 = ls;
+		if (_p5.ctor === '::') {
+			if (_p5._1.ctor === '[]') {
+				return _elm_lang$core$Maybe$Just(_p5._0);
+			} else {
+				var _p6 = _p5._0;
+				return _elm_lang$core$Maybe$Just(
+					_elm_lang$core$Tuple$first(
+						A3(
+							_elm_lang$core$List$foldl,
+							minBy,
+							{
+								ctor: '_Tuple2',
+								_0: _p6,
+								_1: f(_p6)
+							},
+							_p5._1)));
+			}
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	});
+var _lukewestby$lru_cache$LruCache$insert = F3(
+	function (key, value, cache) {
+		var nextItems = function () {
+			if (_elm_lang$core$Native_Utils.cmp(
+				_elm_lang$core$Dict$size(cache.items),
+				cache.maximum) > -1) {
+				var keyToRemove = A2(
+					_elm_lang$core$Maybe$map,
+					_elm_lang$core$Tuple$first,
+					A2(
+						_lukewestby$lru_cache$LruCache$minimumBy,
+						function (_p7) {
+							var _p8 = _p7;
+							return _p8._1._1;
+						},
+						_elm_lang$core$Dict$toList(cache.items)));
+				var _p9 = keyToRemove;
+				if (_p9.ctor === 'Just') {
+					return A3(
+						_elm_lang$core$Dict$insert,
+						key,
+						{ctor: '_Tuple2', _0: value, _1: cache.counter},
+						A2(_elm_lang$core$Dict$remove, _p9._0, cache.items));
+				} else {
+					return A3(
+						_elm_lang$core$Dict$insert,
+						key,
+						{ctor: '_Tuple2', _0: value, _1: cache.counter},
+						cache.items);
+				}
+			} else {
+				return A3(
+					_elm_lang$core$Dict$insert,
+					key,
+					{ctor: '_Tuple2', _0: value, _1: cache.counter},
+					cache.items);
+			}
+		}();
+		return _elm_lang$core$Native_Utils.update(
+			cache,
+			{items: nextItems, counter: cache.counter + 1});
+	});
+var _lukewestby$lru_cache$LruCache$LruCache = F3(
+	function (a, b, c) {
+		return {items: a, maximum: b, counter: c};
+	});

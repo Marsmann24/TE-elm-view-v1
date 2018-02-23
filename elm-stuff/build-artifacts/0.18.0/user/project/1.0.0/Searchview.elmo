@@ -43,12 +43,14 @@ var _user$project$Searchview$searchresult2ListItem = function (result) {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onClick(
 									_user$project$Model$Found(
-										_user$project$Model$TopicsView(
+										A2(
+											_user$project$Model$TopicsView,
 											{
 												ctor: '::',
 												_0: _p2,
 												_1: {ctor: '[]'}
-											}))),
+											},
+											0))),
 								_1: {ctor: '[]'}
 							},
 							{

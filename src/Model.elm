@@ -4,6 +4,7 @@ import Term exposing (..)
 import Topic exposing (..)
 import Document exposing (..)
 
+import ContainerCache
 import Material
 import Material.Options exposing (Property, cs)
 import Material.Color as Color
@@ -37,6 +38,7 @@ type Msg
     | NewTerms (Result Http.Error (List Term))
     | NewFrames (Result Http.Error (List Term))
     | ExecCmd (Cmd Msg)
+    | ContainerCacheTopicMsg Int (ContainerCache.ContainerModelMsg (List Topic))
     | Mdl (Material.Msg Msg)
     | None -- zum Testen, damit update _ -> immer haben kann
 
@@ -65,6 +67,8 @@ type alias Model =
     , raised : Int                  -- ID of raised card
     , settings : Settings           -- which views are shown
     , slots : Slots
+    , containerTopicModel : ContainerCache.ContainerModel (List Topic)
+    , topicsContainer : Int
     , mdl : Material.Model
     }
 
@@ -133,8 +137,10 @@ type Searchresult
 type View
     = TermsView (List Term)
     -- WordlistView (List String)
-    | TopicsView (List Topic)
+    | TopicsView (List Topic) Int
+    --| TopicsView (ContainerCache.Container (List Topic))
     --| DocumentsView (List Document)
+    --| DocumentsView (ContainerCache.Container (List Doc))
     | DocumentsView (List Doc)
     | Dialog
     | Empty

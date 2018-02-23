@@ -77,6 +77,7 @@ var _user$project$TE_elm_v1$update = F2(
 					_1: A3(_andrewMacmurray$elm_delay$Delay$after, 200, _elm_lang$core$Time$millisecond, _p0._1)
 				};
 			case 'ShowTopics':
+				var topicsContainer = model.topicsContainer;
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				return {
@@ -91,7 +92,7 @@ var _user$project$TE_elm_v1$update = F2(
 								_user$project$Model$slotFromTo,
 								oldSlots,
 								_user$project$Model$Empty,
-								_user$project$Model$TopicsView(_p0._0))
+								A2(_user$project$Model$TopicsView, _p0._0, topicsContainer))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -367,6 +368,88 @@ var _user$project$TE_elm_v1$update = F2(
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'ExecCmd':
 				return {ctor: '_Tuple2', _0: model, _1: _p0._0};
+			case 'ContainerCacheTopicMsg':
+				var _p12 = _p0._1;
+				var _p11 = _p0._0;
+				var currentPage = function (cont) {
+					return A2(
+						_elm_lang$core$Maybe$withDefault,
+						_user$project$ContainerCache$HandleError(''),
+						A2(_elm_lang$core$Array$get, cont.meta.currPage, cont.data));
+				};
+				var topicList = function (cont) {
+					var _p6 = currentPage(cont);
+					if (_p6.ctor === 'Loaded') {
+						return _p6._0;
+					} else {
+						return {ctor: '[]'};
+					}
+				};
+				var _p7 = A2(_user$project$ContainerCache$update, _p12, model.containerTopicModel);
+				var newdata = _p7._0;
+				var cmd = _p7._1;
+				var newSlots = function () {
+					var _p8 = _p12;
+					switch (_p8.ctor) {
+						case 'CreateNewContainer':
+							var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
+							var newContainer = A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$ContainerCache$defaultContainer,
+								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+							var newView = A2(
+								_user$project$Model$TopicsView,
+								topicList(newContainer),
+								index);
+							return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
+						case 'PageUpdate':
+							var index = function () {
+								var _p9 = A2(_user$project$Model$slotGet, model.slots, _p11);
+								if (_p9.ctor === 'TopicsView') {
+									return _p9._1;
+								} else {
+									return -1;
+								}
+							}();
+							var newContainer = A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$ContainerCache$defaultContainer,
+								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+							var newView = A2(
+								_user$project$Model$TopicsView,
+								topicList(newContainer),
+								index);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p11, newView);
+						default:
+							var index = function () {
+								var _p10 = A2(_user$project$Model$slotGet, model.slots, _p11);
+								if (_p10.ctor === 'TopicsView') {
+									return _p10._1;
+								} else {
+									return -1;
+								}
+							}();
+							var newContainer = A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$ContainerCache$defaultContainer,
+								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+							var newView = A2(
+								_user$project$Model$TopicsView,
+								topicList(newContainer),
+								index);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p11, newView);
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{containerTopicModel: newdata, slots: newSlots}),
+					_1: A2(
+						_elm_lang$core$Platform_Cmd$map,
+						_user$project$Model$ContainerCacheTopicMsg(_p11),
+						cmd)
+				};
 			case 'Mdl':
 				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
 			default:
