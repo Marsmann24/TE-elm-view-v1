@@ -21013,10 +21013,10 @@ var _user$project$Term$matchTermsortingById = function (termsresult) {
 var _user$project$Term$termDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Term$Term,
-	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _user$project$Decoderhelper$int2),
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'TERM_NAME', _elm_lang$core$Json_Decode$string),
 	_elm_lang$core$Json_Decode$maybe(
-		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _user$project$Decoderhelper$int2)),
+		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _elm_lang$core$Json_Decode$int)),
 	_elm_lang$core$Json_Decode$succeed(_elm_lang$core$Maybe$Nothing));
 var _user$project$Term$bestTermsDecoder = A2(
 	_elm_lang$core$Json_Decode$map,
@@ -21095,6 +21095,14 @@ var _user$project$Term$termsDecoder = A2(
 			'Term',
 			A2(_user$project$Decoderhelper$intDictDecoder, _user$project$Term$defaultTerm, _user$project$Term$termDecoder))));
 
+var _user$project$Topic$termDecoder2 = A5(
+	_elm_lang$core$Json_Decode$map4,
+	_user$project$Term$Term,
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _user$project$Decoderhelper$int2),
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_NAME', _elm_lang$core$Json_Decode$string),
+	_elm_lang$core$Json_Decode$maybe(
+		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _user$project$Decoderhelper$int2)),
+	_elm_lang$core$Json_Decode$succeed(_elm_lang$core$Maybe$Nothing));
 var _user$project$Topic$topicId2Topic = F2(
 	function (topics, topicId) {
 		return _elm_lang$core$List$head(
@@ -21198,7 +21206,7 @@ var _user$project$Topic$decodeTopics = A4(
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'Term',
-		A2(_user$project$Decoderhelper$intDictDecoder, _user$project$Term$defaultTerm, _user$project$Term$termDecoder)));
+		A2(_user$project$Decoderhelper$intDictDecoder, _user$project$Term$defaultTerm, _user$project$Topic$termDecoder2)));
 
 var _user$project$Document$docId2Doc = F2(
 	function (docs, docId) {
