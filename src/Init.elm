@@ -4,6 +4,7 @@ import Model exposing (..)
 import Term exposing (Term)
 import Topic exposing (Topic)
 import Document exposing (Document, Doc)
+import Request exposing (loadTopics)
 import ContainerCache
 
 import Material
@@ -45,7 +46,7 @@ init =
     , containerTopicModel = ContainerCache.newContainerModel Array.empty 3 ContainerCache.defaultContainer
     , topicsContainer = 0
     , mdl = Material.model
-    } , Cmd.none)
+    } , loadTopics)
 
 initResult : List Searchresult
 initResult =

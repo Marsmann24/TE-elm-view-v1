@@ -22089,7 +22089,7 @@ var _user$project$Init$init = {
 		topicsContainer: 0,
 		mdl: _debois$elm_mdl$Material$model
 	},
-	_1: _elm_lang$core$Platform_Cmd$none
+	_1: _user$project$Request$loadTopics
 };
 
 var _user$project$Tabsview$document2DocumentView = function (document) {
