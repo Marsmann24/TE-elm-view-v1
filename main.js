@@ -21777,7 +21777,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 								_0: _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$white),
 								_1: {
 									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'font-size', '14'),
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'font-size', '14px'),
 									_1: {ctor: '[]'}
 								}
 							},
@@ -21856,7 +21856,11 @@ var _user$project$Documentsview$doc2CardView = F3(
 							_1: {
 								ctor: '::',
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '4px'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'font-size', '10px'),
+									_1: {ctor: '[]'}
+								}
 							}
 						},
 						{

@@ -68,7 +68,7 @@ doc2CardView model doc cardID =
             ]
             [ Card.head
                 [ Color.text Color.white
-                , css "font-size" "14"
+                , css "font-size" "14px"
                 ]
                 [ text doc.title
                 , Icon.view "bubble_chart"
@@ -96,6 +96,7 @@ doc2CardView model doc cardID =
         , Card.text
             [ Color.text (Color.white)
             , css "padding" "4px"
+            , css "font-size" "10px"
             ]
             [ text doc.snippet ]
         ]
