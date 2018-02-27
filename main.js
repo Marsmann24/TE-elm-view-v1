@@ -21217,7 +21217,7 @@ var _user$project$Document$tokenDecoder = A5(
 	A2(_elm_lang$core$Json_Decode$field, 'TOKEN', _elm_lang$core$Json_Decode$string),
 	A2(
 		_elm_lang$core$Json_Decode$field,
-		'HIRARCHICAL_TOPIC$PARENT_IDS',
+		'HIERARCHICAL_TOPIC$PARENT_IDS',
 		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)));
 var _user$project$Document$documentDecoder = A2(
 	_elm_lang$core$Json_Decode$field,

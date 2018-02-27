@@ -70,7 +70,7 @@ tokenDecoder =
         (field "TOPIC_ID" int2)
         (field "POSITION_OF_TOKEN_IN_DOCUMENT" int2)
         (field "TOKEN" string)
-        (field "HIRARCHICAL_TOPIC$PARENT_IDS" (list int))
+        (field "HIERARCHICAL_TOPIC$PARENT_IDS" (list int))
 
 documentDecoder : Decoder Document
 documentDecoder =
