@@ -29,13 +29,13 @@ type alias Doc =
     { document_id : Int
     , topic_id : Int
     , document_count : String
-    , keyword_snipet : String
+    , keyword_snippet : String
     , keyword_title : String
     , top_topic : List Int
     , linkurl : String
     , time_stamp : Int
     , title : String
-    , snipet : String
+    , snippet : String
     }
 
 -- Mapper and Checker
@@ -97,13 +97,13 @@ bestDocsDecoder =
                         (field "DOCUMENT_ID" int2)
                         (field "TOPIC_ID" int2)
                         (field "PR_DOCUMENT_GIVEN_TOPIC" string)
-                        (field "KEYWORD_SNIPET" string)
+                        (field "KEYWORD_SNIPPET" string)
                         (field "KEYWORD_TITLE" string)
                         (field "TOP_TOPIC" (list int))
                         (field "LINK$URL" string)
                         (field "TEXT$TIME_STAMP" int)
                         (field "TEXT$TITLE" string)
-                        (field "TEXT$SNIPET" string)
+                        (field "TEXT$SNIPPET" string)
                     )
                 )
 

@@ -93,5 +93,5 @@ doc2CardView model doc cardID =
             [ Color.text (Color.white)
             , css "padding" "4px"
             ]
-            [ text doc.snipet ]
+            [ text doc.snippet ]
         ]

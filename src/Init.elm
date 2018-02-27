@@ -106,13 +106,13 @@ initDoc id =
             { document_id = id
             , topic_id = 0
             , document_count = "0"
-            , keyword_snipet = "key snipet"
+            , keyword_snippet = "key snippet"
             , keyword_title = "key title"
             , top_topic = [0]
             , linkurl = "http://example.com/Docunment"
             , time_stamp = 0
             , title = "title"
-            , snipet = "snipet"
+            , snippet = "snippet"
             }
 
 initTopic : Int -> Topic
