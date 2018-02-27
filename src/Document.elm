@@ -28,7 +28,7 @@ type alias Token =
 type alias Doc =
     { document_id : Int
     , topic_id : Int
-    , document_count : Int
+    , document_count : String
     , keyword_snipet : String
     , keyword_title : String
     , top_topic : List Int
@@ -96,7 +96,7 @@ bestDocsDecoder =
                     (map10 Doc
                         (field "DOCUMENT_ID" int2)
                         (field "TOPIC_ID" int2)
-                        (field "DOCUMENT_COUNT" int)
+                        (field "PR_DOCUMENT_GIVEN_TOPIC" string)
                         (field "KEYWORD_SNIPET" string)
                         (field "KEYWORD_TITLE" string)
                         (field "TOP_TOPIC" (list int))

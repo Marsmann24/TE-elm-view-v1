@@ -105,7 +105,7 @@ initDoc id =
         _ ->
             { document_id = id
             , topic_id = 0
-            , document_count = 0
+            , document_count = "0"
             , keyword_snipet = "key snipet"
             , keyword_title = "key title"
             , top_topic = [0]
