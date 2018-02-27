@@ -13,21 +13,10 @@ import Array
 init : (Model, Cmd Msg)
 init =
     ({ result = initResult
-    , topics = List.map initTopic (List.range 0 8)
-    , currentTopics =
-        [ initTopic 0
-        , initTopic 5
-        ]
-    , docs =
-        [ initDoc 362720
-        , initDoc 362243
-        , initDoc 362723
-        , initDoc 362725
-        ]
-    , currentDocument =
-        { cardID = 0
-        , document = initDocument 0
-        }
+    , topics = []
+    , currentTopics = []
+    , docs = []
+    , currentDocument = { cardID = 0, document = initDocument 0}
     , terms = []
     , currentTerm = initTerm 0
     , tabs = initTabs
@@ -75,7 +64,7 @@ initSettings =
 
 initTabs : List Tab
 initTabs =
-    [ PreviewTab
+    [-- PreviewTab
     ]
 
 initDocument : Int -> Document

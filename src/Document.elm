@@ -49,6 +49,10 @@ termInDocument : Term -> Document -> Bool
 termInDocument term document =
     List.member term.name (List.map .term document.word_list)
 
+documentTerms : Document -> List Term -> List Term
+documentTerms document terms =
+    List.filter ((flip termInDocument) document) terms
+
 topicInDoc : Topic -> Doc -> Bool
 topicInDoc topic doc =
     if (topic.id == doc.topic_id)

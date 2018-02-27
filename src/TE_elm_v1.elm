@@ -2,6 +2,7 @@ module TE_elm_v1 exposing (..)
 
 import Model exposing (..)
 import Topic exposing (Topic)
+import Document
 import Init exposing (init)
 --import Mainview_v1 exposing (view)
 import Mainview_v1
@@ -196,6 +197,19 @@ update msg model =
                         , slots = slotFromTo oldSlots Empty (DocumentsView docs)
                         , docs = newDocs
                         }
+                    , Cmd.none)
+                Err err ->
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
+        NewDocTokens result ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+                allTerms = model.terms
+            in
+            case result of
+                Ok document ->
+                    ({ model
+                        | settings = { oldSettings | showTerms = True}
+                        , slots = slotFromTo oldSlots Empty (TermsView (Document.documentTerms document allTerms))}
                     , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)

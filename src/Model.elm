@@ -35,6 +35,7 @@ type Msg
     | NewTopics (Result Http.Error (List Topic))
     | NewDocument (Result Http.Error Document)
     | NewDocs (Result Http.Error (List Doc))
+    | NewDocTokens (Result Http.Error Document)
     | NewTerms (Result Http.Error (List Term))
     | NewFrames (Result Http.Error (List Term))
     | ExecCmd (Cmd Msg)

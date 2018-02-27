@@ -28,6 +28,10 @@ loadDoc : Int -> Cmd Msg
 loadDoc id =
     loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString id))
 
+loadDocTokens : Int -> Cmd Msg
+loadDocTokens id =
+    loadData Document.documentDecoder (NewDocTokens) ("getDoc&DocId=" ++ (toString id))
+
 loadBestDocs : Int -> Int -> String -> Cmd Msg
 loadBestDocs id term sorting =
     let command = String.concat ["bestDocs&TopicId=", (toString id), termArgument, "&sorting=", sorting]

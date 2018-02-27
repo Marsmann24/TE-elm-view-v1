@@ -70,7 +70,6 @@ topic2Terms model term id=
             [ text (term.name ++ " (" ++ (toString term.id) ++ ")")
             , Icon.view "bubble_chart"
                 [ onClick
-                    --(Request GetBestDocs "")
                     (ShowTopics
                         (List.filter
                             (Topic.termInTopic term)
@@ -84,7 +83,8 @@ topic2Terms model term id=
                     --    (List.filter
                     --        (Document.termInDocument term)
                     --        model.docs
-                    --    ))
+                    --    )
+                    --)
                 ]
             ]
         ]

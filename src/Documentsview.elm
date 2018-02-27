@@ -59,7 +59,9 @@ doc2CardView model doc cardID =
         , Elevation.transition 250
         , onMouseEnter (Raise cardID)
         , onMouseLeave (Raise -1)
-        , onClick (ChangeCurrentDoc cardID doc)
+        --, onClick (ChangeCurrentDoc cardID doc)
+        , onClick
+            (ExecCmd (Request.loadDoc doc.document_id))
         ]
         [ Card.title
             [ css "padding" "4px"
@@ -78,7 +80,7 @@ doc2CardView model doc cardID =
                     ]
                 , Icon.view "list"
                     [ onClick
-                        (ExecCmd (Request.loadDoc doc.document_id))
+                        (ExecCmd (Request.loadDocTokens doc.document_id))
                     ]
                 ]
             , span
