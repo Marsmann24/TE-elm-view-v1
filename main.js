@@ -21301,7 +21301,7 @@ var _user$project$Document$bestDocsDecoder = function () {
 					'TOP_TOPIC',
 					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)))(
 				A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string))(
-				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TIME_STAMP', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _elm_lang$core$Json_Decode$int))(
 				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string))(
 				A2(_elm_lang$core$Json_Decode$field, 'TEXT$SNIPPET', _elm_lang$core$Json_Decode$string))));
 	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
