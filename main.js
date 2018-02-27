@@ -21013,7 +21013,7 @@ var _user$project$Term$matchTermsortingById = function (termsresult) {
 var _user$project$Term$termDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Term$Term,
-	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _user$project$Decoderhelper$int2),
 	A2(_elm_lang$core$Json_Decode$field, 'TERM_NAME', _elm_lang$core$Json_Decode$string),
 	_elm_lang$core$Json_Decode$maybe(
 		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _user$project$Decoderhelper$int2)),
