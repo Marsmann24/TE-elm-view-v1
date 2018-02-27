@@ -48,9 +48,9 @@ matchTermsortingById termsresult =
 termDecoder : Decoder Term
 termDecoder =
     map4 Term
-        (field "TERM_ID" int)
+        (field "TERM_ID" int2)
         (field "TERM_NAME" string)
-        (maybe (field "WORDTYPE$WORDTYPE" int))
+        (maybe (field "WORDTYPE$WORDTYPE" int2))
         (succeed Nothing)
 
 termSortingDecoder : Decoder TermSorting
