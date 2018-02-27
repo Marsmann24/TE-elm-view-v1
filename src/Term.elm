@@ -20,6 +20,10 @@ type alias TermsResult =
     }
 
 -- Mapper and Checker
+defaultTerm : Term
+defaultTerm =
+    (Term -1 "Error: Not matching." Nothing Nothing)
+
 termId2Term : List Term -> Int -> Maybe Term
 termId2Term terms termId =
     (List.head (List.filter (\x -> x.id == termId) terms))
@@ -27,7 +31,7 @@ termId2Term terms termId =
 matchTermsById : { items : Dict Int Term, sorting : List Int} -> List Term
 matchTermsById termsorting =
     List.map
-        (\x -> Maybe.withDefault (Term -1 "Error: Not matching." Nothing Nothing) (Dict.get x termsorting.items))
+        (\x -> Maybe.withDefault defaultTerm (Dict.get x termsorting.items))
         termsorting.sorting
 
 matchTermsortingById : TermsResult -> List Term
@@ -70,7 +74,7 @@ termsDecoder =
                     )
                 )
             )
-            (field "Term" (intDictDecoder (Term -1 "" Nothing Nothing) termDecoder))
+            (field "Term" (intDictDecoder defaultTerm termDecoder))
         )
 
 bestTermsDecoder : Decoder (List Term)
@@ -84,7 +88,7 @@ bestTermsDecoder =
                         (map2 (\x y->{ sorting = x, items = y})
                             (field "SORTING" (list int))
                             (intDictDecoder
-                                (Term -1 "" Nothing Nothing)
+                                defaultTerm
                                 (map4 Term
                                         (field "ITEM_ID" int)
                                         (field "ITEM_NAME" string)

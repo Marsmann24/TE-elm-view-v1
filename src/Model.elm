@@ -32,7 +32,7 @@ type Msg
     | ToggleBottom
     | ToggleView2
     | ToggleShowSaved
-    | NewTopics (Result Http.Error TopicResult)
+    | NewTopics (Result Http.Error (List Topic))
     | NewDocument (Result Http.Error Document)
     | NewDocs (Result Http.Error (List Doc))
     | NewTerms (Result Http.Error (List Term))

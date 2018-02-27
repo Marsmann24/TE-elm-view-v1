@@ -35,6 +35,18 @@ view model =
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
+        ToggleBottom ->
+            let oldSettings = model.settings
+            in
+            ({ model | settings = { oldSettings | bottom = not (model.settings.bottom)}}, Cmd.none)
+        ToggleView2 ->
+            let oldSettings = model.settings
+            in
+            ({ model | settings = { oldSettings | view2 = not (model.settings.view2)}}, Cmd.none)
+        ToggleShowSaved ->
+            let oldSettings = model.settings
+            in
+            ({ model | settings = { oldSettings | showSaved = not (model.settings.showSaved)}}, Cmd.none)
         SelectTab tabNumber ->
             ({ model | currentTab = tabNumber}, Cmd.none)
         Raise cardNumber ->
@@ -142,51 +154,59 @@ update msg model =
             let oldSlots = model.slots
             in
             ({ model | slots = slotChangeTo oldSlots slotId view}, Cmd.none)
-        ToggleBottom ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | bottom = not (model.settings.bottom)}}, Cmd.none)
-        ToggleView2 ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | view2 = not (model.settings.view2)}}, Cmd.none)
-        ToggleShowSaved ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | showSaved = not (model.settings.showSaved)}}, Cmd.none)
         NewTopics result ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+                topicsContainer = model.topicsContainer
+            in
             case result of
-                Ok topicsResult ->
-                    ({ model | topics = topicsResult.topics}, Cmd.none)
+                Ok newTopics ->
+                    ({ model
+                        | settings = { oldSettings | showTopics = True}
+                        , slots = slotFromTo oldSlots Empty (TopicsView newTopics topicsContainer)
+                        , topics = newTopics
+                        }
+                    , Cmd.none)
                 Err err ->
-                    let oldSettings = model.settings
-                    in
-                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocument result ->
-            case result of
-                Ok document ->
-                    let oldTabs = model.tabs
-                    in
-                    ({ model | tabs = (List.append oldTabs [DocumentTab document.title document])}, Cmd.none)
-                Err err ->
-                    let oldSettings = model.settings
-                    in
-                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocs result ->
-            case result of
-                Ok newDocs ->
-                    ({ model | docs = newDocs}, Cmd.none)
-                Err err ->
-                    let oldSettings = model.settings
-                    in
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewTerms result ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+
+            in
             case result of
                 Ok newTerms ->
-                    ({ model |terms = newTerms}, Cmd.none)
+                    ({ model
+                        | settings = { oldSettings | showTerms = True}
+                        , slots = slotFromTo oldSlots Empty (TermsView newTerms)
+                        , terms = newTerms}
+                    , Cmd.none)
                 Err err ->
-                    let oldSettings = model.settings
-                    in
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
+        NewDocs result ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+                docs = model.docs
+                contains term document = List.member term document.terms
+            in
+            case result of
+                Ok newDocs ->
+                    ({ model
+                        | settings = { oldSettings | showDocuments = True}
+                        , slots = slotFromTo oldSlots Empty (DocumentsView docs)
+                        , docs = newDocs
+                        }
+                    , Cmd.none)
+                Err err ->
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
+        NewDocument result ->
+            let oldTabs = model.tabs
+                oldSettings = model.settings
+            in
+            case result of
+                Ok document ->
+                    ({ model | tabs = (List.append oldTabs [DocumentTab document.title document])}, Cmd.none)
+                Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewFrames result ->
             (model, Cmd.none)

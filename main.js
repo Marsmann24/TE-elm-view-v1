@@ -20981,13 +20981,14 @@ var _user$project$Term$Term = F4(
 	function (a, b, c, d) {
 		return {id: a, name: b, wordtype: c, count: d};
 	});
+var _user$project$Term$defaultTerm = A4(_user$project$Term$Term, -1, 'Error: Not matching.', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing);
 var _user$project$Term$matchTermsById = function (termsorting) {
 	return A2(
 		_elm_lang$core$List$map,
 		function (x) {
 			return A2(
 				_elm_lang$core$Maybe$withDefault,
-				A4(_user$project$Term$Term, -1, 'Error: Not matching.', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
+				_user$project$Term$defaultTerm,
 				A2(_elm_lang$core$Dict$get, x, termsorting.items));
 		},
 		termsorting.sorting);
@@ -21045,7 +21046,7 @@ var _user$project$Term$bestTermsDecoder = A2(
 							_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)),
 						A2(
 							_user$project$Decoderhelper$intDictDecoder,
-							A4(_user$project$Term$Term, -1, '', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
+							_user$project$Term$defaultTerm,
 							A5(
 								_elm_lang$core$Json_Decode$map4,
 								_user$project$Term$Term,
@@ -21092,10 +21093,7 @@ var _user$project$Term$termsDecoder = A2(
 		A2(
 			_elm_lang$core$Json_Decode$field,
 			'Term',
-			A2(
-				_user$project$Decoderhelper$intDictDecoder,
-				A4(_user$project$Term$Term, -1, '', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
-				_user$project$Term$termDecoder))));
+			A2(_user$project$Decoderhelper$intDictDecoder, _user$project$Term$defaultTerm, _user$project$Term$termDecoder))));
 
 var _user$project$Topic$topicId2Topic = F2(
 	function (topics, topicId) {
@@ -21119,6 +21117,10 @@ var _user$project$Topic$termInTopic = F2(
 				},
 				topic.top_terms));
 	});
+var _user$project$Topic$RawTopic = F4(
+	function (a, b, c, d) {
+		return {id: a, hirarchical_topic: b, color_topic: c, top_terms: d};
+	});
 var _user$project$Topic$Topic = F4(
 	function (a, b, c, d) {
 		return {id: a, hirarchical_topic: b, color_topic: c, top_terms: d};
@@ -21127,9 +21129,50 @@ var _user$project$Topic$TopicHirarchie = F4(
 	function (a, b, c, d) {
 		return {start: a, end: b, depth: c, cluster: d};
 	});
+var _user$project$Topic$defaultRawTopic = A4(
+	_user$project$Topic$RawTopic,
+	-1,
+	A4(_user$project$Topic$TopicHirarchie, -1, -1, -1, ''),
+	'Error: not matching',
+	{ctor: '[]'});
+var _user$project$Topic$matchRawTopicsById = F2(
+	function (topics, sorting) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (x) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$Topic$defaultRawTopic,
+					A2(_elm_lang$core$Dict$get, x, topics));
+			},
+			sorting);
+	});
+var _user$project$Topic$makeTopicsList = F3(
+	function (topics, sorting, terms) {
+		var matchTerms = F2(
+			function (topic, topic_terms) {
+				return _user$project$Term$matchTermsortingById(
+					{
+						topic: {ctor: '_Tuple2', _0: topic, _1: topic_terms},
+						terms: terms
+					});
+			});
+		var rawTopic2Topic = function (raw) {
+			return A4(
+				_user$project$Topic$Topic,
+				raw.id,
+				raw.hirarchical_topic,
+				raw.color_topic,
+				A2(matchTerms, raw.id, raw.top_terms));
+		};
+		return A2(
+			_elm_lang$core$List$map,
+			rawTopic2Topic,
+			A2(_user$project$Topic$matchRawTopicsById, topics, sorting));
+	});
 var _user$project$Topic$topicDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
-	_user$project$Topic$Topic,
+	_user$project$Topic$RawTopic,
 	A2(_elm_lang$core$Json_Decode$field, 'topic_id', _elm_lang$core$Json_Decode$int),
 	A5(
 		_elm_lang$core$Json_Decode$map4,
@@ -21140,17 +21183,13 @@ var _user$project$Topic$topicDecoder = A5(
 		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$cluster', _elm_lang$core$Json_Decode$string)),
 	A2(_elm_lang$core$Json_Decode$field, 'color_topic$color', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'top_terms', _user$project$Term$termSortingDecoder));
-var _user$project$Topic$TopicResult = F4(
-	function (a, b, c, d) {
-		return {topics: a, sorting: b, terms: c, topicsBestItemLimit: d};
-	});
-var _user$project$Topic$decodeTopics = A5(
-	_elm_lang$core$Json_Decode$map4,
-	_user$project$Topic$TopicResult,
+var _user$project$Topic$decodeTopics = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_user$project$Topic$makeTopicsList,
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'Topic',
-		_user$project$Decoderhelper$pseudolist(_user$project$Topic$topicDecoder)),
+		A2(_user$project$Decoderhelper$intDictDecoder, _user$project$Topic$defaultRawTopic, _user$project$Topic$topicDecoder)),
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'TOPIC_SORTING',
@@ -21158,8 +21197,7 @@ var _user$project$Topic$decodeTopics = A5(
 	A2(
 		_elm_lang$core$Json_Decode$field,
 		'Term',
-		_user$project$Decoderhelper$pseudolist(_user$project$Term$termDecoder)),
-	A2(_elm_lang$core$Json_Decode$field, 'TopicBestItemLimit', _elm_lang$core$Json_Decode$int));
+		A2(_user$project$Decoderhelper$intDictDecoder, _user$project$Term$defaultTerm, _user$project$Term$termDecoder)));
 
 var _user$project$Document$docId2Doc = F2(
 	function (docs, docId) {
@@ -21923,7 +21961,7 @@ var _user$project$Init$initTopic = function (id) {
 		color_topic: '#ffffff',
 		top_terms: {
 			ctor: '::',
-			_0: {id: 0, relevance: 0},
+			_0: _user$project$Init$initTerm(0),
 			_1: {ctor: '[]'}
 		}
 	};
@@ -23925,6 +23963,45 @@ var _user$project$TE_elm_v1$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
 		switch (_p0.ctor) {
+			case 'ToggleBottom':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{bottom: !model.settings.bottom})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleView2':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{view2: !model.settings.view2})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleShowSaved':
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{showSaved: !model.settings.showSaved})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'SelectTab':
 				return {
 					ctor: '_Tuple2',
@@ -24130,57 +24207,31 @@ var _user$project$TE_elm_v1$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'ToggleBottom':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{bottom: !model.settings.bottom})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ToggleView2':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{view2: !model.settings.view2})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ToggleShowSaved':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showSaved: !model.settings.showSaved})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
 			case 'NewTopics':
+				var topicsContainer = model.topicsContainer;
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
 				var _p1 = _p0._0;
 				if (_p1.ctor === 'Ok') {
+					var _p2 = _p1._0;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{topics: _p1._0.topics}),
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{showTopics: true}),
+								slots: A3(
+									_user$project$Model$slotFromTo,
+									oldSlots,
+									_user$project$Model$Empty,
+									A2(_user$project$Model$TopicsView, _p2, topicsContainer)),
+								topics: _p2
+							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
-					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24195,29 +24246,30 @@ var _user$project$TE_elm_v1$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
-			case 'NewDocument':
-				var _p2 = _p0._0;
-				if (_p2.ctor === 'Ok') {
-					var _p3 = _p2._0;
-					var oldTabs = model.tabs;
+			case 'NewTerms':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				var _p3 = _p0._0;
+				if (_p3.ctor === 'Ok') {
+					var _p4 = _p3._0;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								tabs: A2(
-									_elm_lang$core$List$append,
-									oldTabs,
-									{
-										ctor: '::',
-										_0: A2(_user$project$Model$DocumentTab, _p3.title, _p3),
-										_1: {ctor: '[]'}
-									})
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{showTerms: true}),
+								slots: A3(
+									_user$project$Model$slotFromTo,
+									oldSlots,
+									_user$project$Model$Empty,
+									_user$project$Model$TermsView(_p4)),
+								terms: _p4
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
-					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24226,24 +24278,22 @@ var _user$project$TE_elm_v1$update = F2(
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
 									{
-										error: _elm_lang$core$Basics$toString(_p2._0)
+										error: _elm_lang$core$Basics$toString(_p3._0)
 									})
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
 			case 'NewDocs':
-				var _p4 = _p0._0;
-				if (_p4.ctor === 'Ok') {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{docs: _p4._0}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					var oldSettings = model.settings;
+				var contains = F2(
+					function (term, document) {
+						return A2(_elm_lang$core$List$member, term, document.terms);
+					});
+				var docs = model.docs;
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				var _p5 = _p0._0;
+				if (_p5.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24251,25 +24301,17 @@ var _user$project$TE_elm_v1$update = F2(
 							{
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
-									{
-										error: _elm_lang$core$Basics$toString(_p4._0)
-									})
+									{showDocuments: true}),
+								slots: A3(
+									_user$project$Model$slotFromTo,
+									oldSlots,
+									_user$project$Model$Empty,
+									_user$project$Model$DocumentsView(docs)),
+								docs: _p5._0
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				}
-			case 'NewTerms':
-				var _p5 = _p0._0;
-				if (_p5.ctor === 'Ok') {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{terms: _p5._0}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
 				} else {
-					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24284,13 +24326,50 @@ var _user$project$TE_elm_v1$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
+			case 'NewDocument':
+				var oldSettings = model.settings;
+				var oldTabs = model.tabs;
+				var _p6 = _p0._0;
+				if (_p6.ctor === 'Ok') {
+					var _p7 = _p6._0;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								tabs: A2(
+									_elm_lang$core$List$append,
+									oldTabs,
+									{
+										ctor: '::',
+										_0: A2(_user$project$Model$DocumentTab, _p7.title, _p7),
+										_1: {ctor: '[]'}
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{
+										error: _elm_lang$core$Basics$toString(_p6._0)
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
 			case 'NewFrames':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'ExecCmd':
 				return {ctor: '_Tuple2', _0: model, _1: _p0._0};
 			case 'ContainerCacheTopicMsg':
-				var _p12 = _p0._1;
-				var _p11 = _p0._0;
+				var _p14 = _p0._1;
+				var _p13 = _p0._0;
 				var currentPage = function (cont) {
 					return A2(
 						_elm_lang$core$Maybe$withDefault,
@@ -24298,19 +24377,19 @@ var _user$project$TE_elm_v1$update = F2(
 						A2(_elm_lang$core$Array$get, cont.meta.currPage, cont.data));
 				};
 				var topicList = function (cont) {
-					var _p6 = currentPage(cont);
-					if (_p6.ctor === 'Loaded') {
-						return _p6._0;
+					var _p8 = currentPage(cont);
+					if (_p8.ctor === 'Loaded') {
+						return _p8._0;
 					} else {
 						return {ctor: '[]'};
 					}
 				};
-				var _p7 = A2(_user$project$ContainerCache$update, _p12, model.containerTopicModel);
-				var newdata = _p7._0;
-				var cmd = _p7._1;
+				var _p9 = A2(_user$project$ContainerCache$update, _p14, model.containerTopicModel);
+				var newdata = _p9._0;
+				var cmd = _p9._1;
 				var newSlots = function () {
-					var _p8 = _p12;
-					switch (_p8.ctor) {
+					var _p10 = _p14;
+					switch (_p10.ctor) {
 						case 'CreateNewContainer':
 							var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
 							var newContainer = A2(
@@ -24324,9 +24403,9 @@ var _user$project$TE_elm_v1$update = F2(
 							return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
 						case 'PageUpdate':
 							var index = function () {
-								var _p9 = A2(_user$project$Model$slotGet, model.slots, _p11);
-								if (_p9.ctor === 'TopicsView') {
-									return _p9._1;
+								var _p11 = A2(_user$project$Model$slotGet, model.slots, _p13);
+								if (_p11.ctor === 'TopicsView') {
+									return _p11._1;
 								} else {
 									return -1;
 								}
@@ -24339,12 +24418,12 @@ var _user$project$TE_elm_v1$update = F2(
 								_user$project$Model$TopicsView,
 								topicList(newContainer),
 								index);
-							return A3(_user$project$Model$slotChangeTo, model.slots, _p11, newView);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p13, newView);
 						default:
 							var index = function () {
-								var _p10 = A2(_user$project$Model$slotGet, model.slots, _p11);
-								if (_p10.ctor === 'TopicsView') {
-									return _p10._1;
+								var _p12 = A2(_user$project$Model$slotGet, model.slots, _p13);
+								if (_p12.ctor === 'TopicsView') {
+									return _p12._1;
 								} else {
 									return -1;
 								}
@@ -24357,7 +24436,7 @@ var _user$project$TE_elm_v1$update = F2(
 								_user$project$Model$TopicsView,
 								topicList(newContainer),
 								index);
-							return A3(_user$project$Model$slotChangeTo, model.slots, _p11, newView);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p13, newView);
 					}
 				}();
 				return {
@@ -24367,7 +24446,7 @@ var _user$project$TE_elm_v1$update = F2(
 						{containerTopicModel: newdata, slots: newSlots}),
 					_1: A2(
 						_elm_lang$core$Platform_Cmd$map,
-						_user$project$Model$ContainerCacheTopicMsg(_p11),
+						_user$project$Model$ContainerCacheTopicMsg(_p13),
 						cmd)
 				};
 			case 'Mdl':
@@ -24429,7 +24508,7 @@ if (typeof _user$project$Searchview$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["List Document.Doc"],"ErrorSlot":[],"TopicsView":["List Topic.Topic","Int"],"Dialog":[],"TermsView":["List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error Topic.TopicResult"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Term.TermSorting":{"args":[],"type":"List { id : Int, relevance : Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : Term.TermSorting }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Topic.TopicResult":{"args":[],"type":"{ topics : List Topic.Topic , sorting : List Int , terms : List Term.Term , topicsBestItemLimit : Int }"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["List Document.Doc"],"ErrorSlot":[],"TopicsView":["List Topic.Topic","Int"],"Dialog":[],"TermsView":["List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error (List Topic.Topic)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {

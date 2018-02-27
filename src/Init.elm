@@ -128,7 +128,7 @@ initTopic id =
                 , cluster = "0;1;1;1"
                 }
             , color_topic = "#ffffff"
-            , top_terms = [{ id = 0, relevance = 0}]
+            , top_terms = [initTerm 0]
             }
 
 initTerm : Int -> Term
