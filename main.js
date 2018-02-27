@@ -20965,8 +20965,8 @@ var _user$project$Term$termSortingDecoder = _elm_lang$core$Json_Decode$list(
 			function (x, y) {
 				return {id: x, relevance: y};
 			}),
-		A2(_elm_lang$core$Json_Decode$field, 'TermId', _elm_lang$core$Json_Decode$int),
-		A2(_elm_lang$core$Json_Decode$field, 'relevance', _elm_lang$core$Json_Decode$int)));
+		A2(_elm_lang$core$Json_Decode$field, 'TermId', _user$project$Decoderhelper$int2),
+		A2(_elm_lang$core$Json_Decode$field, 'relevance', _user$project$Decoderhelper$int2)));
 var _user$project$Term$termId2Term = F2(
 	function (terms, termId) {
 		return _elm_lang$core$List$head(

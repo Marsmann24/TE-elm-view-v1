@@ -53,8 +53,8 @@ termSortingDecoder : Decoder TermSorting
 termSortingDecoder =
     list
         (map2 (\x y -> {id = x, relevance = y})
-            (field "TermId" int)
-            (field "relevance" int)
+            (field "TermId" int2)
+            (field "relevance" int2)
         )
 
 termsDecoder : Decoder (List Term)
