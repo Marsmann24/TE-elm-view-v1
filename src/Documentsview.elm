@@ -72,7 +72,8 @@ doc2CardView model doc cardID =
                 ]
                 [ text doc.title
                 , Icon.view "bubble_chart"
-                    [ onClick
+                    [ css "float" "right"
+                    , onClick
                         (ShowTopics
                             (List.filterMap
                                 (Topic.topicId2Topic model.topics)
@@ -81,7 +82,8 @@ doc2CardView model doc cardID =
                         )
                     ]
                 , Icon.view "list"
-                    [ onClick
+                    [ css "float" "right"
+                    , onClick
                         (ExecCmd (Request.loadDocTokens doc.document_id))
                     ]
                 ]
