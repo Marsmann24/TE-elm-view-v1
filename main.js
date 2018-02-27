@@ -21291,7 +21291,7 @@ var _user$project$Document$bestDocsDecoder = function () {
 		'DOCUMENT',
 		_user$project$Decoderhelper$pseudolist(
 			_user$project$Decoderhelper$map10(_user$project$Document$Doc)(
-				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int))(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _user$project$Decoderhelper$int2))(
 				A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int))(
 				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_COUNT', _elm_lang$core$Json_Decode$int))(
 				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_SNIPET', _elm_lang$core$Json_Decode$string))(

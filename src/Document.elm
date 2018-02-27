@@ -4,7 +4,7 @@ import Topic exposing (..)
 import Term exposing (..)
 
 import Json.Decode exposing (Decoder, int, string, list, map2, map4, map8, field, keyValuePairs)
-import Decoderhelper exposing (map10, pseudolist, listheadwithdefault)
+import Decoderhelper exposing (int2, map10, pseudolist, listheadwithdefault)
 
 -- Types
 type alias Document =
@@ -94,7 +94,7 @@ bestDocsDecoder =
             field "DOCUMENT"
                 (pseudolist
                     (map10 Doc
-                        (field "DOCUMENT_ID" int)
+                        (field "DOCUMENT_ID" int2)
                         (field "TOPIC_ID" int)
                         (field "DOCUMENT_COUNT" int)
                         (field "KEYWORD_SNIPET" string)
