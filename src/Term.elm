@@ -1,7 +1,7 @@
 module Term exposing (..)
 
-import Json.Decode exposing (Decoder, string, list, map, map2, map4, field, keyValuePairs, succeed, maybe)
-import Decoderhelper exposing (int, intDictDecoder, listheadwithdefault, pseudolist)
+import Json.Decode exposing (Decoder, string, int, list, map, map2, map4, field, keyValuePairs, succeed, maybe)
+import Decoderhelper exposing (int2, intDictDecoder, listheadwithdefault, pseudolist)
 import Dict exposing (Dict)
 
 type alias Term =

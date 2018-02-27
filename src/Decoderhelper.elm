@@ -4,8 +4,8 @@ import Json.Decode exposing (Decoder, map, map2, map5, keyValuePairs, string)
 import Dict exposing (Dict)
 import Result exposing (Result(..))
 
-int : Decoder Int
-int =
+int2 : Decoder Int
+int2 =
     let convert : String -> Int
         convert a = Result.withDefault 0 (String.toInt a)
     in
