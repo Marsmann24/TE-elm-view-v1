@@ -72,7 +72,7 @@ doc2CardView model doc cardID =
                 ]
                 [ text doc.title
                 , Icon.view "bubble_chart"
-                    [ css "float" "right"
+                    [ css "align-self" "right"
                     , onClick
                         (ShowTopics
                             (List.filterMap
@@ -82,7 +82,7 @@ doc2CardView model doc cardID =
                         )
                     ]
                 , Icon.view "list"
-                    [ css "float" "right"
+                    [ css "align-self" "right"
                     , onClick
                         (ExecCmd (Request.loadDocTokens doc.document_id))
                     ]

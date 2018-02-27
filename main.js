@@ -21791,7 +21791,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 										'bubble_chart',
 										{
 											ctor: '::',
-											_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
 											_1: {
 												ctor: '::',
 												_0: _debois$elm_mdl$Material_Options$onClick(
@@ -21810,7 +21810,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 											'list',
 											{
 												ctor: '::',
-												_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
 												_1: {
 													ctor: '::',
 													_0: _debois$elm_mdl$Material_Options$onClick(
