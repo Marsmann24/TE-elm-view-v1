@@ -3,7 +3,7 @@ module Topic exposing (..)
 import Term exposing (..)
 
 import Json.Decode exposing (Decoder, string, int, list, map, map4, field, keyValuePairs)
-import Decoderhelper exposing (int2, pseudolist)
+import Decoderhelper exposing (pseudolist)
 
 type alias Topic =
     { id : Int

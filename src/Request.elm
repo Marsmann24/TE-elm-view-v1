@@ -30,7 +30,7 @@ loadDoc id =
 
 loadBestDocs : Int -> Int -> String -> Cmd Msg
 loadBestDocs id term sorting =
-    let command = String.concat ["getBestDocs&TopicId=", (toString id), termArgument, "&sorting=", sorting]
+    let command = String.concat ["bestDocs&TopicId=", (toString id), termArgument, "&sorting=", sorting]
         termArgument =
             if (term >= 0)
             then ("&term" ++ (toString term))

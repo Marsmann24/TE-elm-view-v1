@@ -21600,7 +21600,7 @@ var _user$project$Request$loadBestDocs = F3(
 		var command = _elm_lang$core$String$concat(
 			{
 				ctor: '::',
-				_0: 'getBestDocs&TopicId=',
+				_0: 'bestDocs&TopicId=',
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$core$Basics$toString(id),
