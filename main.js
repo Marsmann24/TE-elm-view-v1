@@ -21013,7 +21013,7 @@ var _user$project$Term$matchTermsortingById = function (termsresult) {
 var _user$project$Term$termDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Term$Term,
-	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _user$project$Decoderhelper$int2),
+	A2(_elm_lang$core$Json_Decode$field, 'TERM_ID', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'TERM_NAME', _elm_lang$core$Json_Decode$string),
 	_elm_lang$core$Json_Decode$maybe(
 		A2(_elm_lang$core$Json_Decode$field, 'WORDTYPE$WORDTYPE', _user$project$Decoderhelper$int2)),
@@ -22110,13 +22110,7 @@ var _user$project$Init$init = {
 			main: _elm_lang$core$Array$fromList(
 				{
 					ctor: '::',
-					_0: A2(
-						_user$project$Model$TopicsView,
-						A2(
-							_elm_lang$core$List$map,
-							_user$project$Init$initTopic,
-							A2(_elm_lang$core$List$range, 0, 8)),
-						0),
+					_0: _user$project$Model$Empty,
 					_1: {
 						ctor: '::',
 						_0: _user$project$Model$Empty,

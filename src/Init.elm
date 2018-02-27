@@ -37,7 +37,7 @@ init =
     , slots =
         { main =
             Array.fromList
-                [ TopicsView (List.map initTopic (List.range 0 8)) 0
+                [ Empty
                 , Empty
                 , Empty
                 ]
