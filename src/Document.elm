@@ -109,7 +109,7 @@ bestDocsDecoder =
 
         sorting : Decoder (List Int)
         sorting =
-            field "DOCUMENT_SORTING" (list int)
+            field "DOCUMENT_SORTING" (list int2)
 
         -- Combinefunction :
         getDoc : List Doc -> Int -> Maybe Doc

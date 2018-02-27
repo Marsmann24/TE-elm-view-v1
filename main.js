@@ -21285,7 +21285,7 @@ var _user$project$Document$bestDocsDecoder = function () {
 	var sorting = A2(
 		_elm_lang$core$Json_Decode$field,
 		'DOCUMENT_SORTING',
-		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int));
+		_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int2));
 	var documents = A2(
 		_elm_lang$core$Json_Decode$field,
 		'DOCUMENT',
