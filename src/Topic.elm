@@ -3,7 +3,7 @@ module Topic exposing (..)
 import Term exposing (..)
 
 import Json.Decode exposing (Decoder, string, int, list, map, map3, map4, field, keyValuePairs)
-import Decoderhelper exposing (intDictDecoder)
+import Decoderhelper exposing (int2, intDictDecoder)
 import Dict exposing (Dict)
 
 type alias RawTopic =
@@ -68,12 +68,12 @@ defaultRawTopic =
 topicDecoder : Decoder RawTopic
 topicDecoder =
     map4 RawTopic
-        (field "topic_id" int)
+        (field "TOPIC_ID" int2)
         (map4 TopicHirarchie
-            (field "hirarchical_topic$start" int)
-            (field "hirarchical_topic$end" int)
-            (field "hirarchical_topic$depth" int)
-            (field "hirarchical_topic$cluster" string)
+            (field "HIERARCHICAL_TOPIC$START" int2)
+            (field "HIERARCHICAL_TOPIC$END" int2)
+            (field "HIERARCHICAL_TOPIC$DEPTH" int2)
+            (field "HIERARCHICAL_TOPIC$CLUSTER_MEMBERSHIP" string)
         )
         (field "color_topic$color" string)
         (field "top_terms" termSortingDecoder)

@@ -21173,14 +21173,14 @@ var _user$project$Topic$makeTopicsList = F3(
 var _user$project$Topic$topicDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Topic$RawTopic,
-	A2(_elm_lang$core$Json_Decode$field, 'topic_id', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _user$project$Decoderhelper$int2),
 	A5(
 		_elm_lang$core$Json_Decode$map4,
 		_user$project$Topic$TopicHirarchie,
-		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$start', _elm_lang$core$Json_Decode$int),
-		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$end', _elm_lang$core$Json_Decode$int),
-		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$depth', _elm_lang$core$Json_Decode$int),
-		A2(_elm_lang$core$Json_Decode$field, 'hirarchical_topic$cluster', _elm_lang$core$Json_Decode$string)),
+		A2(_elm_lang$core$Json_Decode$field, 'HIERARCHICAL_TOPIC$START', _user$project$Decoderhelper$int2),
+		A2(_elm_lang$core$Json_Decode$field, 'HIERARCHICAL_TOPIC$END', _user$project$Decoderhelper$int2),
+		A2(_elm_lang$core$Json_Decode$field, 'HIERARCHICAL_TOPIC$DEPTH', _user$project$Decoderhelper$int2),
+		A2(_elm_lang$core$Json_Decode$field, 'HIERARCHICAL_TOPIC$CLUSTER_MEMBERSHIP', _elm_lang$core$Json_Decode$string)),
 	A2(_elm_lang$core$Json_Decode$field, 'color_topic$color', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'top_terms', _user$project$Term$termSortingDecoder));
 var _user$project$Topic$decodeTopics = A4(
