@@ -21225,9 +21225,9 @@ var _user$project$Document$documentDecoder = A2(
 	A9(
 		_elm_lang$core$Json_Decode$map8,
 		_user$project$Document$Document,
-		A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _user$project$Decoderhelper$int2),
 		A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string),
-		A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _user$project$Decoderhelper$int2),
 		A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string),
 		A2(_elm_lang$core$Json_Decode$field, 'TEXT$FULLTEXT', _elm_lang$core$Json_Decode$string),
 		A2(_elm_lang$core$Json_Decode$field, 'SEARCH_TEXT', _elm_lang$core$Json_Decode$string),

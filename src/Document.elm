@@ -76,9 +76,9 @@ documentDecoder : Decoder Document
 documentDecoder =
     field "DOCUMENT"
         (map8 Document
-            (field "DOCUMENT_ID" int)
+            (field "DOCUMENT_ID" int2)
             (field "LINK$URL" string)
-            (field "TIME$TIME_STAMP" int)
+            (field "TIME$TIME_STAMP" int2)
             (field "TEXT$TITLE" string)
             (field "TEXT$FULLTEXT" string)
             (field "SEARCH_TEXT" string)
