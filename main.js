@@ -24296,11 +24296,11 @@ var _user$project$TE_elm_v1$update = F2(
 					function (term, document) {
 						return A2(_elm_lang$core$List$member, term, document.terms);
 					});
-				var docs = model.docs;
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
 				var _p5 = _p0._0;
 				if (_p5.ctor === 'Ok') {
+					var _p6 = _p5._0;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24313,8 +24313,8 @@ var _user$project$TE_elm_v1$update = F2(
 									_user$project$Model$slotFromTo,
 									oldSlots,
 									_user$project$Model$Empty,
-									_user$project$Model$DocumentsView(docs)),
-								docs: _p5._0
+									_user$project$Model$DocumentsView(_p6)),
+								docs: _p6
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -24337,8 +24337,8 @@ var _user$project$TE_elm_v1$update = F2(
 				var allTerms = model.terms;
 				var oldSlots = model.slots;
 				var oldSettings = model.settings;
-				var _p6 = _p0._0;
-				if (_p6.ctor === 'Ok') {
+				var _p7 = _p0._0;
+				if (_p7.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24352,46 +24352,7 @@ var _user$project$TE_elm_v1$update = F2(
 									oldSlots,
 									_user$project$Model$Empty,
 									_user$project$Model$TermsView(
-										A2(_user$project$Document$documentTerms, _p6._0, allTerms)))
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{
-										error: _elm_lang$core$Basics$toString(_p6._0)
-									})
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				}
-			case 'NewDocument':
-				var oldTabs = model.tabs;
-				var tabNumber = _elm_lang$core$List$length(oldTabs);
-				var oldSettings = model.settings;
-				var _p7 = _p0._0;
-				if (_p7.ctor === 'Ok') {
-					var _p8 = _p7._0;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								tabs: A2(
-									_elm_lang$core$List$append,
-									oldTabs,
-									{
-										ctor: '::',
-										_0: A2(_user$project$Model$DocumentTab, _p8.title, _p8),
-										_1: {ctor: '[]'}
-									}),
-								currentTab: tabNumber
+										A2(_user$project$Document$documentTerms, _p7._0, allTerms)))
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -24410,13 +24371,52 @@ var _user$project$TE_elm_v1$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
+			case 'NewDocument':
+				var oldTabs = model.tabs;
+				var tabNumber = _elm_lang$core$List$length(oldTabs);
+				var oldSettings = model.settings;
+				var _p8 = _p0._0;
+				if (_p8.ctor === 'Ok') {
+					var _p9 = _p8._0;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								tabs: A2(
+									_elm_lang$core$List$append,
+									oldTabs,
+									{
+										ctor: '::',
+										_0: A2(_user$project$Model$DocumentTab, _p9.title, _p9),
+										_1: {ctor: '[]'}
+									}),
+								currentTab: tabNumber
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{
+										error: _elm_lang$core$Basics$toString(_p8._0)
+									})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
 			case 'NewFrames':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'ExecCmd':
 				return {ctor: '_Tuple2', _0: model, _1: _p0._0};
 			case 'ContainerCacheTopicMsg':
-				var _p15 = _p0._1;
-				var _p14 = _p0._0;
+				var _p16 = _p0._1;
+				var _p15 = _p0._0;
 				var currentPage = function (cont) {
 					return A2(
 						_elm_lang$core$Maybe$withDefault,
@@ -24424,19 +24424,19 @@ var _user$project$TE_elm_v1$update = F2(
 						A2(_elm_lang$core$Array$get, cont.meta.currPage, cont.data));
 				};
 				var topicList = function (cont) {
-					var _p9 = currentPage(cont);
-					if (_p9.ctor === 'Loaded') {
-						return _p9._0;
+					var _p10 = currentPage(cont);
+					if (_p10.ctor === 'Loaded') {
+						return _p10._0;
 					} else {
 						return {ctor: '[]'};
 					}
 				};
-				var _p10 = A2(_user$project$ContainerCache$update, _p15, model.containerTopicModel);
-				var newdata = _p10._0;
-				var cmd = _p10._1;
+				var _p11 = A2(_user$project$ContainerCache$update, _p16, model.containerTopicModel);
+				var newdata = _p11._0;
+				var cmd = _p11._1;
 				var newSlots = function () {
-					var _p11 = _p15;
-					switch (_p11.ctor) {
+					var _p12 = _p16;
+					switch (_p12.ctor) {
 						case 'CreateNewContainer':
 							var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
 							var newContainer = A2(
@@ -24450,25 +24450,7 @@ var _user$project$TE_elm_v1$update = F2(
 							return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
 						case 'PageUpdate':
 							var index = function () {
-								var _p12 = A2(_user$project$Model$slotGet, model.slots, _p14);
-								if (_p12.ctor === 'TopicsView') {
-									return _p12._1;
-								} else {
-									return -1;
-								}
-							}();
-							var newContainer = A2(
-								_elm_lang$core$Maybe$withDefault,
-								_user$project$ContainerCache$defaultContainer,
-								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
-							var newView = A2(
-								_user$project$Model$TopicsView,
-								topicList(newContainer),
-								index);
-							return A3(_user$project$Model$slotChangeTo, model.slots, _p14, newView);
-						default:
-							var index = function () {
-								var _p13 = A2(_user$project$Model$slotGet, model.slots, _p14);
+								var _p13 = A2(_user$project$Model$slotGet, model.slots, _p15);
 								if (_p13.ctor === 'TopicsView') {
 									return _p13._1;
 								} else {
@@ -24483,7 +24465,25 @@ var _user$project$TE_elm_v1$update = F2(
 								_user$project$Model$TopicsView,
 								topicList(newContainer),
 								index);
-							return A3(_user$project$Model$slotChangeTo, model.slots, _p14, newView);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p15, newView);
+						default:
+							var index = function () {
+								var _p14 = A2(_user$project$Model$slotGet, model.slots, _p15);
+								if (_p14.ctor === 'TopicsView') {
+									return _p14._1;
+								} else {
+									return -1;
+								}
+							}();
+							var newContainer = A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$ContainerCache$defaultContainer,
+								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+							var newView = A2(
+								_user$project$Model$TopicsView,
+								topicList(newContainer),
+								index);
+							return A3(_user$project$Model$slotChangeTo, model.slots, _p15, newView);
 					}
 				}();
 				return {
@@ -24493,7 +24493,7 @@ var _user$project$TE_elm_v1$update = F2(
 						{containerTopicModel: newdata, slots: newSlots}),
 					_1: A2(
 						_elm_lang$core$Platform_Cmd$map,
-						_user$project$Model$ContainerCacheTopicMsg(_p14),
+						_user$project$Model$ContainerCacheTopicMsg(_p15),
 						cmd)
 				};
 			case 'Mdl':

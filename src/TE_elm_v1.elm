@@ -187,14 +187,13 @@ update msg model =
         NewDocs result ->
             let oldSettings = model.settings
                 oldSlots = model.slots
-                docs = model.docs
                 contains term document = List.member term document.terms
             in
             case result of
                 Ok newDocs ->
                     ({ model
                         | settings = { oldSettings | showDocuments = True}
-                        , slots = slotFromTo oldSlots Empty (DocumentsView docs)
+                        , slots = slotFromTo oldSlots Empty (DocumentsView newDocs)
                         , docs = newDocs
                         }
                     , Cmd.none)
