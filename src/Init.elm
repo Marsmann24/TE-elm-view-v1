@@ -125,7 +125,7 @@ initTopic id =
                 { start = 0
                 , end = 0
                 , depth = 0
-                , cluster = "0;1;1;1"
+                , cluster = Just "0;1;1;1"
                 }
             , color_topic = "#ffffff"
             , top_terms = [initTerm 0]

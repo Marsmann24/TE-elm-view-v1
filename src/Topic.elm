@@ -2,7 +2,7 @@ module Topic exposing (..)
 
 import Term exposing (..)
 
-import Json.Decode exposing (Decoder, string, int, list, map, map3, map4, field, keyValuePairs)
+import Json.Decode exposing (Decoder, string, int, list, map, map3, map4, field, keyValuePairs, maybe)
 import Decoderhelper exposing (int2, intDictDecoder)
 import Dict exposing (Dict)
 
@@ -24,7 +24,7 @@ type alias TopicHirarchie =
     { start : Int
     , end : Int
     , depth : Int
-    , cluster : String
+    , cluster : Maybe String
     }
 
 --type alias TopicResult =
@@ -62,7 +62,7 @@ makeTopicsList topics sorting terms =
 
 defaultRawTopic : RawTopic
 defaultRawTopic =
-    (RawTopic -1 (TopicHirarchie -1 -1 -1 "") "Error: not matching" [])
+    (RawTopic -1 (TopicHirarchie -1 -1 -1 Nothing) "Error: not matching" [])
 
 -- Decoders
 topicDecoder : Decoder RawTopic
@@ -73,7 +73,7 @@ topicDecoder =
             (field "HIERARCHICAL_TOPIC$START" int2)
             (field "HIERARCHICAL_TOPIC$END" int2)
             (field "HIERARCHICAL_TOPIC$DEPTH" int2)
-            (field "HIERARCHICAL_TOPIC$CLUSTER_MEMBERSHIP" string)
+            (maybe (field "HIERARCHICAL_TOPIC$CLUSTER_MEMBERSHIP" string))
         )
         (field "COLOR_TOPIC$COLOR" string)
         (field "Top_Terms" termSortingDecoder)
