@@ -101,7 +101,7 @@ bestDocsDecoder =
                         (field "KEYWORD_TITLE" string)
                         (field "TOP_TOPIC" (list int))
                         (field "LINK$URL" string)
-                        (field "TIME$TIME_STAMP" int)
+                        (field "TIME$TIME_STAMP" int2)
                         (field "TEXT$TITLE" string)
                         (field "TEXT$SNIPPET" string)
                     )
