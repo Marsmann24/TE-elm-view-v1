@@ -95,7 +95,7 @@ bestDocsDecoder =
                 (pseudolist
                     (map10 Doc
                         (field "DOCUMENT_ID" int2)
-                        (field "TOPIC_ID" int)
+                        (field "TOPIC_ID" int2)
                         (field "DOCUMENT_COUNT" int)
                         (field "KEYWORD_SNIPET" string)
                         (field "KEYWORD_TITLE" string)
