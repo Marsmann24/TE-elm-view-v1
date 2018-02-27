@@ -85,7 +85,7 @@ var _user$project$Decoderhelper$pseudolist = function (decoder) {
 		_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
 		_elm_lang$core$Json_Decode$keyValuePairs(decoder));
 };
-var _user$project$Decoderhelper$stringAsInt = function () {
+var _user$project$Decoderhelper$int = function () {
 	var convert = function (a) {
 		return A2(
 			_elm_lang$core$Result$withDefault,
