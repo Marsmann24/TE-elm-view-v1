@@ -75,8 +75,8 @@ topicDecoder =
             (field "HIERARCHICAL_TOPIC$DEPTH" int2)
             (field "HIERARCHICAL_TOPIC$CLUSTER_MEMBERSHIP" string)
         )
-        (field "color_topic$color" string)
-        (field "top_terms" termSortingDecoder)
+        (field "COLOR_TOPIC$COLOR" string)
+        (field "Top_Terms" termSortingDecoder)
 
 decodeTopics : Decoder (List Topic)
 decodeTopics =

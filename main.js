@@ -21181,8 +21181,8 @@ var _user$project$Topic$topicDecoder = A5(
 		A2(_elm_lang$core$Json_Decode$field, 'HIERARCHICAL_TOPIC$END', _user$project$Decoderhelper$int2),
 		A2(_elm_lang$core$Json_Decode$field, 'HIERARCHICAL_TOPIC$DEPTH', _user$project$Decoderhelper$int2),
 		A2(_elm_lang$core$Json_Decode$field, 'HIERARCHICAL_TOPIC$CLUSTER_MEMBERSHIP', _elm_lang$core$Json_Decode$string)),
-	A2(_elm_lang$core$Json_Decode$field, 'color_topic$color', _elm_lang$core$Json_Decode$string),
-	A2(_elm_lang$core$Json_Decode$field, 'top_terms', _user$project$Term$termSortingDecoder));
+	A2(_elm_lang$core$Json_Decode$field, 'COLOR_TOPIC$COLOR', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'Top_Terms', _user$project$Term$termSortingDecoder));
 var _user$project$Topic$decodeTopics = A4(
 	_elm_lang$core$Json_Decode$map3,
 	_user$project$Topic$makeTopicsList,
