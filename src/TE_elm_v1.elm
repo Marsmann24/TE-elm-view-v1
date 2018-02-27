@@ -200,12 +200,16 @@ update msg model =
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocument result ->
-            let oldTabs = model.tabs
-                oldSettings = model.settings
+            let oldSettings = model.settings
+                oldTabs = model.tabs
+                tabNumber = List.length oldTabs
             in
             case result of
                 Ok document ->
-                    ({ model | tabs = (List.append oldTabs [DocumentTab document.title document])}, Cmd.none)
+                    ({ model
+                        | tabs = (List.append oldTabs [DocumentTab document.title document])
+                        , currentTab = tabNumber}
+                    , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewFrames result ->

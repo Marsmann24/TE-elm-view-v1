@@ -76,7 +76,6 @@ initSettings =
 initTabs : List Tab
 initTabs =
     [ PreviewTab
-    , DocumentTab  "Document 0" (initDocument 1)
     ]
 
 initDocument : Int -> Document

@@ -22024,14 +22024,7 @@ var _user$project$Init$initDocument = function (id) {
 var _user$project$Init$initTabs = {
 	ctor: '::',
 	_0: _user$project$Model$PreviewTab,
-	_1: {
-		ctor: '::',
-		_0: A2(
-			_user$project$Model$DocumentTab,
-			'Document 0',
-			_user$project$Init$initDocument(1)),
-		_1: {ctor: '[]'}
-	}
+	_1: {ctor: '[]'}
 };
 var _user$project$Init$initSettings = {showTopics: true, showDocuments: true, showTerms: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false, error: 'Ok', slotToDelete: -1};
 var _user$project$Init$initResult = {
@@ -24335,8 +24328,9 @@ var _user$project$TE_elm_v1$update = F2(
 					};
 				}
 			case 'NewDocument':
-				var oldSettings = model.settings;
 				var oldTabs = model.tabs;
+				var tabNumber = _elm_lang$core$List$length(oldTabs);
+				var oldSettings = model.settings;
 				var _p6 = _p0._0;
 				if (_p6.ctor === 'Ok') {
 					var _p7 = _p6._0;
@@ -24352,7 +24346,8 @@ var _user$project$TE_elm_v1$update = F2(
 										ctor: '::',
 										_0: A2(_user$project$Model$DocumentTab, _p7.title, _p7),
 										_1: {ctor: '[]'}
-									})
+									}),
+								currentTab: tabNumber
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
