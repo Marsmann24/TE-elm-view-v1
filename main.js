@@ -21212,8 +21212,8 @@ var _user$project$Document$Token = F4(
 var _user$project$Document$tokenDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Document$Token,
-	A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'POSITION_OF_TOKEN_IN_DOCUMENT', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _user$project$Decoderhelper$int2),
+	A2(_elm_lang$core$Json_Decode$field, 'POSITION_OF_TOKEN_IN_DOCUMENT', _user$project$Decoderhelper$int2),
 	A2(_elm_lang$core$Json_Decode$field, 'TOKEN', _elm_lang$core$Json_Decode$string),
 	A2(
 		_elm_lang$core$Json_Decode$field,
