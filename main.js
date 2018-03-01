@@ -23537,11 +23537,7 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 							_debois$elm_mdl$Material_Options$css,
 							'flex',
 							_user$project$Mainview_v2$flexValue(3)),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100%'),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					}
 				},
 				A2(

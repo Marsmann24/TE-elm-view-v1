@@ -84,7 +84,7 @@ viewBody model =
             [ div
                 [ cs "flex__row"
                 , css "flex" (flexValue 3)
-                , css "height" "100%"
+                --, css "height" "100%"
                 ]
                 (List.append
                     ((div
