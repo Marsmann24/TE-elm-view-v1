@@ -29,7 +29,7 @@ view model flex slotId slotName =
             , center
             ]
             [ Icon.view "art_track" [ css "margin" "5px"]
-            , span [ css "width" "calc(100% - 64)"] [ text slotName]
+            , span [ css "width" "calc(100% - 64px)"] [ text slotName]
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab
