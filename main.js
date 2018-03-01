@@ -22679,8 +22679,12 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'grid'),
-							_1: {ctor: '[]'}
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline-block'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'vertical-align', 'top'),
+								_1: {ctor: '[]'}
+							}
 						}
 					},
 					{
@@ -22740,8 +22744,12 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'grid'),
-							_1: {ctor: '[]'}
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline-block'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'vertical-align', 'top'),
+								_1: {ctor: '[]'}
+							}
 						}
 					},
 					{
@@ -22801,8 +22809,12 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'grid'),
-							_1: {ctor: '[]'}
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline-block'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'vertical-align', 'top'),
+								_1: {ctor: '[]'}
+							}
 						}
 					},
 					{
