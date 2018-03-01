@@ -23533,10 +23533,7 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 					_0: _debois$elm_mdl$Material_Options$cs('flex__row'),
 					_1: {
 						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Options$css,
-							'flex',
-							_user$project$Mainview_v2$flexValue(3)),
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '3 2 70%'),
 						_1: {ctor: '[]'}
 					}
 				},
@@ -23607,10 +23604,7 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 					})),
 			_1: {
 				ctor: '::',
-				_0: A2(
-					_user$project$Savedview$view,
-					model,
-					_user$project$Mainview_v2$flexValue(1)),
+				_0: A2(_user$project$Savedview$view, model, '1 1 30%'),
 				_1: {ctor: '[]'}
 			}
 		});

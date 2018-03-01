@@ -83,7 +83,7 @@ viewBody model =
         else
             [ div
                 [ cs "flex__row"
-                , css "flex" (flexValue 3)
+                , css "flex" "3 2 70%"
                 --, css "height" "100%"
                 ]
                 (List.append
@@ -99,7 +99,7 @@ viewBody model =
                         [ Icon.view "add" [Icon.size48]
                         ]
                     , Tabsview.view model (flexValue 6)])
-            , Savedview.view model (flexValue 1)
+            , Savedview.view model "1 1 30%"
             ]
         )
 
