@@ -21614,6 +21614,10 @@ var _user$project$Model$slotFromTo = F3(
 			to) : A3(_user$project$Model$slotChangeTo, slots, findSlot, to);
 	});
 var _user$project$Model$Empty = {ctor: 'Empty'};
+var _user$project$Model$slotsCount = function (slots) {
+	var firstEmpty = A2(_user$project$Model$slotGetFirstId, slots, _user$project$Model$Empty);
+	return (_elm_lang$core$Native_Utils.cmp(firstEmpty, 0) < 0) ? _elm_lang$core$Array$length(slots.main) : firstEmpty;
+};
 var _user$project$Model$slotRemove = F2(
 	function (slots, removeId) {
 		var moreTail = A2(
@@ -23612,7 +23616,8 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 									_0: A2(
 										_debois$elm_mdl$Material_Options$css,
 										'flex',
-										_user$project$Mainview_v2$flexValue(6)),
+										_user$project$Mainview_v2$flexValue(
+											_user$project$Model$slotsCount(model.slots) * 2)),
 									_1: {ctor: '[]'}
 								}
 							},

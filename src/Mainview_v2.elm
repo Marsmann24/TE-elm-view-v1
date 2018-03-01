@@ -95,7 +95,7 @@ viewBody model =
                     else div [] []
                 , div
                     [ cs "flex__row"
-                    , css "flex" (flexValue 6)
+                    , css "flex" (flexValue ((slotsCount model.slots) * 2))
                     ]
 --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
                     (Array.toList (Array.indexedMap (slot model) model.slots.main))

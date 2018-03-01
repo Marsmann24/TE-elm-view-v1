@@ -172,6 +172,15 @@ slotFromTo slots from to =
             2 to
     else slotChangeTo slots findSlot to
 
+slotsCount : Slots -> Int
+slotsCount slots =
+    let firstEmpty =
+            slotGetFirstId slots Empty
+    in
+    if (firstEmpty < 0)
+    then Array.length slots.main
+    else firstEmpty
+
 slotGetFirstId : Slots -> View -> Int
 slotGetFirstId slots view =
     slotGetFirstIdSince slots view 0
