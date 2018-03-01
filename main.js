@@ -21989,7 +21989,11 @@ var _user$project$Documentsview$view = F4(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
@@ -22561,7 +22565,11 @@ var _user$project$Topicsview$view = F4(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
@@ -23080,7 +23088,11 @@ var _user$project$Termsview$view = F4(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',

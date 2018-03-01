@@ -26,6 +26,7 @@ view model flex slotId slotName =
         ]
         [ div
             [ css "height" "45px"
+            , css "text-align" "center"
             ]
             [ Icon.view "list" [ css "margin" "5px"]
             , text slotName
