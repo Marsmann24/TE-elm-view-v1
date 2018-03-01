@@ -55,20 +55,15 @@ topic2Chip model topic =
             , center
             ]
             [ span
-                [ css "width" "calc(100% - 48px)"
-                , css "float" "left"
-                , center
-                ]
+                [ css "width" "calc(100% - 48px)"]
                 [ text (toString topic.id)]
             , Icon.view "list"
-                [ css "float" "right"
-                , onClick
+                [ onClick
                     (ExecCmd (Request.loadTerms topic.id 30))
                     --(ShowTermList topic.top_terms)
                 ]
             , Icon.view "art_track"
-                [ css "float" "right"
-                , onClick
+                [ onClick
                     (ExecCmd (Request.loadBestDocs topic.id -1 "relevance"))
                     --ShowDocuments
                     --    (List.filter

@@ -21864,11 +21864,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 									{
 										ctor: '::',
 										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
-										_1: {
-											ctor: '::',
-											_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'left'),
-											_1: {ctor: '[]'}
-										}
+										_1: {ctor: '[]'}
 									},
 									{
 										ctor: '::',
@@ -21882,18 +21878,14 @@ var _user$project$Documentsview$doc2CardView = F3(
 										'bubble_chart',
 										{
 											ctor: '::',
-											_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-											_1: {
-												ctor: '::',
-												_0: _debois$elm_mdl$Material_Options$onMouseDown(
-													_user$project$Model$SelectAction(
-														_user$project$Model$ShowTopics(
-															A2(
-																_elm_lang$core$List$filterMap,
-																_user$project$Topic$topicId2Topic(model.topics),
-																doc.top_topic)))),
-												_1: {ctor: '[]'}
-											}
+											_0: _debois$elm_mdl$Material_Options$onMouseDown(
+												_user$project$Model$SelectAction(
+													_user$project$Model$ShowTopics(
+														A2(
+															_elm_lang$core$List$filterMap,
+															_user$project$Topic$topicId2Topic(model.topics),
+															doc.top_topic)))),
+											_1: {ctor: '[]'}
 										}),
 									_1: {
 										ctor: '::',
@@ -21902,15 +21894,11 @@ var _user$project$Documentsview$doc2CardView = F3(
 											'list',
 											{
 												ctor: '::',
-												_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-												_1: {
-													ctor: '::',
-													_0: _debois$elm_mdl$Material_Options$onMouseDown(
-														_user$project$Model$SelectAction(
-															_user$project$Model$ExecCmd(
-																_user$project$Request$loadDocTokens(doc.document_id)))),
-													_1: {ctor: '[]'}
-												}
+												_0: _debois$elm_mdl$Material_Options$onMouseDown(
+													_user$project$Model$SelectAction(
+														_user$project$Model$ExecCmd(
+															_user$project$Request$loadDocTokens(doc.document_id)))),
+												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
 									}
@@ -22502,15 +22490,7 @@ var _user$project$Topicsview$topic2Chip = F2(
 							{
 								ctor: '::',
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'left'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$center,
-										_1: {ctor: '[]'}
-									}
-								}
+								_1: {ctor: '[]'}
 							},
 							{
 								ctor: '::',
@@ -22525,14 +22505,10 @@ var _user$project$Topicsview$topic2Chip = F2(
 								'list',
 								{
 									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ExecCmd(
-												A2(_user$project$Request$loadTerms, topic.id, 30))),
-										_1: {ctor: '[]'}
-									}
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ExecCmd(
+											A2(_user$project$Request$loadTerms, topic.id, 30))),
+									_1: {ctor: '[]'}
 								}),
 							_1: {
 								ctor: '::',
@@ -22541,14 +22517,10 @@ var _user$project$Topicsview$topic2Chip = F2(
 									'art_track',
 									{
 										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$ExecCmd(
-													A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
-											_1: {ctor: '[]'}
-										}
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ExecCmd(
+												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
+										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
 							}

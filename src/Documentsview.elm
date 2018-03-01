@@ -72,13 +72,10 @@ doc2CardView model doc cardID =
                 , css "width" "100%"
                 ]
                 [ span
-                    [ css "width" "calc(100% - 48px)"
-                    , css "float" "left"
-                    ]
+                    [ css "width" "calc(100% - 48px)"]
                     [ text doc.title]
                 , Icon.view "bubble_chart"
-                    [ css "float" "right"
-                    , onMouseDown
+                    [ onMouseDown
                         (SelectAction
                             (ShowTopics
                                 (List.filterMap
@@ -89,9 +86,7 @@ doc2CardView model doc cardID =
                         )
                     ]
                 , Icon.view "list"
-                    [ css "float" "right"
-                    , onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc.document_id)))
-                ]
+                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc.document_id)))]
                 ]
             , span
                 [ Color.text (Color.color Color.Grey Color.S200)
