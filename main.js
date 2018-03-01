@@ -21860,7 +21860,11 @@ var _user$project$Documentsview$doc2CardView = F3(
 									{
 										ctor: '::',
 										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'left'),
+											_1: {ctor: '[]'}
+										}
 									},
 									{
 										ctor: '::',
@@ -21874,17 +21878,21 @@ var _user$project$Documentsview$doc2CardView = F3(
 										'bubble_chart',
 										{
 											ctor: '::',
-											_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline-block'),
 											_1: {
 												ctor: '::',
-												_0: _debois$elm_mdl$Material_Options$onMouseDown(
-													_user$project$Model$SelectAction(
-														_user$project$Model$ShowTopics(
-															A2(
-																_elm_lang$core$List$filterMap,
-																_user$project$Topic$topicId2Topic(model.topics),
-																doc.top_topic)))),
-												_1: {ctor: '[]'}
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onMouseDown(
+														_user$project$Model$SelectAction(
+															_user$project$Model$ShowTopics(
+																A2(
+																	_elm_lang$core$List$filterMap,
+																	_user$project$Topic$topicId2Topic(model.topics),
+																	doc.top_topic)))),
+													_1: {ctor: '[]'}
+												}
 											}
 										}),
 									_1: {
@@ -21894,14 +21902,18 @@ var _user$project$Documentsview$doc2CardView = F3(
 											'list',
 											{
 												ctor: '::',
-												_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline-block'),
 												_1: {
 													ctor: '::',
-													_0: _debois$elm_mdl$Material_Options$onMouseDown(
-														_user$project$Model$SelectAction(
-															_user$project$Model$ExecCmd(
-																_user$project$Request$loadDocTokens(doc.document_id)))),
-													_1: {ctor: '[]'}
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Options$onMouseDown(
+															_user$project$Model$SelectAction(
+																_user$project$Model$ExecCmd(
+																	_user$project$Request$loadDocTokens(doc.document_id)))),
+														_1: {ctor: '[]'}
+													}
 												}
 											}),
 										_1: {ctor: '[]'}
