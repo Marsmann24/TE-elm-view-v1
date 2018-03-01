@@ -22677,7 +22677,11 @@ var _user$project$Savedview$slotView2Chip = F2(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
@@ -22734,7 +22738,11 @@ var _user$project$Savedview$slotView2Chip = F2(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
@@ -22791,7 +22799,11 @@ var _user$project$Savedview$slotView2Chip = F2(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
