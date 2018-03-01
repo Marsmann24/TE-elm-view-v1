@@ -23097,7 +23097,53 @@ var _user$project$Mainview_v2$slot = F3(
 									'Documents',
 									A2(_user$project$Model$DocumentsView, 'Documents', model.docs),
 									slotId),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A5(
+										_debois$elm_mdl$Material_Button$render,
+										_user$project$Model$Mdl,
+										{
+											ctor: '::',
+											_0: slotId,
+											_1: {ctor: '[]'}
+										},
+										model.mdl,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Button$fab,
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Button$minifab,
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Button$raised,
+														_1: {
+															ctor: '::',
+															_0: _debois$elm_mdl$Material_Button$ripple,
+															_1: {
+																ctor: '::',
+																_0: _debois$elm_mdl$Material_Options$onClick(
+																	A2(
+																		_user$project$Model$DeleteSlot,
+																		slotId,
+																		_user$project$Model$HideTerms(slotId))),
+																_1: {ctor: '[]'}
+															}
+														}
+													}
+												}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Icon$i('close'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					});

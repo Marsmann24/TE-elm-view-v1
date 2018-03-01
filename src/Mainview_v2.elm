@@ -144,6 +144,15 @@ slot model slotId view =
                 --    , onClick (UpdateSlot (DocumentsView model.docs) slotId)
                 --    ]
                 --    [ text "Documents"]
+                , Button.render Mdl [slotId] model.mdl
+                    [ cs "slot__close_button"
+                    , Button.fab
+                    , Button.minifab
+                    , Button.raised
+                    , Button.ripple
+                    , onClick (DeleteSlot slotId (HideTerms slotId))
+                    ]
+                    [ Icon.i "close" ]
                 ]
         Empty ->
 --            let previouseSlot = (slotGet model.slots (slotId - 1))
