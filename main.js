@@ -21850,7 +21850,11 @@ var _user$project$Documentsview$doc2CardView = F3(
 								_1: {
 									ctor: '::',
 									_0: A2(_debois$elm_mdl$Material_Options$css, 'font-size', '14px'),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '100%'),
+										_1: {ctor: '[]'}
+									}
 								}
 							},
 							{

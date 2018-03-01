@@ -69,6 +69,7 @@ doc2CardView model doc cardID =
             [ Card.head
                 [ Color.text Color.white
                 , css "font-size" "14px"
+                , css "width" "100%"
                 ]
                 [ div
                     [ css "width" "calc(100% - 48px)"
