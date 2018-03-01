@@ -10,7 +10,7 @@ import Searchview
 
 import Array
 import Html exposing (Html, text, h3)
-import Material.Options exposing (css, cs, center, div, span, onToggle, onClick, onInput)
+import Material.Options exposing (Property, css, cs, center, div, span, onToggle, onClick, onInput)
 import Material.Icon as Icon
 import Material.Color as Color
 import Material.Scheme as Scheme
@@ -27,12 +27,7 @@ view model =
             [ Layout.fixedHeader]
             { header =
                 [ viewSearch model
-                , span
-                    [ css "float" "right"
-                    , css "width" "200px"
-                    , css "display" "inline"
-                    ]
-                    [ text model.settings.error]
+                , text model.settings.error
                 ]
             , drawer = [ viewSwitch model]
             , tabs = ( [], [])
@@ -50,9 +45,6 @@ viewSearch model =
         , Textfield.expandable "id-of-expandable-1"
         , Textfield.expandableIcon "search"
         , css "padding" "20px 50px 10px"
-        , css "width" "400px"
-        , css "display" "inline"
-        , css "float" "right"
         , onInput Search
         ]
         [ ]
@@ -97,22 +89,32 @@ viewBody model =
                 , css "flex" "3 2 70%"
                 , css "height" "100%"
                 ]
-                (List.append
-                    ((div
-                        [ cs "flex__row"]
-                        (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
-                        :: (Array.toList (Array.indexedMap (slot model) model.slots.main)))
-                    [ div
-                        [ generalBackgroundColor
-                        , center
-                        , onClick (ChoseSlotDialog (slotGetFirstId model.slots Empty))
-                        ]
-                        [ Icon.view "add" [Icon.size48]
-                        ]
-                    , Tabsview.view model (flexValue 6)])
+--                (List.append
+                [ if (not (List.isEmpty model.slots.more))
+                    then slotAction (onClick None) "<"
+                    else div [] []
+                , div
+                    [ cs "flex__row"]
+--                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
+                    (Array.toList (Array.indexedMap (slot model) model.slots.main))
+                , if ((slotGet model.slots 2) == Empty)
+                    then slotAction (onClick (ChoseSlotDialog (slotGetFirstId model.slots Empty))) "add"
+                    else slotAction (onClick None) ">"
+                , Tabsview.view model (flexValue 6)
+                ]
             , Savedview.view model "1 1 30%"
             ]
         )
+
+slotAction : Property c Msg -> String -> Html Msg
+slotAction action icon =
+    div
+        [ generalBackgroundColor
+        , center
+        , action
+        ]
+        [ Icon.view icon [ Icon.size48 ]
+        ]
 
 slot : Model -> Int -> View -> Html Msg
 slot model slotId view =

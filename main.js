@@ -23521,6 +23521,36 @@ var _user$project$Mainview_v2$slot = F3(
 					});
 		}
 	});
+var _user$project$Mainview_v2$slotAction = F2(
+	function (action, icon) {
+		return A2(
+			_debois$elm_mdl$Material_Options$div,
+			{
+				ctor: '::',
+				_0: _user$project$Model$generalBackgroundColor,
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$center,
+					_1: {
+						ctor: '::',
+						_0: action,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Icon$view,
+					icon,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Icon$size48,
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
 var _user$project$Mainview_v2$viewBody = function (model) {
 	return A2(
 		_debois$elm_mdl$Material_Options$div,
@@ -23561,9 +23591,16 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 						}
 					}
 				},
-				A2(
-					_elm_lang$core$List$append,
-					{
+				{
+					ctor: '::',
+					_0: (!_elm_lang$core$List$isEmpty(model.slots.more)) ? A2(
+						_user$project$Mainview_v2$slotAction,
+						_debois$elm_mdl$Material_Options$onClick(_user$project$Model$None),
+						'<') : A2(
+						_debois$elm_mdl$Material_Options$div,
+						{ctor: '[]'},
+						{ctor: '[]'}),
+					_1: {
 						ctor: '::',
 						_0: A2(
 							_debois$elm_mdl$Material_Options$div,
@@ -23572,60 +23609,35 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 								_0: _debois$elm_mdl$Material_Options$cs('flex__row'),
 								_1: {ctor: '[]'}
 							},
-							A2(
-								_elm_lang$core$List$map,
-								_user$project$Mainview_v2$hiddenSlot,
-								_elm_lang$core$List$reverse(
-									A2(
-										_elm_lang$core$List$range,
-										1,
-										_elm_lang$core$List$length(model.slots.more))))),
-						_1: _elm_lang$core$Array$toList(
-							A2(
-								_elm_lang$core$Array$indexedMap,
-								_user$project$Mainview_v2$slot(model),
-								model.slots.main))
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Options$div,
-							{
-								ctor: '::',
-								_0: _user$project$Model$generalBackgroundColor,
-								_1: {
-									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$center,
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ChoseSlotDialog(
-												A2(_user$project$Model$slotGetFirstId, model.slots, _user$project$Model$Empty))),
-										_1: {ctor: '[]'}
-									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_Icon$view,
-									'add',
-									{
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Icon$size48,
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}),
+							_elm_lang$core$Array$toList(
+								A2(
+									_elm_lang$core$Array$indexedMap,
+									_user$project$Mainview_v2$slot(model),
+									model.slots.main))),
 						_1: {
 							ctor: '::',
-							_0: A2(
-								_user$project$Tabsview$view,
-								model,
-								_user$project$Mainview_v2$flexValue(6)),
-							_1: {ctor: '[]'}
+							_0: _elm_lang$core$Native_Utils.eq(
+								A2(_user$project$Model$slotGet, model.slots, 2),
+								_user$project$Model$Empty) ? A2(
+								_user$project$Mainview_v2$slotAction,
+								_debois$elm_mdl$Material_Options$onClick(
+									_user$project$Model$ChoseSlotDialog(
+										A2(_user$project$Model$slotGetFirstId, model.slots, _user$project$Model$Empty))),
+								'add') : A2(
+								_user$project$Mainview_v2$slotAction,
+								_debois$elm_mdl$Material_Options$onClick(_user$project$Model$None),
+								'>'),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_user$project$Tabsview$view,
+									model,
+									_user$project$Mainview_v2$flexValue(6)),
+								_1: {ctor: '[]'}
+							}
 						}
-					})),
+					}
+				}),
 			_1: {
 				ctor: '::',
 				_0: A2(_user$project$Savedview$view, model, '1 1 30%'),
@@ -23767,20 +23779,8 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '20px 50px 10px'),
 							_1: {
 								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '400px'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline'),
-									_1: {
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
-											_1: {ctor: '[]'}
-										}
-									}
-								}
+								_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
+								_1: {ctor: '[]'}
 							}
 						}
 					}
@@ -23809,26 +23809,7 @@ var _user$project$Mainview_v2$view = function (model) {
 					_0: _user$project$Mainview_v2$viewSearch(model),
 					_1: {
 						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Options$span,
-							{
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-									_1: {
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline'),
-										_1: {ctor: '[]'}
-									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(model.settings.error),
-								_1: {ctor: '[]'}
-							}),
+						_0: _elm_lang$html$Html$text(model.settings.error),
 						_1: {ctor: '[]'}
 					}
 				},
