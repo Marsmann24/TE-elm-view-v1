@@ -15,6 +15,7 @@ view : Model -> String-> Html Msg
 view model flex =
     div
         [ css "flex" flex
+        , css "height" "100%"
         , css "margin" "3px 0px"
         , Elevation.e6
         , primaryColor

@@ -22869,14 +22869,18 @@ var _user$project$Savedview$view = F2(
 				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 				_1: {
 					ctor: '::',
-					_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
+					_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100%'),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e6,
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
 						_1: {
 							ctor: '::',
-							_0: _user$project$Model$primaryColor,
-							_1: {ctor: '[]'}
+							_0: _debois$elm_mdl$Material_Elevation$e6,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Model$primaryColor,
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
