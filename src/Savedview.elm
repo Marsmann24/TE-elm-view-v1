@@ -34,12 +34,14 @@ slotView2Chip id view =
         TopicsView name _ _ ->
             Chip.span
                 [ css "width" "200px"
-                , center
                 ]
                 [ Chip.content
                     [ center]
-                    [ Icon.i "bubble_chart"
-                    , text name
+                    [ span
+                        [ css "width" "160px"]
+                        [ Icon.i "bubble_chart"
+                        , text name
+                        ]
                     , Icon.view "cancel"
                         [ onClick
                             (RemoveSlotFromOther id)
@@ -49,12 +51,14 @@ slotView2Chip id view =
         TermsView name _ ->
             Chip.span
                 [ css "width" "200px"
-                , center
                 ]
                 [ Chip.content
                     [ center]
-                    [ Icon.i "list"
-                    , text name
+                    [ span
+                        [ css "width" "160px"]
+                        [ Icon.i "list"
+                        , text name
+                        ]
                     , Icon.view "cancel"
                         [ onClick
                             (RemoveSlotFromOther id)
@@ -64,12 +68,14 @@ slotView2Chip id view =
         DocumentsView name _ ->
             Chip.span
                 [ css "width" "200px"
-                , center
                 ]
                 [ Chip.content
                     [ center]
-                    [ Icon.i "art_track"
-                    , text name
+                    [ span
+                        [ css "width" "160px"]
+                        [ Icon.i "art_track"
+                        , text name
+                        ]
                     , Icon.view "cancel"
                         [ onClick
                             (RemoveSlotFromOther id)
