@@ -23,6 +23,7 @@ type Msg
     | RemoveTopic Int
     | DeleteSlot Int Msg
     | RemoveSlotFromOther Int
+    | SlotToLastFromOther Int
     | ShowTopics (List Topic)
     | HideTopics Int
     | ShowTerms (List Term)
@@ -235,6 +236,26 @@ slotRemoveMore slots id =
     { slots
         | more = (List.take id oldMore) ++ (List.drop (id + 1) oldMore)
     }
+
+slotMove2EndFromMore : Slots -> Int -> Slots
+slotMove2EndFromMore slots id =
+    let newMore : List View
+        newMore =
+            ((List.take id slots.more) ++ (List.drop (id + 1) slots.more))
+        moreSlot : View
+        moreSlot =
+            withDefault Empty (List.head (List.drop id slots.more))
+        newSlots : Slots
+        newSlots =
+            slotChangeTo
+                (slotChangeTo
+                    (slotChangeTo
+                        { slots | more = ((slotGet slots 0)::newMore)}
+                        0 (slotGet slots 1))
+                    1 (slotGet slots 2))
+                2 moreSlot
+    in
+    newSlots
 
 primaryColor : Property c m
 --primaryColor = Color.background Color.primaryContrast

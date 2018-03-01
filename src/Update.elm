@@ -79,6 +79,12 @@ update msg model =
             ({ model
                 | slots = newSlots
             }, Cmd.none)
+        SlotToLastFromOther id ->
+            let newSlots = slotMove2EndFromMore model.slots id
+            in
+            ({ model
+                | slots = newSlots
+            }, Cmd.none)
         ShowTopics topics ->
             let oldSettings = model.settings
                 oldSlots = model.slots

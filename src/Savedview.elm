@@ -38,7 +38,10 @@ slotView2Chip id view =
                 [ Chip.content
                     [ center]
                     [ span
-                        [ css "width" "160px"]
+                        [ css "width" "160px"
+                        , onClick
+                            (SlotToLastFromOther id)
+                        ]
                         [ Icon.i "bubble_chart"
                         , text name
                         ]
@@ -55,7 +58,10 @@ slotView2Chip id view =
                 [ Chip.content
                     [ center]
                     [ span
-                        [ css "width" "160px"]
+                        [ css "width" "160px"
+                        , onClick
+                            (SlotToLastFromOther id)
+                        ]
                         [ Icon.i "list"
                         , text name
                         ]
@@ -72,7 +78,10 @@ slotView2Chip id view =
                 [ Chip.content
                     [ center]
                     [ span
-                        [ css "width" "160px"]
+                        [ css "width" "160px"
+                        , onClick
+                            (SlotToLastFromOther id)
+                        ]
                         [ Icon.i "art_track"
                         , text name
                         ]
