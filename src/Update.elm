@@ -73,6 +73,12 @@ update msg model =
                 | settings = { oldSettings | slotToDelete = slotId}
                 }
             , Delay.after 200 Time.millisecond msg)
+        RemoveSlotFromOther id ->
+            let newSlots = slotRemoveMore model.slots id
+            in
+            ({ model
+                | slots = newSlots
+            }, Cmd.none)
         ShowTopics topics ->
             let oldSettings = model.settings
                 oldSlots = model.slots

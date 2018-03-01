@@ -22,6 +22,7 @@ type Msg
     | ChangeCurrentDoc Int Doc
     | RemoveTopic Int
     | DeleteSlot Int Msg
+    | RemoveSlotFromOther Int
     | ShowTopics (List Topic)
     | HideTopics Int
     | ShowTerms (List Term)
@@ -225,6 +226,14 @@ slotRemove slots removeId =
     { slots
         | main = Array.indexedMap nextResult slots.main
         , more = moreTail
+    }
+
+slotRemoveMore : Slots -> Int -> Slots
+slotRemoveMore slots id =
+    let oldMore = slots.more
+    in
+    { slots
+        | more = (List.take id oldMore) ++ (List.drop (id + 1) oldMore)
     }
 
 primaryColor : Property c m

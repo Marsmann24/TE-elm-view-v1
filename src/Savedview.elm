@@ -19,9 +19,65 @@ view model flex =
         , Elevation.e6
         , primaryColor
         ]
-        (List.append
-            [ ]
-            (List.map (currentTopic2Chip model) model.currentTopics))
+        [ div []
+            (List.append
+                [ text "More Slots:"
+                ]
+                (List.indexedMap slotView2Chip model.slots.more)
+            )
+            --(List.map (currentTopic2Chip model) model.currentTopics))
+        ]
+
+slotView2Chip : Int -> View -> Html Msg
+slotView2Chip id view =
+    case view of
+        TopicsView name _ _ ->
+            Chip.span
+                [ css "width" "200px"
+                , center
+                ]
+                [ Chip.content
+                    [ center]
+                    [ Icon.i "bubble_chart"
+                    , text name
+                    , Icon.view "cancel"
+                        [ onClick
+                            (RemoveSlotFromOther id)
+                        ]
+                    ]
+                ]
+        TermsView name _ ->
+            Chip.span
+                [ css "width" "200px"
+                , center
+                ]
+                [ Chip.content
+                    [ center]
+                    [ Icon.i "list"
+                    , text name
+                    , Icon.view "cancel"
+                        [ onClick
+                            (RemoveSlotFromOther id)
+                        ]
+                    ]
+                ]
+        DocumentsView name _ ->
+            Chip.span
+                [ css "width" "200px"
+                , center
+                ]
+                [ Chip.content
+                    [ center]
+                    [ Icon.i "art_track"
+                    , text name
+                    , Icon.view "cancel"
+                        [ onClick
+                            (RemoveSlotFromOther id)
+                        ]
+                    ]
+                ]
+        _ ->
+            div [] []
 
 currentTopic2Chip : Model -> Topic -> Html Msg
 currentTopic2Chip model topic =
