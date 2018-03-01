@@ -22898,7 +22898,11 @@ var _user$project$Savedview$view = F2(
 						{
 							ctor: '::',
 							_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'auto'),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 50px)'),
+								_1: {ctor: '[]'}
+							}
 						},
 						A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more)),
 					_1: {ctor: '[]'}
@@ -23534,7 +23538,11 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 					_1: {
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '3 2 70%'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100%'),
+							_1: {ctor: '[]'}
+						}
 					}
 				},
 				A2(
