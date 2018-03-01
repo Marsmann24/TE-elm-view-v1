@@ -56,7 +56,7 @@ slotView2Chip id view =
         TermsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "flex" "1 1 10%"
+                , css "flex" "2 2 10%"
                 ]
                 [ Chip.content
                     [ center]
