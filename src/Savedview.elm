@@ -33,7 +33,7 @@ slotView2Chip id view =
         TopicsView name _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "display" "inline-block"
+                , css "display" "grid"
                 ]
                 [ Chip.content
                     [ center]
@@ -54,7 +54,7 @@ slotView2Chip id view =
         TermsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "display" "inline-block"
+                , css "display" "grid"
                 ]
                 [ Chip.content
                     [ center]
@@ -75,7 +75,7 @@ slotView2Chip id view =
         DocumentsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "display" "inline-block"
+                , css "display" "grid"
                 ]
                 [ Chip.content
                     [ center]
