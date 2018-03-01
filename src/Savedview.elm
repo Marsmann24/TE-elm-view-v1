@@ -20,11 +20,10 @@ view model flex =
         , primaryColor
         ]
         [ div []
-            (List.append
-                [ text "More Slots:"
-                ]
-                (List.indexedMap slotView2Chip model.slots.more)
-            )
+            [ text "More Slots:"
+            ]
+        , div []
+            (List.indexedMap slotView2Chip model.slots.more)
             --(List.map (currentTopic2Chip model) model.currentTopics))
         ]
 

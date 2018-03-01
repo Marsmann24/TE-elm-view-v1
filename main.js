@@ -22874,15 +22874,19 @@ var _user$project$Savedview$view = F2(
 				_0: A2(
 					_debois$elm_mdl$Material_Options$div,
 					{ctor: '[]'},
-					A2(
-						_elm_lang$core$List$append,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('More Slots:'),
-							_1: {ctor: '[]'}
-						},
-						A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more))),
-				_1: {ctor: '[]'}
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('More Slots:'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$div,
+						{ctor: '[]'},
+						A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more)),
+					_1: {ctor: '[]'}
+				}
 			});
 	});
 
