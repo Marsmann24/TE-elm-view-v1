@@ -22494,15 +22494,30 @@ var _user$project$Topicsview$topic2Chip = F2(
 				ctor: '::',
 				_0: A2(
 					_debois$elm_mdl$Material_Chip$content,
+					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$center,
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							_elm_lang$core$Basics$toString(topic.id)),
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'left'),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$center,
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									_elm_lang$core$Basics$toString(topic.id)),
+								_1: {ctor: '[]'}
+							}),
 						_1: {
 							ctor: '::',
 							_0: A2(
@@ -22510,10 +22525,14 @@ var _user$project$Topicsview$topic2Chip = F2(
 								'list',
 								{
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$onClick(
-										_user$project$Model$ExecCmd(
-											A2(_user$project$Request$loadTerms, topic.id, 30))),
-									_1: {ctor: '[]'}
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ExecCmd(
+												A2(_user$project$Request$loadTerms, topic.id, 30))),
+										_1: {ctor: '[]'}
+									}
 								}),
 							_1: {
 								ctor: '::',
@@ -22522,10 +22541,14 @@ var _user$project$Topicsview$topic2Chip = F2(
 									'art_track',
 									{
 										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ExecCmd(
-												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
-										_1: {ctor: '[]'}
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(
+												_user$project$Model$ExecCmd(
+													A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
+											_1: {ctor: '[]'}
+										}
 									}),
 								_1: {ctor: '[]'}
 							}
