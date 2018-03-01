@@ -71,7 +71,7 @@ doc2CardView model doc cardID =
                 , css "font-size" "14px"
                 ]
                 [ span
-                    [ css "width" "100%"]
+                    [ css "width" "200px"]
                     [ text doc.title]
                 , Icon.view "bubble_chart"
                     [ css "float" "right"
