@@ -22,8 +22,7 @@ view model flex =
         , primaryColor
         ]
         [ div
-            [ cs "flex__column"
-            , css "flex-wrap" "wrap"
+            [ css "overflow" "scroll"
             , css "height" "calc(100% - 40px)!important"
             ]
             ((text "More Slots:") ::
@@ -37,7 +36,7 @@ slotView2Chip id view =
         TopicsView name _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "flex" "1 1 15%"
+                , css "display" "block"
                 ]
                 [ Chip.content
                     [ center]
@@ -58,7 +57,7 @@ slotView2Chip id view =
         TermsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "flex" "1 1 15%"
+                , css "display" "block"
                 ]
                 [ Chip.content
                     [ center]
@@ -79,7 +78,7 @@ slotView2Chip id view =
         DocumentsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "flex" "1 1 15%"
+                , css "display" "block"
                 ]
                 [ Chip.content
                     [ center]

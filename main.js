@@ -22679,7 +22679,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 15%'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22740,7 +22740,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 15%'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22801,7 +22801,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 15%'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22895,15 +22895,11 @@ var _user$project$Savedview$view = F2(
 					_debois$elm_mdl$Material_Options$div,
 					{
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$cs('flex__column'),
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'scroll'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-wrap', 'wrap'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 40px)!important'),
-								_1: {ctor: '[]'}
-							}
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 40px)!important'),
+							_1: {ctor: '[]'}
 						}
 					},
 					{
