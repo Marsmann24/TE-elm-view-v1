@@ -23101,7 +23101,42 @@ var _user$project$Mainview_v2$slot = F3(
 						}
 					});
 			case 'Empty':
-				return A2(
+				return _elm_lang$core$Native_Utils.eq(slotId, 0) ? A2(
+					_debois$elm_mdl$Material_Options$div,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$cs('slot'),
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('slot__half'),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Model$primaryColor,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$center,
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ChoseSlotDialog(slotId)),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Icon$view,
+							'add',
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Icon$size48,
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}) : A2(
 					_debois$elm_mdl$Material_Options$div,
 					{ctor: '[]'},
 					{ctor: '[]'});

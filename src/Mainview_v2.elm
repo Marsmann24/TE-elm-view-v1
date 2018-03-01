@@ -142,17 +142,18 @@ slot model slotId view =
 --            let previouseSlot = (slotGet model.slots (slotId - 1))
 --            in
 --            if ((previouseSlot /= Empty) && (previouseSlot /= Dialog))
---                then
---                    div
---                        [ cs "slot"
---                        , cs "slot__half"
---                        , primaryColor
---                        , center
---                        , onClick (ChoseSlotDialog slotId)
---                        ]
---                        [ Icon.view "add" [Icon.size48]
---                        ]
---                else
+            if (slotId == 0)
+                then
+                    div
+                        [ cs "slot"
+                        , cs "slot__half"
+                        , primaryColor
+                        , center
+                        , onClick (ChoseSlotDialog slotId)
+                        ]
+                        [ Icon.view "add" [Icon.size48]
+                        ]
+                else
                     div [] []
         _ ->
             div [][ text "Error"]
