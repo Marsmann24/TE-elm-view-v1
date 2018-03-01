@@ -23797,7 +23797,18 @@ var _user$project$Mainview_v2$view = function (model) {
 					_0: _user$project$Mainview_v2$viewSearch(model),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(model.settings.error),
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(model.settings.error),
+								_1: {ctor: '[]'}
+							}),
 						_1: {ctor: '[]'}
 					}
 				},

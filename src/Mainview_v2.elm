@@ -25,7 +25,12 @@ view : Model -> Html Msg
 view model =
         Layout.render Mdl model.mdl
             [ Layout.fixedHeader]
-            { header =[ viewSearch model, text model.settings.error]
+            { header =
+                [ viewSearch model
+                , span
+                    [ css "float" "right"]
+                    [ text model.settings.error]
+                ]
             , drawer = [ viewSwitch model]
             , tabs = ( [], [])
             , main =
