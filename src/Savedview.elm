@@ -22,12 +22,15 @@ view model flex =
         , primaryColor
         ]
         [ div
-            [ css "overflow" "scroll"
-            , css "height" "calc(100% - 40px)!important"
-            ]
-            ((text "More Slots:") ::
-            (List.indexedMap slotView2Chip model.slots.more))
+            []
+            [ text "More Slots:"
+            , div
+                [ css "overflow" "scroll"
+                , css "height" "calc(100% - 40px)!important"
+                ]
+                (List.indexedMap slotView2Chip model.slots.more)
             --(List.map (currentTopic2Chip model) model.currentTopics))
+            ]
         ]
 
 slotView2Chip : Int -> View -> Html Msg
