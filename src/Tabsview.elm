@@ -4,8 +4,10 @@ import Model exposing (..)
 import Document exposing (Document)
 
 import Html exposing (Html, text, h1, br)
-import Material.Options exposing (css, cs, div, span)
+import Material.Options exposing (css, cs, div, span, onClick)
 import Material.Tabs as Tabs
+import Material.Button as Button
+import Material.Icon as Icon
 
 view : Model -> String -> Html Msg
 view model flex =
@@ -20,7 +22,7 @@ view model flex =
             , Tabs.onSelectTab SelectTab
             , Tabs.activeTab model.currentTab
             ]
-            (List.map tab2TabView model.tabs)
+            (List.indexedMap (tab2TabView model) model.tabs)
             [ let maybetab = (List.head (List.drop model.currentTab model.tabs))
               in let tab =
                   case maybetab of
@@ -39,21 +41,37 @@ view model flex =
             ]
         ]
 
-tab2TabView : Tab -> Tabs.Label Msg
-tab2TabView tab =
+tab2TabView : Model -> Int -> Tab -> Tabs.Label Msg
+tab2TabView model id tab =
     Tabs.label
         []
-        [ span
-            [ css "width" "4px"]
-            []
-        , case tab of
+        (case tab of
             PreviewTab ->
-                text "Vorschau"
+                [ span
+                    [ css "width" "4px"]
+                    []
+                , text "Vorschau"
+                ]
             DocumentTab tabID _ ->
-                text tabID
+                [ span
+                    [ css "width" "4px"]
+                    []
+                , text tabID
+                , Button.render Mdl [(100 + id)] model.mdl
+                    [ cs "slot__close_button"
+                    , Button.icon
+                    , onClick (CloseTab id)
+                    ]
+                    [ Icon.i "close" ]
+                ]
             ErrorTab tabID _ ->
-                text tabID
-        ]
+                [ span
+                    [ css "width" "4px"]
+                    []
+                , text tabID
+                ]
+        )
+
 
 document2DocumentView : Document -> Html Msg
 document2DocumentView document =

@@ -27,8 +27,20 @@ update msg model =
             let oldSettings = model.settings
             in
             ({ model | settings = { oldSettings | showSaved = not (model.settings.showSaved)}}, Cmd.none)
-        SelectTab tabNumber ->
-            ({ model | currentTab = tabNumber}, Cmd.none)
+        SelectTab tabId ->
+            ({ model | currentTab = tabId}, Cmd.none)
+        CloseTab tabId ->
+            let newCurrentTab =
+                    if (model.currentTab >= tabId)
+                        then (model.currentTab - 1)
+                        else model.currentTab
+                newTabs =
+                    List.append (List.take tabId model.tabs) (List.drop (tabId + 1) model.tabs)
+            in
+            ({ model
+                | currentTab = newCurrentTab
+                , tabs = newTabs
+            }, Cmd.none)
         Raise cardNumber ->
             ({ model | raised = cardNumber}, Cmd.none)
         --ChangeCurrentDocument cardNumber newDocument->
