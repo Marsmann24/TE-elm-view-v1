@@ -21856,10 +21856,10 @@ var _user$project$Documentsview$doc2CardView = F3(
 							{
 								ctor: '::',
 								_0: A2(
-									_debois$elm_mdl$Material_Options$span,
+									_debois$elm_mdl$Material_Options$div,
 									{
 										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
 										_1: {ctor: '[]'}
 									},
 									{
