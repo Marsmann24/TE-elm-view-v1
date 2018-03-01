@@ -22897,7 +22897,7 @@ var _user$project$Savedview$view = F2(
 						_debois$elm_mdl$Material_Options$div,
 						{
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$cs('flex__row'),
+							_0: _debois$elm_mdl$Material_Options$cs('flex__column'),
 							_1: {ctor: '[]'}
 						},
 						A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more)),

@@ -23,7 +23,7 @@ view model flex =
             [ text "More Slots:"
             ]
         , div
-            [ cs "flex__row"
+            [ cs "flex__column"
             ]
             (List.indexedMap slotView2Chip model.slots.more)
             --(List.map (currentTopic2Chip model) model.currentTopics))
