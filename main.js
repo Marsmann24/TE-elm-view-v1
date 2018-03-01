@@ -23125,8 +23125,12 @@ var _user$project$Mainview_v2$slot = F3(
 									_0: _debois$elm_mdl$Material_Options$center,
 									_1: {
 										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$cs('flex__column'),
-										_1: {ctor: '[]'}
+										_0: _debois$elm_mdl$Material_Options$cs('slot__content'),
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$cs('flex__column'),
+											_1: {ctor: '[]'}
+										}
 									}
 								},
 								{

@@ -129,6 +129,7 @@ slot model slotId view =
                     [ Icon.i "close" ]
                 , div
                     [ center
+                    , cs "slot__content"
                     , cs "flex__column"
                     ]
                     [ slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
