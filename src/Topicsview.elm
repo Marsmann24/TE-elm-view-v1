@@ -51,7 +51,9 @@ topic2Chip model topic =
         , center
         ]
         [ Chip.content
-            [ css "width" "100%"]
+            [ css "width" "100%"
+            , center
+            ]
             [ span
                 [ css "width" "calc(100% - 48px)"
                 , css "float" "left"
