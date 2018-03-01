@@ -71,14 +71,13 @@ doc2CardView model doc cardID =
                 , css "font-size" "14px"
                 , css "width" "100%"
                 ]
-                [ div
+                [ span
                     [ css "width" "calc(100% - 48px)"
                     , css "float" "left"
                     ]
                     [ text doc.title]
                 , Icon.view "bubble_chart"
-                    [ css "display" "inline-block"
-                    , css "float" "right"
+                    [ css "float" "right"
                     , onMouseDown
                         (SelectAction
                             (ShowTopics
@@ -90,8 +89,7 @@ doc2CardView model doc cardID =
                         )
                     ]
                 , Icon.view "list"
-                    [ css "display" "inline-block"
-                    , css "float" "right"
+                    [ css "float" "right"
                     , onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc.document_id)))
                 ]
                 ]
