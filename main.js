@@ -22671,8 +22671,9 @@ var _user$project$Savedview$slotView2Chip = F2(
 		var _p0 = view;
 		switch (_p0.ctor) {
 			case 'TopicsView':
-				return A2(
-					_debois$elm_mdl$Material_Chip$span,
+				return A3(
+					_debois$elm_mdl$Material_Chip$chip,
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
@@ -22727,8 +22728,9 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_1: {ctor: '[]'}
 					});
 			case 'TermsView':
-				return A2(
-					_debois$elm_mdl$Material_Chip$span,
+				return A3(
+					_debois$elm_mdl$Material_Chip$chip,
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
@@ -22783,8 +22785,9 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_1: {ctor: '[]'}
 					});
 			case 'DocumentsView':
-				return A2(
-					_debois$elm_mdl$Material_Chip$span,
+				return A3(
+					_debois$elm_mdl$Material_Chip$chip,
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),

@@ -32,7 +32,7 @@ slotView2Chip : Int -> View -> Html Msg
 slotView2Chip id view =
     case view of
         TopicsView name _ _ ->
-            Chip.span
+            Chip.chip Html.div
                 [ css "width" "200px"
                 ]
                 [ Chip.content
@@ -52,7 +52,7 @@ slotView2Chip id view =
                     ]
                 ]
         TermsView name _ ->
-            Chip.span
+            Chip.chip Html.div
                 [ css "width" "200px"
                 ]
                 [ Chip.content
@@ -72,7 +72,7 @@ slotView2Chip id view =
                     ]
                 ]
         DocumentsView name _ ->
-            Chip.span
+            Chip.chip Html.div
                 [ css "width" "200px"
                 ]
                 [ Chip.content
