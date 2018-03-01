@@ -22679,7 +22679,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 15%'),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22740,7 +22740,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 15%'),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22801,7 +22801,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'block'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 15%'),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22875,11 +22875,15 @@ var _user$project$Savedview$view = F2(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '3px 0px'),
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Elevation$e6,
+							_0: _debois$elm_mdl$Material_Options$cs('flex__row'),
 							_1: {
 								ctor: '::',
-								_0: _user$project$Model$primaryColor,
-								_1: {ctor: '[]'}
+								_0: _debois$elm_mdl$Material_Elevation$e6,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Model$primaryColor,
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -22889,28 +22893,21 @@ var _user$project$Savedview$view = F2(
 				ctor: '::',
 				_0: A2(
 					_debois$elm_mdl$Material_Options$div,
-					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$cs('flex__column'),
+						_1: {
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 40px)!important'),
+							_1: {ctor: '[]'}
+						}
+					},
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html$text('More Slots:'),
-						_1: {ctor: '[]'}
+						_1: A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more)
 					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Options$div,
-						{
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'auto'),
-							_1: {
-								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 40px)!important'),
-								_1: {ctor: '[]'}
-							}
-						},
-						A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more)),
-					_1: {ctor: '[]'}
-				}
+				_1: {ctor: '[]'}
 			});
 	});
 
