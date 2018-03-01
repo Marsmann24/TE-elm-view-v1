@@ -118,7 +118,6 @@ slot model slotId view =
                 , cs "flex__column"
                 , cs "slot__new"
                 , primaryColor
-                , center
                 ]
                 [ Button.render Mdl [slotId] model.mdl
                     [ cs "slot__close_button"
@@ -129,9 +128,12 @@ slot model slotId view =
                     , onClick (DeleteSlot slotId (HideSlot slotId))
                     ]
                     [ Icon.i "close" ]
-                , slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
-                , slotDialogCard "Terms" (TermsView "Terms" model.terms) slotId
-                , slotDialogCard "Documents" (DocumentsView "Documents" model.docs) slotId
+                , div
+                    [ center
+                    ]
+                    [ slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
+                    , slotDialogCard "Terms" (TermsView "Terms" model.terms) slotId
+                    , slotDialogCard "Documents" (DocumentsView "Documents" model.docs) slotId
                 --, Button.render Mdl [5] model.mdl
                 --    [ Button.ripple
                 --    , css "flex" "flexValue 1"
@@ -153,6 +155,7 @@ slot model slotId view =
                 --    , onClick (UpdateSlot (DocumentsView model.docs) slotId)
                 --    ]
                 --    [ text "Documents"]
+                    ]
                 ]
         Empty ->
 --            let previouseSlot = (slotGet model.slots (slotId - 1))

@@ -23070,11 +23070,7 @@ var _user$project$Mainview_v2$slot = F3(
 								_1: {
 									ctor: '::',
 									_0: _user$project$Model$primaryColor,
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$center,
-										_1: {ctor: '[]'}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
 						}
@@ -23126,28 +23122,39 @@ var _user$project$Mainview_v2$slot = F3(
 							}),
 						_1: {
 							ctor: '::',
-							_0: A3(
-								_user$project$Mainview_v2$slotDialogCard,
-								'Topics',
-								A3(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer),
-								slotId),
-							_1: {
-								ctor: '::',
-								_0: A3(
-									_user$project$Mainview_v2$slotDialogCard,
-									'Terms',
-									A2(_user$project$Model$TermsView, 'Terms', model.terms),
-									slotId),
-								_1: {
+							_0: A2(
+								_debois$elm_mdl$Material_Options$div,
+								{
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$center,
+									_1: {ctor: '[]'}
+								},
+								{
 									ctor: '::',
 									_0: A3(
 										_user$project$Mainview_v2$slotDialogCard,
-										'Documents',
-										A2(_user$project$Model$DocumentsView, 'Documents', model.docs),
+										'Topics',
+										A3(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer),
 										slotId),
-									_1: {ctor: '[]'}
-								}
-							}
+									_1: {
+										ctor: '::',
+										_0: A3(
+											_user$project$Mainview_v2$slotDialogCard,
+											'Terms',
+											A2(_user$project$Model$TermsView, 'Terms', model.terms),
+											slotId),
+										_1: {
+											ctor: '::',
+											_0: A3(
+												_user$project$Mainview_v2$slotDialogCard,
+												'Documents',
+												A2(_user$project$Model$DocumentsView, 'Documents', model.docs),
+												slotId),
+											_1: {ctor: '[]'}
+										}
+									}
+								}),
+							_1: {ctor: '[]'}
 						}
 					});
 			case 'Empty':
