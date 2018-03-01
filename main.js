@@ -22159,62 +22159,62 @@ var _user$project$Tabsview$document2DocumentView = F2(
 			},
 			{
 				ctor: '::',
-				_0: A2(
-					_debois$elm_mdl$Material_Options$span,
+				_0: A5(
+					_debois$elm_mdl$Material_Button$render,
+					_user$project$Model$Mdl,
 					{
 						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+						_0: 99,
+						_1: {ctor: '[]'}
+					},
+					model.mdl,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '4px'),
+							_0: _debois$elm_mdl$Material_Button$icon,
 							_1: {
 								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'grey'),
+								_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$CloseTab),
 								_1: {ctor: '[]'}
 							}
 						}
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							_elm_lang$core$Basics$toString(document.time_stamp)),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$br,
-								{ctor: '[]'},
-								{ctor: '[]'}),
-							_1: {ctor: '[]'}
-						}
+						_0: _debois$elm_mdl$Material_Icon$i('close'),
+						_1: {ctor: '[]'}
 					}),
 				_1: {
 					ctor: '::',
-					_0: A5(
-						_debois$elm_mdl$Material_Button$render,
-						_user$project$Model$Mdl,
+					_0: A2(
+						_debois$elm_mdl$Material_Options$span,
 						{
 							ctor: '::',
-							_0: 99,
-							_1: {ctor: '[]'}
-						},
-						model.mdl,
-						{
-							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
 							_1: {
 								ctor: '::',
-								_0: _debois$elm_mdl$Material_Button$icon,
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '4px'),
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$CloseTab),
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'color', 'grey'),
 									_1: {ctor: '[]'}
 								}
 							}
 						},
 						{
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Icon$i('close'),
-							_1: {ctor: '[]'}
+							_0: _elm_lang$html$Html$text(
+								_elm_lang$core$Basics$toString(document.time_stamp)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {ctor: '[]'}
+							}
 						}),
 					_1: {
 						ctor: '::',

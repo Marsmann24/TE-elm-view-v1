@@ -70,7 +70,13 @@ tab2TabView tab =
 document2DocumentView : Model -> Document -> Html Msg
 document2DocumentView model document =
     div [ css "margin" "0px 6px"]
-        [ span
+        [ Button.render Mdl [99] model.mdl
+            [ cs "slot__close_button"
+            , Button.icon
+            , onClick CloseTab
+            ]
+            [ Icon.i "close" ]
+        , span
             [ css "float" "right"
             , css "margin" "4px"
             , css "color" "grey"
@@ -78,12 +84,6 @@ document2DocumentView model document =
             [ text (toString document.time_stamp)
             , br [][]
             ]
-        , Button.render Mdl [99] model.mdl
-            [ cs "slot__close_button"
-            , Button.icon
-            , onClick CloseTab
-            ]
-            [ Icon.i "close" ]
         , h1 [] [ text document.title]
         , span [] [ text document.fulltext]
         ]
