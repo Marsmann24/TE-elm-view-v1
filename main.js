@@ -23604,11 +23604,7 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 						ctor: '::',
 						_0: A2(
 							_debois$elm_mdl$Material_Options$div,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$cs('flex__row'),
-								_1: {ctor: '[]'}
-							},
+							{ctor: '[]'},
 							_elm_lang$core$Array$toList(
 								A2(
 									_elm_lang$core$Array$indexedMap,
