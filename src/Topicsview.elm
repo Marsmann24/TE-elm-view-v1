@@ -25,13 +25,10 @@ view model flex slotId slotName =
         ]
         [ div
             [ css "height" "45px"
-            , css "text-align" "center"
+            , center
             ]
-            [ Icon.view "bubble_chart"
-                [ css "margin" "5px"
-                , css "text-align" "left"
-                ]
-            , text slotName
+            [ Icon.view "bubble_chart" [ css "margin" "5px"]
+            , span [ css "width" "calc(100% - 64)"] [ text slotName]
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab

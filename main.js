@@ -21991,7 +21991,7 @@ var _user$project$Documentsview$view = F4(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+							_0: _debois$elm_mdl$Material_Options$center,
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22003,15 +22003,22 @@ var _user$project$Documentsview$view = F4(
 							{
 								ctor: '::',
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'left'),
-									_1: {ctor: '[]'}
-								}
+								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(slotName),
+							_0: A2(
+								_debois$elm_mdl$Material_Options$span,
+								{
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 64)'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(slotName),
+									_1: {ctor: '[]'}
+								}),
 							_1: {
 								ctor: '::',
 								_0: A5(
@@ -22571,7 +22578,7 @@ var _user$project$Topicsview$view = F4(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+							_0: _debois$elm_mdl$Material_Options$center,
 							_1: {ctor: '[]'}
 						}
 					},
@@ -22583,15 +22590,22 @@ var _user$project$Topicsview$view = F4(
 							{
 								ctor: '::',
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'left'),
-									_1: {ctor: '[]'}
-								}
+								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(slotName),
+							_0: A2(
+								_debois$elm_mdl$Material_Options$span,
+								{
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 64)'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(slotName),
+									_1: {ctor: '[]'}
+								}),
 							_1: {
 								ctor: '::',
 								_0: A5(
@@ -23098,7 +23112,7 @@ var _user$project$Termsview$view = F4(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '45px'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'center'),
+							_0: _debois$elm_mdl$Material_Options$center,
 							_1: {ctor: '[]'}
 						}
 					},
@@ -23110,15 +23124,22 @@ var _user$project$Termsview$view = F4(
 							{
 								ctor: '::',
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '5px'),
-								_1: {
-									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'left'),
-									_1: {ctor: '[]'}
-								}
+								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(slotName),
+							_0: A2(
+								_debois$elm_mdl$Material_Options$span,
+								{
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 64)'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(slotName),
+									_1: {ctor: '[]'}
+								}),
 							_1: {
 								ctor: '::',
 								_0: A5(

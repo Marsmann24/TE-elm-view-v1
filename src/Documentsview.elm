@@ -6,7 +6,7 @@ import Topic
 import Request
 
 import Html exposing (Html, text)
-import Material.Options exposing (css, cs, div, span, onClick, onMouseEnter, onMouseLeave, onMouseDown, onMouseUp)
+import Material.Options exposing (css, cs, div, span, center, onClick, onMouseEnter, onMouseLeave, onMouseDown, onMouseUp)
 import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Icon as Icon
@@ -26,13 +26,10 @@ view model flex slotId slotName =
         ]
         [ div
             [ css "height" "45px"
-            , css "text-align" "center"
+            , center
             ]
-            [ Icon.view "art_track"
-                [ css "margin" "5px"
-                , css "text-align" "left"
-                ]
-            , text slotName
+            [ Icon.view "art_track" [ css "margin" "5px"]
+            , span [ css "width" "calc(100% - 64)"] [ text slotName]
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab
