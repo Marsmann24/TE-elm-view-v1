@@ -22490,7 +22490,11 @@ var _user$project$Topicsview$topic2Chip = F2(
 							{
 								ctor: '::',
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'text-align', 'centet'),
+									_1: {ctor: '[]'}
+								}
 							},
 							{
 								ctor: '::',
