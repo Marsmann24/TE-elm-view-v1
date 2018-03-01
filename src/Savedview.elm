@@ -23,8 +23,7 @@ view model flex =
             [ text "More Slots:"
             ]
         , div
-            [ cs "flex__column"
-            ]
+            [ css "overflow" "auto"]
             (List.indexedMap slotView2Chip model.slots.more)
             --(List.map (currentTopic2Chip model) model.currentTopics))
         ]
@@ -35,7 +34,6 @@ slotView2Chip id view =
         TopicsView name _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "flex" "1 1 10%"
                 ]
                 [ Chip.content
                     [ center]
@@ -56,7 +54,6 @@ slotView2Chip id view =
         TermsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "flex" "2 2 10%"
                 ]
                 [ Chip.content
                     [ center]
@@ -77,7 +74,6 @@ slotView2Chip id view =
         DocumentsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "flex" "1 1 10%"
                 ]
                 [ Chip.content
                     [ center]

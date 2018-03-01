@@ -22677,11 +22677,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 10%'),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
@@ -22738,11 +22734,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '2 2 10%'),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
@@ -22799,11 +22791,7 @@ var _user$project$Savedview$slotView2Chip = F2(
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-						_1: {
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '1 1 10%'),
-							_1: {ctor: '[]'}
-						}
+						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
@@ -22897,7 +22885,7 @@ var _user$project$Savedview$view = F2(
 						_debois$elm_mdl$Material_Options$div,
 						{
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$cs('flex__column'),
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'auto'),
 							_1: {ctor: '[]'}
 						},
 						A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more)),
