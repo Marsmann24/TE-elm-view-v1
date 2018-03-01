@@ -34,11 +34,12 @@ slotView2Chip id view =
         TopicsView name _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
+                , css "display" "block"
                 ]
                 [ Chip.content
                     [ center]
                     [ span
-                        [ css "width" "160px"
+                        [ css "width" "170px"
                         , onClick
                             (SlotToLastFromOther id)
                         ]
@@ -54,11 +55,12 @@ slotView2Chip id view =
         TermsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
+                , css "display" "block"
                 ]
                 [ Chip.content
                     [ center]
                     [ span
-                        [ css "width" "160px"
+                        [ css "width" "170px"
                         , onClick
                             (SlotToLastFromOther id)
                         ]
@@ -74,11 +76,12 @@ slotView2Chip id view =
         DocumentsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
+                , css "display" "block"
                 ]
                 [ Chip.content
                     [ center]
                     [ span
-                        [ css "width" "160px"
+                        [ css "width" "170px"
                         , onClick
                             (SlotToLastFromOther id)
                         ]
