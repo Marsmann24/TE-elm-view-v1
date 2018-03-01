@@ -44,14 +44,13 @@ slotView2Chip id view =
                 ]
                 [ Chip.content
                     [ center]
-                    [ span
-                        [ css "width" "170px"
+                    [ Icon.i "bubble_chart"
+                    , span
+                        [ css "width" "calc(100% - 48px)"
                         , onClick
                             (SlotToLastFromOther id)
                         ]
-                        [ Icon.i "bubble_chart"
-                        , text name
-                        ]
+                        [ text name]
                     , Icon.view "cancel"
                         [ onClick
                             (RemoveSlotFromOther id)
@@ -65,14 +64,13 @@ slotView2Chip id view =
                 ]
                 [ Chip.content
                     [ center]
-                    [ span
-                        [ css "width" "170px"
+                    [ Icon.i "list"
+                    , span
+                        [ css "width" "calc(100% - 48px)"
                         , onClick
                             (SlotToLastFromOther id)
                         ]
-                        [ Icon.i "list"
-                        , text name
-                        ]
+                        [ text name]
                     , Icon.view "cancel"
                         [ onClick
                             (RemoveSlotFromOther id)
@@ -86,14 +84,13 @@ slotView2Chip id view =
                 ]
                 [ Chip.content
                     [ center]
-                    [ span
-                        [ css "width" "170px"
+                    [ Icon.i "art_track"
+                    , span
+                        [ css "width" "calc(100% - 48px)"
                         , onClick
                             (SlotToLastFromOther id)
                         ]
-                        [ Icon.i "art_track"
-                        , text name
-                        ]
+                        [ text name]
                     , Icon.view "cancel"
                         [ onClick
                             (RemoveSlotFromOther id)

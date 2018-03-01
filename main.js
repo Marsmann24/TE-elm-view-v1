@@ -22736,39 +22736,39 @@ var _user$project$Savedview$slotView2Chip = F2(
 							},
 							{
 								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_Options$span,
-									{
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '170px'),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$SlotToLastFromOther(id)),
-											_1: {ctor: '[]'}
-										}
-									},
-									{
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Icon$i('bubble_chart'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html$text(_p0._0),
-											_1: {ctor: '[]'}
-										}
-									}),
+								_0: _debois$elm_mdl$Material_Icon$i('bubble_chart'),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_debois$elm_mdl$Material_Icon$view,
-										'cancel',
+										_debois$elm_mdl$Material_Options$span,
 										{
 											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$RemoveSlotFromOther(id)),
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$SlotToLastFromOther(id)),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(_p0._0),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Icon$view,
+											'cancel',
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$RemoveSlotFromOther(id)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}),
 						_1: {ctor: '[]'}
@@ -22797,39 +22797,39 @@ var _user$project$Savedview$slotView2Chip = F2(
 							},
 							{
 								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_Options$span,
-									{
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '170px'),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$SlotToLastFromOther(id)),
-											_1: {ctor: '[]'}
-										}
-									},
-									{
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Icon$i('list'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html$text(_p0._0),
-											_1: {ctor: '[]'}
-										}
-									}),
+								_0: _debois$elm_mdl$Material_Icon$i('list'),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_debois$elm_mdl$Material_Icon$view,
-										'cancel',
+										_debois$elm_mdl$Material_Options$span,
 										{
 											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$RemoveSlotFromOther(id)),
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$SlotToLastFromOther(id)),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(_p0._0),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Icon$view,
+											'cancel',
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$RemoveSlotFromOther(id)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}),
 						_1: {ctor: '[]'}
@@ -22858,39 +22858,39 @@ var _user$project$Savedview$slotView2Chip = F2(
 							},
 							{
 								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_Options$span,
-									{
-										ctor: '::',
-										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '170px'),
-										_1: {
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$SlotToLastFromOther(id)),
-											_1: {ctor: '[]'}
-										}
-									},
-									{
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Icon$i('art_track'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html$text(_p0._0),
-											_1: {ctor: '[]'}
-										}
-									}),
+								_0: _debois$elm_mdl$Material_Icon$i('art_track'),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_debois$elm_mdl$Material_Icon$view,
-										'cancel',
+										_debois$elm_mdl$Material_Options$span,
 										{
 											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onClick(
-												_user$project$Model$RemoveSlotFromOther(id)),
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$SlotToLastFromOther(id)),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(_p0._0),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Icon$view,
+											'cancel',
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$RemoveSlotFromOther(id)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}),
 						_1: {ctor: '[]'}
