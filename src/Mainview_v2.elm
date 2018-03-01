@@ -94,7 +94,9 @@ viewBody model =
                     then slotAction (onClick None) "<"
                     else div [] []
                 , div
-                    []
+                    [ cs "flex__row"
+                    , css "flex" (flexValue 6)
+                    ]
 --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
                     (Array.toList (Array.indexedMap (slot model) model.slots.main))
                 , if ((slotGet model.slots 2) == Empty)
