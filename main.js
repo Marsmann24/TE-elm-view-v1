@@ -21855,7 +21855,18 @@ var _user$project$Documentsview$doc2CardView = F3(
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(doc.title),
+								_0: A2(
+									_debois$elm_mdl$Material_Options$span,
+									{
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(doc.title),
+										_1: {ctor: '[]'}
+									}),
 								_1: {
 									ctor: '::',
 									_0: A2(

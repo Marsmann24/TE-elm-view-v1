@@ -70,7 +70,9 @@ doc2CardView model doc cardID =
                 [ Color.text Color.white
                 , css "font-size" "14px"
                 ]
-                [ text doc.title
+                [ span
+                    [ css "width" "calc(100% - 48px)"]
+                    [ text doc.title]
                 , Icon.view "bubble_chart"
                     [ css "float" "right"
                     , onMouseDown
