@@ -23770,8 +23770,12 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '400px'),
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
-									_1: {ctor: '[]'}
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline'),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}

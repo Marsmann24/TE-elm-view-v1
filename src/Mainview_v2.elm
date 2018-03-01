@@ -50,6 +50,7 @@ viewSearch model =
         , Textfield.expandableIcon "search"
         , css "padding" "20px 50px 10px"
         , css "width" "400px"
+        , css "display" "inline"
         , onInput Search
         ]
         [ ]
