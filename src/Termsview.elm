@@ -8,7 +8,7 @@ import Request
 
 import Html exposing (Html, text)
 import Html.Events
-import Material.Options exposing (css, cs, div, center, onClick)
+import Material.Options exposing (css, cs, div, span, center, onClick, nop)
 import Material.Elevation as Elevation
 import Material.Icon as Icon
 import Material.Button as Button
@@ -55,20 +55,16 @@ topic2Terms model term id=
     Lists.li
         []
         [ Lists.content
-            (if (term.id == model.currentTerm.id)
-                then
-                    [ cs "mdl-button"
-                    , cs "mdl-button--raised"
-                    , center
-                    , Elevation.e2
-                    ]
-                else
-                    [ cs "mdl-button"
-                    , cs "mdl-button--raised"
-                    , center
-                    ]
-            )
-            [ text (term.name ++ " (" ++ (toString term.id) ++ ")")
+            [ cs "mdl-button"
+            , cs "mdl-button--raised"
+            , center
+            , if (term.id == model.currentTerm.id)
+                then Elevation.e2
+                else nop
+            ]
+            [ span
+                [ css "width" "calc(100% - 48px)"]
+                [ text (term.name ++ " (" ++ (toString term.id) ++ ")")]
             , Icon.view "bubble_chart"
                 [ onClick
                     (ShowTopics

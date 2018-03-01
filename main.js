@@ -23001,7 +23001,7 @@ var _user$project$Termsview$topic2Terms = F3(
 				ctor: '::',
 				_0: A2(
 					_debois$elm_mdl$Material_List$content,
-					_elm_lang$core$Native_Utils.eq(term.id, model.currentTerm.id) ? {
+					{
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Options$cs('mdl-button'),
 						_1: {
@@ -23012,37 +23012,36 @@ var _user$project$Termsview$topic2Terms = F3(
 								_0: _debois$elm_mdl$Material_Options$center,
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Elevation$e2,
+									_0: _elm_lang$core$Native_Utils.eq(term.id, model.currentTerm.id) ? _debois$elm_mdl$Material_Elevation$e2 : _debois$elm_mdl$Material_Options$nop,
 									_1: {ctor: '[]'}
 								}
-							}
-						}
-					} : {
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$cs('mdl-button'),
-						_1: {
-							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$cs('mdl-button--raised'),
-							_1: {
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$center,
-								_1: {ctor: '[]'}
 							}
 						}
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								term.name,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									' (',
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', 'calc(100% - 48px)'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(term.id),
-										')')))),
+										term.name,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											' (',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(term.id),
+												')')))),
+								_1: {ctor: '[]'}
+							}),
 						_1: {
 							ctor: '::',
 							_0: A2(
