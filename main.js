@@ -23767,8 +23767,12 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '20px 50px 10px'),
 							_1: {
 								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
-								_1: {ctor: '[]'}
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '400px'),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -23802,7 +23806,11 @@ var _user$project$Mainview_v2$view = function (model) {
 							{
 								ctor: '::',
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
+									_1: {ctor: '[]'}
+								}
 							},
 							{
 								ctor: '::',

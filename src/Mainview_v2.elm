@@ -28,7 +28,9 @@ view model =
             { header =
                 [ viewSearch model
                 , span
-                    [ css "float" "right"]
+                    [ css "float" "right"
+                    , css "width" "200px"
+                    ]
                     [ text model.settings.error]
                 ]
             , drawer = [ viewSwitch model]
@@ -47,6 +49,7 @@ viewSearch model =
         , Textfield.expandable "id-of-expandable-1"
         , Textfield.expandableIcon "search"
         , css "padding" "20px 50px 10px"
+        , css "width" "400px"
         , onInput Search
         ]
         [ ]
