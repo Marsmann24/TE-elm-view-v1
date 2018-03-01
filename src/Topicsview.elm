@@ -56,7 +56,7 @@ topic2Chip model topic =
             ]
             [ span
                 [ css "width" "calc(100% - 48px)"
-                , css "text-align" "centet"
+                , css "text-align" "center"
                 ]
                 [ text (toString topic.id)]
             , Icon.view "list"
