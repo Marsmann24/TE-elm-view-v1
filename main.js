@@ -22898,8 +22898,12 @@ var _user$project$Savedview$view = F2(
 						_0: _debois$elm_mdl$Material_Options$cs('flex__column'),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 40px)!important'),
-							_1: {ctor: '[]'}
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex-wrap', 'wrap'),
+							_1: {
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 40px)!important'),
+								_1: {ctor: '[]'}
+							}
 						}
 					},
 					{

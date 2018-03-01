@@ -23,6 +23,7 @@ view model flex =
         ]
         [ div
             [ cs "flex__column"
+            , css "flex-wrap" "wrap"
             , css "height" "calc(100% - 40px)!important"
             ]
             ((text "More Slots:") ::
