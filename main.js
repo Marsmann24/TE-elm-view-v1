@@ -22900,7 +22900,7 @@ var _user$project$Savedview$view = F2(
 							_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'auto'),
 							_1: {
 								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 50px)'),
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 40px)!important'),
 								_1: {ctor: '[]'}
 							}
 						},

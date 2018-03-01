@@ -24,7 +24,7 @@ view model flex =
             ]
         , div
             [ css "overflow" "auto"
-            , css "height" "calc(100% - 50px)"
+            , css "height" "calc(100% - 40px)!important"
             ]
             (List.indexedMap slotView2Chip model.slots.more)
             --(List.map (currentTopic2Chip model) model.currentTopics))
