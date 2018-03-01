@@ -43,6 +43,8 @@ type Msg
     | NewTerms (Result Http.Error (List Term))
     | NewFrames (Result Http.Error (List Term))
     | ExecCmd (Cmd Msg)
+    | SelectAction Msg
+    | ExecuteActionIfNone Msg
     | ContainerCacheTopicMsg Int (ContainerCache.ContainerModelMsg (List Topic))
     | Mdl (Material.Msg Msg)
     | None -- zum Testen, damit update _ -> immer haben kann
@@ -60,16 +62,17 @@ type alias Model =
     { result : List Searchresult    -- search result
     , topics : List Topic           -- all topics
     , currentTopics : List Topic    -- list of topics for the ranking
-    , docs : List Doc          -- ranked articles
+    , docs : List Doc                -- ranked articles
     , currentDocument :              -- active card and preview article
         { cardID : Int
         , document : Document
         }
-    , terms : List Term        -- current term list
-    , currentTerm : Term          -- current term
+    , terms : List Term             -- current term list
+    , currentTerm : Term            -- current term
     , tabs : List Tab               -- all tabs
     , currentTab : Int              -- active tab
     , raised : Int                  -- ID of raised card
+    , selectedMsg : Msg             -- Msg to execute onMouseUp
     , settings : Settings           -- which views are shown
     , slots : Slots
     , containerTopicModel : ContainerCache.ContainerModel (List Topic)

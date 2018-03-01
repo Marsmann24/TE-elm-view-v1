@@ -6,7 +6,7 @@ import Topic
 import Request
 
 import Html exposing (Html, text)
-import Material.Options exposing (css, cs, div, span, onClick, onMouseEnter, onMouseLeave)
+import Material.Options exposing (css, cs, div, span, onClick, onMouseEnter, onMouseLeave, onMouseDown, onMouseUp)
 import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Icon as Icon
@@ -61,6 +61,7 @@ doc2CardView model doc cardID =
         , onMouseEnter (Raise cardID)
         , onMouseLeave (Raise -1)
         --, onClick (ChangeCurrentDoc cardID doc)
+        , onMouseUp (ExecuteActionIfNone (ExecCmd (Request.loadDoc doc.document_id)))
         ]
         [ Card.title
             [ css "padding" "4px"
@@ -69,25 +70,22 @@ doc2CardView model doc cardID =
                 [ Color.text Color.white
                 , css "font-size" "14px"
                 ]
-                [ span
-                    [ onClick (ExecCmd (Request.loadDoc doc.document_id))]
-                    [ text doc.title]
+                [ text doc.title
                 , Icon.view "bubble_chart"
-                    [ css "align-self" "right"
-                    , css "float" "right"
-                    , onClick
-                        (ShowTopics
-                            (List.filterMap
-                                (Topic.topicId2Topic model.topics)
-                                doc.top_topic
+                    [ css "float" "right"
+                    , onMouseDown
+                        (SelectAction
+                            (ShowTopics
+                                (List.filterMap
+                                    (Topic.topicId2Topic model.topics)
+                                    doc.top_topic
+                                )
                             )
                         )
                     ]
                 , Icon.view "list"
-                    [ css "align-self" "right"
-                    , css "float" "right"
-                    , onClick
-                        (ExecCmd (Request.loadDocTokens doc.document_id))
+                    [ css "float" "right"
+                    , onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc.document_id)))
                 ]
                 ]
             , span
@@ -95,7 +93,6 @@ doc2CardView model doc cardID =
                 , css "padding" "2px"
                 , css "font-size" "8px"
                 , css "align-self" "right"
-                , onClick (ExecCmd (Request.loadDoc doc.document_id))
                 ]
                 [ text (toString doc.time_stamp) ]
             ]
@@ -103,7 +100,6 @@ doc2CardView model doc cardID =
             [ Color.text (Color.white)
             , css "padding" "4px"
             , css "font-size" "10px"
-            , onClick (ExecCmd (Request.loadDoc doc.document_id))
             ]
             [ text doc.snippet ]
         ]

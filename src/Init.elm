@@ -22,6 +22,7 @@ init =
     , tabs = initTabs
     , currentTab = 0
     , raised = -1
+    , selectedMsg = None
     , settings = initSettings
     , slots =
         { main =

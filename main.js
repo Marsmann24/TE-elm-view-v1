@@ -21398,7 +21398,9 @@ var _user$project$Model$Model = function (a) {
 												return function (m) {
 													return function (n) {
 														return function (o) {
-															return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, settings: k, slots: l, containerTopicModel: m, topicsContainer: n, mdl: o};
+															return function (p) {
+																return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, selectedMsg: k, settings: l, slots: m, containerTopicModel: n, topicsContainer: o, mdl: p};
+															};
 														};
 													};
 												};
@@ -21447,6 +21449,12 @@ var _user$project$Model$ContainerCacheTopicMsg = F2(
 	function (a, b) {
 		return {ctor: 'ContainerCacheTopicMsg', _0: a, _1: b};
 	});
+var _user$project$Model$ExecuteActionIfNone = function (a) {
+	return {ctor: 'ExecuteActionIfNone', _0: a};
+};
+var _user$project$Model$SelectAction = function (a) {
+	return {ctor: 'SelectAction', _0: a};
+};
 var _user$project$Model$ExecCmd = function (a) {
 	return {ctor: 'ExecCmd', _0: a};
 };
@@ -21807,7 +21815,14 @@ var _user$project$Documentsview$doc2CardView = F3(
 											ctor: '::',
 											_0: _debois$elm_mdl$Material_Options$onMouseLeave(
 												_user$project$Model$Raise(-1)),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onMouseUp(
+													_user$project$Model$ExecuteActionIfNone(
+														_user$project$Model$ExecCmd(
+															_user$project$Request$loadDoc(doc.document_id)))),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -21840,20 +21855,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 							},
 							{
 								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_Options$span,
-									{
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ExecCmd(
-												_user$project$Request$loadDoc(doc.document_id))),
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text(doc.title),
-										_1: {ctor: '[]'}
-									}),
+								_0: _elm_lang$html$Html$text(doc.title),
 								_1: {
 									ctor: '::',
 									_0: A2(
@@ -21861,20 +21863,17 @@ var _user$project$Documentsview$doc2CardView = F3(
 										'bubble_chart',
 										{
 											ctor: '::',
-											_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
 											_1: {
 												ctor: '::',
-												_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-												_1: {
-													ctor: '::',
-													_0: _debois$elm_mdl$Material_Options$onClick(
+												_0: _debois$elm_mdl$Material_Options$onMouseDown(
+													_user$project$Model$SelectAction(
 														_user$project$Model$ShowTopics(
 															A2(
 																_elm_lang$core$List$filterMap,
 																_user$project$Topic$topicId2Topic(model.topics),
-																doc.top_topic))),
-													_1: {ctor: '[]'}
-												}
+																doc.top_topic)))),
+												_1: {ctor: '[]'}
 											}
 										}),
 									_1: {
@@ -21884,17 +21883,14 @@ var _user$project$Documentsview$doc2CardView = F3(
 											'list',
 											{
 												ctor: '::',
-												_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
 												_1: {
 													ctor: '::',
-													_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
-													_1: {
-														ctor: '::',
-														_0: _debois$elm_mdl$Material_Options$onClick(
+													_0: _debois$elm_mdl$Material_Options$onMouseDown(
+														_user$project$Model$SelectAction(
 															_user$project$Model$ExecCmd(
-																_user$project$Request$loadDocTokens(doc.document_id))),
-														_1: {ctor: '[]'}
-													}
+																_user$project$Request$loadDocTokens(doc.document_id)))),
+													_1: {ctor: '[]'}
 												}
 											}),
 										_1: {ctor: '[]'}
@@ -21918,13 +21914,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 											_1: {
 												ctor: '::',
 												_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
-												_1: {
-													ctor: '::',
-													_0: _debois$elm_mdl$Material_Options$onClick(
-														_user$project$Model$ExecCmd(
-															_user$project$Request$loadDoc(doc.document_id))),
-													_1: {ctor: '[]'}
-												}
+												_1: {ctor: '[]'}
 											}
 										}
 									}
@@ -21951,13 +21941,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 								_1: {
 									ctor: '::',
 									_0: A2(_debois$elm_mdl$Material_Options$css, 'font-size', '10px'),
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ExecCmd(
-												_user$project$Request$loadDoc(doc.document_id))),
-										_1: {ctor: '[]'}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
 						},
@@ -22206,6 +22190,7 @@ var _user$project$Init$init = {
 		tabs: _user$project$Init$initTabs,
 		currentTab: 0,
 		raised: -1,
+		selectedMsg: _user$project$Model$None,
 		settings: _user$project$Init$initSettings,
 		slots: {
 			main: _elm_lang$core$Array$fromList(
@@ -23872,305 +23857,155 @@ var _user$project$Mainview_v2$view = function (model) {
 
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
-			case 'ToggleBottom':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{bottom: !model.settings.bottom})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ToggleView2':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{view2: !model.settings.view2})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ToggleShowSaved':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showSaved: !model.settings.showSaved})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'SelectTab':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{currentTab: _p0._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'CloseTab':
-				var newTabs = A2(
-					_elm_lang$core$List$append,
-					A2(_elm_lang$core$List$take, model.currentTab, model.tabs),
-					A2(_elm_lang$core$List$drop, model.currentTab + 1, model.tabs));
-				var newCurrentTab = model.currentTab - 1;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{currentTab: newCurrentTab, tabs: newTabs}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Raise':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{raised: _p0._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'RemoveTopic':
-				var newCurrentTopis = A2(
-					_elm_lang$core$List$filter,
-					function (x) {
-						return !_elm_lang$core$Native_Utils.eq(x.id, _p0._0);
-					},
-					model.currentTopics);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{currentTopics: newCurrentTopis}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Search':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{search: true})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Found':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{search: false}),
-							slots: A3(_user$project$Model$slotFromTo, oldSlots, _user$project$Model$Empty, _p0._0)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'DeleteSlot':
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{slotToDelete: _p0._0})
-						}),
-					_1: A3(_andrewMacmurray$elm_delay$Delay$after, 200, _elm_lang$core$Time$millisecond, _p0._1)
-				};
-			case 'RemoveSlotFromOther':
-				var newSlots = A2(_user$project$Model$slotRemoveMore, model.slots, _p0._0);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{slots: newSlots}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'SlotToLastFromOther':
-				var newSlots = A2(_user$project$Model$slotMove2EndFromMore, model.slots, _p0._0);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{slots: newSlots}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ShowTopics':
-				var topicsContainer = model.topicsContainer;
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showTopics: true}),
-							slots: A3(
-								_user$project$Model$slotFromTo,
-								oldSlots,
-								_user$project$Model$Empty,
-								A3(_user$project$Model$TopicsView, 'Topics', _p0._0, topicsContainer))
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'HideTopics':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showTopics: false, slotToDelete: -1}),
-							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ShowTerms':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showTerms: true}),
-							slots: A3(
-								_user$project$Model$slotFromTo,
-								oldSlots,
-								_user$project$Model$Empty,
-								A2(_user$project$Model$TermsView, 'Terms', _p0._0))
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'HideTerms':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showTerms: false, slotToDelete: -1}),
-							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ShowDocuments':
-				var contains = F2(
-					function (term, document) {
-						return A2(_elm_lang$core$List$member, term, document.terms);
-					});
-				var docs = model.docs;
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showDocuments: true}),
-							slots: A3(
-								_user$project$Model$slotFromTo,
-								oldSlots,
-								_user$project$Model$Empty,
-								A2(_user$project$Model$DocumentsView, 'Documents', docs))
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'HideDocuments':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showDocuments: false, slotToDelete: -1}),
-							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ChoseSlotDialog':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{showSlotDialoge: true}),
-							slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._0, _user$project$Model$Dialog)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'HideSlot':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							settings: _elm_lang$core$Native_Utils.update(
-								oldSettings,
-								{slotToDelete: -1}),
-							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'UpdateSlot':
-				var oldSlots = model.slots;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._1, _p0._0)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'NewTopics':
-				var topicsContainer = model.topicsContainer;
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				var _p1 = _p0._0;
-				if (_p1.ctor === 'Ok') {
-					var _p2 = _p1._0;
+		update:
+		while (true) {
+			var _p0 = msg;
+			switch (_p0.ctor) {
+				case 'ToggleBottom':
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{bottom: !model.settings.bottom})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'ToggleView2':
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{view2: !model.settings.view2})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'ToggleShowSaved':
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{showSaved: !model.settings.showSaved})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'SelectTab':
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{currentTab: _p0._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'CloseTab':
+					var newTabs = A2(
+						_elm_lang$core$List$append,
+						A2(_elm_lang$core$List$take, model.currentTab, model.tabs),
+						A2(_elm_lang$core$List$drop, model.currentTab + 1, model.tabs));
+					var newCurrentTab = model.currentTab - 1;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{currentTab: newCurrentTab, tabs: newTabs}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'Raise':
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{raised: _p0._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'RemoveTopic':
+					var newCurrentTopis = A2(
+						_elm_lang$core$List$filter,
+						function (x) {
+							return !_elm_lang$core$Native_Utils.eq(x.id, _p0._0);
+						},
+						model.currentTopics);
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{currentTopics: newCurrentTopis}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'Search':
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{search: true})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'Found':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{search: false}),
+								slots: A3(_user$project$Model$slotFromTo, oldSlots, _user$project$Model$Empty, _p0._0)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'DeleteSlot':
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{slotToDelete: _p0._0})
+							}),
+						_1: A3(_andrewMacmurray$elm_delay$Delay$after, 200, _elm_lang$core$Time$millisecond, _p0._1)
+					};
+				case 'RemoveSlotFromOther':
+					var newSlots = A2(_user$project$Model$slotRemoveMore, model.slots, _p0._0);
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{slots: newSlots}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'SlotToLastFromOther':
+					var newSlots = A2(_user$project$Model$slotMove2EndFromMore, model.slots, _p0._0);
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{slots: newSlots}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'ShowTopics':
+					var topicsContainer = model.topicsContainer;
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24183,12 +24018,13 @@ var _user$project$Update$update = F2(
 									_user$project$Model$slotFromTo,
 									oldSlots,
 									_user$project$Model$Empty,
-									A3(_user$project$Model$TopicsView, 'Topics', _p2, topicsContainer)),
-								topics: _p2
+									A3(_user$project$Model$TopicsView, 'Topics', _p0._0, topicsContainer))
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				} else {
+				case 'HideTopics':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24196,19 +24032,14 @@ var _user$project$Update$update = F2(
 							{
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
-									{
-										error: _elm_lang$core$Basics$toString(_p1._0)
-									})
+									{showTopics: false, slotToDelete: -1}),
+								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				}
-			case 'NewTerms':
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				var _p3 = _p0._0;
-				if (_p3.ctor === 'Ok') {
-					var _p4 = _p3._0;
+				case 'ShowTerms':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24221,12 +24052,13 @@ var _user$project$Update$update = F2(
 									_user$project$Model$slotFromTo,
 									oldSlots,
 									_user$project$Model$Empty,
-									A2(_user$project$Model$TermsView, 'Terms', _p4)),
-								terms: _p4
+									A2(_user$project$Model$TermsView, 'Terms', _p0._0))
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				} else {
+				case 'HideTerms':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24234,23 +24066,19 @@ var _user$project$Update$update = F2(
 							{
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
-									{
-										error: _elm_lang$core$Basics$toString(_p3._0)
-									})
+									{showTerms: false, slotToDelete: -1}),
+								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				}
-			case 'NewDocs':
-				var contains = F2(
-					function (term, document) {
-						return A2(_elm_lang$core$List$member, term, document.terms);
-					});
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				var _p5 = _p0._0;
-				if (_p5.ctor === 'Ok') {
-					var _p6 = _p5._0;
+				case 'ShowDocuments':
+					var contains = F2(
+						function (term, document) {
+							return A2(_elm_lang$core$List$member, term, document.terms);
+						});
+					var docs = model.docs;
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24263,12 +24091,13 @@ var _user$project$Update$update = F2(
 									_user$project$Model$slotFromTo,
 									oldSlots,
 									_user$project$Model$Empty,
-									A2(_user$project$Model$DocumentsView, 'Documents', _p6)),
-								docs: _p6
+									A2(_user$project$Model$DocumentsView, 'Documents', docs))
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				} else {
+				case 'HideDocuments':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24276,19 +24105,14 @@ var _user$project$Update$update = F2(
 							{
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
-									{
-										error: _elm_lang$core$Basics$toString(_p5._0)
-									})
+									{showDocuments: false, slotToDelete: -1}),
+								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				}
-			case 'NewDocTokens':
-				var allTerms = model.terms;
-				var oldSlots = model.slots;
-				var oldSettings = model.settings;
-				var _p7 = _p0._0;
-				if (_p7.ctor === 'Ok') {
+				case 'ChoseSlotDialog':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24296,19 +24120,14 @@ var _user$project$Update$update = F2(
 							{
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
-									{showTerms: true}),
-								slots: A3(
-									_user$project$Model$slotFromTo,
-									oldSlots,
-									_user$project$Model$Empty,
-									A2(
-										_user$project$Model$TermsView,
-										'Terms',
-										A2(_user$project$Document$documentTerms, _p7._0, allTerms)))
+									{showSlotDialoge: true}),
+								slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._0, _user$project$Model$Dialog)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				} else {
+				case 'HideSlot':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -24316,145 +24135,331 @@ var _user$project$Update$update = F2(
 							{
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
-									{
-										error: _elm_lang$core$Basics$toString(_p7._0)
-									})
+									{slotToDelete: -1}),
+								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				}
-			case 'NewDocument':
-				var oldTabs = model.tabs;
-				var tabNumber = _elm_lang$core$List$length(oldTabs);
-				var oldSettings = model.settings;
-				var _p8 = _p0._0;
-				if (_p8.ctor === 'Ok') {
-					var _p9 = _p8._0;
+				case 'UpdateSlot':
+					var oldSlots = model.slots;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								tabs: A2(
-									_elm_lang$core$List$append,
-									oldTabs,
-									{
-										ctor: '::',
-										_0: A2(_user$project$Model$DocumentTab, _p9.title, _p9),
-										_1: {ctor: '[]'}
-									}),
-								currentTab: tabNumber
+								slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._1, _p0._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
-				} else {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{
-										error: _elm_lang$core$Basics$toString(_p8._0)
-									})
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				}
-			case 'NewFrames':
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'ExecCmd':
-				return {ctor: '_Tuple2', _0: model, _1: _p0._0};
-			case 'ContainerCacheTopicMsg':
-				var _p16 = _p0._1;
-				var _p15 = _p0._0;
-				var currentPage = function (cont) {
-					return A2(
-						_elm_lang$core$Maybe$withDefault,
-						_user$project$ContainerCache$HandleError(''),
-						A2(_elm_lang$core$Array$get, cont.meta.currPage, cont.data));
-				};
-				var topicList = function (cont) {
-					var _p10 = currentPage(cont);
-					if (_p10.ctor === 'Loaded') {
-						return _p10._0;
+				case 'NewTopics':
+					var topicsContainer = model.topicsContainer;
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
+					var _p1 = _p0._0;
+					if (_p1.ctor === 'Ok') {
+						var _p2 = _p1._0;
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{showTopics: true}),
+									slots: A3(
+										_user$project$Model$slotFromTo,
+										oldSlots,
+										_user$project$Model$Empty,
+										A3(_user$project$Model$TopicsView, 'Topics', _p2, topicsContainer)),
+									topics: _p2
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
 					} else {
-						return {ctor: '[]'};
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											error: _elm_lang$core$Basics$toString(_p1._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
 					}
-				};
-				var _p11 = A2(_user$project$ContainerCache$update, _p16, model.containerTopicModel);
-				var newdata = _p11._0;
-				var cmd = _p11._1;
-				var newSlots = function () {
-					var _p12 = _p16;
-					switch (_p12.ctor) {
-						case 'CreateNewContainer':
-							var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
-							var newContainer = A2(
-								_elm_lang$core$Maybe$withDefault,
-								_user$project$ContainerCache$defaultContainer,
-								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
-							var newView = A3(
-								_user$project$Model$TopicsView,
-								'Topics',
-								topicList(newContainer),
-								index);
-							return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
-						case 'PageUpdate':
-							var index = function () {
-								var _p13 = A2(_user$project$Model$slotGet, model.slots, _p15);
-								if (_p13.ctor === 'TopicsView') {
-									return _p13._2;
-								} else {
-									return -1;
-								}
-							}();
-							var newContainer = A2(
-								_elm_lang$core$Maybe$withDefault,
-								_user$project$ContainerCache$defaultContainer,
-								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
-							var newView = A3(
-								_user$project$Model$TopicsView,
-								'Topics',
-								topicList(newContainer),
-								index);
-							return A3(_user$project$Model$slotChangeTo, model.slots, _p15, newView);
-						default:
-							var index = function () {
-								var _p14 = A2(_user$project$Model$slotGet, model.slots, _p15);
-								if (_p14.ctor === 'TopicsView') {
-									return _p14._2;
-								} else {
-									return -1;
-								}
-							}();
-							var newContainer = A2(
-								_elm_lang$core$Maybe$withDefault,
-								_user$project$ContainerCache$defaultContainer,
-								A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
-							var newView = A3(
-								_user$project$Model$TopicsView,
-								'Topics',
-								topicList(newContainer),
-								index);
-							return A3(_user$project$Model$slotChangeTo, model.slots, _p15, newView);
+				case 'NewTerms':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
+					var _p3 = _p0._0;
+					if (_p3.ctor === 'Ok') {
+						var _p4 = _p3._0;
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{showTerms: true}),
+									slots: A3(
+										_user$project$Model$slotFromTo,
+										oldSlots,
+										_user$project$Model$Empty,
+										A2(_user$project$Model$TermsView, 'Terms', _p4)),
+									terms: _p4
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											error: _elm_lang$core$Basics$toString(_p3._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
 					}
-				}();
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
+				case 'NewDocs':
+					var contains = F2(
+						function (term, document) {
+							return A2(_elm_lang$core$List$member, term, document.terms);
+						});
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
+					var _p5 = _p0._0;
+					if (_p5.ctor === 'Ok') {
+						var _p6 = _p5._0;
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{showDocuments: true}),
+									slots: A3(
+										_user$project$Model$slotFromTo,
+										oldSlots,
+										_user$project$Model$Empty,
+										A2(_user$project$Model$DocumentsView, 'Documents', _p6)),
+									docs: _p6
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											error: _elm_lang$core$Basics$toString(_p5._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'NewDocTokens':
+					var allTerms = model.terms;
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
+					var _p7 = _p0._0;
+					if (_p7.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{showTerms: true}),
+									slots: A3(
+										_user$project$Model$slotFromTo,
+										oldSlots,
+										_user$project$Model$Empty,
+										A2(
+											_user$project$Model$TermsView,
+											'Terms',
+											A2(_user$project$Document$documentTerms, _p7._0, allTerms)))
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											error: _elm_lang$core$Basics$toString(_p7._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'NewDocument':
+					var oldTabs = model.tabs;
+					var tabNumber = _elm_lang$core$List$length(oldTabs);
+					var oldSettings = model.settings;
+					var _p8 = _p0._0;
+					if (_p8.ctor === 'Ok') {
+						var _p9 = _p8._0;
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									tabs: A2(
+										_elm_lang$core$List$append,
+										oldTabs,
+										{
+											ctor: '::',
+											_0: A2(_user$project$Model$DocumentTab, _p9.title, _p9),
+											_1: {ctor: '[]'}
+										}),
+									currentTab: tabNumber
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											error: _elm_lang$core$Basics$toString(_p8._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'NewFrames':
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				case 'ExecCmd':
+					return {ctor: '_Tuple2', _0: model, _1: _p0._0};
+				case 'SelectAction':
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{selectedMsg: _p0._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'ExecuteActionIfNone':
+					var newMsg = _elm_lang$core$Native_Utils.eq(model.selectedMsg, _user$project$Model$None) ? _p0._0 : model.selectedMsg;
+					var _v6 = newMsg,
+						_v7 = _elm_lang$core$Native_Utils.update(
 						model,
-						{containerTopicModel: newdata, slots: newSlots}),
-					_1: A2(
-						_elm_lang$core$Platform_Cmd$map,
-						_user$project$Model$ContainerCacheTopicMsg(_p15),
-						cmd)
-				};
-			case 'Mdl':
-				return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
-			default:
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+						{selectedMsg: _user$project$Model$None});
+					msg = _v6;
+					model = _v7;
+					continue update;
+				case 'ContainerCacheTopicMsg':
+					var _p16 = _p0._1;
+					var _p15 = _p0._0;
+					var currentPage = function (cont) {
+						return A2(
+							_elm_lang$core$Maybe$withDefault,
+							_user$project$ContainerCache$HandleError(''),
+							A2(_elm_lang$core$Array$get, cont.meta.currPage, cont.data));
+					};
+					var topicList = function (cont) {
+						var _p10 = currentPage(cont);
+						if (_p10.ctor === 'Loaded') {
+							return _p10._0;
+						} else {
+							return {ctor: '[]'};
+						}
+					};
+					var _p11 = A2(_user$project$ContainerCache$update, _p16, model.containerTopicModel);
+					var newdata = _p11._0;
+					var cmd = _p11._1;
+					var newSlots = function () {
+						var _p12 = _p16;
+						switch (_p12.ctor) {
+							case 'CreateNewContainer':
+								var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
+								var newContainer = A2(
+									_elm_lang$core$Maybe$withDefault,
+									_user$project$ContainerCache$defaultContainer,
+									A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+								var newView = A3(
+									_user$project$Model$TopicsView,
+									'Topics',
+									topicList(newContainer),
+									index);
+								return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
+							case 'PageUpdate':
+								var index = function () {
+									var _p13 = A2(_user$project$Model$slotGet, model.slots, _p15);
+									if (_p13.ctor === 'TopicsView') {
+										return _p13._2;
+									} else {
+										return -1;
+									}
+								}();
+								var newContainer = A2(
+									_elm_lang$core$Maybe$withDefault,
+									_user$project$ContainerCache$defaultContainer,
+									A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+								var newView = A3(
+									_user$project$Model$TopicsView,
+									'Topics',
+									topicList(newContainer),
+									index);
+								return A3(_user$project$Model$slotChangeTo, model.slots, _p15, newView);
+							default:
+								var index = function () {
+									var _p14 = A2(_user$project$Model$slotGet, model.slots, _p15);
+									if (_p14.ctor === 'TopicsView') {
+										return _p14._2;
+									} else {
+										return -1;
+									}
+								}();
+								var newContainer = A2(
+									_elm_lang$core$Maybe$withDefault,
+									_user$project$ContainerCache$defaultContainer,
+									A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+								var newView = A3(
+									_user$project$Model$TopicsView,
+									'Topics',
+									topicList(newContainer),
+									index);
+								return A3(_user$project$Model$slotChangeTo, model.slots, _p15, newView);
+						}
+					}();
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{containerTopicModel: newdata, slots: newSlots}),
+						_1: A2(
+							_elm_lang$core$Platform_Cmd$map,
+							_user$project$Model$ContainerCacheTopicMsg(_p15),
+							cmd)
+					};
+				case 'Mdl':
+					return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
+				default:
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			}
 		}
 	});
 
@@ -24507,7 +24512,7 @@ if (typeof _user$project$Searchview$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"HideSlot":["Int"],"NewDocTokens":["Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"HideSlot":["Int"],"NewDocTokens":["Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"SelectAction":["Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {

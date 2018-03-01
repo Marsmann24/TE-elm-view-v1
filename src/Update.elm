@@ -239,6 +239,15 @@ update msg model =
             (model, Cmd.none)
         ExecCmd cmd ->
             (model, cmd)
+        SelectAction defMsg ->
+            ({ model | selectedMsg = defMsg}, Cmd.none)
+        ExecuteActionIfNone defMsg ->
+            let newMsg =
+                    if (model.selectedMsg == None)
+                    then defMsg
+                    else model.selectedMsg
+            in
+            update newMsg { model | selectedMsg = None}
         ContainerCacheTopicMsg slotId submsg -> -- Chris Einbindung
             let
                 (newdata, cmd ) =
