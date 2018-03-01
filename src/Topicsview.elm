@@ -30,7 +30,7 @@ view model flex slotId slotName =
             [ Icon.view "bubble_chart" [ css "margin" "5px"]
             , span
                 [ css "width" "calc(100% - 64px)"
-                , css "text-align" "center"
+                , css "text-align" "left"
                 ]
                 [ text slotName]
             , Button.render Mdl [slotId] model.mdl
