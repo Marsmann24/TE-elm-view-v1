@@ -21456,6 +21456,9 @@ var _user$project$Model$NewDocument = function (a) {
 var _user$project$Model$NewTopics = function (a) {
 	return {ctor: 'NewTopics', _0: a};
 };
+var _user$project$Model$HideSlot = function (a) {
+	return {ctor: 'HideSlot', _0: a};
+};
 var _user$project$Model$ToggleShowSaved = {ctor: 'ToggleShowSaved'};
 var _user$project$Model$ToggleView2 = {ctor: 'ToggleView2'};
 var _user$project$Model$ToggleBottom = {ctor: 'ToggleBottom'};
@@ -23078,112 +23081,77 @@ var _user$project$Mainview_v2$slot = F3(
 					},
 					{
 						ctor: '::',
-						_0: A3(
-							_user$project$Mainview_v2$slotDialogCard,
-							'Topics',
-							A3(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer),
-							slotId),
+						_0: A5(
+							_debois$elm_mdl$Material_Button$render,
+							_user$project$Model$Mdl,
+							{
+								ctor: '::',
+								_0: slotId,
+								_1: {ctor: '[]'}
+							},
+							model.mdl,
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Button$fab,
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Button$minifab,
+										_1: {
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Button$raised,
+											_1: {
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Button$ripple,
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														A2(
+															_user$project$Model$DeleteSlot,
+															slotId,
+															_user$project$Model$HideSlot(slotId))),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Icon$i('close'),
+								_1: {ctor: '[]'}
+							}),
 						_1: {
 							ctor: '::',
 							_0: A3(
 								_user$project$Mainview_v2$slotDialogCard,
-								'Terms',
-								A2(_user$project$Model$TermsView, 'Terms', model.terms),
+								'Topics',
+								A3(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer),
 								slotId),
 							_1: {
 								ctor: '::',
 								_0: A3(
 									_user$project$Mainview_v2$slotDialogCard,
-									'Documents',
-									A2(_user$project$Model$DocumentsView, 'Documents', model.docs),
+									'Terms',
+									A2(_user$project$Model$TermsView, 'Terms', model.terms),
 									slotId),
 								_1: {
 									ctor: '::',
-									_0: A5(
-										_debois$elm_mdl$Material_Button$render,
-										_user$project$Model$Mdl,
-										{
-											ctor: '::',
-											_0: slotId,
-											_1: {ctor: '[]'}
-										},
-										model.mdl,
-										{
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
-											_1: {
-												ctor: '::',
-												_0: _debois$elm_mdl$Material_Button$fab,
-												_1: {
-													ctor: '::',
-													_0: _debois$elm_mdl$Material_Button$minifab,
-													_1: {
-														ctor: '::',
-														_0: _debois$elm_mdl$Material_Button$raised,
-														_1: {
-															ctor: '::',
-															_0: _debois$elm_mdl$Material_Button$ripple,
-															_1: {
-																ctor: '::',
-																_0: _debois$elm_mdl$Material_Options$onClick(
-																	A2(
-																		_user$project$Model$DeleteSlot,
-																		slotId,
-																		_user$project$Model$HideTerms(slotId))),
-																_1: {ctor: '[]'}
-															}
-														}
-													}
-												}
-											}
-										},
-										{
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Icon$i('close'),
-											_1: {ctor: '[]'}
-										}),
+									_0: A3(
+										_user$project$Mainview_v2$slotDialogCard,
+										'Documents',
+										A2(_user$project$Model$DocumentsView, 'Documents', model.docs),
+										slotId),
 									_1: {ctor: '[]'}
 								}
 							}
 						}
 					});
 			case 'Empty':
-				return _elm_lang$core$Native_Utils.eq(slotId, 0) ? A2(
-					_debois$elm_mdl$Material_Options$div,
-					{
-						ctor: '::',
-						_0: _debois$elm_mdl$Material_Options$cs('slot'),
-						_1: {
-							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$cs('slot__half'),
-							_1: {
-								ctor: '::',
-								_0: _user$project$Model$primaryColor,
-								_1: {
-									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$center,
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(
-											_user$project$Model$ChoseSlotDialog(slotId)),
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						}
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Icon$view,
-							'add',
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Icon$size48,
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
-					}) : A2(
+				return A2(
 					_debois$elm_mdl$Material_Options$div,
 					{ctor: '[]'},
 					{ctor: '[]'});
@@ -23739,6 +23707,21 @@ var _user$project$Update$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'HideSlot':
+				var oldSlots = model.slots;
+				var oldSettings = model.settings;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							settings: _elm_lang$core$Native_Utils.update(
+								oldSettings,
+								{slotToDelete: -1}),
+							slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'UpdateSlot':
 				var oldSlots = model.slots;
 				return {
@@ -24093,7 +24076,7 @@ if (typeof _user$project$Searchview$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error (List Topic.Topic)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"NewDocTokens":["Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error (List Topic.Topic)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"HideSlot":["Int"],"NewDocTokens":["Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {
