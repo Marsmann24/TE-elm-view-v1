@@ -5,7 +5,7 @@ import Topic exposing (Topic)
 import Request
 
 import Html exposing (Html, text)
-import Material.Options exposing (css, div, span, onClick, center)
+import Material.Options exposing (cs, css, div, span, onClick, center)
 import Material.Icon as Icon
 import Material.Elevation as Elevation
 import Material.Chip as Chip
@@ -22,7 +22,9 @@ view model flex =
         [ div []
             [ text "More Slots:"
             ]
-        , div []
+        , div
+            [ cs "flex__row"
+            ]
             (List.indexedMap slotView2Chip model.slots.more)
             --(List.map (currentTopic2Chip model) model.currentTopics))
         ]
@@ -33,8 +35,7 @@ slotView2Chip id view =
         TopicsView name _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "display" "inline-block"
-                , css "vertical-align" "top"
+                , css "flex" "1 1 10%"
                 ]
                 [ Chip.content
                     [ center]
@@ -55,8 +56,7 @@ slotView2Chip id view =
         TermsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "display" "inline-block"
-                , css "vertical-align" "top"
+                , css "flex" "1 1 10%"
                 ]
                 [ Chip.content
                     [ center]
@@ -77,8 +77,7 @@ slotView2Chip id view =
         DocumentsView name _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
-                , css "display" "inline-block"
-                , css "vertical-align" "top"
+                , css "flex" "1 1 10%"
                 ]
                 [ Chip.content
                     [ center]
