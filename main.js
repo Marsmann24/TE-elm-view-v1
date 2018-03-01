@@ -22189,41 +22189,41 @@ var _user$project$Tabsview$document2DocumentView = F2(
 					}),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$h1,
-						{ctor: '[]'},
+					_0: A5(
+						_debois$elm_mdl$Material_Button$render,
+						_user$project$Model$Mdl,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(document.title),
+							_0: 99,
+							_1: {ctor: '[]'}
+						},
+						model.mdl,
+						{
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Button$icon,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$CloseTab),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Icon$i('close'),
 							_1: {ctor: '[]'}
 						}),
 					_1: {
 						ctor: '::',
-						_0: A5(
-							_debois$elm_mdl$Material_Button$render,
-							_user$project$Model$Mdl,
+						_0: A2(
+							_elm_lang$html$Html$h1,
+							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: 99,
-								_1: {ctor: '[]'}
-							},
-							model.mdl,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$cs('slot__close_button'),
-								_1: {
-									ctor: '::',
-									_0: _debois$elm_mdl$Material_Button$icon,
-									_1: {
-										ctor: '::',
-										_0: _debois$elm_mdl$Material_Options$onClick(_user$project$Model$CloseTab),
-										_1: {ctor: '[]'}
-									}
-								}
-							},
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Icon$i('close'),
+								_0: _elm_lang$html$Html$text(document.title),
 								_1: {ctor: '[]'}
 							}),
 						_1: {

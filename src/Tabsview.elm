@@ -78,12 +78,12 @@ document2DocumentView model document =
             [ text (toString document.time_stamp)
             , br [][]
             ]
-        , h1 [] [ text document.title]
         , Button.render Mdl [99] model.mdl
             [ cs "slot__close_button"
             , Button.icon
             , onClick CloseTab
             ]
             [ Icon.i "close" ]
+        , h1 [] [ text document.title]
         , span [] [ text document.fulltext]
         ]
