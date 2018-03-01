@@ -30,6 +30,7 @@ view model =
                 , span
                     [ css "float" "right"
                     , css "width" "200px"
+                    , css "display" "inline"
                     ]
                     [ text model.settings.error]
                 ]

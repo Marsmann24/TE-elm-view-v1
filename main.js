@@ -23817,7 +23817,11 @@ var _user$project$Mainview_v2$view = function (model) {
 								_1: {
 									ctor: '::',
 									_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '200px'),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline'),
+										_1: {ctor: '[]'}
+									}
 								}
 							},
 							{
