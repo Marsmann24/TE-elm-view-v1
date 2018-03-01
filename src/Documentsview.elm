@@ -61,8 +61,6 @@ doc2CardView model doc cardID =
         , onMouseEnter (Raise cardID)
         , onMouseLeave (Raise -1)
         --, onClick (ChangeCurrentDoc cardID doc)
-        , onClick
-            (ExecCmd (Request.loadDoc doc.document_id))
         ]
         [ Card.title
             [ css "padding" "4px"
@@ -71,9 +69,12 @@ doc2CardView model doc cardID =
                 [ Color.text Color.white
                 , css "font-size" "14px"
                 ]
-                [ text doc.title
+                [ span
+                    [ onClick (ExecCmd (Request.loadDoc doc.document_id))]
+                    [ text doc.title]
                 , Icon.view "bubble_chart"
                     [ css "align-self" "right"
+                    , css "float" "right"
                     , onClick
                         (ShowTopics
                             (List.filterMap
@@ -84,15 +85,17 @@ doc2CardView model doc cardID =
                     ]
                 , Icon.view "list"
                     [ css "align-self" "right"
+                    , css "float" "right"
                     , onClick
                         (ExecCmd (Request.loadDocTokens doc.document_id))
-                    ]
+                ]
                 ]
             , span
                 [ Color.text (Color.color Color.Grey Color.S200)
                 , css "padding" "2px"
                 , css "font-size" "8px"
                 , css "align-self" "right"
+                , onClick (ExecCmd (Request.loadDoc doc.document_id))
                 ]
                 [ text (toString doc.time_stamp) ]
             ]
@@ -100,6 +103,7 @@ doc2CardView model doc cardID =
             [ Color.text (Color.white)
             , css "padding" "4px"
             , css "font-size" "10px"
+            , onClick (ExecCmd (Request.loadDoc doc.document_id))
             ]
             [ text doc.snippet ]
         ]

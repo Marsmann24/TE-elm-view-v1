@@ -21807,13 +21807,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 											ctor: '::',
 											_0: _debois$elm_mdl$Material_Options$onMouseLeave(
 												_user$project$Model$Raise(-1)),
-											_1: {
-												ctor: '::',
-												_0: _debois$elm_mdl$Material_Options$onClick(
-													_user$project$Model$ExecCmd(
-														_user$project$Request$loadDoc(doc.document_id))),
-												_1: {ctor: '[]'}
-											}
+											_1: {ctor: '[]'}
 										}
 									}
 								}
@@ -21846,7 +21840,20 @@ var _user$project$Documentsview$doc2CardView = F3(
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(doc.title),
+								_0: A2(
+									_debois$elm_mdl$Material_Options$span,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ExecCmd(
+												_user$project$Request$loadDoc(doc.document_id))),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(doc.title),
+										_1: {ctor: '[]'}
+									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
@@ -21857,13 +21864,17 @@ var _user$project$Documentsview$doc2CardView = F3(
 											_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
 											_1: {
 												ctor: '::',
-												_0: _debois$elm_mdl$Material_Options$onClick(
-													_user$project$Model$ShowTopics(
-														A2(
-															_elm_lang$core$List$filterMap,
-															_user$project$Topic$topicId2Topic(model.topics),
-															doc.top_topic))),
-												_1: {ctor: '[]'}
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														_user$project$Model$ShowTopics(
+															A2(
+																_elm_lang$core$List$filterMap,
+																_user$project$Topic$topicId2Topic(model.topics),
+																doc.top_topic))),
+													_1: {ctor: '[]'}
+												}
 											}
 										}),
 									_1: {
@@ -21876,10 +21887,14 @@ var _user$project$Documentsview$doc2CardView = F3(
 												_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
 												_1: {
 													ctor: '::',
-													_0: _debois$elm_mdl$Material_Options$onClick(
-														_user$project$Model$ExecCmd(
-															_user$project$Request$loadDocTokens(doc.document_id))),
-													_1: {ctor: '[]'}
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+													_1: {
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Options$onClick(
+															_user$project$Model$ExecCmd(
+																_user$project$Request$loadDocTokens(doc.document_id))),
+														_1: {ctor: '[]'}
+													}
 												}
 											}),
 										_1: {ctor: '[]'}
@@ -21903,7 +21918,13 @@ var _user$project$Documentsview$doc2CardView = F3(
 											_1: {
 												ctor: '::',
 												_0: A2(_debois$elm_mdl$Material_Options$css, 'align-self', 'right'),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: _debois$elm_mdl$Material_Options$onClick(
+														_user$project$Model$ExecCmd(
+															_user$project$Request$loadDoc(doc.document_id))),
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									}
@@ -21930,7 +21951,13 @@ var _user$project$Documentsview$doc2CardView = F3(
 								_1: {
 									ctor: '::',
 									_0: A2(_debois$elm_mdl$Material_Options$css, 'font-size', '10px'),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ExecCmd(
+												_user$project$Request$loadDoc(doc.document_id))),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						},
