@@ -23222,10 +23222,38 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 					{
 						ctor: '::',
 						_0: A2(
-							_user$project$Tabsview$view,
-							model,
-							_user$project$Mainview_v2$flexValue(6)),
-						_1: {ctor: '[]'}
+							_debois$elm_mdl$Material_Options$div,
+							{
+								ctor: '::',
+								_0: _user$project$Model$primaryColor,
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onClick(
+										_user$project$Model$ChoseSlotDialog(
+											A2(_user$project$Model$slotGetFirstId, model.slots, _user$project$Model$Empty))),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Icon$view,
+									'add',
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Icon$size48,
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$Tabsview$view,
+								model,
+								_user$project$Mainview_v2$flexValue(6)),
+							_1: {ctor: '[]'}
+						}
 					})),
 			_1: {
 				ctor: '::',

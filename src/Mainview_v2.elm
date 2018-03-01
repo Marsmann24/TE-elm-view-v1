@@ -91,7 +91,13 @@ viewBody model =
                         [ cs "flex__row"]
                         (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
                         :: (Array.toList (Array.indexedMap (slot model) model.slots.main)))
-                    [ Tabsview.view model (flexValue 6)])
+                    [ div
+                        [ primaryColor
+                        , onClick (ChoseSlotDialog (slotGetFirstId model.slots Empty))
+                        ]
+                        [ Icon.view "add" [Icon.size48]
+                        ]
+                    , Tabsview.view model (flexValue 6)])
             , Savedview.view model (flexValue 1)
             ]
         )
