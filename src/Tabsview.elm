@@ -22,7 +22,7 @@ view model flex =
             , Tabs.onSelectTab SelectTab
             , Tabs.activeTab model.currentTab
             ]
-            (List.indexedMap (tab2TabView model) model.tabs)
+            (List.map tab2TabView  model.tabs)
             [ let maybetab = (List.head (List.drop model.currentTab model.tabs))
               in let tab =
                   case maybetab of
@@ -33,16 +33,16 @@ view model flex =
               in
               case tab of
                   PreviewTab ->
-                      document2DocumentView model.currentDocument.document
+                      document2DocumentView model model.currentDocument.document
                   DocumentTab _ document ->
-                      document2DocumentView document
+                      document2DocumentView model document
                   ErrorTab _ errormessage ->
                       text errormessage
             ]
         ]
 
-tab2TabView : Model -> Int -> Tab -> Tabs.Label Msg
-tab2TabView model id tab =
+tab2TabView : Tab -> Tabs.Label Msg
+tab2TabView tab =
     Tabs.label
         []
         (case tab of
@@ -57,12 +57,6 @@ tab2TabView model id tab =
                     [ css "width" "4px"]
                     []
                 , text tabID
-                , Button.render Mdl [(100 + id)] model.mdl
-                    [ cs "slot__close_button"
-                    , Button.icon
-                    , onClick (CloseTab id)
-                    ]
-                    [ Icon.i "close" ]
                 ]
             ErrorTab tabID _ ->
                 [ span
@@ -73,8 +67,8 @@ tab2TabView model id tab =
         )
 
 
-document2DocumentView : Document -> Html Msg
-document2DocumentView document =
+document2DocumentView : Model -> Document -> Html Msg
+document2DocumentView model document =
     div [ css "margin" "0px 6px"]
         [ span
             [ css "float" "right"
@@ -85,5 +79,11 @@ document2DocumentView document =
             , br [][]
             ]
         , h1 [] [ text document.title]
+        , Button.render Mdl [99] model.mdl
+            [ cs "slot__close_button"
+            , Button.icon
+            , onClick CloseTab
+            ]
+            [ Icon.i "close" ]
         , span [] [ text document.fulltext]
         ]

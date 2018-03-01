@@ -17,7 +17,7 @@ type Msg
     = Search String
     | Found View
     | SelectTab Int
-    | CloseTab Int
+    | CloseTab
     | Raise Int
     | ChangeCurrentDoc Int Doc
     | RemoveTopic Int

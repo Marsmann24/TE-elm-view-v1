@@ -29,13 +29,11 @@ update msg model =
             ({ model | settings = { oldSettings | showSaved = not (model.settings.showSaved)}}, Cmd.none)
         SelectTab tabId ->
             ({ model | currentTab = tabId}, Cmd.none)
-        CloseTab tabId ->
+        CloseTab ->
             let newCurrentTab =
-                    if (model.currentTab >= tabId)
-                        then (model.currentTab - 1)
-                        else model.currentTab
+                    model.currentTab - 1
                 newTabs =
-                    List.append (List.take tabId model.tabs) (List.drop (tabId + 1) model.tabs)
+                    List.append (List.take model.currentTab model.tabs) (List.drop (model.currentTab + 1) model.tabs)
             in
             ({ model
                 | currentTab = newCurrentTab
