@@ -115,7 +115,6 @@ slot model slotId view =
         Dialog ->
             div
                 [ cs "slot"
-                , cs "flex__column"
                 , cs "slot__new"
                 , primaryColor
                 ]
@@ -130,6 +129,7 @@ slot model slotId view =
                     [ Icon.i "close" ]
                 , div
                     [ center
+                    , cs "flex__column"
                     ]
                     [ slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
                     , slotDialogCard "Terms" (TermsView "Terms" model.terms) slotId
