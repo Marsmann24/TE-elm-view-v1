@@ -27,7 +27,10 @@ view model flex slotId slotName =
             [ css "height" "45px"
             , css "text-align" "center"
             ]
-            [ Icon.view "bubble_chart" [ css "margin" "5px"]
+            [ Icon.view "bubble_chart"
+                [ css "margin" "5px"
+                , css "text-align" "left"
+                ]
             , text slotName
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
