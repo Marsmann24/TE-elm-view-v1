@@ -5,7 +5,7 @@ import Topic exposing (Topic)
 import Document
 import Init exposing (init)
 --import Mainview_v1 exposing (view)
-import Mainview_v1
+--import Mainview_v1
 import Mainview_v2
 
 import Html
@@ -91,7 +91,7 @@ update msg model =
             in
             ({ model
                 | settings = { oldSettings | showTopics = True}
-                , slots = slotFromTo oldSlots Empty (TopicsView topics topicsContainer)
+                , slots = slotFromTo oldSlots Empty (TopicsView "Topics" topics topicsContainer)
                 }
             , Cmd.none)
         HideTopics slotId ->
@@ -110,7 +110,7 @@ update msg model =
             ({ model
                 | settings = { oldSettings | showTerms = True}
         --        , termList = terms
-                , slots = slotFromTo oldSlots Empty (TermsView terms)
+                , slots = slotFromTo oldSlots Empty (TermsView "Terms" terms)
                 }
             , Cmd.none)
         HideTerms slotId ->
@@ -130,7 +130,7 @@ update msg model =
             in
             ({ model
                 | settings = { oldSettings | showDocuments = True}
-                , slots = slotFromTo oldSlots Empty (DocumentsView docs)
+                , slots = slotFromTo oldSlots Empty (DocumentsView "Documents" docs)
                 }
             , Cmd.none)
         HideDocuments slotId ->
@@ -164,7 +164,7 @@ update msg model =
                 Ok newTopics ->
                     ({ model
                         | settings = { oldSettings | showTopics = True}
-                        , slots = slotFromTo oldSlots Empty (TopicsView newTopics topicsContainer)
+                        , slots = slotFromTo oldSlots Empty (TopicsView "Topics" newTopics topicsContainer)
                         , topics = newTopics
                         }
                     , Cmd.none)
@@ -179,7 +179,7 @@ update msg model =
                 Ok newTerms ->
                     ({ model
                         | settings = { oldSettings | showTerms = True}
-                        , slots = slotFromTo oldSlots Empty (TermsView newTerms)
+                        , slots = slotFromTo oldSlots Empty (TermsView "Terms" newTerms)
                         , terms = newTerms}
                     , Cmd.none)
                 Err err ->
@@ -193,7 +193,7 @@ update msg model =
                 Ok newDocs ->
                     ({ model
                         | settings = { oldSettings | showDocuments = True}
-                        , slots = slotFromTo oldSlots Empty (DocumentsView newDocs)
+                        , slots = slotFromTo oldSlots Empty (DocumentsView "Documents" newDocs)
                         , docs = newDocs
                         }
                     , Cmd.none)
@@ -208,7 +208,7 @@ update msg model =
                 Ok document ->
                     ({ model
                         | settings = { oldSettings | showTerms = True}
-                        , slots = slotFromTo oldSlots Empty (TermsView (Document.documentTerms document allTerms))}
+                        , slots = slotFromTo oldSlots Empty (TermsView "Terms" (Document.documentTerms document allTerms))}
                     , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
@@ -251,33 +251,33 @@ update msg model =
                                 newContainer =
                                     (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
                                 newView =
-                                    TopicsView (topicList newContainer) index
+                                    TopicsView "Topics" (topicList newContainer) index
                             in
                             slotFromTo model.slots Empty newView
                         ContainerCache.PageUpdate _ _ ->
                             let index =
                                     case (slotGet model.slots slotId) of
-                                        TopicsView _ contId->
+                                        TopicsView _ _ contId->
                                             contId
                                         _ ->
                                             -1
                                 newContainer =
                                     (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
                                 newView =
-                                    TopicsView (topicList newContainer) index
+                                    TopicsView "Topics" (topicList newContainer) index
                             in
                             slotChangeTo model.slots slotId newView
                         _ ->
                             let index =
                                     case (slotGet model.slots slotId) of
-                                        TopicsView _ contId->
+                                        TopicsView _ _ contId->
                                             contId
                                         _ ->
                                             -1
                                 newContainer =
                                     (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
                                 newView =
-                                    TopicsView (topicList newContainer) index
+                                    TopicsView "Topics" (topicList newContainer) index
                             in
                             slotChangeTo model.slots slotId newView
             in

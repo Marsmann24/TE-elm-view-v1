@@ -24,19 +24,19 @@ searchresult2ListItem result =
         [( case result of
             Termresult term ->
                 Lists.content
-                    [ onClick (Found (TermsView [term]))]
+                    [ onClick (Found (TermsView "Terms" [term]))]
                     [ Lists.icon "list" []
                     , text term.name
                     ]
             Topicresult topic ->
                 Lists.content
-                    [ onClick (Found (TopicsView [topic] 0))]
+                    [ onClick (Found (TopicsView "Topics" [topic] 0))]
                     [ Lists.icon "bubble_chart" []
                     , text (toString topic.id)
                     ]
             Documentresult doc ->
                 Lists.content
-                    [ onClick (Found (DocumentsView [doc]))]
+                    [ onClick (Found (DocumentsView "Documents" [doc]))]
                     [ Lists.icon "art_track" []
                     , text doc.title
                     ]

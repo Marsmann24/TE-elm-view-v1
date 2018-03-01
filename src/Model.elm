@@ -136,13 +136,13 @@ type Searchresult
 --Slots
 
 type View
-    = TermsView (List Term)
+    = TermsView String (List Term)
     -- WordlistView (List String)
-    | TopicsView (List Topic) Int
+    | TopicsView String (List Topic) Int
     --| TopicsView (ContainerCache.Container (List Topic))
     --| DocumentsView (List Document)
     --| DocumentsView (ContainerCache.Container (List Doc))
-    | DocumentsView (List Doc)
+    | DocumentsView String (List Doc)
     | Dialog
     | Empty
     | ErrorSlot

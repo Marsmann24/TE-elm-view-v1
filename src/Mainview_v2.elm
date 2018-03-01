@@ -99,12 +99,12 @@ viewBody model =
 slot : Model -> Int -> View -> Html Msg
 slot model slotId view =
     case view of
-        TopicsView topics contId ->
-            Topicsview.view { model | topics = topics, topicsContainer = contId} (flexValue 2) slotId
-        TermsView terms ->
-            Termsview.view { model | terms = terms} (flexValue 2) slotId
-        DocumentsView docs ->
-            Documentsview.view { model | docs = docs} (flexValue 2) slotId
+        TopicsView name topics contId ->
+            Topicsview.view { model | topics = topics, topicsContainer = contId} (flexValue 2) slotId name
+        TermsView name terms ->
+            Termsview.view { model | terms = terms} (flexValue 2) slotId name
+        DocumentsView name docs ->
+            Documentsview.view { model | docs = docs} (flexValue 2) slotId name
         Dialog ->
             div
                 [ cs "slot"
@@ -113,9 +113,9 @@ slot model slotId view =
                 , primaryColor
                 , center
                 ]
-                [ slotDialogCard "Topics" (TopicsView model.topics model.topicsContainer) slotId
-                , slotDialogCard "Terms" (TermsView model.terms) slotId
-                , slotDialogCard "Documents" (DocumentsView model.docs) slotId
+                [ slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
+                , slotDialogCard "Terms" (TermsView "Terms" model.terms) slotId
+                , slotDialogCard "Documents" (DocumentsView "Documents" model.docs) slotId
                 --, Button.render Mdl [5] model.mdl
                 --    [ Button.ripple
                 --    , css "flex" "flexValue 1"

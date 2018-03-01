@@ -14,8 +14,8 @@ import Material.Button as Button
 import Material.Color as Color
 import Material.Card as Card
 
-view : Model -> String -> Int -> Html Msg
-view model flex slotId =
+view : Model -> String -> Int -> String -> Html Msg
+view model flex slotId slotName =
     div
         [ cs "slot"
         , if (slotId == model.settings.slotToDelete)
@@ -28,6 +28,7 @@ view model flex slotId =
             [ css "height" "45px"
             ]
             [ Icon.view "art_track" [ css "margin" "5px"]
+            , text slotName
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab

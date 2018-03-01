@@ -14,8 +14,8 @@ import Material.Button as Button
 import Material.Chip as Chip
 import ContainerCache exposing (Page(..))
 
-view : Model -> String -> Int -> Html Msg
-view model flex slotId =
+view : Model -> String -> Int -> String -> Html Msg
+view model flex slotId slotName =
     div [ cs "slot"
         , if (slotId == model.settings.slotToDelete)
             then cs "slot__remove"
@@ -27,6 +27,7 @@ view model flex slotId =
             [ css "height" "45px"
             ]
             [ Icon.view "bubble_chart" [ css "margin" "5px"]
+            , text slotName
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab
