@@ -130,6 +130,15 @@ update msg model =
                 , slots =  slotChangeTo oldSlots slotId Dialog
                 }
             , Cmd.none)
+        HideSlot slotId ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+            in
+            ({ model
+                | settings = { oldSettings | slotToDelete =-1}
+                , slots =  slotRemove oldSlots slotId
+                }
+            , Cmd.none)
         UpdateSlot view slotId ->
             let oldSlots = model.slots
             in

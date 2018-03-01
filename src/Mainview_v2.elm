@@ -120,7 +120,16 @@ slot model slotId view =
                 , primaryColor
                 , center
                 ]
-                [ slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
+                [ Button.render Mdl [slotId] model.mdl
+                    [ cs "slot__close_button"
+                    , Button.fab
+                    , Button.minifab
+                    , Button.raised
+                    , Button.ripple
+                    , onClick (DeleteSlot slotId (HideSlot slotId))
+                    ]
+                    [ Icon.i "close" ]
+                , slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
                 , slotDialogCard "Terms" (TermsView "Terms" model.terms) slotId
                 , slotDialogCard "Documents" (DocumentsView "Documents" model.docs) slotId
                 --, Button.render Mdl [5] model.mdl
@@ -144,32 +153,23 @@ slot model slotId view =
                 --    , onClick (UpdateSlot (DocumentsView model.docs) slotId)
                 --    ]
                 --    [ text "Documents"]
-                , Button.render Mdl [slotId] model.mdl
-                    [ cs "slot__close_button"
-                    , Button.fab
-                    , Button.minifab
-                    , Button.raised
-                    , Button.ripple
-                    , onClick (DeleteSlot slotId (HideTerms slotId))
-                    ]
-                    [ Icon.i "close" ]
                 ]
         Empty ->
 --            let previouseSlot = (slotGet model.slots (slotId - 1))
 --            in
 --            if ((previouseSlot /= Empty) && (previouseSlot /= Dialog))
-            if (slotId == 0)
-                then
-                    div
-                        [ cs "slot"
-                        , cs "slot__half"
-                        , primaryColor
-                        , center
-                        , onClick (ChoseSlotDialog slotId)
-                        ]
-                        [ Icon.view "add" [Icon.size48]
-                        ]
-                else
+--            if (slotId == 0)
+--                then
+--                    div
+--                        [ cs "slot"
+--                        , cs "slot__half"
+--                        , primaryColor
+--                        , center
+--                        , onClick (ChoseSlotDialog slotId)
+--                        ]
+--                        [ Icon.view "add" [Icon.size48]
+--                        ]
+--                else
                     div [] []
         _ ->
             div [][ text "Error"]
