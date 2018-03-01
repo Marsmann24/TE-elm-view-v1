@@ -21361,6 +21361,7 @@ var _user$project$Document$bestDocsDecoder = function () {
 	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
 }();
 
+var _user$project$Model$generalBackgroundColor = _debois$elm_mdl$Material_Options$cs('generalBackgroundColor');
 var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Options$cs('primaryColor');
 var _user$project$Model$slotChangeTo = F3(
 	function (oldSlots, id, value) {
@@ -23225,13 +23226,17 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 							_debois$elm_mdl$Material_Options$div,
 							{
 								ctor: '::',
-								_0: _user$project$Model$primaryColor,
+								_0: _user$project$Model$generalBackgroundColor,
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$onClick(
-										_user$project$Model$ChoseSlotDialog(
-											A2(_user$project$Model$slotGetFirstId, model.slots, _user$project$Model$Empty))),
-									_1: {ctor: '[]'}
+									_0: _debois$elm_mdl$Material_Options$center,
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ChoseSlotDialog(
+												A2(_user$project$Model$slotGetFirstId, model.slots, _user$project$Model$Empty))),
+										_1: {ctor: '[]'}
+									}
 								}
 							},
 							{

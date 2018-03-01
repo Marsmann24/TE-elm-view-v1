@@ -92,7 +92,8 @@ viewBody model =
                         (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
                         :: (Array.toList (Array.indexedMap (slot model) model.slots.main)))
                     [ div
-                        [ primaryColor
+                        [ generalBackgroundColor
+                        , center
                         , onClick (ChoseSlotDialog (slotGetFirstId model.slots Empty))
                         ]
                         [ Icon.view "add" [Icon.size48]

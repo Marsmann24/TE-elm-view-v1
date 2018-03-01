@@ -228,3 +228,6 @@ slotRemove slots removeId =
 primaryColor : Property c m
 --primaryColor = Color.background Color.primaryContrast
 primaryColor = cs "primaryColor"
+
+generalBackgroundColor : Property c m
+generalBackgroundColor = cs "generalBackgroundColor"
