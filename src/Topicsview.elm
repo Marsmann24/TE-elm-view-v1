@@ -71,7 +71,7 @@ topic2Chip model topic =
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs topic.id -1 "relevance"))
+                    (ExecCmd (Request.loadBestDocs topic.id -1 "RELEVANCE"))
                     --ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDoc topic)

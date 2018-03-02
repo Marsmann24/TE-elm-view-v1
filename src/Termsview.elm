@@ -80,7 +80,7 @@ topic2Terms model term id=
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs 0 term.id "relevance"))
+                    (ExecCmd (Request.loadBestDocs 0 term.id "RELEVANCE"))
                     --(ShowDocuments
                     --    (List.filter
                     --        (Document.termInDocument term)

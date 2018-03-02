@@ -22542,7 +22542,7 @@ var _user$project$Topicsview$topic2Chip = F2(
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
 											_user$project$Model$ExecCmd(
-												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
+												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'RELEVANCE'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
@@ -23080,7 +23080,7 @@ var _user$project$Termsview$topic2Terms = F3(
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
 											_user$project$Model$ExecCmd(
-												A3(_user$project$Request$loadBestDocs, 0, term.id, 'relevance'))),
+												A3(_user$project$Request$loadBestDocs, 0, term.id, 'RELEVANCE'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
