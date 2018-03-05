@@ -40,10 +40,11 @@ view model =
 viewSearch : Model -> Html Msg
 viewSearch model =
     Textfield.render Mdl [7] model.mdl
-        [ Textfield.label "Expandable"
+        [ Textfield.label "Search"
         , Textfield.floatingLabel
-        , Textfield.expandable "id-of-expandable-1"
-        , Textfield.expandableIcon "search"
+        , Textfield.text_
+    --    , Textfield.expandable "id-of-expandable-1"
+    --    , Textfield.expandableIcon "search"
         , css "padding" "20px 50px 10px"
         , onInput Search
         ]
