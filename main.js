@@ -24583,7 +24583,11 @@ var _user$project$Update$update = F2(
 											topicsContainer)),
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
-										{search: false, search4: ''})
+										{
+											search: false,
+											search4: '',
+											error: _elm_lang$core$Basics$toString(concatTopTopics)
+										})
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};

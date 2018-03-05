@@ -308,6 +308,7 @@ update msg model =
                             { oldSettings
                                 | search = False
                                 , search4 = ""
+                                , error = toString concatTopTopics
                             --    , showTopics = True
                             }
                     }, Cmd.none)
