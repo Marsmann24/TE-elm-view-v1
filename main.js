@@ -24533,24 +24533,6 @@ var _user$project$Update$update = F2(
 						};
 					}
 				case 'NewSearchTopics':
-					var isMember = F2(
-						function (terms, topics) {
-							return A2(
-								_elm_lang$core$List$member,
-								topics.id,
-								A2(
-									_elm_lang$core$List$map,
-									function (_) {
-										return _.id;
-									},
-									terms));
-						});
-					var newTopics = function (terms) {
-						return A2(
-							_elm_lang$core$List$filter,
-							isMember(terms),
-							model.topics);
-					};
 					var concatTopTopics = function (terms) {
 						return _elm_lang$core$Set$toList(
 							_elm_lang$core$Set$fromList(
@@ -24561,6 +24543,19 @@ var _user$project$Update$update = F2(
 											return _.top_topic;
 										},
 										terms))));
+					};
+					var isMember = F2(
+						function (terms, topics) {
+							return A2(
+								_elm_lang$core$List$member,
+								topics.id,
+								concatTopTopics(terms));
+						});
+					var newTopics = function (terms) {
+						return A2(
+							_elm_lang$core$List$filter,
+							isMember(terms),
+							model.topics);
 					};
 					var oldSlots = model.slots;
 					var topicsContainer = model.topicsContainer;
@@ -24583,11 +24578,7 @@ var _user$project$Update$update = F2(
 											topicsContainer)),
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
-										{
-											search: false,
-											search4: '',
-											error: _elm_lang$core$Basics$toString(concatTopTopics)
-										})
+										{search: false, search4: ''})
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};

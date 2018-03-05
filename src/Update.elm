@@ -293,7 +293,7 @@ update msg model =
                 isMember terms topics=
                     List.member
                         topics.id
-                        (List.map .id terms)
+                        (concatTopTopics terms)
                 newTopics : List Term -> List Topic
                 newTopics terms =
                     List.filter
@@ -308,7 +308,6 @@ update msg model =
                             { oldSettings
                                 | search = False
                                 , search4 = ""
-                                , error = toString concatTopTopics
                             --    , showTopics = True
                             }
                     }, Cmd.none)
