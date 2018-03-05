@@ -21308,7 +21308,7 @@ var _user$project$Topic$defaultRawTopic = A4(
 	{ctor: '[]'});
 var _user$project$Topic$matchRawTopicsById = F2(
 	function (topics, sorting) {
-		return A2(
+		var sortedList = A2(
 			_elm_lang$core$List$map,
 			function (x) {
 				return A2(
@@ -21317,6 +21317,13 @@ var _user$project$Topic$matchRawTopicsById = F2(
 					A2(_elm_lang$core$Dict$get, x, topics));
 			},
 			sorting);
+		var unsortedList = A2(
+			_elm_lang$core$List$filter,
+			function (_p0) {
+				return !A3(_elm_lang$core$Basics$flip, _elm_lang$core$List$member, sortedList, _p0);
+			},
+			_elm_lang$core$Dict$values(topics));
+		return A2(_elm_lang$core$List$append, sortedList, unsortedList);
 	});
 var _user$project$Topic$makeTopicsList = F3(
 	function (topics, sorting, terms) {
