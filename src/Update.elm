@@ -12,6 +12,7 @@ import ContainerCache exposing (Page(..))
 import Platform.Cmd
 import Maybe exposing (withDefault)
 import Array
+import Set
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -54,19 +55,25 @@ update msg model =
                 let oldSettings = model.settings
                 in
                 ({ model
-                    | settings = { oldSettings | search = True}
+                    | settings =
+                        { oldSettings
+                            | search = True
+                            , search4 = term
+                        }
                     --, result = List.filter (\x -> (x == term)) []
-                    }
-                , Cmd.none)
-        Found view ->
-                let oldSettings = model.settings
-                    oldSlots = model.slots
-                in
-                ({ model
-                    | settings = { oldSettings | search = False}
-                    , slots = slotFromTo oldSlots Empty view
-                    }
-                , Cmd.none)
+                }, Cmd.none)
+        --Found view ->
+        --        let oldSettings = model.settings
+        --            oldSlots = model.slots
+        --        in
+        --        ({ model
+        --            | settings = { oldSettings
+        --                            | search = False
+        --                            , search4 = ""
+        --                        }
+        --            , slots = slotFromTo oldSlots Empty view
+        --            }
+        --        , Cmd.none)
         DeleteSlot slotId msg->
             let oldSettings = model.settings
             in
@@ -86,64 +93,64 @@ update msg model =
             ({ model
                 | slots = newSlots
             }, Cmd.none)
-        ShowTopics topics ->
-            let oldSettings = model.settings
-                oldSlots = model.slots
-                topicsContainer = model.topicsContainer
-            in
-            ({ model
-                | settings = { oldSettings | showTopics = True}
-                , slots = slotFromTo oldSlots Empty (TopicsView "Topics" topics topicsContainer)
-                }
-            , Cmd.none)
-        HideTopics slotId ->
-            let oldSettings = model.settings
-                oldSlots = model.slots
-            in
-            ({ model
-                | settings = { oldSettings | showTopics = False, slotToDelete =-1}
-                , slots =  slotRemove oldSlots slotId
-                }
-            , Cmd.none)
-        ShowTerms terms ->
-            let oldSettings = model.settings
-                oldSlots = model.slots
-            in
-            ({ model
-                | settings = { oldSettings | showTerms = True}
-        --        , termList = terms
-                , slots = slotFromTo oldSlots Empty (TermsView "Terms" terms)
-                }
-            , Cmd.none)
-        HideTerms slotId ->
-            let oldSettings = model.settings
-                oldSlots = model.slots
-            in
-            ({ model
-                | settings = { oldSettings | showTerms = False, slotToDelete =-1}
-                , slots =  slotRemove oldSlots slotId
-                }
-            , Cmd.none)
-        ShowDocuments documents ->
-            let oldSettings = model.settings
-                oldSlots = model.slots
-                docs = model.docs
-                contains term document = List.member term document.terms
-            in
-            ({ model
-                | settings = { oldSettings | showDocuments = True}
-                , slots = slotFromTo oldSlots Empty (DocumentsView "Documents" docs)
-                }
-            , Cmd.none)
-        HideDocuments slotId ->
-            let oldSettings = model.settings
-                oldSlots = model.slots
-            in
-            ({ model
-                | settings = { oldSettings | showDocuments = False, slotToDelete =-1}
-                , slots =  slotRemove oldSlots slotId
-                }
-            , Cmd.none)
+--        ShowTopics topics ->
+--            let oldSettings = model.settings
+--                oldSlots = model.slots
+--                topicsContainer = model.topicsContainer
+--            in
+--            ({ model
+--                | settings = { oldSettings | showTopics = True}
+--                , slots = slotFromTo oldSlots Empty (TopicsView "Topics" topics topicsContainer)
+--                }
+--            , Cmd.none)
+--        HideTopics slotId ->
+--            let oldSettings = model.settings
+--                oldSlots = model.slots
+--            in
+--            ({ model
+--                | settings = { oldSettings | showTopics = False, slotToDelete =-1}
+--                , slots =  slotRemove oldSlots slotId
+--                }
+--            , Cmd.none)
+--        ShowTerms terms ->
+--            let oldSettings = model.settings
+--                oldSlots = model.slots
+--            in
+--            ({ model
+--                | settings = { oldSettings | showTerms = True}
+--        --        , termList = terms
+--                , slots = slotFromTo oldSlots Empty (TermsView "Terms" terms)
+--                }
+--            , Cmd.none)
+--        HideTerms slotId ->
+--            let oldSettings = model.settings
+--                oldSlots = model.slots
+--            in
+--            ({ model
+--                | settings = { oldSettings | showTerms = False, slotToDelete =-1}
+--                , slots =  slotRemove oldSlots slotId
+--                }
+--            , Cmd.none)
+--        ShowDocuments documents ->
+--            let oldSettings = model.settings
+--                oldSlots = model.slots
+--                docs = model.docs
+--                contains term document = List.member term document.terms
+--            in
+--            ({ model
+--                | settings = { oldSettings | showDocuments = True}
+--                , slots = slotFromTo oldSlots Empty (DocumentsView "Documents" docs)
+--                }
+--            , Cmd.none)
+--        HideDocuments slotId ->
+--            let oldSettings = model.settings
+--                oldSlots = model.slots
+--            in
+--            ({ model
+--                | settings = { oldSettings | showDocuments = False, slotToDelete =-1}
+--                , slots =  slotRemove oldSlots slotId
+--                }
+--            , Cmd.none)
         ChoseSlotDialog slotId ->
             let oldSettings = model.settings
                 oldSlots = model.slots
@@ -174,11 +181,10 @@ update msg model =
             case result of
                 Ok newTopics ->
                     ({ model
-                        | settings = { oldSettings | showTopics = True}
-                        , slots = slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
+                        | slots = slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
                         , topics = newTopics
-                        }
-                    , Cmd.none)
+                        --, settings = { oldSettings | showTopics = True}
+                    }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewTerms name result ->
@@ -189,25 +195,23 @@ update msg model =
             case result of
                 Ok newTerms ->
                     ({ model
-                        | settings = { oldSettings | showTerms = True}
-                        , slots = slotFromTo oldSlots Empty (TermsView name newTerms)
-                        , terms = newTerms}
-                    , Cmd.none)
+                        | slots = slotFromTo oldSlots Empty (TermsView name newTerms)
+                        , terms = newTerms
+                        --, settings = { oldSettings | showTerms = True}
+                    }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocs name result ->
             let oldSettings = model.settings
                 oldSlots = model.slots
-                contains term document = List.member term document.terms
             in
             case result of
                 Ok newDocs ->
                     ({ model
-                        | settings = { oldSettings | showDocuments = True}
-                        , slots = slotFromTo oldSlots Empty (DocumentsView name newDocs)
+                        | slots = slotFromTo oldSlots Empty (DocumentsView name newDocs)
                         , docs = newDocs
-                        }
-                    , Cmd.none)
+                        --,settings = { oldSettings | showDocuments = True}
+                    }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocTokens name result ->
@@ -218,9 +222,9 @@ update msg model =
             case result of
                 Ok document ->
                     ({ model
-                        | settings = { oldSettings | showTerms = True}
-                        , slots = slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))}
-                    , Cmd.none)
+                        | slots = slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))
+                        --,settings = { oldSettings | showTerms = True}
+                    }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocument result ->
@@ -259,7 +263,6 @@ update msg model =
                         (maybeTerm2TopicList
                             (fetchTerm terms)
                         )
-
                 newTopics : List Term -> List Topic
                 newTopics terms =
                     List.filter
@@ -269,12 +272,103 @@ update msg model =
             case result of
                 Ok termList ->
                     ({ model
-                        | settings = { oldSettings | showTopics = True}
-                        , slots = slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
-                        }
-                    , Cmd.none)
+                        | slots = slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
+                        --,settings = { oldSettings | showTopics = True}
+                    }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
+        NewSearchTopics name result ->
+            let oldSettings = model.settings
+                topicsContainer = model.topicsContainer
+                oldSlots = model.slots
+                concatTopTopics : List Term -> List Int
+                concatTopTopics terms =
+                    Set.toList
+                        (Set.fromList
+                            (List.concat
+                                (List.map .top_topic terms)
+                            )
+                        )
+                isMember : List Term -> Topic -> Bool
+                isMember terms topics=
+                    List.member
+                        topics.id
+                        (List.map .id terms)
+                newTopics : List Term -> List Topic
+                newTopics terms =
+                    List.filter
+                        (isMember terms)
+                        model.topics
+            in
+            case result of
+                Ok termList ->
+                    ({ model
+                        | slots = slotFromTo oldSlots Empty (TopicsView name (newTopics termList) topicsContainer)
+                        , settings =
+                            { oldSettings
+                                | search = False
+                                , search4 = ""
+                            --    , showTopics = True
+                            }
+                    }, Cmd.none)
+                Err err ->
+                    ({ model
+                        | settings =
+                            { oldSettings
+                                | search = False
+                                , search4 = ""
+                                , error = toString err
+                            }
+                    }, Cmd.none)
+        NewSearchTerms name result ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+            in
+            case result of
+                Ok termList ->
+                    ({ model
+                        | slots = slotFromTo oldSlots Empty (TermsView name termList)
+                        , settings =
+                            { oldSettings
+                                | search = False
+                                , search4 = ""
+                            --    , showTerms = True
+                            }
+                    }, Cmd.none)
+                Err err ->
+                    ({ model
+                        | settings =
+                            { oldSettings
+                                | search = False
+                                , search4 = ""
+                                , error = toString err
+                            }
+                    }, Cmd.none)
+        NewSearchDocs name result ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+
+            in
+            case result of
+                Ok docList ->
+                    ({ model
+                        | slots = slotFromTo oldSlots Empty (DocumentsView name docList)
+                        , settings =
+                            { oldSettings
+                                | search = False
+                                , search4 = ""
+                            --    , showDocuments = True
+                            }
+                    }, Cmd.none)
+                Err err ->
+                    ({ model
+                        | settings =
+                            { oldSettings
+                                | search = False
+                                , search4 = ""
+                                , error = toString err
+                            }
+                    }, Cmd.none)
         ExecCmd cmd ->
             (model, cmd)
         SelectAction defMsg ->

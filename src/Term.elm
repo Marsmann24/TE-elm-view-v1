@@ -12,6 +12,10 @@ type alias Term =
     , top_topic : List Int
     }
 
+defaultTerm : Term
+defaultTerm =
+    (Term -1 "Error: Not matching." Nothing Nothing [])
+
 type alias TermSorting =
     List { id : Int, relevance : Int}
 
@@ -21,10 +25,6 @@ type alias TermsResult =
     }
 
 -- Mapper and Checker
-defaultTerm : Term
-defaultTerm =
-    (Term -1 "Error: Not matching." Nothing Nothing [])
-
 termId2Term : List Term -> Int -> Maybe Term
 termId2Term terms termId =
     (List.head (List.filter (\x -> x.id == termId) terms))

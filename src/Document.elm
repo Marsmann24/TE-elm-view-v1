@@ -3,10 +3,36 @@ module Document exposing (..)
 import Topic exposing (..)
 import Term exposing (..)
 
-import Json.Decode exposing (Decoder, int, string, list, map2, map4, map8, field, keyValuePairs)
-import Decoderhelper exposing (int2, map10, pseudolist, listheadwithdefault)
+import Json.Decode exposing (Decoder, int, string, list, map2, map4, map8, field, keyValuePairs, maybe)
+import Decoderhelper exposing (int2, float2, map12, pseudolist, listheadwithdefault)
 
 -- Types
+type alias Token =
+    { topic_id : Int
+    , posintion_in_document : Int
+    , term : String
+    , parent_topic_ids : List Int
+    }
+
+type alias Doc =
+    { id : Int
+    , keyword_snippet : String
+    , keyword_title : String
+    , top_topic : List Int
+    , linkurl : String
+    , time_stamp : Int
+    , title : String
+    , snippet : String
+    , topic_id : Maybe Int
+    , document_count : Maybe String
+    , relevance : Maybe Float
+    , isino : Maybe Int
+    }
+
+defaultDoc : Doc
+defaultDoc =
+    Doc 0 "" "default" [] "url" 0 "default" "" Nothing Nothing Nothing Nothing
+
 type alias Document =
     { id : Int
     , linkurl : String
@@ -18,33 +44,11 @@ type alias Document =
     , word_list : List Token
     }
 
-type alias Token =
-    { topic_id : Int
-    , posintion_in_document : Int
-    , term : String
-    , parent_topic_ids : List Int
-    }
-
-type alias Doc =
-    { document_id : Int
-    , topic_id : Int
-    , document_count : String
-    , keyword_snippet : String
-    , keyword_title : String
-    , top_topic : List Int
-    , linkurl : String
-    , time_stamp : Int
-    , title : String
-    , snippet : String
-    }
+defaultDocument : Document
+defaultDocument =
+    Document 0 "url" 0 "default" "" "" [] []
 
 -- Mapper and Checker
-docInTopic : Doc -> Topic -> Bool
-docInTopic doc topic =
-    if (doc.topic_id == topic.id)
-    then True
-    else List.member topic.id doc.top_topic
-
 termInDocument : Term -> Document -> Bool
 termInDocument term document =
     List.member term.name (List.map .term document.word_list)
@@ -53,19 +57,13 @@ documentTerms : Document -> List Term -> List Term
 documentTerms document terms =
     List.filter ((flip termInDocument) document) terms
 
-topicInDoc : Topic -> Doc -> Bool
-topicInDoc topic doc =
-    if (topic.id == doc.topic_id)
-        then True
-        else False
-
 documentId2Document : List Document -> Int -> Maybe Document
 documentId2Document documents documentId =
     (List.head (List.filter (\x -> x.id == documentId) documents))
 
 docId2Doc : List Doc -> Int -> Maybe Doc
 docId2Doc docs docId =
-    (List.head (List.filter (\x -> x.document_id == docId) docs))
+    (List.head (List.filter (\x -> x.id == docId) docs))
 
 -- Decoders :
 tokenDecoder : Decoder Token
@@ -97,10 +95,8 @@ bestDocsDecoder =
         documents =
             field "DOCUMENT"
                 (pseudolist
-                    (map10 Doc
+                    (map12 Doc
                         (field "DOCUMENT_ID" int2)
-                        (field "TOPIC_ID" int2)
-                        (field "PR_DOCUMENT_GIVEN_TOPIC" string)
                         (field "KEYWORD_SNIPPET" string)
                         (field "KEYWORD_TITLE" string)
                         (field "TOP_TOPIC" (list int))
@@ -108,6 +104,10 @@ bestDocsDecoder =
                         (field "TIME$TIME_STAMP" int2)
                         (field "TEXT$TITLE" string)
                         (field "TEXT$SNIPPET" string)
+                        (maybe (field "TOPIC_ID" int2))
+                        (maybe (field "PR_DOCUMENT_GIVEN_TOPIC" string))
+                        (maybe (field "RELEVANCE" float2))
+                        (maybe (field "ISIN0" int2))
                     )
                 )
 
@@ -120,7 +120,7 @@ bestDocsDecoder =
         getDoc docs docId =
             List.head
                 (List.filter
-                    (\a -> a.document_id == docId)
+                    (\a -> a.id == docId)
                     docs
                 )
 

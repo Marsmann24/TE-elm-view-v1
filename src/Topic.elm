@@ -15,11 +15,7 @@ type alias RawTopic =
 
 defaultRawTopic : RawTopic
 defaultRawTopic =
-    RawTopic
-        -1
-        defaultTopicHirarchie
-        "Error: not matching"
-        []
+    RawTopic -1 defaultTopicHirarchie "" []
 
 type alias Topic =
     { id : Int
@@ -30,12 +26,7 @@ type alias Topic =
 
 defaultTopic : Topic
 defaultTopic =
-    Topic
-        0
-        defaultTopicHirarchie
-        "Error: not matching"
-        []
-
+    Topic 0 defaultTopicHirarchie "" []
 
 type alias TopicHirarchie =
     { start : Int
@@ -46,11 +37,7 @@ type alias TopicHirarchie =
 
 defaultTopicHirarchie : TopicHirarchie
 defaultTopicHirarchie =
-    TopicHirarchie
-        -1
-        -1
-        -1
-        Nothing
+    TopicHirarchie 0 0 0 Nothing
 
 --type alias TopicResult =
 --    { topics : List Topic

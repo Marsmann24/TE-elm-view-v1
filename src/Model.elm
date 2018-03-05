@@ -15,7 +15,7 @@ import Maybe exposing (Maybe, withDefault)
 
 type Msg
     = Search String
-    | Found View
+    --| Found View
     | SelectTab Int
     | CloseTab
     | Raise Int
@@ -43,6 +43,9 @@ type Msg
     | NewTerms String (Result Http.Error (List Term))
     | NewFrames String (Result Http.Error (List Term))
     | NewTermTopics String (Result Http.Error (List Term))
+    | NewSearchTopics String (Result Http.Error (List Term))
+    | NewSearchTerms String (Result Http.Error (List Term))
+    | NewSearchDocs String (Result Http.Error (List Doc))
     | ExecCmd (Cmd Msg)
     | SelectAction Msg
     | ExecuteActionIfNone Msg
@@ -60,8 +63,7 @@ type Msg
 --    | GetBestFrames
 
 type alias Model =
-    { result : List Searchresult    -- search result
-    , topics : List Topic           -- all topics
+    { topics : List Topic           -- all topics
     , currentTopics : List Topic    -- list of topics for the ranking
     , docs : List Doc                -- ranked articles
     , currentDocument :              -- active card and preview article
@@ -75,6 +77,7 @@ type alias Model =
     , raised : Int                  -- ID of raised card
     , selectedMsg : Msg             -- Msg to execute onMouseUp
     , settings : Settings           -- which views are shown
+    --, result : List Searchresult    -- search result
     , slots : Slots
     , containerTopicModel : ContainerCache.ContainerModel (List Topic)
     , topicsContainer : Int
@@ -118,15 +121,16 @@ type alias Model =
 --    List.member term article.terms
 
 type alias Settings =
-    { showTopics : Bool
-    , showDocuments : Bool
-    , showTerms : Bool
+    { error : String
+    --, showTopics : Bool
+    --, showDocuments : Bool
+    --, showTerms : Bool
     , showSaved : Bool
     , bottom : Bool
     , view2 : Bool
     , showSlotDialoge : Bool
     , search : Bool
-    , error : String
+    , search4 : String
     , slotToDelete : Int
     }
 
@@ -135,11 +139,10 @@ type Tab
     | DocumentTab String Document
     | ErrorTab String String
 
-type Searchresult
-    = Topicresult Topic
---    | Wordresult String
-    | Termresult Term
-    | Documentresult Doc
+--type Searchresult
+--    = Topicresult Topic
+--    | Termresult Term
+--    | Documentresult Doc
 
 --Slots
 

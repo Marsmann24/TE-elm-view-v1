@@ -19921,6 +19921,137 @@ var _debois$elm_mdl$Material_Scheme$top = function (content) {
 	return A3(_debois$elm_mdl$Material_Scheme$topWithScheme, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$Grey, content);
 };
 
+var _elm_lang$core$Set$foldr = F3(
+	function (f, b, _p0) {
+		var _p1 = _p0;
+		return A3(
+			_elm_lang$core$Dict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p1._0);
+	});
+var _elm_lang$core$Set$foldl = F3(
+	function (f, b, _p3) {
+		var _p4 = _p3;
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, _p5, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p4._0);
+	});
+var _elm_lang$core$Set$toList = function (_p6) {
+	var _p7 = _p6;
+	return _elm_lang$core$Dict$keys(_p7._0);
+};
+var _elm_lang$core$Set$size = function (_p8) {
+	var _p9 = _p8;
+	return _elm_lang$core$Dict$size(_p9._0);
+};
+var _elm_lang$core$Set$member = F2(
+	function (k, _p10) {
+		var _p11 = _p10;
+		return A2(_elm_lang$core$Dict$member, k, _p11._0);
+	});
+var _elm_lang$core$Set$isEmpty = function (_p12) {
+	var _p13 = _p12;
+	return _elm_lang$core$Dict$isEmpty(_p13._0);
+};
+var _elm_lang$core$Set$Set_elm_builtin = function (a) {
+	return {ctor: 'Set_elm_builtin', _0: a};
+};
+var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
+var _elm_lang$core$Set$singleton = function (k) {
+	return _elm_lang$core$Set$Set_elm_builtin(
+		A2(
+			_elm_lang$core$Dict$singleton,
+			k,
+			{ctor: '_Tuple0'}));
+};
+var _elm_lang$core$Set$insert = F2(
+	function (k, _p14) {
+		var _p15 = _p14;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A3(
+				_elm_lang$core$Dict$insert,
+				k,
+				{ctor: '_Tuple0'},
+				_p15._0));
+	});
+var _elm_lang$core$Set$fromList = function (xs) {
+	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
+};
+var _elm_lang$core$Set$map = F2(
+	function (f, s) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_elm_lang$core$Set$toList(s)));
+	});
+var _elm_lang$core$Set$remove = F2(
+	function (k, _p16) {
+		var _p17 = _p16;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$remove, k, _p17._0));
+	});
+var _elm_lang$core$Set$union = F2(
+	function (_p19, _p18) {
+		var _p20 = _p19;
+		var _p21 = _p18;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
+	});
+var _elm_lang$core$Set$intersect = F2(
+	function (_p23, _p22) {
+		var _p24 = _p23;
+		var _p25 = _p22;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
+	});
+var _elm_lang$core$Set$diff = F2(
+	function (_p27, _p26) {
+		var _p28 = _p27;
+		var _p29 = _p26;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
+	});
+var _elm_lang$core$Set$filter = F2(
+	function (p, _p30) {
+		var _p31 = _p30;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, _p32) {
+						return p(k);
+					}),
+				_p31._0));
+	});
+var _elm_lang$core$Set$partition = F2(
+	function (p, _p33) {
+		var _p34 = _p33;
+		var _p35 = A2(
+			_elm_lang$core$Dict$partition,
+			F2(
+				function (k, _p36) {
+					return p(k);
+				}),
+			_p34._0);
+		var p1 = _p35._0;
+		var p2 = _p35._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
+			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
+		};
+	});
+
 var _elm_lang$http$Native_Http = function() {
 
 
@@ -20861,7 +20992,7 @@ var _user$project$ContainerCache$update = F2(
 		}
 	});
 
-var _user$project$Decoderhelper$map10 = function ($function) {
+var _user$project$Decoderhelper$map12 = function ($function) {
 	return function (decoder0) {
 		return function (decoder1) {
 			return function (decoder2) {
@@ -20872,34 +21003,40 @@ var _user$project$Decoderhelper$map10 = function ($function) {
 								return function (decoder7) {
 									return function (decoder8) {
 										return function (decoder9) {
-											return A3(
-												_elm_lang$core$Json_Decode$map2,
-												F2(
-													function (a, b) {
-														return $function(a.a1)(a.a2)(a.a3)(a.a4)(a.a5)(b.b1)(b.b2)(b.b3)(b.b4)(b.b5);
-													}),
-												A6(
-													_elm_lang$core$Json_Decode$map5,
-													F5(
-														function (a, b, c, d, e) {
-															return {a1: a, a2: b, a3: c, a4: d, a5: e};
-														}),
-													decoder0,
-													decoder1,
-													decoder2,
-													decoder3,
-													decoder4),
-												A6(
-													_elm_lang$core$Json_Decode$map5,
-													F5(
-														function (a, b, c, d, e) {
-															return {b1: a, b2: b, b3: c, b4: d, b5: e};
-														}),
-													decoder5,
-													decoder6,
-													decoder7,
-													decoder8,
-													decoder9));
+											return function (decoder10) {
+												return function (decoder11) {
+													return A3(
+														_elm_lang$core$Json_Decode$map2,
+														F2(
+															function (a, b) {
+																return $function(a.a0)(a.a1)(a.a2)(a.a3)(a.a4)(a.a5)(b.b0)(b.b1)(b.b2)(b.b3)(b.b4)(b.b5);
+															}),
+														A7(
+															_elm_lang$core$Json_Decode$map6,
+															F6(
+																function (a0, a1, a2, a3, a4, a5) {
+																	return {a0: a0, a1: a1, a2: a2, a3: a3, a4: a4, a5: a5};
+																}),
+															decoder0,
+															decoder1,
+															decoder2,
+															decoder3,
+															decoder4,
+															decoder5),
+														A7(
+															_elm_lang$core$Json_Decode$map6,
+															F6(
+																function (b0, b1, b2, b3, b4, b5) {
+																	return {b0: b0, b1: b1, b2: b2, b3: b3, b4: b4, b5: b5};
+																}),
+															decoder6,
+															decoder7,
+															decoder8,
+															decoder9,
+															decoder10,
+															decoder11));
+												};
+											};
 										};
 									};
 								};
@@ -20948,6 +21085,15 @@ var _user$project$Decoderhelper$pseudolist = function (decoder) {
 		_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
 		_elm_lang$core$Json_Decode$keyValuePairs(decoder));
 };
+var _user$project$Decoderhelper$float2 = function () {
+	var convert = function (a) {
+		return A2(
+			_elm_lang$core$Result$withDefault,
+			0,
+			_elm_lang$core$String$toFloat(a));
+	};
+	return A2(_elm_lang$core$Json_Decode$map, convert, _elm_lang$core$Json_Decode$string);
+}();
 var _user$project$Decoderhelper$int2 = function () {
 	var convert = function (a) {
 		return A2(
@@ -21153,12 +21299,12 @@ var _user$project$Topic$TopicHirarchie = F4(
 	function (a, b, c, d) {
 		return {start: a, end: b, depth: c, cluster: d};
 	});
-var _user$project$Topic$defaultTopicHirarchie = A4(_user$project$Topic$TopicHirarchie, -1, -1, -1, _elm_lang$core$Maybe$Nothing);
+var _user$project$Topic$defaultTopicHirarchie = A4(_user$project$Topic$TopicHirarchie, 0, 0, 0, _elm_lang$core$Maybe$Nothing);
 var _user$project$Topic$defaultRawTopic = A4(
 	_user$project$Topic$RawTopic,
 	-1,
 	_user$project$Topic$defaultTopicHirarchie,
-	'Error: not matching',
+	'',
 	{ctor: '[]'});
 var _user$project$Topic$matchRawTopicsById = F2(
 	function (topics, sorting) {
@@ -21199,7 +21345,7 @@ var _user$project$Topic$defaultTopic = A4(
 	_user$project$Topic$Topic,
 	0,
 	_user$project$Topic$defaultTopicHirarchie,
-	'Error: not matching',
+	'',
 	{ctor: '[]'});
 var _user$project$Topic$topicDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
@@ -21240,7 +21386,7 @@ var _user$project$Document$docId2Doc = F2(
 			A2(
 				_elm_lang$core$List$filter,
 				function (x) {
-					return _elm_lang$core$Native_Utils.eq(x.document_id, docId);
+					return _elm_lang$core$Native_Utils.eq(x.id, docId);
 				},
 				docs));
 	});
@@ -21253,10 +21399,6 @@ var _user$project$Document$documentId2Document = F2(
 					return _elm_lang$core$Native_Utils.eq(x.id, documentId);
 				},
 				documents));
-	});
-var _user$project$Document$topicInDoc = F2(
-	function (topic, doc) {
-		return _elm_lang$core$Native_Utils.eq(topic.id, doc.topic_id) ? true : false;
 	});
 var _user$project$Document$termInDocument = F2(
 	function (term, document) {
@@ -21277,14 +21419,6 @@ var _user$project$Document$documentTerms = F2(
 			A2(_elm_lang$core$Basics$flip, _user$project$Document$termInDocument, document),
 			terms);
 	});
-var _user$project$Document$docInTopic = F2(
-	function (doc, topic) {
-		return _elm_lang$core$Native_Utils.eq(doc.topic_id, topic.id) ? true : A2(_elm_lang$core$List$member, topic.id, doc.top_topic);
-	});
-var _user$project$Document$Document = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {id: a, linkurl: b, time_stamp: c, title: d, fulltext: e, search_test: f, frame_list: g, word_list: h};
-	});
 var _user$project$Document$Token = F4(
 	function (a, b, c, d) {
 		return {topic_id: a, posintion_in_document: b, term: c, parent_topic_ids: d};
@@ -21299,6 +21433,95 @@ var _user$project$Document$tokenDecoder = A5(
 		_elm_lang$core$Json_Decode$field,
 		'HIERARCHICAL_TOPIC$PARENT_IDS',
 		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)));
+var _user$project$Document$Doc = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return {id: a, keyword_snippet: b, keyword_title: c, top_topic: d, linkurl: e, time_stamp: f, title: g, snippet: h, topic_id: i, document_count: j, relevance: k, isino: l};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _user$project$Document$defaultDoc = _user$project$Document$Doc(0)('')('default')(
+	{ctor: '[]'})('url')(0)('default')('')(_elm_lang$core$Maybe$Nothing)(_elm_lang$core$Maybe$Nothing)(_elm_lang$core$Maybe$Nothing)(_elm_lang$core$Maybe$Nothing);
+var _user$project$Document$bestDocsDecoder = function () {
+	var getDoc = F2(
+		function (docs, docId) {
+			return _elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (a) {
+						return _elm_lang$core$Native_Utils.eq(a.id, docId);
+					},
+					docs));
+		});
+	var applySorting = F2(
+		function (docs, order) {
+			return A2(
+				_elm_lang$core$List$filterMap,
+				getDoc(docs),
+				order);
+		});
+	var sorting = A2(
+		_elm_lang$core$Json_Decode$field,
+		'DOCUMENT_SORTING',
+		_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int2));
+	var documents = A2(
+		_elm_lang$core$Json_Decode$field,
+		'DOCUMENT',
+		_user$project$Decoderhelper$pseudolist(
+			_user$project$Decoderhelper$map12(_user$project$Document$Doc)(
+				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _user$project$Decoderhelper$int2))(
+				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_SNIPPET', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_TITLE', _elm_lang$core$Json_Decode$string))(
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'TOP_TOPIC',
+					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)))(
+				A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _user$project$Decoderhelper$int2))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string))(
+				A2(_elm_lang$core$Json_Decode$field, 'TEXT$SNIPPET', _elm_lang$core$Json_Decode$string))(
+				_elm_lang$core$Json_Decode$maybe(
+					A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _user$project$Decoderhelper$int2)))(
+				_elm_lang$core$Json_Decode$maybe(
+					A2(_elm_lang$core$Json_Decode$field, 'PR_DOCUMENT_GIVEN_TOPIC', _elm_lang$core$Json_Decode$string)))(
+				_elm_lang$core$Json_Decode$maybe(
+					A2(_elm_lang$core$Json_Decode$field, 'RELEVANCE', _user$project$Decoderhelper$float2)))(
+				_elm_lang$core$Json_Decode$maybe(
+					A2(_elm_lang$core$Json_Decode$field, 'ISIN0', _user$project$Decoderhelper$int2)))));
+	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
+}();
+var _user$project$Document$Document = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {id: a, linkurl: b, time_stamp: c, title: d, fulltext: e, search_test: f, frame_list: g, word_list: h};
+	});
+var _user$project$Document$defaultDocument = A8(
+	_user$project$Document$Document,
+	0,
+	'url',
+	0,
+	'default',
+	'',
+	'',
+	{ctor: '[]'},
+	{ctor: '[]'});
 var _user$project$Document$documentDecoder = A2(
 	_elm_lang$core$Json_Decode$field,
 	'DOCUMENT',
@@ -21323,69 +21546,6 @@ var _user$project$Document$documentDecoder = A2(
 			_elm_lang$core$Json_Decode$field,
 			'WORD_LIST',
 			_elm_lang$core$Json_Decode$list(_user$project$Document$tokenDecoder))));
-var _user$project$Document$Doc = function (a) {
-	return function (b) {
-		return function (c) {
-			return function (d) {
-				return function (e) {
-					return function (f) {
-						return function (g) {
-							return function (h) {
-								return function (i) {
-									return function (j) {
-										return {document_id: a, topic_id: b, document_count: c, keyword_snippet: d, keyword_title: e, top_topic: f, linkurl: g, time_stamp: h, title: i, snippet: j};
-									};
-								};
-							};
-						};
-					};
-				};
-			};
-		};
-	};
-};
-var _user$project$Document$bestDocsDecoder = function () {
-	var getDoc = F2(
-		function (docs, docId) {
-			return _elm_lang$core$List$head(
-				A2(
-					_elm_lang$core$List$filter,
-					function (a) {
-						return _elm_lang$core$Native_Utils.eq(a.document_id, docId);
-					},
-					docs));
-		});
-	var applySorting = F2(
-		function (docs, order) {
-			return A2(
-				_elm_lang$core$List$filterMap,
-				getDoc(docs),
-				order);
-		});
-	var sorting = A2(
-		_elm_lang$core$Json_Decode$field,
-		'DOCUMENT_SORTING',
-		_elm_lang$core$Json_Decode$list(_user$project$Decoderhelper$int2));
-	var documents = A2(
-		_elm_lang$core$Json_Decode$field,
-		'DOCUMENT',
-		_user$project$Decoderhelper$pseudolist(
-			_user$project$Decoderhelper$map10(_user$project$Document$Doc)(
-				A2(_elm_lang$core$Json_Decode$field, 'DOCUMENT_ID', _user$project$Decoderhelper$int2))(
-				A2(_elm_lang$core$Json_Decode$field, 'TOPIC_ID', _user$project$Decoderhelper$int2))(
-				A2(_elm_lang$core$Json_Decode$field, 'PR_DOCUMENT_GIVEN_TOPIC', _elm_lang$core$Json_Decode$string))(
-				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_SNIPPET', _elm_lang$core$Json_Decode$string))(
-				A2(_elm_lang$core$Json_Decode$field, 'KEYWORD_TITLE', _elm_lang$core$Json_Decode$string))(
-				A2(
-					_elm_lang$core$Json_Decode$field,
-					'TOP_TOPIC',
-					_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)))(
-				A2(_elm_lang$core$Json_Decode$field, 'LINK$URL', _elm_lang$core$Json_Decode$string))(
-				A2(_elm_lang$core$Json_Decode$field, 'TIME$TIME_STAMP', _user$project$Decoderhelper$int2))(
-				A2(_elm_lang$core$Json_Decode$field, 'TEXT$TITLE', _elm_lang$core$Json_Decode$string))(
-				A2(_elm_lang$core$Json_Decode$field, 'TEXT$SNIPPET', _elm_lang$core$Json_Decode$string))));
-	return A3(_elm_lang$core$Json_Decode$map2, applySorting, documents, sorting);
-}();
 
 var _user$project$Model$generalBackgroundColor = _debois$elm_mdl$Material_Options$cs('generalBackgroundColor');
 var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Options$cs('primaryColor');
@@ -21424,9 +21584,7 @@ var _user$project$Model$Model = function (a) {
 												return function (m) {
 													return function (n) {
 														return function (o) {
-															return function (p) {
-																return {result: a, topics: b, currentTopics: c, docs: d, currentDocument: e, terms: f, currentTerm: g, tabs: h, currentTab: i, raised: j, selectedMsg: k, settings: l, slots: m, containerTopicModel: n, topicsContainer: o, mdl: p};
-															};
+															return {topics: a, currentTopics: b, docs: c, currentDocument: d, terms: e, currentTerm: f, tabs: g, currentTab: h, raised: i, selectedMsg: j, settings: k, slots: l, containerTopicModel: m, topicsContainer: n, mdl: o};
 														};
 													};
 												};
@@ -21442,27 +21600,10 @@ var _user$project$Model$Model = function (a) {
 		};
 	};
 };
-var _user$project$Model$Settings = function (a) {
-	return function (b) {
-		return function (c) {
-			return function (d) {
-				return function (e) {
-					return function (f) {
-						return function (g) {
-							return function (h) {
-								return function (i) {
-									return function (j) {
-										return {showTopics: a, showDocuments: b, showTerms: c, showSaved: d, bottom: e, view2: f, showSlotDialoge: g, search: h, error: i, slotToDelete: j};
-									};
-								};
-							};
-						};
-					};
-				};
-			};
-		};
-	};
-};
+var _user$project$Model$Settings = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {error: a, showSaved: b, bottom: c, view2: d, showSlotDialoge: e, search: f, search4: g, slotToDelete: h};
+	});
 var _user$project$Model$Slots = F2(
 	function (a, b) {
 		return {main: a, more: b};
@@ -21484,6 +21625,18 @@ var _user$project$Model$SelectAction = function (a) {
 var _user$project$Model$ExecCmd = function (a) {
 	return {ctor: 'ExecCmd', _0: a};
 };
+var _user$project$Model$NewSearchDocs = F2(
+	function (a, b) {
+		return {ctor: 'NewSearchDocs', _0: a, _1: b};
+	});
+var _user$project$Model$NewSearchTerms = F2(
+	function (a, b) {
+		return {ctor: 'NewSearchTerms', _0: a, _1: b};
+	});
+var _user$project$Model$NewSearchTopics = F2(
+	function (a, b) {
+		return {ctor: 'NewSearchTopics', _0: a, _1: b};
+	});
 var _user$project$Model$NewTermTopics = F2(
 	function (a, b) {
 		return {ctor: 'NewTermTopics', _0: a, _1: b};
@@ -21566,9 +21719,6 @@ var _user$project$Model$CloseTab = {ctor: 'CloseTab'};
 var _user$project$Model$SelectTab = function (a) {
 	return {ctor: 'SelectTab', _0: a};
 };
-var _user$project$Model$Found = function (a) {
-	return {ctor: 'Found', _0: a};
-};
 var _user$project$Model$Search = function (a) {
 	return {ctor: 'Search', _0: a};
 };
@@ -21581,15 +21731,6 @@ var _user$project$Model$DocumentTab = F2(
 		return {ctor: 'DocumentTab', _0: a, _1: b};
 	});
 var _user$project$Model$PreviewTab = {ctor: 'PreviewTab'};
-var _user$project$Model$Documentresult = function (a) {
-	return {ctor: 'Documentresult', _0: a};
-};
-var _user$project$Model$Termresult = function (a) {
-	return {ctor: 'Termresult', _0: a};
-};
-var _user$project$Model$Topicresult = function (a) {
-	return {ctor: 'Topicresult', _0: a};
-};
 var _user$project$Model$ErrorSlot = {ctor: 'ErrorSlot'};
 var _user$project$Model$slotGetFirstIdSince = F3(
 	function (slots, view, id) {
@@ -21756,7 +21897,7 @@ var _user$project$Request$loadDoc = function (doc) {
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			'getDoc&DocId=',
-			_elm_lang$core$Basics$toString(doc.document_id)));
+			_elm_lang$core$Basics$toString(doc.id)));
 };
 var _user$project$Request$loadDocTokens = function (doc) {
 	return A3(
@@ -21770,7 +21911,7 @@ var _user$project$Request$loadDocTokens = function (doc) {
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			'getDoc&DocId=',
-			_elm_lang$core$Basics$toString(doc.document_id)));
+			_elm_lang$core$Basics$toString(doc.id)));
 };
 var _user$project$Request$loadBestDocs = F3(
 	function (topic, maybeterm, sorting) {
@@ -21872,6 +22013,59 @@ var _user$project$Request$loadBestFrames = A3(
 	_user$project$Term$bestTermsDecoder,
 	_user$project$Model$NewFrames('Frames'),
 	'getBestFrames');
+var _user$project$Request$loadSearchTopics = function (search) {
+	var name = A2(_elm_lang$core$Basics_ops['++'], 'Search Result for ', search);
+	var command = A2(_elm_lang$core$Basics_ops['++'], 'autocomplete&SearchWord=', search);
+	return A3(
+		_user$project$Request$loadData,
+		_user$project$Term$searchTermDecoder,
+		_user$project$Model$NewSearchTopics(name),
+		command);
+};
+var _user$project$Request$loadSearchTerms = function (search) {
+	var name = A2(_elm_lang$core$Basics_ops['++'], 'Search Result for ', search);
+	var command = A2(_elm_lang$core$Basics_ops['++'], 'autocomplete&SearchWord=', search);
+	return A3(
+		_user$project$Request$loadData,
+		_user$project$Term$searchTermDecoder,
+		_user$project$Model$NewSearchTerms(name),
+		command);
+};
+var _user$project$Request$loadSearchDocs = F3(
+	function (search, strict, sorting) {
+		var name = A2(_elm_lang$core$Basics_ops['++'], 'Search Result for ', search);
+		var command = _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: 'search&SearchWord=',
+				_1: {
+					ctor: '::',
+					_0: search,
+					_1: {
+						ctor: '::',
+						_0: '&SearchStrict=',
+						_1: {
+							ctor: '::',
+							_0: strict ? 'true' : 'false',
+							_1: {
+								ctor: '::',
+								_0: '&sorting=',
+								_1: {
+									ctor: '::',
+									_0: sorting,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+		return A3(
+			_user$project$Request$loadData,
+			_user$project$Document$bestDocsDecoder,
+			_user$project$Model$NewSearchDocs(name),
+			command);
+	});
 
 var _user$project$Documentsview$doc2CardView = F3(
 	function (model, doc, cardID) {
@@ -22184,116 +22378,30 @@ var _user$project$Documentsview$view = F4(
 	});
 
 var _user$project$Init$initTerm = function (id) {
-	var _p0 = id;
-	return {
-		id: id,
-		name: 'term',
-		wordtype: _elm_lang$core$Maybe$Just(0),
-		count: _elm_lang$core$Maybe$Just(0),
-		top_topic: {ctor: '[]'}
-	};
+	return _elm_lang$core$Native_Utils.update(
+		_user$project$Term$defaultTerm,
+		{id: id});
 };
 var _user$project$Init$initTopic = function (id) {
-	var _p1 = id;
-	return {
-		id: id,
-		hirarchical_topic: {
-			start: 0,
-			end: 0,
-			depth: 0,
-			cluster: _elm_lang$core$Maybe$Just('0;1;1;1')
-		},
-		color_topic: '#ffffff',
-		top_terms: {
-			ctor: '::',
-			_0: _user$project$Init$initTerm(0),
-			_1: {ctor: '[]'}
-		}
-	};
+	return _elm_lang$core$Native_Utils.update(
+		_user$project$Topic$defaultTopic,
+		{id: id});
 };
 var _user$project$Init$initDoc = function (id) {
-	var _p2 = id;
-	return {
-		document_id: id,
-		topic_id: 0,
-		document_count: '0',
-		keyword_snippet: 'key snippet',
-		keyword_title: 'key title',
-		top_topic: {
-			ctor: '::',
-			_0: 0,
-			_1: {ctor: '[]'}
-		},
-		linkurl: 'http://example.com/Docunment',
-		time_stamp: 0,
-		title: 'title',
-		snippet: 'snippet'
-	};
+	return _elm_lang$core$Native_Utils.update(
+		_user$project$Document$defaultDoc,
+		{id: id});
 };
 var _user$project$Init$initDocument = function (id) {
-	var _p3 = id;
-	return {
-		id: id,
-		linkurl: 'http://example.com/Docunment',
-		time_stamp: 0,
-		title: 'document',
-		fulltext: 'This is a test document. Further content is not available.',
-		search_test: 'whatever',
-		frame_list: {ctor: '[]'},
-		word_list: {
-			ctor: '::',
-			_0: {
-				topic_id: 0,
-				posintion_in_document: 0,
-				term: 'term',
-				parent_topic_ids: {ctor: '[]'}
-			},
-			_1: {ctor: '[]'}
-		}
-	};
+	return _elm_lang$core$Native_Utils.update(
+		_user$project$Document$defaultDocument,
+		{id: id});
 };
 var _user$project$Init$initTabs = {ctor: '[]'};
-var _user$project$Init$initSettings = {showTopics: true, showDocuments: true, showTerms: false, showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false, error: 'Ok', slotToDelete: -1};
-var _user$project$Init$initResult = {
-	ctor: '::',
-	_0: _user$project$Model$Termresult(
-		_user$project$Init$initTerm(0)),
-	_1: {
-		ctor: '::',
-		_0: _user$project$Model$Termresult(
-			_user$project$Init$initTerm(1)),
-		_1: {
-			ctor: '::',
-			_0: _user$project$Model$Termresult(
-				_user$project$Init$initTerm(2)),
-			_1: {
-				ctor: '::',
-				_0: _user$project$Model$Documentresult(
-					_user$project$Init$initDoc(0)),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Model$Documentresult(
-						_user$project$Init$initDoc(1)),
-					_1: {
-						ctor: '::',
-						_0: _user$project$Model$Topicresult(
-							_user$project$Init$initTopic(0)),
-						_1: {
-							ctor: '::',
-							_0: _user$project$Model$Topicresult(
-								_user$project$Init$initTopic(1)),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			}
-		}
-	}
-};
+var _user$project$Init$initSettings = {error: 'Ok', showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false, search4: '', slotToDelete: -1};
 var _user$project$Init$init = {
 	ctor: '_Tuple2',
 	_0: {
-		result: _user$project$Init$initResult,
 		topics: {ctor: '[]'},
 		currentTopics: {ctor: '[]'},
 		docs: {ctor: '[]'},
@@ -23322,112 +23430,6 @@ var _user$project$Termsview$view = F4(
 			});
 	});
 
-var _user$project$Searchview$searchresult2ListItem = function (result) {
-	return A2(
-		_debois$elm_mdl$Material_List$li,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: function () {
-				var _p0 = result;
-				switch (_p0.ctor) {
-					case 'Termresult':
-						var _p1 = _p0._0;
-						return A2(
-							_debois$elm_mdl$Material_List$content,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$onClick(
-									_user$project$Model$Found(
-										A2(
-											_user$project$Model$TermsView,
-											'Terms',
-											{
-												ctor: '::',
-												_0: _p1,
-												_1: {ctor: '[]'}
-											}))),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_List$icon,
-									'list',
-									{ctor: '[]'}),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(_p1.name),
-									_1: {ctor: '[]'}
-								}
-							});
-					case 'Topicresult':
-						var _p2 = _p0._0;
-						return A2(
-							_debois$elm_mdl$Material_List$content,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$onClick(
-									_user$project$Model$Found(
-										A3(
-											_user$project$Model$TopicsView,
-											'Topics',
-											{
-												ctor: '::',
-												_0: _p2,
-												_1: {ctor: '[]'}
-											},
-											0))),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_List$icon,
-									'bubble_chart',
-									{ctor: '[]'}),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(
-										_elm_lang$core$Basics$toString(_p2.id)),
-									_1: {ctor: '[]'}
-								}
-							});
-					default:
-						var _p3 = _p0._0;
-						return A2(
-							_debois$elm_mdl$Material_List$content,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Options$onClick(
-									_user$project$Model$Found(
-										A2(
-											_user$project$Model$DocumentsView,
-											'Documents',
-											{
-												ctor: '::',
-												_0: _p3,
-												_1: {ctor: '[]'}
-											}))),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_debois$elm_mdl$Material_List$icon,
-									'art_track',
-									{ctor: '[]'}),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(_p3.title),
-									_1: {ctor: '[]'}
-								}
-							});
-				}
-			}(),
-			_1: {ctor: '[]'}
-		});
-};
 var _user$project$Searchview$view = F2(
 	function (model, flex) {
 		return A2(
@@ -23446,7 +23448,103 @@ var _user$project$Searchview$view = F2(
 				_0: A2(
 					_debois$elm_mdl$Material_List$ul,
 					{ctor: '[]'},
-					A2(_elm_lang$core$List$map, _user$project$Searchview$searchresult2ListItem, model.result)),
+					{
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_List$li,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_List$content,
+									{
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Options$onClick(
+											_user$project$Model$ExecCmd(
+												_user$project$Request$loadSearchTopics(model.settings.search4))),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_List$icon,
+											'bubble_chart',
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												A2(_elm_lang$core$Basics_ops['++'], 'Search for Topics with ', model.settings.search4)),
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_debois$elm_mdl$Material_List$li,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_debois$elm_mdl$Material_List$content,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Options$onClick(
+												_user$project$Model$ExecCmd(
+													_user$project$Request$loadSearchTerms(model.settings.search4))),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_debois$elm_mdl$Material_List$icon,
+												'list',
+												{ctor: '[]'}),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(
+													A2(_elm_lang$core$Basics_ops['++'], 'Search for Terms with ', model.settings.search4)),
+												_1: {ctor: '[]'}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_List$li,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_List$content,
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Options$onClick(
+													_user$project$Model$ExecCmd(
+														A3(_user$project$Request$loadSearchDocs, model.settings.search4, false, 'RELEVANCE'))),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_List$icon,
+													'art_track',
+													{ctor: '[]'}),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html$text(
+														A2(_elm_lang$core$Basics_ops['++'], 'Search for Documents with ', model.settings.search4)),
+													_1: {ctor: '[]'}
+												}
+											}),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
 				_1: {ctor: '[]'}
 			});
 	});
@@ -24128,22 +24226,7 @@ var _user$project$Update$update = F2(
 							{
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
-									{search: true})
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				case 'Found':
-					var oldSlots = model.slots;
-					var oldSettings = model.settings;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{search: false}),
-								slots: A3(_user$project$Model$slotFromTo, oldSlots, _user$project$Model$Empty, _p0._0)
+									{search: true, search4: _p0._0})
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -24176,114 +24259,6 @@ var _user$project$Update$update = F2(
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{slots: newSlots}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				case 'ShowTopics':
-					var topicsContainer = model.topicsContainer;
-					var oldSlots = model.slots;
-					var oldSettings = model.settings;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{showTopics: true}),
-								slots: A3(
-									_user$project$Model$slotFromTo,
-									oldSlots,
-									_user$project$Model$Empty,
-									A3(_user$project$Model$TopicsView, 'Topics', _p0._0, topicsContainer))
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				case 'HideTopics':
-					var oldSlots = model.slots;
-					var oldSettings = model.settings;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{showTopics: false, slotToDelete: -1}),
-								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				case 'ShowTerms':
-					var oldSlots = model.slots;
-					var oldSettings = model.settings;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{showTerms: true}),
-								slots: A3(
-									_user$project$Model$slotFromTo,
-									oldSlots,
-									_user$project$Model$Empty,
-									A2(_user$project$Model$TermsView, 'Terms', _p0._0))
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				case 'HideTerms':
-					var oldSlots = model.slots;
-					var oldSettings = model.settings;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{showTerms: false, slotToDelete: -1}),
-								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				case 'ShowDocuments':
-					var contains = F2(
-						function (term, document) {
-							return A2(_elm_lang$core$List$member, term, document.terms);
-						});
-					var docs = model.docs;
-					var oldSlots = model.slots;
-					var oldSettings = model.settings;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{showDocuments: true}),
-								slots: A3(
-									_user$project$Model$slotFromTo,
-									oldSlots,
-									_user$project$Model$Empty,
-									A2(_user$project$Model$DocumentsView, 'Documents', docs))
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				case 'HideDocuments':
-					var oldSlots = model.slots;
-					var oldSettings = model.settings;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								settings: _elm_lang$core$Native_Utils.update(
-									oldSettings,
-									{showDocuments: false, slotToDelete: -1}),
-								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
-							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				case 'ChoseSlotDialog':
@@ -24339,9 +24314,6 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									settings: _elm_lang$core$Native_Utils.update(
-										oldSettings,
-										{showTopics: true}),
 									slots: A3(
 										_user$project$Model$slotFromTo,
 										oldSlots,
@@ -24377,9 +24349,6 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									settings: _elm_lang$core$Native_Utils.update(
-										oldSettings,
-										{showTerms: true}),
 									slots: A3(
 										_user$project$Model$slotFromTo,
 										oldSlots,
@@ -24405,10 +24374,6 @@ var _user$project$Update$update = F2(
 						};
 					}
 				case 'NewDocs':
-					var contains = F2(
-						function (term, document) {
-							return A2(_elm_lang$core$List$member, term, document.terms);
-						});
 					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					var _p5 = _p0._1;
@@ -24419,9 +24384,6 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									settings: _elm_lang$core$Native_Utils.update(
-										oldSettings,
-										{showDocuments: true}),
 									slots: A3(
 										_user$project$Model$slotFromTo,
 										oldSlots,
@@ -24457,9 +24419,6 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									settings: _elm_lang$core$Native_Utils.update(
-										oldSettings,
-										{showTerms: true}),
 									slots: A3(
 										_user$project$Model$slotFromTo,
 										oldSlots,
@@ -24570,9 +24529,6 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									settings: _elm_lang$core$Native_Utils.update(
-										oldSettings,
-										{showTopics: true}),
 									slots: A3(
 										_user$project$Model$slotFromTo,
 										oldSlots,
@@ -24600,6 +24556,154 @@ var _user$project$Update$update = F2(
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					}
+				case 'NewSearchTopics':
+					var isMember = F2(
+						function (terms, topics) {
+							return A2(
+								_elm_lang$core$List$member,
+								topics.id,
+								A2(
+									_elm_lang$core$List$map,
+									function (_) {
+										return _.id;
+									},
+									terms));
+						});
+					var newTopics = function (terms) {
+						return A2(
+							_elm_lang$core$List$filter,
+							isMember(terms),
+							model.topics);
+					};
+					var concatTopTopics = function (terms) {
+						return _elm_lang$core$Set$toList(
+							_elm_lang$core$Set$fromList(
+								_elm_lang$core$List$concat(
+									A2(
+										_elm_lang$core$List$map,
+										function (_) {
+											return _.top_topic;
+										},
+										terms))));
+					};
+					var oldSlots = model.slots;
+					var topicsContainer = model.topicsContainer;
+					var oldSettings = model.settings;
+					var _p13 = _p0._1;
+					if (_p13.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									slots: A3(
+										_user$project$Model$slotFromTo,
+										oldSlots,
+										_user$project$Model$Empty,
+										A3(
+											_user$project$Model$TopicsView,
+											_p0._0,
+											newTopics(_p13._0),
+											topicsContainer)),
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{search: false, search4: ''})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											search: false,
+											search4: '',
+											error: _elm_lang$core$Basics$toString(_p13._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'NewSearchTerms':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
+					var _p14 = _p0._1;
+					if (_p14.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									slots: A3(
+										_user$project$Model$slotFromTo,
+										oldSlots,
+										_user$project$Model$Empty,
+										A2(_user$project$Model$TermsView, _p0._0, _p14._0)),
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{search: false, search4: ''})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											search: false,
+											search4: '',
+											error: _elm_lang$core$Basics$toString(_p14._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
+				case 'NewSearchDocs':
+					var oldSlots = model.slots;
+					var oldSettings = model.settings;
+					var _p15 = _p0._1;
+					if (_p15.ctor === 'Ok') {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									slots: A3(
+										_user$project$Model$slotFromTo,
+										oldSlots,
+										_user$project$Model$Empty,
+										A2(_user$project$Model$DocumentsView, _p0._0, _p15._0)),
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{search: false, search4: ''})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									settings: _elm_lang$core$Native_Utils.update(
+										oldSettings,
+										{
+											search: false,
+											search4: '',
+											error: _elm_lang$core$Basics$toString(_p15._0)
+										})
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					}
 				case 'ExecCmd':
 					return {ctor: '_Tuple2', _0: model, _1: _p0._0};
 				case 'SelectAction':
@@ -24612,16 +24716,16 @@ var _user$project$Update$update = F2(
 					};
 				case 'ExecuteActionIfNone':
 					var newMsg = _elm_lang$core$Native_Utils.eq(model.selectedMsg, _user$project$Model$None) ? _p0._0 : model.selectedMsg;
-					var _v8 = newMsg,
-						_v9 = _elm_lang$core$Native_Utils.update(
+					var _v11 = newMsg,
+						_v12 = _elm_lang$core$Native_Utils.update(
 						model,
 						{selectedMsg: _user$project$Model$None});
-					msg = _v8;
-					model = _v9;
+					msg = _v11;
+					model = _v12;
 					continue update;
 				case 'ContainerCacheTopicMsg':
-					var _p19 = _p0._1;
-					var _p18 = _p0._0;
+					var _p22 = _p0._1;
+					var _p21 = _p0._0;
 					var currentPage = function (cont) {
 						return A2(
 							_elm_lang$core$Maybe$withDefault,
@@ -24629,19 +24733,19 @@ var _user$project$Update$update = F2(
 							A2(_elm_lang$core$Array$get, cont.meta.currPage, cont.data));
 					};
 					var topicList = function (cont) {
-						var _p13 = currentPage(cont);
-						if (_p13.ctor === 'Loaded') {
-							return _p13._0;
+						var _p16 = currentPage(cont);
+						if (_p16.ctor === 'Loaded') {
+							return _p16._0;
 						} else {
 							return {ctor: '[]'};
 						}
 					};
-					var _p14 = A2(_user$project$ContainerCache$update, _p19, model.containerTopicModel);
-					var newdata = _p14._0;
-					var cmd = _p14._1;
+					var _p17 = A2(_user$project$ContainerCache$update, _p22, model.containerTopicModel);
+					var newdata = _p17._0;
+					var cmd = _p17._1;
 					var newSlots = function () {
-						var _p15 = _p19;
-						switch (_p15.ctor) {
+						var _p18 = _p22;
+						switch (_p18.ctor) {
 							case 'CreateNewContainer':
 								var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
 								var newContainer = A2(
@@ -24656,9 +24760,9 @@ var _user$project$Update$update = F2(
 								return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
 							case 'PageUpdate':
 								var index = function () {
-									var _p16 = A2(_user$project$Model$slotGet, model.slots, _p18);
-									if (_p16.ctor === 'TopicsView') {
-										return _p16._2;
+									var _p19 = A2(_user$project$Model$slotGet, model.slots, _p21);
+									if (_p19.ctor === 'TopicsView') {
+										return _p19._2;
 									} else {
 										return -1;
 									}
@@ -24672,12 +24776,12 @@ var _user$project$Update$update = F2(
 									'Topics',
 									topicList(newContainer),
 									index);
-								return A3(_user$project$Model$slotChangeTo, model.slots, _p18, newView);
+								return A3(_user$project$Model$slotChangeTo, model.slots, _p21, newView);
 							default:
 								var index = function () {
-									var _p17 = A2(_user$project$Model$slotGet, model.slots, _p18);
-									if (_p17.ctor === 'TopicsView') {
-										return _p17._2;
+									var _p20 = A2(_user$project$Model$slotGet, model.slots, _p21);
+									if (_p20.ctor === 'TopicsView') {
+										return _p20._2;
 									} else {
 										return -1;
 									}
@@ -24691,7 +24795,7 @@ var _user$project$Update$update = F2(
 									'Topics',
 									topicList(newContainer),
 									index);
-								return A3(_user$project$Model$slotChangeTo, model.slots, _p18, newView);
+								return A3(_user$project$Model$slotChangeTo, model.slots, _p21, newView);
 						}
 					}();
 					return {
@@ -24701,7 +24805,7 @@ var _user$project$Update$update = F2(
 							{containerTopicModel: newdata, slots: newSlots}),
 						_1: A2(
 							_elm_lang$core$Platform_Cmd$map,
-							_user$project$Model$ContainerCacheTopicMsg(_p18),
+							_user$project$Model$ContainerCacheTopicMsg(_p21),
 							cmd)
 					};
 				case 'Mdl':
@@ -24761,7 +24865,7 @@ if (typeof _user$project$Searchview$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["String","Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["String","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"HideSlot":["Int"],"NewDocTokens":["String","Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"SelectAction":["Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["String","Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"NewTopics":["String","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"NewSearchDocs":["String","Result.Result Http.Error (List Document.Doc)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"HideSlot":["Int"],"NewDocTokens":["String","Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"NewSearchTerms":["String","Result.Result Http.Error (List Term.Term)"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"NewSearchTopics":["String","Result.Result Http.Error (List Term.Term)"],"SelectAction":["Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ id : Int , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String , topic_id : Maybe.Maybe Int , document_count : Maybe.Maybe String , relevance : Maybe.Maybe Float , isino : Maybe.Maybe Int }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {

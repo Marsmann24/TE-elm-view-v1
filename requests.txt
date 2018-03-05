@@ -131,3 +131,22 @@ List
     , "TERM_NAME": String
     , "TOP_TOPIC": List Int
     }
+
+Command=search
+    &SearchWord=Zeit
+    &SearchStrict=false
+    &sorting=RELEVANCE
+{ DOCUMENT :
+    ? (document_ids) :
+        { DOCUMENT_ID : Int
+        , RELEVANCE : Float
+        , ISIN0 : Int
+        , KEYWORD_TITLE : String
+        , KEYWORD_SNIPPET : String
+        , TOP_TOPIC : List Int
+        , LINK$URL : String
+        , TIME$TIME_STAMP : Int
+        , TEXT$TITLE : String
+        , TEXT$SNIPPET : String
+, DOCUMENT_SORTING : List Int
+}

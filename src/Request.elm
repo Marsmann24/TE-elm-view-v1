@@ -26,15 +26,22 @@ loadTopics =
 
 loadDoc : Doc -> Cmd Msg
 loadDoc doc =
-    loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString doc.document_id))
+    loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString doc.id))
 
 loadDocTokens : Doc -> Cmd Msg
 loadDocTokens doc =
-    loadData Document.documentDecoder (NewDocTokens (("Terms in \"" ++ doc.title) ++ "\"")) ("getDoc&DocId=" ++ (toString doc.document_id))
+    loadData Document.documentDecoder (NewDocTokens (("Terms in \"" ++ doc.title) ++ "\"")) ("getDoc&DocId=" ++ (toString doc.id))
 
 loadBestDocs : Topic -> Maybe Term -> String -> Cmd Msg
 loadBestDocs topic maybeterm sorting =
-    let command = String.concat ["bestDocs&TopicId=", (toString topic.id), termArgument, "&sorting=", sorting]
+    let command =
+            String.concat
+                [ "bestDocs&TopicId="
+                , (toString topic.id)
+                , termArgument
+                , "&sorting="
+                , sorting
+                ]
         termArgument =
             case maybeterm of
                 Just term ->
@@ -52,7 +59,13 @@ loadBestDocs topic maybeterm sorting =
 
 loadTerms : Topic -> Int -> Cmd Msg
 loadTerms topic offset =
-    let command = String.concat ["getTerms&TopicId=", (toString topic.id), "&offset=",(toString offset)]
+    let command =
+            String.concat
+                [ "getTerms&TopicId="
+                , (toString topic.id)
+                , "&offset="
+                , (toString offset)
+                ]
     in
     loadData Term.termsDecoder (NewTerms ("Terms in Topic " ++ (toString topic.id))) command
 
@@ -69,6 +82,39 @@ loadAutocompleteTerms termName =
 loadBestFrames : Cmd Msg
 loadBestFrames =
     loadData Term.bestTermsDecoder (NewFrames "Frames") "getBestFrames"
+
+loadSearchTopics : String -> Cmd Msg
+loadSearchTopics search =
+    let command =
+            "autocomplete&SearchWord=" ++ search
+        name = "Search Result for " ++ search
+    in
+    loadData Term.searchTermDecoder (NewSearchTopics name) command
+
+loadSearchTerms : String -> Cmd Msg
+loadSearchTerms search =
+    let command =
+            "autocomplete&SearchWord=" ++ search
+        name = "Search Result for " ++ search
+    in
+    loadData Term.searchTermDecoder (NewSearchTerms name) command
+
+loadSearchDocs : String -> Bool -> String -> Cmd Msg
+loadSearchDocs search strict sorting =
+    let command =
+            String.concat
+                [ "search&SearchWord="
+                , search
+                , "&SearchStrict="
+                , if strict
+                    then "true"
+                    else "false"
+                , "&sorting="
+                , sorting
+                ]
+        name = "Search Result for " ++ search
+    in
+    loadData Document.bestDocsDecoder (NewSearchDocs name) command
 
 -- Command Struktur
 --loadData : Command -> String -> Cmd Msg
