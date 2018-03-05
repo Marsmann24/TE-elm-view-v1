@@ -139,7 +139,7 @@ slot model slotId view =
                     , Button.minifab
                     , Button.raised
                     , Button.ripple
-                    , onClick (DeleteSlot slotId (HideSlot slotId))
+                    , onClick (DeleteSlot slotId)
                     ]
                     [ Icon.i "close" ]
                 , div

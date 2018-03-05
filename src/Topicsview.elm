@@ -38,7 +38,7 @@ view model flex slotId slotName =
                 , Button.fab
                 , Button.minifab
                 , Button.raised
-                , onClick (DeleteSlot slotId (HideTopics slotId))
+                , onClick (DeleteSlot slotId)
                 ]
                 [ Icon.i "close" ]
             ]

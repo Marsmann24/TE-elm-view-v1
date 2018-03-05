@@ -74,13 +74,22 @@ update msg model =
         --            , slots = slotFromTo oldSlots Empty view
         --            }
         --        , Cmd.none)
-        DeleteSlot slotId msg->
+        DeleteSlot slotId ->
             let oldSettings = model.settings
             in
             ({ model
                 | settings = { oldSettings | slotToDelete = slotId}
                 }
-            , Delay.after 200 Time.millisecond msg)
+            , Delay.after 200 Time.millisecond (RemoveSlot slotId))
+        RemoveSlot slotId ->
+            let oldSettings = model.settings
+                oldSlots = model.slots
+            in
+            ({ model
+                | settings = { oldSettings | slotToDelete =-1}
+                , slots =  slotRemove oldSlots slotId
+                }
+            , Cmd.none)
         RemoveSlotFromOther id ->
             let newSlots = slotRemoveMore model.slots id
             in
@@ -158,15 +167,6 @@ update msg model =
             ({ model
                 | settings = { oldSettings | showSlotDialoge = True}
                 , slots =  slotChangeTo oldSlots slotId Dialog
-                }
-            , Cmd.none)
-        HideSlot slotId ->
-            let oldSettings = model.settings
-                oldSlots = model.slots
-            in
-            ({ model
-                | settings = { oldSettings | slotToDelete =-1}
-                , slots =  slotRemove oldSlots slotId
                 }
             , Cmd.none)
         UpdateSlot view slotId ->

@@ -40,7 +40,7 @@ view model flex slotId slotName =
                 , Button.minifab
                 , Button.raised
                 , Button.ripple
-                , onClick (DeleteSlot slotId (HideTerms slotId))
+                , onClick (DeleteSlot slotId)
                 ]
                 [ Icon.i "close" ]
             ]
@@ -82,12 +82,13 @@ doc2CardView model doc cardID =
                 , Icon.view "bubble_chart"
                     [ onMouseDown
                         (SelectAction
-                            (ShowTopics
-                                (List.filterMap
-                                    (Topic.topicId2Topic model.topics)
-                                    doc.top_topic
-                                )
-                            )
+                            None
+--                            (ShowTopics
+--                                (List.filterMap
+--                                    (Topic.topicId2Topic model.topics)
+--                                    doc.top_topic
+--                                )
+--                            )
                         )
                     ]
                 , Icon.view "list"

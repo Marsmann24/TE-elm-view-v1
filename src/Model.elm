@@ -21,21 +21,21 @@ type Msg
     | Raise Int
     | ChangeCurrentDoc Int Doc
     | RemoveTopic Int
-    | DeleteSlot Int Msg
+    | DeleteSlot Int
+    | RemoveSlot Int
     | RemoveSlotFromOther Int
     | SlotToLastFromOther Int
-    | ShowTopics (List Topic)
-    | HideTopics Int
-    | ShowTerms (List Term)
-    | HideTerms Int
-    | ShowDocuments (List Doc)
-    | HideDocuments Int
+    --| ShowTopics (List Topic)
+    --| HideTopics Int
+    --| ShowTerms (List Term)
+    --| HideTerms Int
+    --| ShowDocuments (List Doc)
+    --| HideDocuments Int
     | ChoseSlotDialog Int
     | UpdateSlot View Int
     | ToggleBottom
     | ToggleView2
     | ToggleShowSaved
-    | HideSlot Int
     | NewTopics String (Result Http.Error (List Topic))
     | NewDocument (Result Http.Error Document)
     | NewDocs String (Result Http.Error (List Doc))
@@ -51,7 +51,7 @@ type Msg
     | ExecuteActionIfNone Msg
     | ContainerCacheTopicMsg Int (ContainerCache.ContainerModelMsg (List Topic))
     | Mdl (Material.Msg Msg)
-    | None -- zum Testen, damit update _ -> immer haben kann
+    | None -- zum Testen, damit update immer einen "_ ->"-Zweig haben kann
 
 -- Command type for Request
 --type Command
