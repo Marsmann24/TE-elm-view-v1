@@ -123,3 +123,11 @@ Command=getTopics
     }
 , topicBestItemLimit : Int
 }
+
+Command=autocomplete
+    &SearchWord=term
+List
+    { "TERM_ID": Int as String
+    , "TERM_NAME": String
+    , "TOP_TOPIC": List Int
+    }

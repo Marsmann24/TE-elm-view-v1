@@ -42,6 +42,7 @@ type Msg
     | NewDocTokens (Result Http.Error Document)
     | NewTerms (Result Http.Error (List Term))
     | NewFrames (Result Http.Error (List Term))
+    | NewTermTopics String (Result Http.Error (List Term))
     | ExecCmd (Cmd Msg)
     | SelectAction Msg
     | ExecuteActionIfNone Msg

@@ -52,6 +52,12 @@ loadBestTerms : Cmd Msg
 loadBestTerms =
     loadData Term.bestTermsDecoder (NewTerms) "getBestTerms"
 
+loadAutocompleteTerms : String -> Cmd Msg
+loadAutocompleteTerms termName =
+    let command = "autocomplete&SearchWord=" ++ termName
+    in
+    loadData Term.searchTermDecoder (NewTermTopics termName) command
+
 loadBestFrames : Cmd Msg
 loadBestFrames =
     loadData Term.bestTermsDecoder (NewFrames) "getBestFrames"

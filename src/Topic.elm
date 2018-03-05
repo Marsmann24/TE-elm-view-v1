@@ -65,14 +65,6 @@ defaultRawTopic =
     (RawTopic -1 (TopicHirarchie -1 -1 -1 Nothing) "Error: not matching" [])
 
 -- Decoders
-termDecoder2 : Decoder Term
-termDecoder2 =
-    map4 Term
-        (field "TERM_ID" int2)
-        (field "TERM_NAME" string)
-        (maybe (field "WORDTYPE$WORDTYPE" int2))
-        (succeed Nothing)
-
 topicDecoder : Decoder RawTopic
 topicDecoder =
     map4 RawTopic
@@ -91,5 +83,5 @@ decodeTopics =
     map3 makeTopicsList
         (field "Topic" (intDictDecoder defaultRawTopic topicDecoder))
         (field "TOPIC_SORTING" (list int))
-        (field "Term" (intDictDecoder defaultTerm termDecoder2))
+        (field "Term" (intDictDecoder defaultTerm (termDecoder int2)))
         --(field "TopicBestItemLimit" int)

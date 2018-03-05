@@ -1,6 +1,6 @@
 module Term exposing (..)
 
-import Json.Decode exposing (Decoder, string, int, list, map, map2, map4, field, keyValuePairs, succeed, maybe)
+import Json.Decode exposing (Decoder, string, int, list, map, map2, map5, field, keyValuePairs, succeed, maybe)
 import Decoderhelper exposing (int2, intDictDecoder, listheadwithdefault, pseudolist)
 import Dict exposing (Dict)
 
@@ -9,6 +9,7 @@ type alias Term =
     , name : String
     , wordtype : Maybe Int
     , count : Maybe Int
+    , top_topic : List Int
     }
 
 type alias TermSorting =
@@ -22,7 +23,7 @@ type alias TermsResult =
 -- Mapper and Checker
 defaultTerm : Term
 defaultTerm =
-    (Term -1 "Error: Not matching." Nothing Nothing)
+    (Term -1 "Error: Not matching." Nothing Nothing [])
 
 termId2Term : List Term -> Int -> Maybe Term
 termId2Term terms termId =
@@ -45,13 +46,17 @@ matchTermsortingById termsresult =
     matchTermsById termsorting
 
 -- Decoders
-termDecoder : Decoder Term
-termDecoder =
-    map4 Term
-        (field "TERM_ID" int)
+termDecoder : Decoder Int -> Decoder Term
+termDecoder intDecoder =
+    map5 Term
+        (field "TERM_ID" intDecoder)
         (field "TERM_NAME" string)
-        (maybe (field "WORDTYPE$WORDTYPE" int))
+        (maybe (field "WORDTYPE$WORDTYPE" intDecoder))
         (succeed Nothing)
+        (map
+            (Maybe.withDefault [])
+            (maybe (field "TOP_TOPIC" (list int)))
+        )
 
 termSortingDecoder : Decoder TermSorting
 termSortingDecoder =
@@ -74,7 +79,7 @@ termsDecoder =
                     )
                 )
             )
-            (field "Term" (intDictDecoder defaultTerm termDecoder))
+            (field "Term" (intDictDecoder defaultTerm (termDecoder int)))
         )
 
 bestTermsDecoder : Decoder (List Term)
@@ -89,11 +94,12 @@ bestTermsDecoder =
                             (field "SORTING" (list int))
                             (intDictDecoder
                                 defaultTerm
-                                (map4 Term
+                                (map5 Term
                                         (field "ITEM_ID" int)
                                         (field "ITEM_NAME" string)
                                         (succeed Nothing)
                                         (maybe (field "ITEM_COUNT" int))
+                                        (succeed [])
                                 )
                             )
                         )
@@ -101,3 +107,8 @@ bestTermsDecoder =
                 )
             )
         )
+
+
+searchTermDecoder : Decoder (List Term)
+searchTermDecoder =
+    list (termDecoder int2)

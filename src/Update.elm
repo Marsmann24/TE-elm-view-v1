@@ -2,7 +2,8 @@ module Update exposing (update)
 
 import Model exposing (..)
 import Topic exposing (Topic)
-import Document
+import Term exposing (Term)
+import Document exposing (Doc, Document)
 
 import Material
 import Delay
@@ -237,6 +238,43 @@ update msg model =
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewFrames result ->
             (model, Cmd.none)
+        NewTermTopics termName result ->
+            let oldSettings = model.settings
+                topicsContainer = model.topicsContainer
+                oldSlots = model.slots
+                fetchTerm : List Term -> Maybe Term
+                fetchTerm terms =
+                    List.head (List.filter (\x -> x.name == termName) terms)
+                maybeTerm2TopicList : Maybe Term -> List Int
+                maybeTerm2TopicList terms =
+                    case terms of
+                        Just term ->
+                            term.top_topic
+                        Nothing ->
+                            []
+                isMember : List Term -> Topic -> Bool
+                isMember terms topics=
+                    List.member
+                        topics.id
+                        (maybeTerm2TopicList
+                            (fetchTerm terms)
+                        )
+
+                newTopics : List Term -> List Topic
+                newTopics terms =
+                    List.filter
+                        (isMember terms)
+                        model.topics
+            in
+            case result of
+                Ok termList ->
+                    ({ model
+                        | settings = { oldSettings | showTopics = True}
+                        , slots = slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
+                        }
+                    , Cmd.none)
+                Err err ->
+                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         ExecCmd cmd ->
             (model, cmd)
         SelectAction defMsg ->

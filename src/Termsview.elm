@@ -72,11 +72,12 @@ topic2Terms model term id=
                 [ text (term.name ++ " (" ++ (toString term.id) ++ ")")]
             , Icon.view "bubble_chart"
                 [ onClick
-                    (ShowTopics
-                        (List.filter
-                            (Topic.termInTopic term)
-                            model.topics
-                        ))
+                    (ExecCmd (Request.loadAutocompleteTerms term.name))
+                --    (ShowTopics
+                --        (List.filter
+                --            (Topic.termInTopic term)
+                --            model.topics
+                --        ))
                 ]
             , Icon.view "art_track"
                 [ onClick

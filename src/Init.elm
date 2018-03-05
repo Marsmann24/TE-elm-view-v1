@@ -128,4 +128,5 @@ initTerm id =
             , name = "term"
             , wordtype = Just 0
             , count = Just 0
+            , top_topic = []
             }
