@@ -40,7 +40,7 @@ type Msg
     | NewDocument (Result Http.Error Document)
     | NewDocs (Result Http.Error (List Doc))
     | NewDocTokens (Result Http.Error Document)
-    | NewTerms (Result Http.Error (List Term))
+    | NewTerms String (Result Http.Error (List Term))
     | NewFrames (Result Http.Error (List Term))
     | NewTermTopics String (Result Http.Error (List Term))
     | ExecCmd (Cmd Msg)

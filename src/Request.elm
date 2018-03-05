@@ -46,11 +46,11 @@ loadTerms : Int -> Int -> Cmd Msg
 loadTerms id offset =
     let command = String.concat ["getTerms&TopicId=", (toString id), "&offset=",(toString offset)]
     in
-    loadData Term.termsDecoder (NewTerms) command
+    loadData Term.termsDecoder (NewTerms ("Terms form Topic " ++ (toString id))) command
 
 loadBestTerms : Cmd Msg
 loadBestTerms =
-    loadData Term.bestTermsDecoder (NewTerms) "getBestTerms"
+    loadData Term.bestTermsDecoder (NewTerms "Terms") "getBestTerms"
 
 loadAutocompleteTerms : String -> Cmd Msg
 loadAutocompleteTerms termName =

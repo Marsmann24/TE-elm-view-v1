@@ -181,7 +181,7 @@ update msg model =
                     , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewTerms result ->
+        NewTerms name result ->
             let oldSettings = model.settings
                 oldSlots = model.slots
 
@@ -190,7 +190,7 @@ update msg model =
                 Ok newTerms ->
                     ({ model
                         | settings = { oldSettings | showTerms = True}
-                        , slots = slotFromTo oldSlots Empty (TermsView "Terms" newTerms)
+                        , slots = slotFromTo oldSlots Empty (TermsView name newTerms)
                         , terms = newTerms}
                     , Cmd.none)
                 Err err ->
