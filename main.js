@@ -22378,7 +22378,7 @@ var _user$project$Init$initDocument = function (id) {
 		{id: id});
 };
 var _user$project$Init$initTabs = {ctor: '[]'};
-var _user$project$Init$initSettings = {error: 'Ok', showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false, search4: '', slotToDelete: -1};
+var _user$project$Init$initSettings = {error: '', showSaved: true, bottom: false, view2: true, showSlotDialoge: false, search: false, search4: '', slotToDelete: -1};
 var _user$project$Init$init = {
 	ctor: '_Tuple2',
 	_0: {
@@ -24022,30 +24022,37 @@ var _user$project$Mainview_v2$viewSwitch = function (model) {
 		});
 };
 var _user$project$Mainview_v2$viewSearch = function (model) {
-	return A5(
-		_debois$elm_mdl$Material_Textfield$render,
-		_user$project$Model$Mdl,
+	return A2(
+		_debois$elm_mdl$Material_Options$span,
 		{
 			ctor: '::',
-			_0: 7,
-			_1: {ctor: '[]'}
-		},
-		model.mdl,
-		{
-			ctor: '::',
-			_0: _debois$elm_mdl$Material_Textfield$label('Search'),
+			_0: _debois$elm_mdl$Material_Options$cs('search_box'),
 			_1: {
 				ctor: '::',
-				_0: _debois$elm_mdl$Material_Textfield$floatingLabel,
-				_1: {
+				_0: _debois$elm_mdl$Material_Color$background(_debois$elm_mdl$Material_Color$white),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A5(
+				_debois$elm_mdl$Material_Textfield$render,
+				_user$project$Model$Mdl,
+				{
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Textfield$text_,
+					_0: 7,
+					_1: {ctor: '[]'}
+				},
+				model.mdl,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Textfield$label('Search'),
 					_1: {
 						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
+						_0: _debois$elm_mdl$Material_Textfield$floatingLabel,
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '20px 50px 10px'),
+							_0: _debois$elm_mdl$Material_Textfield$text_,
 							_1: {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
@@ -24053,10 +24060,10 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 							}
 						}
 					}
-				}
-			}
-		},
-		{ctor: '[]'});
+				},
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		});
 };
 var _user$project$Mainview_v2$view = function (model) {
 	return A3(
@@ -24073,12 +24080,35 @@ var _user$project$Mainview_v2$view = function (model) {
 				_1: {ctor: '[]'}
 			},
 			{
-				header: {
+				header: _elm_lang$core$Native_Utils.eq(model.settings.error, '') ? {
+					ctor: '::',
+					_0: _user$project$Mainview_v2$viewSearch(model),
+					_1: {ctor: '[]'}
+				} : {
 					ctor: '::',
 					_0: _user$project$Mainview_v2$viewSearch(model),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(model.settings.error),
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Options$css, 'float', 'right'),
+								_1: {
+									ctor: '::',
+									_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '300px'),
+									_1: {
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'display', 'inline'),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(model.settings.error),
+								_1: {ctor: '[]'}
+							}),
 						_1: {ctor: '[]'}
 					}
 				},

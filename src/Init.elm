@@ -51,7 +51,7 @@ init =
 
 initSettings : Settings
 initSettings =
-    { error = "Ok"
+    { error = ""
     --, showTopics = True
     --, showDocuments = True
     --, showTerms = False

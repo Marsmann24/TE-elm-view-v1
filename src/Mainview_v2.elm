@@ -26,9 +26,19 @@ view model =
         Layout.render Mdl model.mdl
             [ Layout.fixedHeader]
             { header =
-                [ viewSearch model
-                , text model.settings.error
-                ]
+                (if model.settings.error == ""
+                then
+                    [ viewSearch model]
+                else
+                    [ viewSearch model
+                    , span
+                        [ css "float" "right"
+                        , css "width" "300px"
+                        , css "display" "inline"
+                        ]
+                        [ text model.settings.error]
+                    ]
+                )
             , drawer = [ viewSwitch model]
             , tabs = ( [], [])
             , main =
@@ -39,17 +49,20 @@ view model =
 
 viewSearch : Model -> Html Msg
 viewSearch model =
-    Textfield.render Mdl [7] model.mdl
-        [ Textfield.label "Search"
-        , Textfield.floatingLabel
-        , Textfield.text_
-    --    , Textfield.expandable "id-of-expandable-1"
-    --    , Textfield.expandableIcon "search"
-        , css "margin" "0"
-        , css "padding" "20px 50px 10px"
-        , onInput Search
+    span
+        [ cs "search_box"
+        , Color.background Color.white
         ]
-        [ ]
+        [ Textfield.render Mdl [7] model.mdl
+            [ Textfield.label "Search"
+            , Textfield.floatingLabel
+            , Textfield.text_
+        --    , Textfield.expandable "id-of-expandable-1"
+        --    , Textfield.expandableIcon "search"
+            , onInput Search
+            ]
+            [ ]
+        ]
 
 viewSwitch : Model -> Html Msg
 viewSwitch model =

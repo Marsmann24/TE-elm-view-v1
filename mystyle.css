@@ -4,6 +4,13 @@
     justify-content: flex-start!important;
 }
 
+.search_box{
+    display: inline!important;
+    margin: 0 80px;
+    padding: 0 20px;
+    width: 300px;
+    border-radius: 0 0 20px 20px;
+}
 /*.mdl-chip__text{
     float: left!important;
     text-align: center!important;
