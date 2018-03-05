@@ -45,6 +45,7 @@ viewSearch model =
         , Textfield.text_
     --    , Textfield.expandable "id-of-expandable-1"
     --    , Textfield.expandableIcon "search"
+        , css "margin" "0"
         , css "padding" "20px 50px 10px"
         , onInput Search
         ]

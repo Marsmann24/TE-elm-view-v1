@@ -24042,11 +24042,15 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 					_0: _debois$elm_mdl$Material_Textfield$text_,
 					_1: {
 						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '20px 50px 10px'),
+						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '0'),
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
-							_1: {ctor: '[]'}
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'padding', '20px 50px 10px'),
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
