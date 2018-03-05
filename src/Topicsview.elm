@@ -63,15 +63,15 @@ topic2Chip model topic =
                 [ css "width" "calc(100% - 48px)"
                 , css "text-align" "center"
                 ]
-                [ text (toString topic.id)]
+                [ text ("Topic " ++ (toString topic.id))]
             , Icon.view "list"
                 [ onClick
-                    (ExecCmd (Request.loadTerms topic.id 30))
+                    (ExecCmd (Request.loadTerms topic 30))
                     --(ShowTermList topic.top_terms)
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs topic.id -1 "RELEVANCE"))
+                    (ExecCmd (Request.loadBestDocs topic Nothing "RELEVANCE"))
                     --ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDoc topic)

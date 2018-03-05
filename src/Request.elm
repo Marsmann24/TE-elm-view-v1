@@ -2,9 +2,9 @@ module Request exposing (..)
 
 import Model exposing (Msg(..))
 --, Command(..))
-import Topic
-import Term
-import Document
+import Topic exposing (Topic)
+import Term exposing (Term)
+import Document exposing (Doc, Document)
 
 import ContainerCache
 import Http
@@ -22,31 +22,39 @@ loadData decoder msg arguments =
 
 loadTopics : Cmd Msg
 loadTopics =
-    loadData Topic.decodeTopics (NewTopics) "getTopics"
+    loadData Topic.decodeTopics (NewTopics "Topics") "getTopics"
 
-loadDoc : Int -> Cmd Msg
-loadDoc id =
-    loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString id))
+loadDoc : Doc -> Cmd Msg
+loadDoc doc =
+    loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString doc.document_id))
 
-loadDocTokens : Int -> Cmd Msg
-loadDocTokens id =
-    loadData Document.documentDecoder (NewDocTokens) ("getDoc&DocId=" ++ (toString id))
+loadDocTokens : Doc -> Cmd Msg
+loadDocTokens doc =
+    loadData Document.documentDecoder (NewDocTokens (("Terms in \"" ++ doc.title) ++ "\"")) ("getDoc&DocId=" ++ (toString doc.document_id))
 
-loadBestDocs : Int -> Int -> String -> Cmd Msg
-loadBestDocs id term sorting =
-    let command = String.concat ["bestDocs&TopicId=", (toString id), termArgument, "&sorting=", sorting]
+loadBestDocs : Topic -> Maybe Term -> String -> Cmd Msg
+loadBestDocs topic maybeterm sorting =
+    let command = String.concat ["bestDocs&TopicId=", (toString topic.id), termArgument, "&sorting=", sorting]
         termArgument =
-            if (term >= 0)
-            then ("&term" ++ (toString term))
-            else ""
+            case maybeterm of
+                Just term ->
+                    "&term" ++ (toString term)
+                _ ->
+                    ""
+        name =
+            case maybeterm of
+                Just term ->
+                    "Docs with " ++ term.name
+                _ ->
+                    "Docs in Topic " ++ (toString topic.id)
     in
-    loadData Document.bestDocsDecoder (NewDocs) command
+    loadData Document.bestDocsDecoder (NewDocs name) command
 
-loadTerms : Int -> Int -> Cmd Msg
-loadTerms id offset =
-    let command = String.concat ["getTerms&TopicId=", (toString id), "&offset=",(toString offset)]
+loadTerms : Topic -> Int -> Cmd Msg
+loadTerms topic offset =
+    let command = String.concat ["getTerms&TopicId=", (toString topic.id), "&offset=",(toString offset)]
     in
-    loadData Term.termsDecoder (NewTerms ("Terms form Topic " ++ (toString id))) command
+    loadData Term.termsDecoder (NewTerms ("Terms in Topic " ++ (toString topic.id))) command
 
 loadBestTerms : Cmd Msg
 loadBestTerms =
@@ -60,7 +68,7 @@ loadAutocompleteTerms termName =
 
 loadBestFrames : Cmd Msg
 loadBestFrames =
-    loadData Term.bestTermsDecoder (NewFrames) "getBestFrames"
+    loadData Term.bestTermsDecoder (NewFrames "Frames") "getBestFrames"
 
 -- Command Struktur
 --loadData : Command -> String -> Cmd Msg

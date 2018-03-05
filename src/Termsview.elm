@@ -81,7 +81,7 @@ topic2Terms model term id=
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs 0 term.id "RELEVANCE"))
+                    (ExecCmd (Request.loadBestDocs Topic.defaultTopic (Just term) "RELEVANCE"))
                     --(ShowDocuments
                     --    (List.filter
                     --        (Document.termInDocument term)

@@ -115,12 +115,12 @@ currentTopic2Chip model topic =
             [ text (toString topic.id)
             , Icon.view "list"
                 [ onClick
-                    (ExecCmd (Request.loadTerms topic.id 30))
+                    (ExecCmd (Request.loadTerms topic 30))
                     --(ShowTerms topic.words)
                 ]
             , Icon.view "art_track"
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs topic.id -1 "relevance"))
+                    (ExecCmd (Request.loadBestDocs topic Nothing "relevance"))
                     --(ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDocument topic)

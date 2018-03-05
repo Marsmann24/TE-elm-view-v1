@@ -36,12 +36,12 @@ type Msg
     | ToggleView2
     | ToggleShowSaved
     | HideSlot Int
-    | NewTopics (Result Http.Error (List Topic))
+    | NewTopics String (Result Http.Error (List Topic))
     | NewDocument (Result Http.Error Document)
-    | NewDocs (Result Http.Error (List Doc))
-    | NewDocTokens (Result Http.Error Document)
+    | NewDocs String (Result Http.Error (List Doc))
+    | NewDocTokens String (Result Http.Error Document)
     | NewTerms String (Result Http.Error (List Term))
-    | NewFrames (Result Http.Error (List Term))
+    | NewFrames String (Result Http.Error (List Term))
     | NewTermTopics String (Result Http.Error (List Term))
     | ExecCmd (Cmd Msg)
     | SelectAction Msg

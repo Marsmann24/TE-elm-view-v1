@@ -13,6 +13,14 @@ type alias RawTopic =
     , top_terms : TermSorting
     }
 
+defaultRawTopic : RawTopic
+defaultRawTopic =
+    RawTopic
+        -1
+        defaultTopicHirarchie
+        "Error: not matching"
+        []
+
 type alias Topic =
     { id : Int
     , hirarchical_topic : TopicHirarchie
@@ -20,12 +28,29 @@ type alias Topic =
     , top_terms : List Term
     }
 
+defaultTopic : Topic
+defaultTopic =
+    Topic
+        0
+        defaultTopicHirarchie
+        "Error: not matching"
+        []
+
+
 type alias TopicHirarchie =
     { start : Int
     , end : Int
     , depth : Int
     , cluster : Maybe String
     }
+
+defaultTopicHirarchie : TopicHirarchie
+defaultTopicHirarchie =
+    TopicHirarchie
+        -1
+        -1
+        -1
+        Nothing
 
 --type alias TopicResult =
 --    { topics : List Topic
@@ -59,10 +84,6 @@ makeTopicsList topics sorting terms =
             Topic raw.id raw.hirarchical_topic raw.color_topic (matchTerms raw.id raw.top_terms)
     in
     List.map rawTopic2Topic (matchRawTopicsById topics sorting)
-
-defaultRawTopic : RawTopic
-defaultRawTopic =
-    (RawTopic -1 (TopicHirarchie -1 -1 -1 Nothing) "Error: not matching" [])
 
 -- Decoders
 topicDecoder : Decoder RawTopic

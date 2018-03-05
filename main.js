@@ -21153,10 +21153,11 @@ var _user$project$Topic$TopicHirarchie = F4(
 	function (a, b, c, d) {
 		return {start: a, end: b, depth: c, cluster: d};
 	});
+var _user$project$Topic$defaultTopicHirarchie = A4(_user$project$Topic$TopicHirarchie, -1, -1, -1, _elm_lang$core$Maybe$Nothing);
 var _user$project$Topic$defaultRawTopic = A4(
 	_user$project$Topic$RawTopic,
 	-1,
-	A4(_user$project$Topic$TopicHirarchie, -1, -1, -1, _elm_lang$core$Maybe$Nothing),
+	_user$project$Topic$defaultTopicHirarchie,
 	'Error: not matching',
 	{ctor: '[]'});
 var _user$project$Topic$matchRawTopicsById = F2(
@@ -21194,6 +21195,12 @@ var _user$project$Topic$makeTopicsList = F3(
 			rawTopic2Topic,
 			A2(_user$project$Topic$matchRawTopicsById, topics, sorting));
 	});
+var _user$project$Topic$defaultTopic = A4(
+	_user$project$Topic$Topic,
+	0,
+	_user$project$Topic$defaultTopicHirarchie,
+	'Error: not matching',
+	{ctor: '[]'});
 var _user$project$Topic$topicDecoder = A5(
 	_elm_lang$core$Json_Decode$map4,
 	_user$project$Topic$RawTopic,
@@ -21481,25 +21488,29 @@ var _user$project$Model$NewTermTopics = F2(
 	function (a, b) {
 		return {ctor: 'NewTermTopics', _0: a, _1: b};
 	});
-var _user$project$Model$NewFrames = function (a) {
-	return {ctor: 'NewFrames', _0: a};
-};
+var _user$project$Model$NewFrames = F2(
+	function (a, b) {
+		return {ctor: 'NewFrames', _0: a, _1: b};
+	});
 var _user$project$Model$NewTerms = F2(
 	function (a, b) {
 		return {ctor: 'NewTerms', _0: a, _1: b};
 	});
-var _user$project$Model$NewDocTokens = function (a) {
-	return {ctor: 'NewDocTokens', _0: a};
-};
-var _user$project$Model$NewDocs = function (a) {
-	return {ctor: 'NewDocs', _0: a};
-};
+var _user$project$Model$NewDocTokens = F2(
+	function (a, b) {
+		return {ctor: 'NewDocTokens', _0: a, _1: b};
+	});
+var _user$project$Model$NewDocs = F2(
+	function (a, b) {
+		return {ctor: 'NewDocs', _0: a, _1: b};
+	});
 var _user$project$Model$NewDocument = function (a) {
 	return {ctor: 'NewDocument', _0: a};
 };
-var _user$project$Model$NewTopics = function (a) {
-	return {ctor: 'NewTopics', _0: a};
-};
+var _user$project$Model$NewTopics = F2(
+	function (a, b) {
+		return {ctor: 'NewTopics', _0: a, _1: b};
+	});
 var _user$project$Model$HideSlot = function (a) {
 	return {ctor: 'HideSlot', _0: a};
 };
@@ -21732,8 +21743,12 @@ var _user$project$Request$loadData = F3(
 		var request = A2(_elm_lang$http$Http$get, url, decoder);
 		return A2(_elm_lang$http$Http$send, msg, request);
 	});
-var _user$project$Request$loadTopics = A3(_user$project$Request$loadData, _user$project$Topic$decodeTopics, _user$project$Model$NewTopics, 'getTopics');
-var _user$project$Request$loadDoc = function (id) {
+var _user$project$Request$loadTopics = A3(
+	_user$project$Request$loadData,
+	_user$project$Topic$decodeTopics,
+	_user$project$Model$NewTopics('Topics'),
+	'getTopics');
+var _user$project$Request$loadDoc = function (doc) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Document$documentDecoder,
@@ -21741,31 +21756,53 @@ var _user$project$Request$loadDoc = function (id) {
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			'getDoc&DocId=',
-			_elm_lang$core$Basics$toString(id)));
+			_elm_lang$core$Basics$toString(doc.document_id)));
 };
-var _user$project$Request$loadDocTokens = function (id) {
+var _user$project$Request$loadDocTokens = function (doc) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Document$documentDecoder,
-		_user$project$Model$NewDocTokens,
+		_user$project$Model$NewDocTokens(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(_elm_lang$core$Basics_ops['++'], 'Terms in \"', doc.title),
+				'\"')),
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			'getDoc&DocId=',
-			_elm_lang$core$Basics$toString(id)));
+			_elm_lang$core$Basics$toString(doc.document_id)));
 };
 var _user$project$Request$loadBestDocs = F3(
-	function (id, term, sorting) {
-		var termArgument = (_elm_lang$core$Native_Utils.cmp(term, 0) > -1) ? A2(
-			_elm_lang$core$Basics_ops['++'],
-			'&term',
-			_elm_lang$core$Basics$toString(term)) : '';
+	function (topic, maybeterm, sorting) {
+		var name = function () {
+			var _p0 = maybeterm;
+			if (_p0.ctor === 'Just') {
+				return A2(_elm_lang$core$Basics_ops['++'], 'Docs with ', _p0._0.name);
+			} else {
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Docs in Topic ',
+					_elm_lang$core$Basics$toString(topic.id));
+			}
+		}();
+		var termArgument = function () {
+			var _p1 = maybeterm;
+			if (_p1.ctor === 'Just') {
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					'&term',
+					_elm_lang$core$Basics$toString(_p1._0));
+			} else {
+				return '';
+			}
+		}();
 		var command = _elm_lang$core$String$concat(
 			{
 				ctor: '::',
 				_0: 'bestDocs&TopicId=',
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$core$Basics$toString(id),
+					_0: _elm_lang$core$Basics$toString(topic.id),
 					_1: {
 						ctor: '::',
 						_0: termArgument,
@@ -21781,17 +21818,21 @@ var _user$project$Request$loadBestDocs = F3(
 					}
 				}
 			});
-		return A3(_user$project$Request$loadData, _user$project$Document$bestDocsDecoder, _user$project$Model$NewDocs, command);
+		return A3(
+			_user$project$Request$loadData,
+			_user$project$Document$bestDocsDecoder,
+			_user$project$Model$NewDocs(name),
+			command);
 	});
 var _user$project$Request$loadTerms = F2(
-	function (id, offset) {
+	function (topic, offset) {
 		var command = _elm_lang$core$String$concat(
 			{
 				ctor: '::',
 				_0: 'getTerms&TopicId=',
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$core$Basics$toString(id),
+					_0: _elm_lang$core$Basics$toString(topic.id),
 					_1: {
 						ctor: '::',
 						_0: '&offset=',
@@ -21809,8 +21850,8 @@ var _user$project$Request$loadTerms = F2(
 			_user$project$Model$NewTerms(
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					'Terms form Topic ',
-					_elm_lang$core$Basics$toString(id))),
+					'Terms in Topic ',
+					_elm_lang$core$Basics$toString(topic.id))),
 			command);
 	});
 var _user$project$Request$loadBestTerms = A3(
@@ -21826,7 +21867,11 @@ var _user$project$Request$loadAutocompleteTerms = function (termName) {
 		_user$project$Model$NewTermTopics(termName),
 		command);
 };
-var _user$project$Request$loadBestFrames = A3(_user$project$Request$loadData, _user$project$Term$bestTermsDecoder, _user$project$Model$NewFrames, 'getBestFrames');
+var _user$project$Request$loadBestFrames = A3(
+	_user$project$Request$loadData,
+	_user$project$Term$bestTermsDecoder,
+	_user$project$Model$NewFrames('Frames'),
+	'getBestFrames');
 
 var _user$project$Documentsview$doc2CardView = F3(
 	function (model, doc, cardID) {
@@ -21864,7 +21909,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 												_0: _debois$elm_mdl$Material_Options$onMouseUp(
 													_user$project$Model$ExecuteActionIfNone(
 														_user$project$Model$ExecCmd(
-															_user$project$Request$loadDoc(doc.document_id)))),
+															_user$project$Request$loadDoc(doc)))),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -21941,7 +21986,7 @@ var _user$project$Documentsview$doc2CardView = F3(
 												_0: _debois$elm_mdl$Material_Options$onMouseDown(
 													_user$project$Model$SelectAction(
 														_user$project$Model$ExecCmd(
-															_user$project$Request$loadDocTokens(doc.document_id)))),
+															_user$project$Request$loadDocTokens(doc)))),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -22563,7 +22608,10 @@ var _user$project$Topicsview$topic2Chip = F2(
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html$text(
-									_elm_lang$core$Basics$toString(topic.id)),
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										'Topic ',
+										_elm_lang$core$Basics$toString(topic.id))),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -22575,7 +22623,7 @@ var _user$project$Topicsview$topic2Chip = F2(
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
 										_user$project$Model$ExecCmd(
-											A2(_user$project$Request$loadTerms, topic.id, 30))),
+											A2(_user$project$Request$loadTerms, topic, 30))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -22587,7 +22635,7 @@ var _user$project$Topicsview$topic2Chip = F2(
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
 											_user$project$Model$ExecCmd(
-												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'RELEVANCE'))),
+												A3(_user$project$Request$loadBestDocs, topic, _elm_lang$core$Maybe$Nothing, 'RELEVANCE'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
@@ -22757,7 +22805,7 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
 										_user$project$Model$ExecCmd(
-											A2(_user$project$Request$loadTerms, topic.id, 30))),
+											A2(_user$project$Request$loadTerms, topic, 30))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -22769,7 +22817,7 @@ var _user$project$Savedview$currentTopic2Chip = F2(
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
 											_user$project$Model$ExecCmd(
-												A3(_user$project$Request$loadBestDocs, topic.id, -1, 'relevance'))),
+												A3(_user$project$Request$loadBestDocs, topic, _elm_lang$core$Maybe$Nothing, 'relevance'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -23122,7 +23170,11 @@ var _user$project$Termsview$topic2Terms = F3(
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$onClick(
 											_user$project$Model$ExecCmd(
-												A3(_user$project$Request$loadBestDocs, 0, term.id, 'RELEVANCE'))),
+												A3(
+													_user$project$Request$loadBestDocs,
+													_user$project$Topic$defaultTopic,
+													_elm_lang$core$Maybe$Just(term),
+													'RELEVANCE'))),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
@@ -24279,7 +24331,7 @@ var _user$project$Update$update = F2(
 					var topicsContainer = model.topicsContainer;
 					var oldSlots = model.slots;
 					var oldSettings = model.settings;
-					var _p1 = _p0._0;
+					var _p1 = _p0._1;
 					if (_p1.ctor === 'Ok') {
 						var _p2 = _p1._0;
 						return {
@@ -24294,7 +24346,7 @@ var _user$project$Update$update = F2(
 										_user$project$Model$slotFromTo,
 										oldSlots,
 										_user$project$Model$Empty,
-										A3(_user$project$Model$TopicsView, 'Topics', _p2, topicsContainer)),
+										A3(_user$project$Model$TopicsView, _p0._0, _p2, topicsContainer)),
 									topics: _p2
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
@@ -24359,7 +24411,7 @@ var _user$project$Update$update = F2(
 						});
 					var oldSlots = model.slots;
 					var oldSettings = model.settings;
-					var _p5 = _p0._0;
+					var _p5 = _p0._1;
 					if (_p5.ctor === 'Ok') {
 						var _p6 = _p5._0;
 						return {
@@ -24374,7 +24426,7 @@ var _user$project$Update$update = F2(
 										_user$project$Model$slotFromTo,
 										oldSlots,
 										_user$project$Model$Empty,
-										A2(_user$project$Model$DocumentsView, 'Documents', _p6)),
+										A2(_user$project$Model$DocumentsView, _p0._0, _p6)),
 									docs: _p6
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
@@ -24398,7 +24450,7 @@ var _user$project$Update$update = F2(
 					var allTerms = model.terms;
 					var oldSlots = model.slots;
 					var oldSettings = model.settings;
-					var _p7 = _p0._0;
+					var _p7 = _p0._1;
 					if (_p7.ctor === 'Ok') {
 						return {
 							ctor: '_Tuple2',
@@ -24414,7 +24466,7 @@ var _user$project$Update$update = F2(
 										_user$project$Model$Empty,
 										A2(
 											_user$project$Model$TermsView,
-											'Terms',
+											_p0._0,
 											A2(_user$project$Document$documentTerms, _p7._0, allTerms)))
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
@@ -24709,7 +24761,7 @@ if (typeof _user$project$Searchview$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"HideSlot":["Int"],"NewDocTokens":["Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"SelectAction":["Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Result.Result Http.Error (List Document.Doc)"],"HideTopics":["Int"],"NewFrames":["String","Result.Result Http.Error (List Term.Term)"],"None":[],"HideTerms":["Int"],"ToggleBottom":[],"DeleteSlot":["Int","Model.Msg"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["String","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"HideSlot":["Int"],"NewDocTokens":["String","Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"HideDocuments":["Int"],"ShowDocuments":["List Document.Doc"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"SelectAction":["Model.Msg"],"ShowTerms":["List Term.Term"],"ChoseSlotDialog":["Int"],"Search":["String"],"ShowTopics":["List Topic.Topic"],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ document_id : Int , topic_id : Int , document_count : String , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {

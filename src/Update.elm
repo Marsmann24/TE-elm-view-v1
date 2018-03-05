@@ -166,7 +166,7 @@ update msg model =
             let oldSlots = model.slots
             in
             ({ model | slots = slotChangeTo oldSlots slotId view}, Cmd.none)
-        NewTopics result ->
+        NewTopics name result ->
             let oldSettings = model.settings
                 oldSlots = model.slots
                 topicsContainer = model.topicsContainer
@@ -175,7 +175,7 @@ update msg model =
                 Ok newTopics ->
                     ({ model
                         | settings = { oldSettings | showTopics = True}
-                        , slots = slotFromTo oldSlots Empty (TopicsView "Topics" newTopics topicsContainer)
+                        , slots = slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
                         , topics = newTopics
                         }
                     , Cmd.none)
@@ -195,7 +195,7 @@ update msg model =
                     , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocs result ->
+        NewDocs name result ->
             let oldSettings = model.settings
                 oldSlots = model.slots
                 contains term document = List.member term document.terms
@@ -204,13 +204,13 @@ update msg model =
                 Ok newDocs ->
                     ({ model
                         | settings = { oldSettings | showDocuments = True}
-                        , slots = slotFromTo oldSlots Empty (DocumentsView "Documents" newDocs)
+                        , slots = slotFromTo oldSlots Empty (DocumentsView name newDocs)
                         , docs = newDocs
                         }
                     , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocTokens result ->
+        NewDocTokens name result ->
             let oldSettings = model.settings
                 oldSlots = model.slots
                 allTerms = model.terms
@@ -219,7 +219,7 @@ update msg model =
                 Ok document ->
                     ({ model
                         | settings = { oldSettings | showTerms = True}
-                        , slots = slotFromTo oldSlots Empty (TermsView "Terms" (Document.documentTerms document allTerms))}
+                        , slots = slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))}
                     , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
@@ -236,7 +236,7 @@ update msg model =
                     , Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewFrames result ->
+        NewFrames name result ->
             (model, Cmd.none)
         NewTermTopics termName result ->
             let oldSettings = model.settings

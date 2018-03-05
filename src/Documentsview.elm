@@ -66,7 +66,7 @@ doc2CardView model doc cardID =
         , onMouseEnter (Raise cardID)
         , onMouseLeave (Raise -1)
         --, onClick (ChangeCurrentDoc cardID doc)
-        , onMouseUp (ExecuteActionIfNone (ExecCmd (Request.loadDoc doc.document_id)))
+        , onMouseUp (ExecuteActionIfNone (ExecCmd (Request.loadDoc doc)))
         ]
         [ Card.title
             [ css "padding" "4px"
@@ -91,7 +91,7 @@ doc2CardView model doc cardID =
                         )
                     ]
                 , Icon.view "list"
-                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc.document_id)))]
+                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc)))]
                 ]
             , span
                 [ Color.text (Color.color Color.Grey Color.S200)
