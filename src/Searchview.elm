@@ -11,6 +11,7 @@ view : Model -> String -> Html Msg
 view model flex =
     div
         [ css "flex" flex
+        , primaryColor
         , center
         ]
         [ Lists.ul

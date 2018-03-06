@@ -23413,8 +23413,12 @@ var _user$project$Searchview$view = F2(
 				_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 				_1: {
 					ctor: '::',
-					_0: _debois$elm_mdl$Material_Options$center,
-					_1: {ctor: '[]'}
+					_0: _user$project$Model$primaryColor,
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$center,
+						_1: {ctor: '[]'}
+					}
 				}
 			},
 			{
@@ -24029,7 +24033,7 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 			_0: _debois$elm_mdl$Material_Options$cs('search_box'),
 			_1: {
 				ctor: '::',
-				_0: _debois$elm_mdl$Material_Color$background(_debois$elm_mdl$Material_Color$white),
+				_0: _user$project$Model$primaryColor,
 				_1: {ctor: '[]'}
 			}
 		},
