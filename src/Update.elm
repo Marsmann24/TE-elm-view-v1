@@ -6,6 +6,7 @@ import Term exposing (Term)
 import Document exposing (Doc, Document)
 
 import Material
+import Dispatch
 import Delay
 import Time
 import ContainerCache exposing (Page(..))
@@ -437,6 +438,8 @@ update msg model =
                 , slots = newSlots
                 }
             , Platform.Cmd.map (ContainerCacheTopicMsg slotId) cmd )
+        Batch msg_ ->
+            model ! [ Dispatch.forward msg_ ]
         Mdl msgmdl ->
             (Material.update Mdl msgmdl model)
         _ ->

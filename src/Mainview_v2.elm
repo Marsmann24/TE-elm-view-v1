@@ -10,7 +10,7 @@ import Searchview
 
 import Array
 import Html exposing (Html, text, h3)
-import Material.Options exposing (Property, css, cs, center, div, span, onToggle, onClick, onInput)
+import Material.Options exposing (Property, css, cs, center, div, span, onToggle, onClick, onInput, dispatch)
 import Material.Icon as Icon
 import Material.Color as Color
 import Material.Scheme as Scheme
@@ -60,6 +60,7 @@ viewSearch model =
         --    , Textfield.expandable "id-of-expandable-1"
         --    , Textfield.expandableIcon "search"
             , onInput Search
+            , dispatch Batch
             ]
             [ ]
         ]

@@ -50,6 +50,7 @@ type Msg
     | SelectAction Msg
     | ExecuteActionIfNone Msg
     | ContainerCacheTopicMsg Int (ContainerCache.ContainerModelMsg (List Topic))
+    | Batch (List Msg)
     | Mdl (Material.Msg Msg)
     | None -- zum Testen, damit update immer einen "_ ->"-Zweig haben kann
 

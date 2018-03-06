@@ -21619,6 +21619,9 @@ var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
 };
+var _user$project$Model$Batch = function (a) {
+	return {ctor: 'Batch', _0: a};
+};
 var _user$project$Model$ContainerCacheTopicMsg = F2(
 	function (a, b) {
 		return {ctor: 'ContainerCacheTopicMsg', _0: a, _1: b};
@@ -24060,7 +24063,11 @@ var _user$project$Mainview_v2$viewSearch = function (model) {
 							_1: {
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Options$onInput(_user$project$Model$Search),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$dispatch(_user$project$Model$Batch),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -24131,6 +24138,325 @@ var _user$project$Mainview_v2$view = function (model) {
 					_0: _user$project$Mainview_v2$viewBody(model),
 					_1: {ctor: '[]'}
 				}
+			}));
+};
+
+var _vipentti$elm_dispatch$Dispatch$split = F4(
+	function (k0, same, differ, xs) {
+		split:
+		while (true) {
+			var _p0 = xs;
+			if (_p0.ctor === '[]') {
+				return {ctor: '_Tuple2', _0: same, _1: differ};
+			} else {
+				var _p1 = _p0._1;
+				if (_elm_lang$core$Native_Utils.eq(_p0._0._0, k0)) {
+					var _v1 = k0,
+						_v2 = {ctor: '::', _0: _p0._0._1, _1: same},
+						_v3 = differ,
+						_v4 = _p1;
+					k0 = _v1;
+					same = _v2;
+					differ = _v3;
+					xs = _v4;
+					continue split;
+				} else {
+					var _v5 = k0,
+						_v6 = same,
+						_v7 = {ctor: '::', _0: _p0._0, _1: differ},
+						_v8 = _p1;
+					k0 = _v5;
+					same = _v6;
+					differ = _v7;
+					xs = _v8;
+					continue split;
+				}
+			}
+		}
+	});
+var _vipentti$elm_dispatch$Dispatch$group_ = F2(
+	function (acc, items) {
+		group_:
+		while (true) {
+			var _p2 = items;
+			if (_p2.ctor === '[]') {
+				return acc;
+			} else {
+				if (_p2._1.ctor === '[]') {
+					return {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: _p2._0._0,
+							_1: {
+								ctor: '::',
+								_0: _p2._0._1,
+								_1: {ctor: '[]'}
+							}
+						},
+						_1: acc
+					};
+				} else {
+					if ((_p2._1._0.ctor === '_Tuple2') && (_p2._1._1.ctor === '[]')) {
+						var _p6 = _p2._1._0._1;
+						var _p5 = _p2._0._1;
+						var _p4 = _p2._1._0._0;
+						var _p3 = _p2._0._0;
+						return _elm_lang$core$Native_Utils.eq(_p3, _p4) ? {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: _p3,
+								_1: {
+									ctor: '::',
+									_0: _p6,
+									_1: {
+										ctor: '::',
+										_0: _p5,
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							_1: acc
+						} : {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: _p4,
+								_1: {
+									ctor: '::',
+									_0: _p6,
+									_1: {ctor: '[]'}
+								}
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: _p3,
+									_1: {
+										ctor: '::',
+										_0: _p5,
+										_1: {ctor: '[]'}
+									}
+								},
+								_1: acc
+							}
+						};
+					} else {
+						var _p8 = _p2._0._0;
+						var _p7 = A4(
+							_vipentti$elm_dispatch$Dispatch$split,
+							_p8,
+							{
+								ctor: '::',
+								_0: _p2._0._1,
+								_1: {ctor: '[]'}
+							},
+							{ctor: '[]'},
+							_p2._1);
+						var same = _p7._0;
+						var different = _p7._1;
+						var _v10 = {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _p8, _1: same},
+							_1: acc
+						},
+							_v11 = different;
+						acc = _v10;
+						items = _v11;
+						continue group_;
+					}
+				}
+			}
+		}
+	});
+var _vipentti$elm_dispatch$Dispatch$group = _vipentti$elm_dispatch$Dispatch$group_(
+	{ctor: '[]'});
+var _vipentti$elm_dispatch$Dispatch$onSingle = function (_p9) {
+	var _p10 = _p9;
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		_p10._0,
+		A2(_elm_lang$core$Maybe$withDefault, _elm_lang$html$Html_Events$defaultOptions, _p10._1._1),
+		_p10._1._0);
+};
+var _vipentti$elm_dispatch$Dispatch$pickOptions = function (decoders) {
+	pickOptions:
+	while (true) {
+		var _p11 = decoders;
+		if (_p11.ctor === '::') {
+			if ((_p11._0.ctor === '_Tuple2') && (_p11._0._1.ctor === 'Just')) {
+				return _p11._0._1._0;
+			} else {
+				var _v14 = _p11._1;
+				decoders = _v14;
+				continue pickOptions;
+			}
+		} else {
+			return _elm_lang$html$Html_Events$defaultOptions;
+		}
+	}
+};
+var _vipentti$elm_dispatch$Dispatch$flatten = function (decoders) {
+	return A2(
+		_elm_lang$core$Json_Decode$map,
+		function (value) {
+			return A2(
+				_elm_lang$core$List$filterMap,
+				function (decoder) {
+					return _elm_lang$core$Result$toMaybe(
+						A2(_elm_lang$core$Json_Decode$decodeValue, decoder, value));
+				},
+				decoders);
+		},
+		_elm_lang$core$Json_Decode$value);
+};
+var _vipentti$elm_dispatch$Dispatch$onWithOptions = F4(
+	function (event, lift, options, decoders) {
+		return A3(
+			_elm_lang$html$Html_Events$onWithOptions,
+			event,
+			options,
+			A2(
+				_elm_lang$core$Json_Decode$map,
+				lift,
+				_vipentti$elm_dispatch$Dispatch$flatten(decoders)));
+	});
+var _vipentti$elm_dispatch$Dispatch$on = F2(
+	function (event, lift) {
+		return A3(_vipentti$elm_dispatch$Dispatch$onWithOptions, event, lift, _elm_lang$html$Html_Events$defaultOptions);
+	});
+var _vipentti$elm_dispatch$Dispatch$onMany = F2(
+	function (lift, decoders) {
+		var _p12 = decoders;
+		if ((_p12._1.ctor === '::') && (_p12._1._1.ctor === '[]')) {
+			return _vipentti$elm_dispatch$Dispatch$onSingle(
+				{ctor: '_Tuple2', _0: _p12._0, _1: _p12._1._0});
+		} else {
+			var _p13 = _p12._1;
+			return A3(
+				_elm_lang$html$Html_Events$onWithOptions,
+				_p12._0,
+				_vipentti$elm_dispatch$Dispatch$pickOptions(_p13),
+				lift(
+					_vipentti$elm_dispatch$Dispatch$flatten(
+						A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, _p13))));
+		}
+	});
+var _vipentti$elm_dispatch$Dispatch$map2nd = F2(
+	function (f, _p14) {
+		var _p15 = _p14;
+		return {
+			ctor: '_Tuple2',
+			_0: _p15._0,
+			_1: f(_p15._1)
+		};
+	});
+var _vipentti$elm_dispatch$Dispatch$update1 = F3(
+	function (update, cmd, _p16) {
+		var _p17 = _p16;
+		return A2(
+			_vipentti$elm_dispatch$Dispatch$map2nd,
+			A2(
+				_elm_lang$core$Basics$flip,
+				F2(
+					function (x, y) {
+						return {ctor: '::', _0: x, _1: y};
+					}),
+				_p17._1),
+			A2(update, cmd, _p17._0));
+	});
+var _vipentti$elm_dispatch$Dispatch$update = F3(
+	function (update, msg, model) {
+		return A2(
+			_vipentti$elm_dispatch$Dispatch$map2nd,
+			_elm_lang$core$Platform_Cmd$batch,
+			A3(
+				_elm_lang$core$List$foldl,
+				_vipentti$elm_dispatch$Dispatch$update1(update),
+				{
+					ctor: '_Tuple2',
+					_0: model,
+					_1: {ctor: '[]'}
+				},
+				msg));
+	});
+var _vipentti$elm_dispatch$Dispatch$cmd = function (msg) {
+	return A2(
+		_elm_lang$core$Task$perform,
+		_elm_lang$core$Basics$always(msg),
+		_elm_lang$core$Task$succeed(msg));
+};
+var _vipentti$elm_dispatch$Dispatch$forward = function (messages) {
+	return _elm_lang$core$Platform_Cmd$batch(
+		A2(_elm_lang$core$List$map, _vipentti$elm_dispatch$Dispatch$cmd, messages));
+};
+var _vipentti$elm_dispatch$Dispatch$toAttributes = function (_p18) {
+	var _p19 = _p18;
+	var _p21 = _p19._0;
+	var _p20 = _p21.lift;
+	if (_p20.ctor === 'Just') {
+		return A2(
+			_elm_lang$core$List$map,
+			_vipentti$elm_dispatch$Dispatch$onMany(_p20._0),
+			_vipentti$elm_dispatch$Dispatch$group(_p21.decoders));
+	} else {
+		return A2(_elm_lang$core$List$map, _vipentti$elm_dispatch$Dispatch$onSingle, _p21.decoders);
+	}
+};
+var _vipentti$elm_dispatch$Dispatch$getDecoder = function (_p22) {
+	var _p23 = _p22;
+	return _p23._0.lift;
+};
+var _vipentti$elm_dispatch$Dispatch$Config = function (a) {
+	return {ctor: 'Config', _0: a};
+};
+var _vipentti$elm_dispatch$Dispatch$defaultConfig = _vipentti$elm_dispatch$Dispatch$Config(
+	{
+		decoders: {ctor: '[]'},
+		lift: _elm_lang$core$Maybe$Nothing
+	});
+var _vipentti$elm_dispatch$Dispatch$setDecoder = F2(
+	function (f, _p24) {
+		var _p25 = _p24;
+		return _vipentti$elm_dispatch$Dispatch$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p25._0,
+				{
+					lift: _elm_lang$core$Maybe$Just(f)
+				}));
+	});
+var _vipentti$elm_dispatch$Dispatch$setMsg = function (_p26) {
+	return _vipentti$elm_dispatch$Dispatch$setDecoder(
+		_elm_lang$core$Json_Decode$map(_p26));
+};
+var _vipentti$elm_dispatch$Dispatch$add = F4(
+	function (event, options, decoder, _p27) {
+		var _p28 = _p27;
+		var _p29 = _p28._0;
+		return _vipentti$elm_dispatch$Dispatch$Config(
+			_elm_lang$core$Native_Utils.update(
+				_p29,
+				{
+					decoders: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: event,
+							_1: {ctor: '_Tuple2', _0: decoder, _1: options}
+						},
+						_1: _p29.decoders
+					}
+				}));
+	});
+var _vipentti$elm_dispatch$Dispatch$clear = function (_p30) {
+	var _p31 = _p30;
+	return _vipentti$elm_dispatch$Dispatch$Config(
+		_elm_lang$core$Native_Utils.update(
+			_p31._0,
+			{
+				decoders: {ctor: '[]'}
 			}));
 };
 
@@ -24813,6 +25139,15 @@ var _user$project$Update$update = F2(
 							_user$project$Model$ContainerCacheTopicMsg(_p22),
 							cmd)
 					};
+				case 'Batch':
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{
+							ctor: '::',
+							_0: _vipentti$elm_dispatch$Dispatch$forward(_p0._0),
+							_1: {ctor: '[]'}
+						});
 				case 'Mdl':
 					return A3(_debois$elm_mdl$Material$update, _user$project$Model$Mdl, _p0._0, model);
 				default:
@@ -24870,7 +25205,7 @@ if (typeof _user$project$Searchview$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Result.Result Http.Error (List Document.Doc)"],"RemoveSlot":["Int"],"NewFrames":["String","Result.Result Http.Error (List Term.Term)"],"None":[],"ToggleBottom":[],"DeleteSlot":["Int"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"NewTopics":["String","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"NewSearchDocs":["String","Result.Result Http.Error (List Document.Doc)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"NewDocTokens":["String","Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"NewSearchTerms":["String","Result.Result Http.Error (List Term.Term)"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"NewSearchTopics":["String","Result.Result Http.Error (List Term.Term)"],"SelectAction":["Model.Msg"],"ChoseSlotDialog":["Int"],"Search":["String"],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ id : Int , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String , topic_id : Maybe.Maybe Int , document_count : Maybe.Maybe String , relevance : Maybe.Maybe Float , isino : Maybe.Maybe Int }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Batch":["List Model.Msg"],"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Result.Result Http.Error (List Document.Doc)"],"RemoveSlot":["Int"],"NewFrames":["String","Result.Result Http.Error (List Term.Term)"],"None":[],"ToggleBottom":[],"DeleteSlot":["Int"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"NewTopics":["String","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"NewSearchDocs":["String","Result.Result Http.Error (List Document.Doc)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"NewDocTokens":["String","Result.Result Http.Error Document.Document"],"ToggleShowSaved":[],"NewSearchTerms":["String","Result.Result Http.Error (List Term.Term)"],"RemoveTopic":["Int"],"ToggleView2":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"NewSearchTopics":["String","Result.Result Http.Error (List Term.Term)"],"SelectAction":["Model.Msg"],"ChoseSlotDialog":["Int"],"Search":["String"],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ id : Int , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String , topic_id : Maybe.Maybe Int , document_count : Maybe.Maybe String , relevance : Maybe.Maybe Float , isino : Maybe.Maybe Int }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {
