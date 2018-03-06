@@ -51,7 +51,7 @@ viewSearch : Model -> Html Msg
 viewSearch model =
     span
         [ cs "search_box"
-        , Color.background Color.white
+        , primaryColor
         ]
         [ Textfield.render Mdl [7] model.mdl
             [ Textfield.label "Search"
