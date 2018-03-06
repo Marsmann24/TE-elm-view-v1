@@ -57,6 +57,7 @@ viewSearch model =
             [ Textfield.label "Search"
             , Textfield.floatingLabel
             , Textfield.text_
+        --    , Textfield.value <value> to set the value manualy if the label is not floating, wehn it should
         --    , Textfield.expandable "id-of-expandable-1"
         --    , Textfield.expandableIcon "search"
             , onInput Search
