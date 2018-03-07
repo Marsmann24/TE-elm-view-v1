@@ -1,4 +1,4 @@
-module Init exposing (init)
+module Init exposing (init, initSettings)
 
 import Model exposing (..)
 import Topic exposing (Topic, defaultTopic)
@@ -62,6 +62,7 @@ initSettings =
     , search = False
     , search4 = ""
     , slotToDelete = -1
+    , selectedItem = (-1, -1)
     }
 
 initTabs : List Tab

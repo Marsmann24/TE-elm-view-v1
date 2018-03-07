@@ -6,16 +6,19 @@ import Document exposing (..)
 
 import ContainerCache
 import Material
-import Material.Options exposing (Property, cs)
+import Material.Options exposing (Property, cs, css)
 import Material.Color as Color
+import Material.Icon as Icon
 import Http
 import Html exposing (Html)
 import Array exposing (Array)
 import Maybe exposing (Maybe, withDefault)
 
 type Msg
-    = Search String
+    = ResetSettings
+    | Search String
     --| Found View
+    | SelectItem (Int, Int)
     | SelectTab Int
     | CloseTab
     | Raise Int
@@ -133,6 +136,7 @@ type alias Settings =
     , search : Bool
     , search4 : String
     , slotToDelete : Int
+    , selectedItem : (Int, Int)
     }
 
 type Tab
@@ -273,6 +277,20 @@ slotMove2EndFromMore slots id =
                 2 moreSlot
     in
     newSlots
+
+iconHighlighted : Settings -> (Int, Int) -> List (Icon.Property m)
+iconHighlighted settings id =
+    if (id == settings.selectedItem)
+    then
+        [ Icon.size48
+        , Color.text Color.primary
+        , Color.background Color.primaryContrast
+        , css "border-radius" "10px"
+        , css "margin" "10px"
+        , css "padding" "10px"
+        ]
+    else
+        []
 
 primaryColor : Property c m
 --primaryColor = Color.background Color.primaryContrast

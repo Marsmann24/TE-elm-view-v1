@@ -113,12 +113,13 @@ currentTopic2Chip model topic =
         [ Chip.content
             [ center]
             [ text (toString topic.id)
-            , Icon.view "list"
+            , span
                 [ onClick
                     (ExecCmd (Request.loadTerms topic 30))
                     --(ShowTerms topic.words)
                 ]
-            , Icon.view "art_track"
+                [ Icon.i "list"]
+            , span
                 [ onClick
                     (ExecCmd (Request.loadBestDocs topic Nothing "relevance"))
                     --(ShowDocuments
@@ -127,6 +128,7 @@ currentTopic2Chip model topic =
                     --        model.docs
                     --    ))
                 ]
+                [ Icon.i "art_track"]
             , Icon.view "cancel"
                 [ onClick
                     (RemoveTopic topic.id)

@@ -4,20 +4,24 @@ import Model exposing (..)
 import Request
 
 import Html exposing (Html, text)
-import Material.Options exposing (div, css, center, onClick)
+import Material.Options exposing (div, cs, css, center, onClick)
 import Material.List as Lists
+import Material.Elevation as Elevation
 
 view : Model -> String -> Html Msg
 view model flex =
     div
-        [ css "flex" flex
+        [ cs "search_results"
+        --, css "flex" flex
         , primaryColor
-        , center
+        --, center
         ]
         [ Lists.ul
             []
             [ Lists.li
-                []
+                [ Elevation.e4
+                , css "margin" "20px 0 20px 0"
+                ]
                 [ Lists.content
                     [ onClick
                         (ExecCmd (Request.loadSearchTopics model.settings.search4))
@@ -27,7 +31,9 @@ view model flex =
                     ]
                 ]
             , Lists.li
-                []
+                [ Elevation.e4
+                , css "margin" "20px 0 20px 0"
+                ]
                 [ Lists.content
                     [ onClick
                         (ExecCmd (Request.loadSearchTerms model.settings.search4))
@@ -37,7 +43,9 @@ view model flex =
                     ]
                 ]
             , Lists.li
-                []
+                [ Elevation.e4
+                , css "margin" "20px 0 20px 0"
+                ]
                 [ Lists.content
                     [ onClick
                         (ExecCmd (Request.loadSearchDocs model.settings.search4 False "RELEVANCE"))

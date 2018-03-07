@@ -45,11 +45,11 @@ view model flex slotId slotName =
         , div
             [ cs "slot__content"
             ]
-            (List.map (topic2Chip model) model.topics)
+            (List.indexedMap (topic2Chip model.settings slotId) model.topics)
         ]
 
-topic2Chip : Model -> Topic -> Html Msg
-topic2Chip model topic =
+topic2Chip : Settings -> Int -> Int -> Topic -> Html Msg
+topic2Chip settings slotId id topic =
     Chip.span
         [ css "width" "calc(100% - 40px)"
         , css "margin" "6px 4px"
@@ -62,21 +62,26 @@ topic2Chip model topic =
             [ span
                 [ css "width" "calc(100% - 48px)"
                 , css "text-align" "center"
+                , onClick (SelectItem (slotId, id))
                 ]
                 [ text ("Topic " ++ (toString topic.id))]
-            , Icon.view "list"
+            , span
                 [ onClick
                     (ExecCmd (Request.loadTerms topic 30))
                     --(ShowTermList topic.top_terms)
+                , center
                 ]
-            , Icon.view "art_track"
+                [ Icon.view "list" (iconHighlighted settings (slotId, id))]
+            , span
                 [ onClick
                     (ExecCmd (Request.loadBestDocs topic Nothing "RELEVANCE"))
                     --ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDoc topic)
                     --        model.docs
-                    --    ))
+                    --    ))]
+                , center
                 ]
+                [ Icon.view "art_track" (iconHighlighted settings (slotId, id))]
             ]
         ]

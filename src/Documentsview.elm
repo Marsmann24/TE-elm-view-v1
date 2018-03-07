@@ -55,8 +55,8 @@ doc2CardView model doc cardID =
     Card.view
         [ css "height" "100px"
         , css "width" "94%"
-        , css "margin" "4% 3%"
-        , Color.background (Color.color Color.Brown Color.S500)
+        , css "margin" "4% 8% 4% 3%"
+        , Color.background Color.primary
         , if (cardID == model.currentDocument.cardID)
             then Elevation.e0
           else if (cardID == model.raised)
@@ -79,7 +79,7 @@ doc2CardView model doc cardID =
                 [ span
                     [ css "width" "calc(100% - 48px)"]
                     [ text doc.title]
-                , Icon.view "bubble_chart"
+                , span
                     [ onMouseDown
                         (SelectAction
                             None
@@ -91,8 +91,11 @@ doc2CardView model doc cardID =
 --                            )
                         )
                     ]
-                , Icon.view "list"
-                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc)))]
+                    [ Icon.i "bubble_chart"]
+                , span
+                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc)))
+                    ]
+                    [ Icon.i "list"]
                 ]
             , span
                 [ Color.text (Color.color Color.Grey Color.S200)

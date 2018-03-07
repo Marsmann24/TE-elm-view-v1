@@ -1,6 +1,7 @@
 module Update exposing (update)
 
 import Model exposing (..)
+import Init exposing (initSettings)
 import Topic exposing (Topic)
 import Term exposing (Term)
 import Document exposing (Doc, Document)
@@ -42,6 +43,13 @@ update msg model =
                 | currentTab = newCurrentTab
                 , tabs = newTabs
             }, Cmd.none)
+        SelectItem itemId ->
+            let oldSettings = model.settings
+            in
+            ({ model
+                | settings =
+                    { oldSettings | selectedItem = itemId}
+            }, Cmd.none)
         Raise cardNumber ->
             ({ model | raised = cardNumber}, Cmd.none)
         --ChangeCurrentDocument cardNumber newDocument->
@@ -58,11 +66,13 @@ update msg model =
                 ({ model
                     | settings =
                         { oldSettings
-                            | search = True
+                            | search = not (term == "")
                             , search4 = term
                         }
                     --, result = List.filter (\x -> (x == term)) []
                 }, Cmd.none)
+        ResetSettings ->
+            ({ model | settings = initSettings}, Cmd.none)
         --Found view ->
         --        let oldSettings = model.settings
         --            oldSlots = model.slots
@@ -371,7 +381,12 @@ update msg model =
                             }
                     }, Cmd.none)
         ExecCmd cmd ->
-            (model, cmd)
+            let oldSettings = model.settings
+            in
+            ({ model
+                | settings =
+                    { oldSettings | selectedItem = (-1, -1)}
+            }, cmd)
         SelectAction defMsg ->
             ({ model | selectedMsg = defMsg}, Cmd.none)
         ExecuteActionIfNone defMsg ->

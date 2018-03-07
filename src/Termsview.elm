@@ -47,30 +47,31 @@ view model flex slotId slotName =
         , Lists.ul
             [ cs "slot__content"
             ]
-            (List.map2 (topic2Terms model)
-                model.terms
-                (List.map (\x -> x + 10 * slotId)
-                    (List.range 1 (List.length model.terms))
-                )
-            )
+            (List.indexedMap (topic2Terms model slotId) model.terms)
         ]
 
-topic2Terms : Model -> Term -> Int -> Html Msg
-topic2Terms model term id=
+topic2Terms : Model -> Int -> Int -> Term -> Html Msg
+topic2Terms model slotId id term =
     Lists.li
-        []
+        [ css "overflow" "visible"
+        ]
         [ Lists.content
             [ cs "mdl-button"
             , cs "mdl-button--raised"
+            , css "overflow" "visible"
             , center
             , if (term.id == model.currentTerm.id)
                 then Elevation.e2
                 else nop
             ]
             [ span
-                [ css "width" "calc(100% - 48px)"]
-                [ text (term.name ++ " (" ++ (toString term.id) ++ ")")]
-            , Icon.view "bubble_chart"
+                [ css "width" "calc(100% - 48px)"
+                , onClick (SelectItem (slotId, id))
+                ]
+                [ text term.name
+                --, text (term.name ++ " (" ++ (toString term.id) ++ ")")
+                ]
+            , span
                 [ onClick
                     (ExecCmd (Request.loadAutocompleteTerms term.name))
                 --    (ShowTopics
@@ -79,7 +80,8 @@ topic2Terms model term id=
                 --            model.topics
                 --        ))
                 ]
-            , Icon.view "art_track"
+                [ Icon.view "bubble_chart" (iconHighlighted model.settings (slotId, id))]
+            , span
                 [ onClick
                     (ExecCmd (Request.loadBestDocs Topic.defaultTopic (Just term) "RELEVANCE"))
                     --(ShowDocuments
@@ -89,5 +91,6 @@ topic2Terms model term id=
                     --    )
                     --)
                 ]
+                [ Icon.view "art_track" (iconHighlighted model.settings (slotId, id))]
             ]
         ]

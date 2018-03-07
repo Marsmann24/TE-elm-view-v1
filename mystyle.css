@@ -4,13 +4,6 @@
     justify-content: flex-start!important;
 }
 
-.search_box{
-    display: inline!important;
-    margin: 0 80px;
-    padding: 0 20px;
-    width: 300px;
-    border-radius: 0 0 20px 20px;
-}
 /*.mdl-chip__text{
     float: left!important;
     text-align: center!important;
@@ -21,6 +14,34 @@
     padding: 4px 0!important;
 }
 */
+
+/* Search */
+.search_box{
+    display: inline!important;
+    margin: 0 80px;
+    padding: 0 20px;
+    width: 300px;
+    border-radius: 0 0 20px 20px;
+}
+.search_overlay {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+.search_results{
+    width: 300px;
+    padding: 0 20px;
+    margin: 70px 0 0 80px;
+    border-radius: 25px;
+}
 
 /* Slot */
 .slot{
