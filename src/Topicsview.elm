@@ -67,7 +67,7 @@ topic2Chip settings slotId id topic =
                 [ text ("Topic " ++ (toString topic.id))]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadTerms topic 30))
+                    (ExecCmd (Request.loadTerms topic 0))
                     --(ShowTermList topic.top_terms)
                 , center
                 ]

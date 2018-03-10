@@ -61,14 +61,14 @@ matchRawTopicsById topics sorting =
             List.map
                 (\x -> Maybe.withDefault defaultRawTopic (Dict.get x topics))
                 sorting
-        unsortedList =
-            List.filter
-                (not << ((flip List.member) sortedList))
-                (Dict.values topics)
+    --    unsortedList =
+    --        List.filter
+    --            (not << ((flip List.member) sortedList))
+    --            (Dict.values topics)
     in
-    List.append
+    --List.append
         sortedList
-        unsortedList
+    --    unsortedList
 
 makeTopicsList : Dict Int RawTopic -> List Int -> Dict Int Term -> List Topic
 makeTopicsList topics sorting terms =

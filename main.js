@@ -21317,13 +21317,7 @@ var _user$project$Topic$matchRawTopicsById = F2(
 					A2(_elm_lang$core$Dict$get, x, topics));
 			},
 			sorting);
-		var unsortedList = A2(
-			_elm_lang$core$List$filter,
-			function (_p0) {
-				return !A3(_elm_lang$core$Basics$flip, _elm_lang$core$List$member, sortedList, _p0);
-			},
-			_elm_lang$core$Dict$values(topics));
-		return A2(_elm_lang$core$List$append, sortedList, unsortedList);
+		return sortedList;
 	});
 var _user$project$Topic$makeTopicsList = F3(
 	function (topics, sorting, terms) {
@@ -22768,7 +22762,7 @@ var _user$project$Topicsview$topic2Chip = F4(
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
 										_user$project$Model$ExecCmd(
-											A2(_user$project$Request$loadTerms, topic, 30))),
+											A2(_user$project$Request$loadTerms, topic, 0))),
 									_1: {
 										ctor: '::',
 										_0: _debois$elm_mdl$Material_Options$center,
