@@ -75,27 +75,35 @@ viewSearch model =
 
 viewSwitch : Model -> Html Msg
 viewSwitch model =
+    let oldSettings = model.settings
+    in
     div
         []
         [ h3 [] [ text "Einstellungen"]
         , Toggles.switch Mdl [0] model.mdl
             [ css "margin" "5px"
-            , onToggle ToggleBottom
+            , onToggle (Toggle {oldSettings | bottom = not model.settings.bottom})
             , Toggles.value model.settings.bottom
             ]
-            [ text "Topics at bottom" ]
+            [ text "topics at bottom" ]
         , Toggles.switch Mdl [1] model.mdl
             [ css "margin" "5px"
-            , onToggle ToggleView2
+            , onToggle (Toggle { oldSettings | view2 = not model.settings.view2})
             , Toggles.value model.settings.view2
             ]
-            [ text "Mainview 2" ]
+            [ text "main view 2" ]
         , Toggles.switch Mdl [2] model.mdl
             [ css "margin" "5px"
-            , onToggle ToggleShowSaved
+            , onToggle (Toggle { oldSettings | showSaved = not model.settings.showSaved})
             , Toggles.value model.settings.showSaved
             ]
-            [ text "show Saved"]
+            [ text "show saved"]
+        , Toggles.switch Mdl [3] model.mdl
+            [ css "margin" "5px"
+            , onToggle (Toggle { oldSettings | showRelevance = not model.settings.showRelevance})
+            , Toggles.value model.settings.showRelevance
+            ]
+            [ text "show term relevance"]
         ]
 
 viewBody : Model -> Html Msg
@@ -163,6 +171,7 @@ slot model slotId view =
                     [ Icon.i "close" ]
                 , div
                     [ center
+                    , css "margin-top" "40px"
                     , cs "slot__content"
                     , cs "flex__column"
                     ]

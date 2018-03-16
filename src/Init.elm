@@ -58,9 +58,11 @@ initSettings =
     , showSaved = True
     , bottom = False
     , view2 = True
+    , showRelevance = True
     , showSlotDialoge = False
     , search = False
     , search4 = ""
+    , searchResult = TopicResult []
     , slotToDelete = -1
     , selectedItem = (-1, -1)
     }

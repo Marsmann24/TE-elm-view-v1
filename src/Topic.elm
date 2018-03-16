@@ -100,5 +100,5 @@ decodeTopics =
     map3 makeTopicsList
         (field "Topic" (intDictDecoder defaultRawTopic topicDecoder))
         (field "TOPIC_SORTING" (list int))
-        (field "Term" (intDictDecoder defaultTerm (termDecoder int2)))
+        (field "Term" (intDictDecoder defaultTerm (termDecoder "TERM" int2)))
         --(field "TopicBestItemLimit" int)

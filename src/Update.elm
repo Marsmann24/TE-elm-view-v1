@@ -5,6 +5,7 @@ import Init exposing (initSettings)
 import Topic exposing (Topic)
 import Term exposing (Term)
 import Document exposing (Doc, Document)
+import Request
 
 import Material
 import Dispatch
@@ -19,18 +20,8 @@ import Set
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
-        ToggleBottom ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | bottom = not (model.settings.bottom)}}, Cmd.none)
-        ToggleView2 ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | view2 = not (model.settings.view2)}}, Cmd.none)
-        ToggleShowSaved ->
-            let oldSettings = model.settings
-            in
-            ({ model | settings = { oldSettings | showSaved = not (model.settings.showSaved)}}, Cmd.none)
+        Toggle settings ->
+            ({ model | settings = settings}, Cmd.none)
         SelectTab tabId ->
             ({ model | currentTab = tabId}, Cmd.none)
         CloseTab ->
@@ -60,31 +51,34 @@ update msg model =
             let newCurrentTopis = List.filter (\x -> x.id /= topicID) model.currentTopics
             in
             ({ model | currentTopics = newCurrentTopis}, Cmd.none)
-        Search term ->
-                let oldSettings = model.settings
-                in
+        Search searchterm ->
+            let oldSettings = model.settings
+            in
+            if not (searchterm == "")
+            then
                 ({ model
                     | settings =
                         { oldSettings
-                            | search = not (term == "")
-                            , search4 = term
+                            | search = not (searchterm == "")
+                            , search4 = searchterm
                         }
-                    --, result = List.filter (\x -> (x == term)) []
-                }, Cmd.none)
+                }, Request.loadSearchTerms searchterm)
+            else
+                ( model, Cmd.none)
         ResetSettings ->
             ({ model | settings = initSettings}, Cmd.none)
-        --Found view ->
-        --        let oldSettings = model.settings
-        --            oldSlots = model.slots
-        --        in
-        --        ({ model
-        --            | settings = { oldSettings
-        --                            | search = False
-        --                            , search4 = ""
-        --                        }
-        --            , slots = slotFromTo oldSlots Empty view
-        --            }
-        --        , Cmd.none)
+        Found view ->
+                let oldSettings = model.settings
+                    oldSlots = model.slots
+                in
+                ({ model
+                    | settings = { oldSettings
+                                    | search = False
+                                    , search4 = ""
+                                }
+                    , slots = slotFromTo oldSlots Empty view
+                    }
+                , Cmd.none)
         DeleteSlot slotId ->
             let oldSettings = model.settings
             in
@@ -318,7 +312,7 @@ update msg model =
                         , settings =
                             { oldSettings
                                 | search = False
-                                , search4 = ""
+                            --    , search4 = ""
                             --    , showTopics = True
                             }
                     }, Cmd.none)
@@ -338,11 +332,11 @@ update msg model =
             case result of
                 Ok termList ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (TermsView name termList)
-                        , settings =
+                        --| slots = slotFromTo oldSlots Empty (TermsView name termList)
+                        | settings =
                             { oldSettings
-                                | search = False
-                                , search4 = ""
+                                | searchResult = TermResult termList
+                            --    , search4 = ""
                             --    , showTerms = True
                             }
                     }, Cmd.none)
@@ -358,7 +352,6 @@ update msg model =
         NewSearchDocs name result ->
             let oldSettings = model.settings
                 oldSlots = model.slots
-
             in
             case result of
                 Ok docList ->
@@ -367,7 +360,7 @@ update msg model =
                         , settings =
                             { oldSettings
                                 | search = False
-                                , search4 = ""
+                            --    , search4 = ""
                             --    , showDocuments = True
                             }
                     }, Cmd.none)

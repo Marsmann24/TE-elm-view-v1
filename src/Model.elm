@@ -17,7 +17,7 @@ import Maybe exposing (Maybe, withDefault)
 type Msg
     = ResetSettings
     | Search String
-    --| Found View
+    | Found View
     | SelectItem (Int, Int)
     | SelectTab Int
     | CloseTab
@@ -36,9 +36,10 @@ type Msg
     --| HideDocuments Int
     | ChoseSlotDialog Int
     | UpdateSlot View Int
-    | ToggleBottom
-    | ToggleView2
-    | ToggleShowSaved
+    | Toggle Settings
+    --| ToggleBottom
+    --| ToggleView2
+    --| ToggleShowSaved
     | NewTopics String (Result Http.Error (List Topic))
     | NewDocument (Result Http.Error Document)
     | NewDocs String (Result Http.Error (List Doc))
@@ -132,9 +133,11 @@ type alias Settings =
     , showSaved : Bool
     , bottom : Bool
     , view2 : Bool
+    , showRelevance : Bool
     , showSlotDialoge : Bool
     , search : Bool
     , search4 : String
+    , searchResult : SearchResult
     , slotToDelete : Int
     , selectedItem : (Int, Int)
     }
@@ -144,10 +147,10 @@ type Tab
     | DocumentTab String Document
     | ErrorTab String String
 
---type Searchresult
---    = Topicresult Topic
---    | Termresult Term
---    | Documentresult Doc
+type SearchResult
+    = TopicResult (List Topic)
+    | TermResult (List Term)
+    | DocumentResult Doc
 
 --Slots
 

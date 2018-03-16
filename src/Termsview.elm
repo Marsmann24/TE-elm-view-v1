@@ -47,11 +47,11 @@ view model flex slotId slotName =
         , Lists.ul
             [ cs "slot__content"
             ]
-            (List.indexedMap (topic2Terms model slotId) model.terms)
+            (List.indexedMap (terms2ListItem model slotId) model.terms)
         ]
 
-topic2Terms : Model -> Int -> Int -> Term -> Html Msg
-topic2Terms model slotId id term =
+terms2ListItem : Model -> Int -> Int -> Term -> Html Msg
+terms2ListItem model slotId id term =
     Lists.li
         [ css "overflow" "visible"
         ]
@@ -68,8 +68,9 @@ topic2Terms model slotId id term =
                 [ css "width" "calc(100% - 48px)"
                 , onClick (SelectItem (slotId, id))
                 ]
-                [ text term.name
-                --, text (term.name ++ " (" ++ (toString term.id) ++ ")")
+                [ if (model.settings.showRelevance)
+                  then text (term.name ++ " (" ++ (toString (Maybe.withDefault 0 term.relevance)) ++ ")")
+                  else text term.name
                 ]
             , span
                 [ onClick

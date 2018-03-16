@@ -1,6 +1,6 @@
 module Term exposing (..)
 
-import Json.Decode exposing (Decoder, string, int, list, map, map2, map5, field, keyValuePairs, succeed, maybe)
+import Json.Decode exposing (Decoder, string, int, list, map, map2, map6, field, keyValuePairs, maybe)
 import Decoderhelper exposing (int2, intDictDecoder, listheadwithdefault, pseudolist)
 import Dict exposing (Dict)
 
@@ -9,12 +9,13 @@ type alias Term =
     , name : String
     , wordtype : Maybe Int
     , count : Maybe Int
+    , relevance : Maybe Int
     , top_topic : List Int
     }
 
 defaultTerm : Term
 defaultTerm =
-    (Term -1 "Error: Not matching." Nothing Nothing [])
+    (Term -1 "Error: Not matching." Nothing Nothing Nothing [])
 
 type alias TermSorting =
     List { id : Int, relevance : Int}
@@ -31,28 +32,53 @@ termId2Term terms termId =
 
 matchTermsById : { items : Dict Int Term, sorting : List Int} -> List Term
 matchTermsById termsorting =
+    let toTermSortingItem id =
+            { id = id
+            , relevance = 0
+            }
+        sorting =
+            { items = termsorting.items
+            , sorting = List.map toTermSortingItem termsorting.sorting
+            }
+    in
+    matchTermsBySorting sorting
+
+matchTermsBySorting : { items : Dict Int Term, sorting : TermSorting} -> List Term
+matchTermsBySorting termsorting =
+    let term : { id : Int, relevance : Int} -> Term
+        term x =
+            Maybe.withDefault
+                defaultTerm
+                (Dict.get x.id termsorting.items)
+        matchTerm : { id : Int, relevance : Int} -> Term
+        matchTerm x =
+            let term_ = term x
+            in
+            { term_ | relevance = Just x.relevance}
+    in
     List.map
-        (\x -> Maybe.withDefault defaultTerm (Dict.get x termsorting.items))
+        matchTerm
         termsorting.sorting
 
 matchTermsortingById : TermsResult -> List Term
 matchTermsortingById termsresult =
-    let termsorting : { items : Dict Int Term, sorting : List Int}
+    let termsorting : { items : Dict Int Term, sorting : TermSorting}
         termsorting =
             { items = termsresult.terms
-            , sorting = List.map .id (List.sortBy .relevance (Tuple.second termsresult.topic))
+            , sorting = Tuple.second termsresult.topic
             }
     in
-    matchTermsById termsorting
+    matchTermsBySorting termsorting
 
 -- Decoders
-termDecoder : Decoder Int -> Decoder Term
-termDecoder intDecoder =
-    map5 Term
-        (field "TERM_ID" intDecoder)
-        (field "TERM_NAME" string)
+termDecoder : String -> Decoder Int -> Decoder Term
+termDecoder itemName intDecoder =
+    map6 Term
+        (field (itemName ++ "_ID") intDecoder)
+        (field (itemName ++ "_NAME") string)
         (maybe (field "WORDTYPE$WORDTYPE" intDecoder))
-        (succeed Nothing)
+        (maybe (field (itemName ++ "_COUNT") intDecoder))
+        (maybe (field "RELEVANCE" intDecoder))
         (map
             (Maybe.withDefault [])
             (maybe (field "TOP_TOPIC" (list int)))
@@ -79,7 +105,7 @@ termsDecoder =
                     )
                 )
             )
-            (field "Term" (intDictDecoder defaultTerm (termDecoder int)))
+            (field "Term" (intDictDecoder defaultTerm (termDecoder "TERM" int)))
         )
 
 bestTermsDecoder : Decoder (List Term)
@@ -94,13 +120,7 @@ bestTermsDecoder =
                             (field "SORTING" (list int))
                             (intDictDecoder
                                 defaultTerm
-                                (map5 Term
-                                        (field "ITEM_ID" int)
-                                        (field "ITEM_NAME" string)
-                                        (succeed Nothing)
-                                        (maybe (field "ITEM_COUNT" int))
-                                        (succeed [])
-                                )
+                                (termDecoder "ITEM" int)
                             )
                         )
                     )
@@ -111,4 +131,4 @@ bestTermsDecoder =
 
 searchTermDecoder : Decoder (List Term)
 searchTermDecoder =
-    list (termDecoder int2)
+    list (termDecoder "TERM" int2)
