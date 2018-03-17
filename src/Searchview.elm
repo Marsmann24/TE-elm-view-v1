@@ -20,32 +20,42 @@ view model flex =
         ]
         [ Lists.ul
             [ css "overflow" "auto"]
-            (List.append
-                [ if (String.startsWith "topics:" model.settings.search4)
-                  then
-                    (li "bubble_chart"
-                        ("Search for Topics with " ++ model.settings.search4)
-                        (ExecCmd (Request.loadSearchTopics (String.dropLeft 6 model.settings.search4)))
-                    )
-                  else span [] []
-                , if (String.startsWith "terms:" model.settings.search4)
-                  then
-                      (li "list"
-                        ("Search for Terms with " ++ model.settings.search4)
-                        (ExecCmd (Request.loadSearchTerms (String.dropLeft 6 model.settings.search4)))
-                    )
-                  else span [] []
-                , if (String.startsWith "documents:" model.settings.search4)
-                  then
-                      (li "art_track"
-                        ("Search for Documents with " ++ model.settings.search4)
-                        (ExecCmd (Request.loadSearchDocs (String.dropLeft 6 model.settings.search4 False "RELEVANCE")))
-                    )
-                  else span [] []
-                ]
+            --(List.append
+            --    (advancedSearch model.settings.search4)
                 (searchresult2ListItems model.settings.searchResult)
-            )
+            --)
         ]
+
+advancedSearch : String -> List (Html Msg)
+advancedSearch search4 =
+    [ if (String.startsWith "topic:" search4)
+      then
+          let search4topic = (String.dropLeft 6 search4)
+          in
+        (li "bubble_chart"
+            ("Search for Topics with " ++ search4topic)
+            (ExecCmd (Request.loadSearchTopics search4topic))
+        )
+      else span [] []
+    , if (String.startsWith "term:" search4)
+      then
+          let search4term = (String.dropLeft 5 search4)
+          in
+          (li "list"
+            ("Search for Terms with " ++ search4term)
+            (ExecCmd (Request.loadSearchTerms search4term))
+        )
+      else span [] []
+    , if (String.startsWith "document:" search4)
+      then
+          let search4doc = (String.dropLeft 9 search4)
+          in
+          (li "art_track"
+            ("Search for Documents with " ++ search4doc)
+            (ExecCmd (Request.loadSearchDocs search4doc False "RELEVANCE"))
+        )
+      else span [] []
+    ]
 
 searchresult2ListItems : SearchResult -> List (Html Msg)
 searchresult2ListItems result =

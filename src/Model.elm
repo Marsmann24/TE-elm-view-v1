@@ -17,6 +17,7 @@ import Maybe exposing (Maybe, withDefault)
 type Msg
     = ResetSettings
     | Search String
+    | AdvancedSearch String
     | Found View
     | SelectItem (Int, Int)
     | SelectTab Int

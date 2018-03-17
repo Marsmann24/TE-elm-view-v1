@@ -65,6 +65,48 @@ update msg model =
                 }, Request.loadSearchTerms searchterm)
             else
                 ( model, Cmd.none)
+        AdvancedSearch string ->
+            let oldSettings = model.settings
+                searchterm = String.toLower string
+            in
+            if not (searchterm == "")
+            then
+                let request =
+                        (if (String.startsWith "topic:" searchterm)
+                        then
+                            let search4topic = (String.dropLeft 6 searchterm)
+                            in
+                            (Request.loadSearchTopics search4topic)
+                        else (if (String.startsWith "term:" searchterm)
+                        then
+                            let search4term = (String.dropLeft 5 searchterm)
+                            in
+                            (Request.loadSearchTerms search4term)
+                        else (if (String.startsWith "document:" searchterm)
+                        then
+                            let search4doc = (String.dropLeft 9 searchterm)
+                                docId = String.toInt search4doc
+                            in
+                            case docId of
+                                Ok id ->
+                                    let doc = Document.defaultDoc
+                                    in
+                                    (Request.loadDoc { doc | id = id})
+                                Err _ ->
+                                    (Request.loadSearchDocs search4doc False "RELEVANCE")
+                        else
+                            (Request.loadSearchTerms searchterm)
+                        )))
+                in
+                ({ model
+                    | settings =
+                        { oldSettings
+                            | search = False
+                            , search4 = searchterm
+                        }
+                }, request)
+            else
+                ( model, Cmd.none)
         ResetSettings ->
             ({ model | settings = initSettings}, Cmd.none)
         Found view ->
@@ -188,7 +230,11 @@ update msg model =
                     ({ model
                         | slots = slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
                         , topics = newTopics
-                        --, settings = { oldSettings | showTopics = True}
+                        , settings =
+                            { oldSettings
+                                | error = ""
+                                --,  showTopics = True
+                            }
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
@@ -202,7 +248,11 @@ update msg model =
                     ({ model
                         | slots = slotFromTo oldSlots Empty (TermsView name newTerms)
                         , terms = newTerms
-                        --, settings = { oldSettings | showTerms = True}
+                        , settings =
+                            { oldSettings
+                                | error = ""
+                                --, showTerms = True
+                            }
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
@@ -215,7 +265,11 @@ update msg model =
                     ({ model
                         | slots = slotFromTo oldSlots Empty (DocumentsView name newDocs)
                         , docs = newDocs
-                        --,settings = { oldSettings | showDocuments = True}
+                        ,settings =
+                            { oldSettings
+                                | error = ""
+                                --, showDocuments = True
+                            }
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
@@ -228,7 +282,11 @@ update msg model =
                 Ok document ->
                     ({ model
                         | slots = slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))
-                        --,settings = { oldSettings | showTerms = True}
+                        ,settings =
+                            { oldSettings
+                                | error = ""
+                                --, showTerms = True
+                            }
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
@@ -241,10 +299,11 @@ update msg model =
                 Ok document ->
                     ({ model
                         | tabs = (List.append oldTabs [DocumentTab document.title document])
-                        , currentTab = tabNumber}
-                    , Cmd.none)
+                        , currentTab = tabNumber
+                        , settings = { oldSettings | error = ""}
+                    }, Cmd.none)
                 Err err ->
-                    ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
+                    ({ model | settings = { oldSettings | error = "Document not found"}}, Cmd.none)
         NewFrames name result ->
             (model, Cmd.none)
         NewTermTopics termName result ->
@@ -278,7 +337,10 @@ update msg model =
                 Ok termList ->
                     ({ model
                         | slots = slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
-                        --,settings = { oldSettings | showTopics = True}
+                        , settings =
+                            { oldSettings | error = ""
+                            --, showTopics = True
+                            }
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
@@ -312,6 +374,7 @@ update msg model =
                         , settings =
                             { oldSettings
                                 | search = False
+                                , error = ""
                             --    , search4 = ""
                             --    , showTopics = True
                             }
@@ -336,6 +399,7 @@ update msg model =
                         | settings =
                             { oldSettings
                                 | searchResult = TermResult termList
+                                , error = ""
                             --    , search4 = ""
                             --    , showTerms = True
                             }
@@ -360,6 +424,7 @@ update msg model =
                         , settings =
                             { oldSettings
                                 | search = False
+                                , error = ""
                             --    , search4 = ""
                             --    , showDocuments = True
                             }

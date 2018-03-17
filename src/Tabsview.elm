@@ -81,7 +81,7 @@ document2DocumentView model document =
             , css "margin" "4px"
             , css "color" "grey"
             ]
-            [ text (toString document.time_stamp)
+            [ text (("id=" ++ (toString document.id)) ++ (" | date=" ++ (toString document.time_stamp)))
             , br [][]
             ]
         , h1 [] [ text document.title]

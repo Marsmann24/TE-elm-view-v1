@@ -103,7 +103,7 @@ doc2CardView model doc cardID =
                 , css "font-size" "8px"
                 , css "align-self" "right"
                 ]
-                [ text (toString doc.time_stamp) ]
+                [ text (("id=" ++ (toString doc.id)) ++ (" | date=" ++ (toString doc.time_stamp))) ]
             ]
         , Card.text
             [ Color.text (Color.white)

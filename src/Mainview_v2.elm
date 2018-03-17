@@ -10,7 +10,8 @@ import Searchview
 
 import Array
 import Html exposing (Html, text, h3)
-import Material.Options exposing (Property, css, cs, center, div, span, onToggle, onClick, onInput, dispatch)
+import Html.Events exposing (keyCode)
+import Material.Options exposing (Property, css, cs, center, div, span, onToggle, onClick, onInput, on, dispatch)
 import Material.Icon as Icon
 import Material.Color as Color
 import Material.Scheme as Scheme
@@ -20,6 +21,7 @@ import Material.Toggles as Toggles
 import Material.Button as Button
 import Material.Card as Card
 import Material.Elevation as Elevation
+import Json.Decode as Json
 
 view : Model -> Html Msg
 view model =
@@ -68,10 +70,22 @@ viewSearch model =
         --    , Textfield.expandable "id-of-expandable-1"
         --    , Textfield.expandableIcon "search"
             , onInput Search
+            , onEnterPressed (AdvancedSearch model.settings.search4)
             , dispatch Batch
             ]
             [ ]
         ]
+
+onEnterPressed : Msg -> Property c Msg
+onEnterPressed msg =
+    let
+        isEnter code =
+            if code == 13 then
+                Json.succeed msg
+            else
+                Json.fail "not ENTER"
+    in
+    on "keydown" <| Json.andThen isEnter keyCode
 
 viewSwitch : Model -> Html Msg
 viewSwitch model =
@@ -117,21 +131,24 @@ viewBody model =
             , css "flex" "3 2 70%"
             , css "height" "100%"
             ]
---                (List.append
-            [ if (not (List.isEmpty model.slots.more))
-                then slotAction (onClick None) "<"
-                else div [] []
-            , div
-                [ cs "flex__row"
-                , css "flex" (flexValue ((slotsCount model.slots) * 2))
+            (List.concat
+                [ [ if (not (List.isEmpty model.slots.more))
+                    then slotAction (onClick None) "<"
+                    else div [] []
+                  ]
+                --, div
+                --    [ cs "flex__row"
+                --    , css "flex" (flexValue ((slotsCount model.slots) * 2))
+                --    ]
+    --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
+                , (Array.toList (Array.indexedMap (slot model) model.slots.main))
+                , [ if ((slotGet model.slots 2) == Empty)
+                    then slotAction (onClick (ChoseSlotDialog (slotGetFirstId model.slots Empty))) "add"
+                    else slotAction (onClick None) ">"
+                  , Tabsview.view model (flexValue 6)
+                  ]
                 ]
---                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
-                (Array.toList (Array.indexedMap (slot model) model.slots.main))
-            , if ((slotGet model.slots 2) == Empty)
-                then slotAction (onClick (ChoseSlotDialog (slotGetFirstId model.slots Empty))) "add"
-                else slotAction (onClick None) ">"
-            , Tabsview.view model (flexValue 6)
-            ]
+            )
         , Savedview.view model "1 1 30%"
         ]
 
