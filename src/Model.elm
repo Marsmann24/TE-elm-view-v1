@@ -3,6 +3,7 @@ module Model exposing (..)
 import Term exposing (..)
 import Topic exposing (..)
 import Document exposing (..)
+import Slots exposing (Slots)
 
 import ContainerCache
 import Material
@@ -27,6 +28,8 @@ type Msg
     | RemoveTopic Int
     | DeleteSlot Int
     | RemoveSlot Int
+    | MoveLeft
+    | MoveRight
     | RemoveSlotFromOther Int
     | SlotToLastFromOther Int
     --| ShowTopics (List Topic)
@@ -84,7 +87,7 @@ type alias Model =
     , selectedMsg : Msg             -- Msg to execute onMouseUp
     , settings : Settings           -- which views are shown
     --, result : List Searchresult    -- search result
-    , slots : Slots
+    , slots : Slots View
     , containerTopicModel : ContainerCache.ContainerModel (List Topic)
     , topicsContainer : Int
     , mdl : Material.Model
@@ -168,119 +171,119 @@ type View
     | ErrorSlot
 
 
-type alias Slots =
-    { main : Array View
-    , more : List View
-    }
+--type alias Slots =
+--    { main : Array View
+--    , more : List View
+--    }
 
-slotFromTo : Slots -> View -> View -> Slots
-slotFromTo slots from to =
-    let findSlot = slotGetFirstId slots from
-    in
-    if (findSlot == -1)
-    then
-        slotChangeTo
-            (slotChangeTo
-                (slotChangeTo
-                    { slots | more = ((slotGet slots 0)::slots.more)}
-                    0 (slotGet slots 1))
-                1 (slotGet slots 2))
-            2 to
-    else slotChangeTo slots findSlot to
+--slotFromTo : Slots -> View -> View -> Slots
+--slotFromTo slots from to =
+--    let findSlot = slotGetFirstId slots from
+--    in
+--    if (findSlot == -1)
+--    then
+--        slotChangeTo
+--            (slotChangeTo
+--                (slotChangeTo
+--                    { slots | more = ((slotGet slots 0)::slots.more)}
+--                    0 (slotGet slots 1))
+--                1 (slotGet slots 2))
+--            2 to
+--    else slotChangeTo slots findSlot to
+--
+--slotsCount : Slots -> Int
+--slotsCount slots =
+--    let firstEmpty =
+--            slotGetFirstId slots Empty
+--    in
+--    if (firstEmpty < 0)
+--    then Array.length slots.main
+--    else firstEmpty
+--
+--slotGetFirstId : Slots -> View -> Int
+--slotGetFirstId slots view =
+--    slotGetFirstIdSince slots view 0
+--
+--slotGetFirstIdSince : Slots -> View -> Int -> Int
+--slotGetFirstIdSince slots view id =
+--    let getView =
+--        case (Array.get id slots.main) of
+--            Just a ->
+--                a
+--            Nothing ->
+--                ErrorSlot
+--    in
+--    if (getView == ErrorSlot)
+--    then -1
+--    else if (getView == view)
+--        then id
+--        else (slotGetFirstIdSince slots view (id + 1))
+--
+--slotGet : Slots -> Int -> View
+--slotGet slots slotId =
+--    withDefault ErrorSlot (Array.get slotId slots.main)
 
-slotsCount : Slots -> Int
-slotsCount slots =
-    let firstEmpty =
-            slotGetFirstId slots Empty
-    in
-    if (firstEmpty < 0)
-    then Array.length slots.main
-    else firstEmpty
+--slotChangeTo : Slots -> Int -> View -> Slots
+--slotChangeTo oldSlots id value =
+--    { oldSlots | main = Array.set id value oldSlots.main}
 
-slotGetFirstId : Slots -> View -> Int
-slotGetFirstId slots view =
-    slotGetFirstIdSince slots view 0
-
-slotGetFirstIdSince : Slots -> View -> Int -> Int
-slotGetFirstIdSince slots view id =
-    let getView =
-        case (Array.get id slots.main) of
-            Just a ->
-                a
-            Nothing ->
-                ErrorSlot
-    in
-    if (getView == ErrorSlot)
-    then -1
-    else if (getView == view)
-        then id
-        else (slotGetFirstIdSince slots view (id + 1))
-
-slotGet : Slots -> Int -> View
-slotGet slots slotId =
-    withDefault ErrorSlot (Array.get slotId slots.main)
-
-slotChangeTo : Slots -> Int -> View -> Slots
-slotChangeTo oldSlots id value =
-    { oldSlots | main = Array.set id value oldSlots.main}
-
-slotRemove : Slots -> Int -> Slots
-slotRemove slots removeId =
-    let
-        nextResult : Int -> View -> View
-        nextResult id view =
-            if ((nextSlot id) == ErrorSlot)
-            then moreHead
-            else if ((id * dir) >= (removeId * dir))
-                then nextSlot id
-                else view
-        nextSlot : Int -> View
-        nextSlot id =
-            slotGet slots (id + dir)
-        dir : Int
-        dir =
-            if (moreHead == Empty)
-            then 1
-            else (-1)
-        moreHead : View
-        moreHead =
-            withDefault Empty (List.head slots.more)
-        moreTail : List (View)
-        moreTail =
-            withDefault [] (List.tail slots.more)
-    in
-    { slots
-        | main = Array.indexedMap nextResult slots.main
-        , more = moreTail
-    }
-
-slotRemoveMore : Slots -> Int -> Slots
-slotRemoveMore slots id =
-    let oldMore = slots.more
-    in
-    { slots
-        | more = (List.take id oldMore) ++ (List.drop (id + 1) oldMore)
-    }
-
-slotMove2EndFromMore : Slots -> Int -> Slots
-slotMove2EndFromMore slots id =
-    let newMore : List View
-        newMore =
-            ((List.take id slots.more) ++ (List.drop (id + 1) slots.more))
-        moreSlot : View
-        moreSlot =
-            withDefault Empty (List.head (List.drop id slots.more))
-        newSlots : Slots
-        newSlots =
-            slotChangeTo
-                (slotChangeTo
-                    (slotChangeTo
-                        { slots | more = ((slotGet slots 0)::newMore)}
-                        0 (slotGet slots 1))
-                    1 (slotGet slots 2))
-                2 moreSlot
-    in
-    newSlots
+--slotRemove : Slots -> Int -> Slots
+--slotRemove slots removeId =
+--    let
+--        nextResult : Int -> View -> View
+--        nextResult id view =
+--            if ((nextSlot id) == ErrorSlot)
+--            then moreHead
+--            else if ((id * dir) >= (removeId * dir))
+--                then nextSlot id
+--                else view
+--        nextSlot : Int -> View
+--        nextSlot id =
+--            slotGet slots (id + dir)
+--        dir : Int
+--        dir =
+--            if (moreHead == Empty)
+--            then 1
+--            else (-1)
+--        moreHead : View
+--        moreHead =
+--            withDefault Empty (List.head slots.more)
+--        moreTail : List (View)
+--        moreTail =
+--            withDefault [] (List.tail slots.more)
+--    in
+--    { slots
+--        | main = Array.indexedMap nextResult slots.main
+--        , more = moreTail
+--    }
+--
+--slotRemoveMore : Slots -> Int -> Slots
+--slotRemoveMore slots id =
+--    let oldMore = slots.more
+--    in
+--    { slots
+--        | more = (List.take id oldMore) ++ (List.drop (id + 1) oldMore)
+--    }
+--
+--slotMove2EndFromMore : Slots -> Int -> Slots
+--slotMove2EndFromMore slots id =
+--    let newMore : List View
+--        newMore =
+--            ((List.take id slots.more) ++ (List.drop (id + 1) slots.more))
+--        moreSlot : View
+--        moreSlot =
+--            withDefault Empty (List.head (List.drop id slots.more))
+--        newSlots : Slots
+--        newSlots =
+--            slotChangeTo
+--                (slotChangeTo
+--                    (slotChangeTo
+--                        { slots | more = ((slotGet slots 0)::newMore)}
+--                        0 (slotGet slots 1))
+--                    1 (slotGet slots 2))
+--                2 moreSlot
+--    in
+--    newSlots
 
 iconHighlighted : Settings -> (Int, Int) -> List (Icon.Property m)
 iconHighlighted settings id =

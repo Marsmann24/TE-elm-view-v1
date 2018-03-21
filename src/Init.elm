@@ -25,14 +25,19 @@ init =
     , settings = initSettings
     --, result = initResult
     , slots =
-        { main =
-            Array.fromList
-                [ Empty
-                , Empty
-                , Empty
-                ]
-        , more = []
+        { left = []
+        , focus = Array.initialize 3 (always Empty)
+        , right = []
+        , null = Empty
         }
+        --{ main =
+        --    Array.fromList
+        --        [ Empty
+        --        , Empty
+        --        , Empty
+        --        ]
+        --, more = []
+        --}
     , containerTopicModel = ContainerCache.newContainerModel Array.empty 3 ContainerCache.defaultContainer
     , topicsContainer = 0
     , mdl = Material.model

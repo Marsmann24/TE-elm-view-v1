@@ -21559,6 +21559,275 @@ var _user$project$Document$documentDecoder = A2(
 			'WORD_LIST',
 			_elm_lang$core$Json_Decode$list(_user$project$Document$tokenDecoder))));
 
+var _user$project$Slots$setAt = F3(
+	function (slots, value, id) {
+		return _elm_lang$core$Native_Utils.update(
+			slots,
+			{
+				focus: A3(_elm_lang$core$Array$set, id, value, slots.focus)
+			});
+	});
+var _user$project$Slots$rightHead = function (slots) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		slots.$null,
+		_elm_lang$core$List$head(slots.right));
+};
+var _user$project$Slots$rightDrop = function (slots) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		{ctor: '[]'},
+		_elm_lang$core$List$tail(slots.right));
+};
+var _user$project$Slots$leftHead = function (slots) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		slots.$null,
+		_elm_lang$core$List$head(slots.left));
+};
+var _user$project$Slots$leftDrop = function (slots) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		{ctor: '[]'},
+		_elm_lang$core$List$tail(slots.left));
+};
+var _user$project$Slots$getById = F2(
+	function (slots, id) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			slots.$null,
+			A2(_elm_lang$core$Array$get, id, slots.focus));
+	});
+var _user$project$Slots$getFocusLast = function (slots) {
+	return A2(
+		_user$project$Slots$getById,
+		slots,
+		_elm_lang$core$Array$length(slots.focus) - 1);
+};
+var _user$project$Slots$getFocusFirst = function (slots) {
+	return A2(_user$project$Slots$getById, slots, 0);
+};
+var _user$project$Slots$getFirstIdOf = F2(
+	function (slots, item) {
+		var check = F2(
+			function (value, counter) {
+				return (_elm_lang$core$Native_Utils.eq(value, item) || counter.b) ? _elm_lang$core$Native_Utils.update(
+					counter,
+					{b: true}) : _elm_lang$core$Native_Utils.update(
+					counter,
+					{n: counter.n + 1});
+			});
+		var result = A3(
+			_elm_lang$core$Array$foldl,
+			check,
+			{n: 0, b: false},
+			slots.focus);
+		return result.b ? _elm_lang$core$Maybe$Just(result.n) : _elm_lang$core$Maybe$Nothing;
+	});
+var _user$project$Slots$isNull = F2(
+	function (slots, item) {
+		return _elm_lang$core$Native_Utils.eq(item, slots.$null);
+	});
+var _user$project$Slots$isNotNull = F2(
+	function (slots, item) {
+		return !A2(_user$project$Slots$isNull, slots, item);
+	});
+var _user$project$Slots$getFocus = function (slots) {
+	return A2(
+		_elm_lang$core$Array$filter,
+		_user$project$Slots$isNotNull(slots),
+		slots.focus);
+};
+var _user$project$Slots$focusIsFull = function (slots) {
+	return _elm_lang$core$Native_Utils.eq(
+		_user$project$Slots$getFocus(slots),
+		slots.focus);
+};
+var _user$project$Slots$getFocusFirstNotNull = function (slots) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		slots.$null,
+		A2(
+			_elm_lang$core$Array$get,
+			0,
+			_user$project$Slots$getFocus(slots)));
+};
+var _user$project$Slots$getFocusLastNotNull = function (slots) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		slots.$null,
+		A2(
+			_elm_lang$core$Array$get,
+			_elm_lang$core$Array$length(
+				_user$project$Slots$getFocus(slots)) - 1,
+			_user$project$Slots$getFocus(slots)));
+};
+var _user$project$Slots$leftAdd = F2(
+	function (slots, item) {
+		return A2(_user$project$Slots$isNull, slots, item) ? slots.left : {ctor: '::', _0: item, _1: slots.left};
+	});
+var _user$project$Slots$moveLeft = function (slots) {
+	var next = F2(
+		function (id, view) {
+			return (_elm_lang$core$Native_Utils.cmp(
+				id,
+				_elm_lang$core$Array$length(slots.focus) - 1) < 0) ? A2(
+				_elm_lang$core$Maybe$withDefault,
+				slots.$null,
+				A2(_elm_lang$core$Array$get, id + 1, slots.focus)) : _user$project$Slots$rightHead(slots);
+		});
+	return _elm_lang$core$Native_Utils.update(
+		slots,
+		{
+			left: A2(
+				_user$project$Slots$leftAdd,
+				slots,
+				_user$project$Slots$getFocusFirst(slots)),
+			focus: A2(_elm_lang$core$Array$indexedMap, next, slots.focus),
+			right: _user$project$Slots$rightDrop(slots)
+		});
+};
+var _user$project$Slots$rightAdd = F2(
+	function (slots, item) {
+		return A2(_user$project$Slots$isNull, slots, item) ? slots.right : {ctor: '::', _0: item, _1: slots.right};
+	});
+var _user$project$Slots$moveRight = function (slots) {
+	var next = F2(
+		function (id, view) {
+			return (_elm_lang$core$Native_Utils.cmp(id, 0) > 0) ? A2(
+				_elm_lang$core$Maybe$withDefault,
+				slots.$null,
+				A2(_elm_lang$core$Array$get, id - 1, slots.focus)) : _user$project$Slots$leftHead(slots);
+		});
+	return _elm_lang$core$Native_Utils.update(
+		slots,
+		{
+			left: _user$project$Slots$leftDrop(slots),
+			focus: A2(_elm_lang$core$Array$indexedMap, next, slots.focus),
+			right: A2(
+				_user$project$Slots$rightAdd,
+				slots,
+				_user$project$Slots$getFocusLast(slots))
+		});
+};
+var _user$project$Slots$insertAt = F3(
+	function (slots, value, id) {
+		var next = F3(
+			function (useId, pointer, view) {
+				return (_elm_lang$core$Native_Utils.cmp(pointer, useId) < 0) ? A2(
+					_elm_lang$core$Maybe$withDefault,
+					slots.$null,
+					A2(_elm_lang$core$Array$get, pointer, slots.focus)) : (_elm_lang$core$Native_Utils.eq(pointer, useId) ? value : A2(
+					_elm_lang$core$Maybe$withDefault,
+					slots.$null,
+					A2(_elm_lang$core$Array$get, pointer - 1, slots.focus)));
+			});
+		var calcPosition = function () {
+			var _p0 = A2(_user$project$Slots$getFirstIdOf, slots, slots.$null);
+			if (_p0.ctor === 'Just') {
+				var _p1 = _p0._0;
+				return (_elm_lang$core$Native_Utils.cmp(id, _p1) > 0) ? _p1 : id;
+			} else {
+				return id;
+			}
+		}();
+		return A2(_user$project$Slots$isNull, slots, value) ? slots : (_user$project$Slots$focusIsFull(slots) ? _elm_lang$core$Native_Utils.update(
+			slots,
+			{
+				focus: A2(
+					_elm_lang$core$Array$indexedMap,
+					next(id),
+					slots.focus),
+				right: A2(
+					_user$project$Slots$rightAdd,
+					slots,
+					_user$project$Slots$getFocusLast(slots))
+			}) : _elm_lang$core$Native_Utils.update(
+			slots,
+			{
+				focus: A2(
+					_elm_lang$core$Array$indexedMap,
+					next(calcPosition),
+					slots.focus)
+			}));
+	});
+var _user$project$Slots$insertAfter = F3(
+	function (slots, value, id) {
+		return _user$project$Slots$focusIsFull(slots) ? A3(
+			_user$project$Slots$insertAt,
+			_user$project$Slots$moveLeft(slots),
+			value,
+			id) : A3(_user$project$Slots$insertAt, slots, value, id + 1);
+	});
+var _user$project$Slots$focusLength = function (slots) {
+	var count = F2(
+		function (item, counter) {
+			return A2(_user$project$Slots$isNull, slots, item) ? counter : (counter + 1);
+		});
+	return A3(_elm_lang$core$Array$foldl, count, 0, slots.focus);
+};
+var _user$project$Slots$insertEnd = F2(
+	function (slots, value) {
+		insertEnd:
+		while (true) {
+			if ((!_elm_lang$core$List$isEmpty(slots.right)) && _user$project$Slots$focusIsFull(slots)) {
+				var _v1 = _user$project$Slots$moveLeft(slots),
+					_v2 = value;
+				slots = _v1;
+				value = _v2;
+				continue insertEnd;
+			} else {
+				return A3(
+					_user$project$Slots$insertAfter,
+					slots,
+					value,
+					_user$project$Slots$focusLength(slots) - 1);
+			}
+		}
+	});
+var _user$project$Slots$removeAt = F2(
+	function (slots, id) {
+		var alignLeft = function (slots) {
+			alignLeft:
+			while (true) {
+				if (_user$project$Slots$focusIsFull(slots)) {
+					return slots;
+				} else {
+					if (_elm_lang$core$List$isEmpty(slots.left)) {
+						return slots;
+					} else {
+						var _v3 = _user$project$Slots$moveRight(slots);
+						slots = _v3;
+						continue alignLeft;
+					}
+				}
+			}
+		};
+		var next = F2(
+			function (pointer, view) {
+				return (_elm_lang$core$Native_Utils.cmp(pointer, id) < 0) ? A2(
+					_elm_lang$core$Maybe$withDefault,
+					slots.$null,
+					A2(_elm_lang$core$Array$get, pointer, slots.focus)) : ((_elm_lang$core$Native_Utils.cmp(
+					pointer,
+					_user$project$Slots$focusLength(slots) - 1) < 0) ? A2(
+					_elm_lang$core$Maybe$withDefault,
+					slots.$null,
+					A2(_elm_lang$core$Array$get, pointer + 1, slots.focus)) : _user$project$Slots$rightHead(slots));
+			});
+		var newSlots = _elm_lang$core$Native_Utils.update(
+			slots,
+			{
+				focus: A2(_elm_lang$core$Array$indexedMap, next, slots.focus),
+				right: _user$project$Slots$rightDrop(slots)
+			});
+		return alignLeft(newSlots);
+	});
+var _user$project$Slots$Slots = F4(
+	function (a, b, c, d) {
+		return {left: a, focus: b, right: c, $null: d};
+	});
+
 var _user$project$Model$generalBackgroundColor = _debois$elm_mdl$Material_Options$cs('generalBackgroundColor');
 var _user$project$Model$primaryColor = _debois$elm_mdl$Material_Options$cs('primaryColor');
 var _user$project$Model$iconHighlighted = F2(
@@ -21588,26 +21857,6 @@ var _user$project$Model$iconHighlighted = F2(
 				}
 			}
 		} : {ctor: '[]'};
-	});
-var _user$project$Model$slotRemoveMore = F2(
-	function (slots, id) {
-		var oldMore = slots.more;
-		return _elm_lang$core$Native_Utils.update(
-			slots,
-			{
-				more: A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$List$take, id, oldMore),
-					A2(_elm_lang$core$List$drop, id + 1, oldMore))
-			});
-	});
-var _user$project$Model$slotChangeTo = F3(
-	function (oldSlots, id, value) {
-		return _elm_lang$core$Native_Utils.update(
-			oldSlots,
-			{
-				main: A3(_elm_lang$core$Array$set, id, value, oldSlots.main)
-			});
 	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
@@ -21663,10 +21912,6 @@ var _user$project$Model$Settings = function (a) {
 		};
 	};
 };
-var _user$project$Model$Slots = F2(
-	function (a, b) {
-		return {main: a, more: b};
-	});
 var _user$project$Model$None = {ctor: 'None'};
 var _user$project$Model$Mdl = function (a) {
 	return {ctor: 'Mdl', _0: a};
@@ -21742,6 +21987,8 @@ var _user$project$Model$SlotToLastFromOther = function (a) {
 var _user$project$Model$RemoveSlotFromOther = function (a) {
 	return {ctor: 'RemoveSlotFromOther', _0: a};
 };
+var _user$project$Model$MoveRight = {ctor: 'MoveRight'};
+var _user$project$Model$MoveLeft = {ctor: 'MoveLeft'};
 var _user$project$Model$RemoveSlot = function (a) {
 	return {ctor: 'RemoveSlot', _0: a};
 };
@@ -21794,137 +22041,7 @@ var _user$project$Model$TopicResult = function (a) {
 	return {ctor: 'TopicResult', _0: a};
 };
 var _user$project$Model$ErrorSlot = {ctor: 'ErrorSlot'};
-var _user$project$Model$slotGetFirstIdSince = F3(
-	function (slots, view, id) {
-		slotGetFirstIdSince:
-		while (true) {
-			var getView = function () {
-				var _p0 = A2(_elm_lang$core$Array$get, id, slots.main);
-				if (_p0.ctor === 'Just') {
-					return _p0._0;
-				} else {
-					return _user$project$Model$ErrorSlot;
-				}
-			}();
-			if (_elm_lang$core$Native_Utils.eq(getView, _user$project$Model$ErrorSlot)) {
-				return -1;
-			} else {
-				if (_elm_lang$core$Native_Utils.eq(getView, view)) {
-					return id;
-				} else {
-					var _v1 = slots,
-						_v2 = view,
-						_v3 = id + 1;
-					slots = _v1;
-					view = _v2;
-					id = _v3;
-					continue slotGetFirstIdSince;
-				}
-			}
-		}
-	});
-var _user$project$Model$slotGetFirstId = F2(
-	function (slots, view) {
-		return A3(_user$project$Model$slotGetFirstIdSince, slots, view, 0);
-	});
-var _user$project$Model$slotGet = F2(
-	function (slots, slotId) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			_user$project$Model$ErrorSlot,
-			A2(_elm_lang$core$Array$get, slotId, slots.main));
-	});
-var _user$project$Model$slotFromTo = F3(
-	function (slots, from, to) {
-		var findSlot = A2(_user$project$Model$slotGetFirstId, slots, from);
-		return _elm_lang$core$Native_Utils.eq(findSlot, -1) ? A3(
-			_user$project$Model$slotChangeTo,
-			A3(
-				_user$project$Model$slotChangeTo,
-				A3(
-					_user$project$Model$slotChangeTo,
-					_elm_lang$core$Native_Utils.update(
-						slots,
-						{
-							more: {
-								ctor: '::',
-								_0: A2(_user$project$Model$slotGet, slots, 0),
-								_1: slots.more
-							}
-						}),
-					0,
-					A2(_user$project$Model$slotGet, slots, 1)),
-				1,
-				A2(_user$project$Model$slotGet, slots, 2)),
-			2,
-			to) : A3(_user$project$Model$slotChangeTo, slots, findSlot, to);
-	});
 var _user$project$Model$Empty = {ctor: 'Empty'};
-var _user$project$Model$slotsCount = function (slots) {
-	var firstEmpty = A2(_user$project$Model$slotGetFirstId, slots, _user$project$Model$Empty);
-	return (_elm_lang$core$Native_Utils.cmp(firstEmpty, 0) < 0) ? _elm_lang$core$Array$length(slots.main) : firstEmpty;
-};
-var _user$project$Model$slotRemove = F2(
-	function (slots, removeId) {
-		var moreTail = A2(
-			_elm_lang$core$Maybe$withDefault,
-			{ctor: '[]'},
-			_elm_lang$core$List$tail(slots.more));
-		var moreHead = A2(
-			_elm_lang$core$Maybe$withDefault,
-			_user$project$Model$Empty,
-			_elm_lang$core$List$head(slots.more));
-		var dir = _elm_lang$core$Native_Utils.eq(moreHead, _user$project$Model$Empty) ? 1 : -1;
-		var nextSlot = function (id) {
-			return A2(_user$project$Model$slotGet, slots, id + dir);
-		};
-		var nextResult = F2(
-			function (id, view) {
-				return _elm_lang$core$Native_Utils.eq(
-					nextSlot(id),
-					_user$project$Model$ErrorSlot) ? moreHead : ((_elm_lang$core$Native_Utils.cmp(id * dir, removeId * dir) > -1) ? nextSlot(id) : view);
-			});
-		return _elm_lang$core$Native_Utils.update(
-			slots,
-			{
-				main: A2(_elm_lang$core$Array$indexedMap, nextResult, slots.main),
-				more: moreTail
-			});
-	});
-var _user$project$Model$slotMove2EndFromMore = F2(
-	function (slots, id) {
-		var moreSlot = A2(
-			_elm_lang$core$Maybe$withDefault,
-			_user$project$Model$Empty,
-			_elm_lang$core$List$head(
-				A2(_elm_lang$core$List$drop, id, slots.more)));
-		var newMore = A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(_elm_lang$core$List$take, id, slots.more),
-			A2(_elm_lang$core$List$drop, id + 1, slots.more));
-		var newSlots = A3(
-			_user$project$Model$slotChangeTo,
-			A3(
-				_user$project$Model$slotChangeTo,
-				A3(
-					_user$project$Model$slotChangeTo,
-					_elm_lang$core$Native_Utils.update(
-						slots,
-						{
-							more: {
-								ctor: '::',
-								_0: A2(_user$project$Model$slotGet, slots, 0),
-								_1: newMore
-							}
-						}),
-					0,
-					A2(_user$project$Model$slotGet, slots, 1)),
-				1,
-				A2(_user$project$Model$slotGet, slots, 2)),
-			2,
-			moreSlot);
-		return newSlots;
-	});
 var _user$project$Model$Dialog = {ctor: 'Dialog'};
 var _user$project$Model$DocumentsView = F2(
 	function (a, b) {
@@ -22500,21 +22617,13 @@ var _user$project$Init$init = {
 		selectedMsg: _user$project$Model$None,
 		settings: _user$project$Init$initSettings,
 		slots: {
-			main: _elm_lang$core$Array$fromList(
-				{
-					ctor: '::',
-					_0: _user$project$Model$Empty,
-					_1: {
-						ctor: '::',
-						_0: _user$project$Model$Empty,
-						_1: {
-							ctor: '::',
-							_0: _user$project$Model$Empty,
-							_1: {ctor: '[]'}
-						}
-					}
-				}),
-			more: {ctor: '[]'}
+			left: {ctor: '[]'},
+			focus: A2(
+				_elm_lang$core$Array$initialize,
+				3,
+				_elm_lang$core$Basics$always(_user$project$Model$Empty)),
+			right: {ctor: '[]'},
+			$null: _user$project$Model$Empty
 		},
 		containerTopicModel: A3(_user$project$ContainerCache$newContainerModel, _elm_lang$core$Array$empty, 3, _user$project$ContainerCache$defaultContainer),
 		topicsContainer: 0,
@@ -23330,11 +23439,45 @@ var _user$project$Savedview$view = F2(
 										}
 									}
 								},
-								A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.more)),
+								A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.left)),
 							_1: {ctor: '[]'}
 						}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$div,
+						{
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Options$css, 'height', '100%'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('More Slots:'),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_debois$elm_mdl$Material_Options$div,
+									{
+										ctor: '::',
+										_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'auto'),
+										_1: {
+											ctor: '::',
+											_0: A2(_debois$elm_mdl$Material_Options$css, 'height', 'calc(100% - 20px)'),
+											_1: {
+												ctor: '::',
+												_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '250px'),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									A2(_elm_lang$core$List$indexedMap, _user$project$Savedview$slotView2Chip, model.slots.right)),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
 			});
 	});
 
@@ -24098,9 +24241,9 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 						ctor: '::',
 						_0: {
 							ctor: '::',
-							_0: (!_elm_lang$core$List$isEmpty(model.slots.more)) ? A2(
+							_0: (!_elm_lang$core$List$isEmpty(model.slots.left)) ? A2(
 								_user$project$Mainview_v2$slotAction,
-								_debois$elm_mdl$Material_Options$onClick(_user$project$Model$None),
+								_debois$elm_mdl$Material_Options$onClick(_user$project$Model$MoveRight),
 								'<') : A2(
 								_debois$elm_mdl$Material_Options$div,
 								{ctor: '[]'},
@@ -24113,22 +24256,25 @@ var _user$project$Mainview_v2$viewBody = function (model) {
 								A2(
 									_elm_lang$core$Array$indexedMap,
 									_user$project$Mainview_v2$slot(model),
-									model.slots.main)),
+									_user$project$Slots$getFocus(model.slots))),
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '::',
-									_0: _elm_lang$core$Native_Utils.eq(
-										A2(_user$project$Model$slotGet, model.slots, 2),
-										_user$project$Model$Empty) ? A2(
+									_0: (_elm_lang$core$Native_Utils.cmp(
+										_user$project$Slots$focusLength(model.slots),
+										2) < 1) ? A2(
 										_user$project$Mainview_v2$slotAction,
 										_debois$elm_mdl$Material_Options$onClick(
 											_user$project$Model$ChoseSlotDialog(
-												A2(_user$project$Model$slotGetFirstId, model.slots, _user$project$Model$Empty))),
-										'add') : A2(
+												_user$project$Slots$focusLength(model.slots))),
+										'add') : ((!_elm_lang$core$List$isEmpty(model.slots.right)) ? A2(
 										_user$project$Mainview_v2$slotAction,
-										_debois$elm_mdl$Material_Options$onClick(_user$project$Model$None),
-										'>'),
+										_debois$elm_mdl$Material_Options$onClick(_user$project$Model$MoveLeft),
+										'>') : A2(
+										_debois$elm_mdl$Material_Options$div,
+										{ctor: '[]'},
+										{ctor: '[]'})),
 									_1: {
 										ctor: '::',
 										_0: A2(
@@ -24904,7 +25050,6 @@ var _user$project$Update$update = F2(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				case 'Found':
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
@@ -24914,7 +25059,7 @@ var _user$project$Update$update = F2(
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
 									{search: false, search4: ''}),
-								slots: A3(_user$project$Model$slotFromTo, oldSlots, _user$project$Model$Empty, _p0._0)
+								slots: A2(_user$project$Slots$insertEnd, model.slots, _p0._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -24937,7 +25082,6 @@ var _user$project$Update$update = F2(
 							_user$project$Model$RemoveSlot(_p3))
 					};
 				case 'RemoveSlot':
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
@@ -24947,30 +25091,47 @@ var _user$project$Update$update = F2(
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
 									{slotToDelete: -1}),
-								slots: A2(_user$project$Model$slotRemove, oldSlots, _p0._0)
+								slots: A2(_user$project$Slots$removeAt, model.slots, _p0._0)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'MoveLeft':
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								slots: _user$project$Slots$moveLeft(model.slots)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'MoveRight':
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								slots: _user$project$Slots$moveRight(model.slots)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				case 'RemoveSlotFromOther':
-					var newSlots = A2(_user$project$Model$slotRemoveMore, model.slots, _p0._0);
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{slots: newSlots}),
+							{slots: model.slots}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				case 'SlotToLastFromOther':
-					var newSlots = A2(_user$project$Model$slotMove2EndFromMore, model.slots, _p0._0);
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{slots: newSlots}),
+							{slots: model.slots}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				case 'ChoseSlotDialog':
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					return {
 						ctor: '_Tuple2',
@@ -24980,24 +25141,22 @@ var _user$project$Update$update = F2(
 								settings: _elm_lang$core$Native_Utils.update(
 									oldSettings,
 									{showSlotDialoge: true}),
-								slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._0, _user$project$Model$Dialog)
+								slots: A2(_user$project$Slots$insertEnd, model.slots, _user$project$Model$Dialog)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				case 'UpdateSlot':
-					var oldSlots = model.slots;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								slots: A3(_user$project$Model$slotChangeTo, oldSlots, _p0._1, _p0._0)
+								slots: A3(_user$project$Slots$setAt, model.slots, _p0._0, _p0._1)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				case 'NewTopics':
 					var topicsContainer = model.topicsContainer;
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					var _p4 = _p0._1;
 					if (_p4.ctor === 'Ok') {
@@ -25007,10 +25166,9 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									slots: A3(
-										_user$project$Model$slotFromTo,
-										oldSlots,
-										_user$project$Model$Empty,
+									slots: A2(
+										_user$project$Slots$insertEnd,
+										model.slots,
 										A3(_user$project$Model$TopicsView, _p0._0, _p5, topicsContainer)),
 									topics: _p5,
 									settings: _elm_lang$core$Native_Utils.update(
@@ -25035,7 +25193,6 @@ var _user$project$Update$update = F2(
 						};
 					}
 				case 'NewTerms':
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					var _p6 = _p0._1;
 					if (_p6.ctor === 'Ok') {
@@ -25045,10 +25202,9 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									slots: A3(
-										_user$project$Model$slotFromTo,
-										oldSlots,
-										_user$project$Model$Empty,
+									slots: A2(
+										_user$project$Slots$insertEnd,
+										model.slots,
 										A2(_user$project$Model$TermsView, _p0._0, _p7)),
 									terms: _p7,
 									settings: _elm_lang$core$Native_Utils.update(
@@ -25073,7 +25229,6 @@ var _user$project$Update$update = F2(
 						};
 					}
 				case 'NewDocs':
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					var _p8 = _p0._1;
 					if (_p8.ctor === 'Ok') {
@@ -25083,10 +25238,9 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									slots: A3(
-										_user$project$Model$slotFromTo,
-										oldSlots,
-										_user$project$Model$Empty,
+									slots: A2(
+										_user$project$Slots$insertEnd,
+										model.slots,
 										A2(_user$project$Model$DocumentsView, _p0._0, _p9)),
 									docs: _p9,
 									settings: _elm_lang$core$Native_Utils.update(
@@ -25112,7 +25266,6 @@ var _user$project$Update$update = F2(
 					}
 				case 'NewDocTokens':
 					var allTerms = model.terms;
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					var _p10 = _p0._1;
 					if (_p10.ctor === 'Ok') {
@@ -25121,10 +25274,9 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									slots: A3(
-										_user$project$Model$slotFromTo,
-										oldSlots,
-										_user$project$Model$Empty,
+									slots: A2(
+										_user$project$Slots$insertEnd,
+										model.slots,
 										A2(
 											_user$project$Model$TermsView,
 											_p0._0,
@@ -25225,7 +25377,6 @@ var _user$project$Update$update = F2(
 							isMember(terms),
 							model.topics);
 					};
-					var oldSlots = model.slots;
 					var topicsContainer = model.topicsContainer;
 					var oldSettings = model.settings;
 					var _p14 = _p0._1;
@@ -25235,10 +25386,9 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									slots: A3(
-										_user$project$Model$slotFromTo,
-										oldSlots,
-										_user$project$Model$Empty,
+									slots: A2(
+										_user$project$Slots$insertEnd,
+										model.slots,
 										A3(
 											_user$project$Model$TopicsView,
 											A2(_elm_lang$core$Basics_ops['++'], 'Topics with ', _p15),
@@ -25290,7 +25440,6 @@ var _user$project$Update$update = F2(
 							isMember(terms),
 							model.topics);
 					};
-					var oldSlots = model.slots;
 					var topicsContainer = model.topicsContainer;
 					var oldSettings = model.settings;
 					var _p16 = _p0._1;
@@ -25300,10 +25449,9 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									slots: A3(
-										_user$project$Model$slotFromTo,
-										oldSlots,
-										_user$project$Model$Empty,
+									slots: A2(
+										_user$project$Slots$insertEnd,
+										model.slots,
 										A3(
 											_user$project$Model$TopicsView,
 											_p0._0,
@@ -25333,7 +25481,6 @@ var _user$project$Update$update = F2(
 						};
 					}
 				case 'NewSearchTerms':
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					var _p17 = _p0._1;
 					if (_p17.ctor === 'Ok') {
@@ -25369,7 +25516,6 @@ var _user$project$Update$update = F2(
 						};
 					}
 				case 'NewSearchDocs':
-					var oldSlots = model.slots;
 					var oldSettings = model.settings;
 					var _p18 = _p0._1;
 					if (_p18.ctor === 'Ok') {
@@ -25378,10 +25524,9 @@ var _user$project$Update$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									slots: A3(
-										_user$project$Model$slotFromTo,
-										oldSlots,
-										_user$project$Model$Empty,
+									slots: A2(
+										_user$project$Slots$insertEnd,
+										model.slots,
 										A2(_user$project$Model$DocumentsView, _p0._0, _p18._0)),
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
@@ -25472,10 +25617,10 @@ var _user$project$Update$update = F2(
 									'Topics',
 									topicList(newContainer),
 									index);
-								return A3(_user$project$Model$slotFromTo, model.slots, _user$project$Model$Empty, newView);
+								return A2(_user$project$Slots$insertEnd, model.slots, newView);
 							case 'PageUpdate':
 								var index = function () {
-									var _p22 = A2(_user$project$Model$slotGet, model.slots, _p24);
+									var _p22 = A2(_user$project$Slots$getById, model.slots, _p24);
 									if (_p22.ctor === 'TopicsView') {
 										return _p22._2;
 									} else {
@@ -25491,10 +25636,10 @@ var _user$project$Update$update = F2(
 									'Topics',
 									topicList(newContainer),
 									index);
-								return A3(_user$project$Model$slotChangeTo, model.slots, _p24, newView);
+								return A3(_user$project$Slots$setAt, model.slots, newView, _p24);
 							default:
 								var index = function () {
-									var _p23 = A2(_user$project$Model$slotGet, model.slots, _p24);
+									var _p23 = A2(_user$project$Slots$getById, model.slots, _p24);
 									if (_p23.ctor === 'TopicsView') {
 										return _p23._2;
 									} else {
@@ -25510,7 +25655,7 @@ var _user$project$Update$update = F2(
 									'Topics',
 									topicList(newContainer),
 									index);
-								return A3(_user$project$Model$slotChangeTo, model.slots, _p24, newView);
+								return A3(_user$project$Slots$setAt, model.slots, newView, _p24);
 						}
 					}();
 					return {
@@ -25587,9 +25732,13 @@ Elm['Searchview'] = Elm['Searchview'] || {};
 if (typeof _user$project$Searchview$main !== 'undefined') {
     _user$project$Searchview$main(Elm['Searchview'], 'Searchview', {"types":null,"versions":{"elm":"0.18.0"}});
 }
+Elm['Slots'] = Elm['Slots'] || {};
+if (typeof _user$project$Slots$main !== 'undefined') {
+    _user$project$Slots$main(Elm['Slots'], 'Slots', {"types":null,"versions":{"elm":"0.18.0"}});
+}
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Batch":["List Model.Msg"],"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Result.Result Http.Error (List Document.Doc)"],"RemoveSlot":["Int"],"NewFrames":["String","Result.Result Http.Error (List Term.Term)"],"None":[],"Toggle":["Model.Settings"],"SelectItem":["( Int, Int )"],"DeleteSlot":["Int"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["String","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"NewSearchDocs":["String","Result.Result Http.Error (List Document.Doc)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"NewDocTokens":["String","Result.Result Http.Error Document.Document"],"NewSearchTerms":["String","Result.Result Http.Error (List Term.Term)"],"RemoveTopic":["Int"],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"NewSearchTopics":["String","Result.Result Http.Error (List Term.Term)"],"ResetSettings":[],"AdvancedSearch":["String"],"SelectAction":["Model.Msg"],"ChoseSlotDialog":["Int"],"Search":["String"],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Model.SearchResult":{"args":[],"tags":{"TopicResult":["List Topic.Topic"],"DocumentResult":["Document.Doc"],"TermResult":["List Term.Term"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , relevance : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ id : Int , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String , topic_id : Maybe.Maybe Int , document_count : Maybe.Maybe String , relevance : Maybe.Maybe Float , isino : Maybe.Maybe Int }"},"Model.Settings":{"args":[],"type":"{ error : String , showSaved : Bool , bottom : Bool , view2 : Bool , showRelevance : Bool , showSlotDialoge : Bool , search : Bool , search4 : String , searchResult : Model.SearchResult , slotToDelete : Int , selectedItem : ( Int, Int ) }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Batch":["List Model.Msg"],"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Result.Result Http.Error (List Document.Doc)"],"RemoveSlot":["Int"],"NewFrames":["String","Result.Result Http.Error (List Term.Term)"],"None":[],"Toggle":["Model.Settings"],"SelectItem":["( Int, Int )"],"DeleteSlot":["Int"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["String","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"NewSearchDocs":["String","Result.Result Http.Error (List Document.Doc)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"NewDocTokens":["String","Result.Result Http.Error Document.Document"],"NewSearchTerms":["String","Result.Result Http.Error (List Term.Term)"],"RemoveTopic":["Int"],"MoveLeft":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"NewSearchTopics":["String","Result.Result Http.Error (List Term.Term)"],"ResetSettings":[],"AdvancedSearch":["String"],"SelectAction":["Model.Msg"],"ChoseSlotDialog":["Int"],"Search":["String"],"MoveRight":[],"NewTerms":["String","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Model.SearchResult":{"args":[],"tags":{"TopicResult":["List Topic.Topic"],"DocumentResult":["Document.Doc"],"TermResult":["List Term.Term"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , relevance : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ id : Int , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String , topic_id : Maybe.Maybe Int , document_count : Maybe.Maybe String , relevance : Maybe.Maybe Float , isino : Maybe.Maybe Int }"},"Model.Settings":{"args":[],"type":"{ error : String , showSaved : Bool , bottom : Bool , view2 : Bool , showRelevance : Bool , showSlotDialoge : Bool , search : Bool , search4 : String , searchResult : Model.SearchResult , slotToDelete : Int , selectedItem : ( Int, Int ) }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {

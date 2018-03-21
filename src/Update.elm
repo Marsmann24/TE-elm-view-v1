@@ -6,6 +6,7 @@ import Topic exposing (Topic)
 import Term exposing (Term)
 import Document exposing (Doc, Document)
 import Request
+import Slots
 
 import Material
 import Dispatch
@@ -111,14 +112,13 @@ update msg model =
             ({ model | settings = initSettings}, Cmd.none)
         Found view ->
                 let oldSettings = model.settings
-                    oldSlots = model.slots
                 in
                 ({ model
                     | settings = { oldSettings
                                     | search = False
                                     , search4 = ""
                                 }
-                    , slots = slotFromTo oldSlots Empty view
+                    , slots = Slots.insertEnd model.slots view
                     }
                 , Cmd.none)
         DeleteSlot slotId ->
@@ -130,24 +130,27 @@ update msg model =
             , Delay.after 200 Time.millisecond (RemoveSlot slotId))
         RemoveSlot slotId ->
             let oldSettings = model.settings
-                oldSlots = model.slots
             in
             ({ model
                 | settings = { oldSettings | slotToDelete =-1}
-                , slots =  slotRemove oldSlots slotId
+                , slots =  Slots.removeAt model.slots slotId
                 }
             , Cmd.none)
-        RemoveSlotFromOther id ->
-            let newSlots = slotRemoveMore model.slots id
-            in
+        MoveLeft ->
             ({ model
-                | slots = newSlots
+                | slots = (Slots.moveLeft model.slots)
+            }, Cmd.none)
+        MoveRight ->
+            ({ model
+                | slots = (Slots.moveRight model.slots)
+            }, Cmd.none)
+        RemoveSlotFromOther id ->
+            ({ model
+                | slots = model.slots -- slotRemoveMore model.slots id
             }, Cmd.none)
         SlotToLastFromOther id ->
-            let newSlots = slotMove2EndFromMore model.slots id
-            in
             ({ model
-                | slots = newSlots
+                | slots = model.slots --slotMove2EndFromMore model.slots id
             }, Cmd.none)
 --        ShowTopics topics ->
 --            let oldSettings = model.settings
@@ -209,26 +212,26 @@ update msg model =
 --            , Cmd.none)
         ChoseSlotDialog slotId ->
             let oldSettings = model.settings
-                oldSlots = model.slots
             in
             ({ model
                 | settings = { oldSettings | showSlotDialoge = True}
-                , slots =  slotChangeTo oldSlots slotId Dialog
+                , slots = Slots.insertEnd model.slots Dialog --slotChangeTo oldSlots slotId Dialog
                 }
             , Cmd.none)
         UpdateSlot view slotId ->
-            let oldSlots = model.slots
-            in
-            ({ model | slots = slotChangeTo oldSlots slotId view}, Cmd.none)
+            ({ model
+                | slots = Slots.setAt model.slots view slotId
+                                        --slotChangeTo oldSlots slotId view
+            }, Cmd.none)
         NewTopics name result ->
             let oldSettings = model.settings
-                oldSlots = model.slots
                 topicsContainer = model.topicsContainer
             in
             case result of
                 Ok newTopics ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
+                        | slots = Slots.insertEnd model.slots (TopicsView name newTopics topicsContainer)
+                                        --slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
                         , topics = newTopics
                         , settings =
                             { oldSettings
@@ -240,13 +243,12 @@ update msg model =
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewTerms name result ->
             let oldSettings = model.settings
-                oldSlots = model.slots
-
             in
             case result of
                 Ok newTerms ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (TermsView name newTerms)
+                        | slots = Slots.insertEnd model.slots (TermsView name newTerms)
+                                        --slotFromTo oldSlots Empty (TermsView name newTerms)
                         , terms = newTerms
                         , settings =
                             { oldSettings
@@ -258,12 +260,12 @@ update msg model =
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocs name result ->
             let oldSettings = model.settings
-                oldSlots = model.slots
             in
             case result of
                 Ok newDocs ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (DocumentsView name newDocs)
+                        | slots = Slots.insertEnd model.slots (DocumentsView name newDocs)
+                                        --slotFromTo oldSlots Empty (DocumentsView name newDocs)
                         , docs = newDocs
                         ,settings =
                             { oldSettings
@@ -275,13 +277,13 @@ update msg model =
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
         NewDocTokens name result ->
             let oldSettings = model.settings
-                oldSlots = model.slots
                 allTerms = model.terms
             in
             case result of
                 Ok document ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))
+                        | slots = Slots.insertEnd model.slots (TermsView name (Document.documentTerms document allTerms))
+                                        --slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))
                         ,settings =
                             { oldSettings
                                 | error = ""
@@ -309,7 +311,6 @@ update msg model =
         NewTermTopics termName result ->
             let oldSettings = model.settings
                 topicsContainer = model.topicsContainer
-                oldSlots = model.slots
                 fetchTerm : List Term -> Maybe Term
                 fetchTerm terms =
                     List.head (List.filter (\x -> x.name == termName) terms)
@@ -336,7 +337,8 @@ update msg model =
             case result of
                 Ok termList ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
+                        | slots = Slots.insertEnd model.slots (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
+                                        --slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
                         , settings =
                             { oldSettings | error = ""
                             --, showTopics = True
@@ -347,7 +349,6 @@ update msg model =
         NewSearchTopics name result ->
             let oldSettings = model.settings
                 topicsContainer = model.topicsContainer
-                oldSlots = model.slots
                 concatTopTopics : List Term -> List Int
                 concatTopTopics terms =
                     Set.toList
@@ -370,7 +371,8 @@ update msg model =
             case result of
                 Ok termList ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (TopicsView name (newTopics termList) topicsContainer)
+                        | slots = Slots.insertEnd model.slots (TopicsView name (newTopics termList) topicsContainer)
+                                        --slotFromTo oldSlots Empty (TopicsView name (newTopics termList) topicsContainer)
                         , settings =
                             { oldSettings
                                 | search = False
@@ -390,7 +392,6 @@ update msg model =
                     }, Cmd.none)
         NewSearchTerms name result ->
             let oldSettings = model.settings
-                oldSlots = model.slots
             in
             case result of
                 Ok termList ->
@@ -415,12 +416,12 @@ update msg model =
                     }, Cmd.none)
         NewSearchDocs name result ->
             let oldSettings = model.settings
-                oldSlots = model.slots
             in
             case result of
                 Ok docList ->
                     ({ model
-                        | slots = slotFromTo oldSlots Empty (DocumentsView name docList)
+                        | slots = Slots.insertEnd model.slots (DocumentsView name docList)
+                                        --slotFromTo oldSlots Empty (DocumentsView name docList)
                         , settings =
                             { oldSettings
                                 | search = False
@@ -478,10 +479,11 @@ update msg model =
                                 newView =
                                     TopicsView "Topics" (topicList newContainer) index
                             in
-                            slotFromTo model.slots Empty newView
+                            Slots.insertEnd model.slots newView
+                            --slotFromTo model.slots Empty newView
                         ContainerCache.PageUpdate _ _ ->
                             let index =
-                                    case (slotGet model.slots slotId) of
+                                    case (Slots.getById model.slots slotId) of
                                         TopicsView _ _ contId->
                                             contId
                                         _ ->
@@ -491,10 +493,11 @@ update msg model =
                                 newView =
                                     TopicsView "Topics" (topicList newContainer) index
                             in
-                            slotChangeTo model.slots slotId newView
+                            Slots.setAt model.slots newView slotId
+                            --slotChangeTo model.slots slotId newView
                         _ ->
                             let index =
-                                    case (slotGet model.slots slotId) of
+                                    case (Slots.getById model.slots slotId) of
                                         TopicsView _ _ contId->
                                             contId
                                         _ ->
@@ -504,7 +507,8 @@ update msg model =
                                 newView =
                                     TopicsView "Topics" (topicList newContainer) index
                             in
-                            slotChangeTo model.slots slotId newView
+                            Slots.setAt model.slots newView slotId
+                            --slotChangeTo model.slots slotId newView
             in
             ({ model
                 | containerTopicModel = newdata

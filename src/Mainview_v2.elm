@@ -7,6 +7,7 @@ import Savedview
 import Documentsview
 import Termsview
 import Searchview
+import Slots
 
 import Array
 import Html exposing (Html, text, h3)
@@ -30,12 +31,14 @@ view model =
             { header =
                 (if model.settings.error == ""
                 then
-                    [ viewSearch model]
+                    [ viewSearch model
+                    ]
                 else
                     [ viewSearch model
                     , span
                         []
-                        [ text model.settings.error]
+                        [ text model.settings.error
+                        ]
                     ]
                 )
             , drawer = [ viewSwitch model]
@@ -132,8 +135,8 @@ viewBody model =
             , css "height" "100%"
             ]
             (List.concat
-                [ [ if (not (List.isEmpty model.slots.more))
-                    then slotAction (onClick None) "<"
+                [ [ if (not (List.isEmpty model.slots.left))
+                    then slotAction (onClick MoveRight) "<"
                     else div [] []
                   ]
                 --, div
@@ -141,10 +144,13 @@ viewBody model =
                 --    , css "flex" (flexValue ((slotsCount model.slots) * 2))
                 --    ]
     --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
-                , (Array.toList (Array.indexedMap (slot model) model.slots.main))
-                , [ if ((slotGet model.slots 2) == Empty)
-                    then slotAction (onClick (ChoseSlotDialog (slotGetFirstId model.slots Empty))) "add"
-                    else slotAction (onClick None) ">"
+                , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
+                , [ if ((Slots.focusLength model.slots) <= 2)
+                    then slotAction (onClick (ChoseSlotDialog (Slots.focusLength model.slots))) "add"
+                    else if (not (List.isEmpty model.slots.right))
+                    then
+                        slotAction (onClick MoveLeft) ">"
+                    else div [] []
                   , Tabsview.view model (flexValue 6)
                   ]
                 ]
