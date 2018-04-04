@@ -67,14 +67,14 @@ topic2Chip settings slotId id topic =
                 [ text ("Topic " ++ (toString topic.id))]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadTerms topic 0))
+                    (ExecCmd (Request.loadTerms topic 0 slotId))
                     --(ShowTermList topic.top_terms)
                 , center
                 ]
                 [ Icon.view "list" (iconHighlighted settings (slotId, id))]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs topic Nothing "RELEVANCE"))
+                    (ExecCmd (Request.loadBestDocs topic Nothing "RELEVANCE" slotId)))
                     --ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDoc topic)

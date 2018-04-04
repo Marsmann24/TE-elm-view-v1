@@ -20,20 +20,20 @@ loadData decoder msg arguments =
     in
     Http.send msg request
 
-loadTopics : Cmd Msg
-loadTopics =
-    loadData Topic.decodeTopics (NewTopics "Topics") "getTopics"
+loadTopics : Int -> Cmd Msg
+loadTopics slotId =
+    loadData Topic.decodeTopics (NewTopics "Topics" slotId) "getTopics"
 
 loadDoc : Doc -> Cmd Msg
 loadDoc doc =
     loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString doc.id))
 
-loadDocTokens : Doc -> Cmd Msg
-loadDocTokens doc =
-    loadData Document.documentDecoder (NewDocTokens (("Terms in \"" ++ doc.title) ++ "\"")) ("getDoc&DocId=" ++ (toString doc.id))
+loadDocTokens : Int -> Doc -> Cmd Msg
+loadDocTokens slotId doc =
+    loadData Document.documentDecoder (NewDocTokens (("Terms in \"" ++ doc.title) ++ "\"") slotId) ("getDoc&DocId=" ++ (toString doc.id))
 
-loadBestDocs : Topic -> Maybe Term -> String -> Cmd Msg
-loadBestDocs topic maybeterm sorting =
+loadBestDocs : Topic -> Maybe Term -> String -> Int -> Cmd Msg
+loadBestDocs topic maybeterm sorting slotId =
     let command =
             String.concat
                 [ "bestDocs&TopicId="
@@ -55,10 +55,10 @@ loadBestDocs topic maybeterm sorting =
                 _ ->
                     "Docs in Topic " ++ (toString topic.id)
     in
-    loadData Document.bestDocsDecoder (NewDocs name) command
+    loadData Document.bestDocsDecoder (NewDocs name slotId) command
 
-loadTerms : Topic -> Int -> Cmd Msg
-loadTerms topic offset =
+loadTerms : Topic -> Int -> Int -> Cmd Msg
+loadTerms topic offset slotId =
     let command =
             String.concat
                 [ "getTerms&TopicId="
@@ -67,11 +67,11 @@ loadTerms topic offset =
                 , (toString offset)
                 ]
     in
-    loadData Term.termsDecoder (NewTerms ("Terms in Topic " ++ (toString topic.id))) command
+    loadData Term.termsDecoder (NewTerms ("Terms in Topic " ++ (toString topic.id)) slotId) command
 
-loadBestTerms : Cmd Msg
-loadBestTerms =
-    loadData Term.bestTermsDecoder (NewTerms "Terms") "getBestTerms"
+loadBestTerms : Int -> Cmd Msg
+loadBestTerms slotId =
+    loadData Term.bestTermsDecoder (NewTerms "Terms" slotId) "getBestTerms"
 
 loadAutocompleteTerms : String -> Cmd Msg
 loadAutocompleteTerms termName =
@@ -79,9 +79,9 @@ loadAutocompleteTerms termName =
     in
     loadData Term.searchTermDecoder (NewTermTopics termName) command
 
-loadBestFrames : Cmd Msg
-loadBestFrames =
-    loadData Term.bestTermsDecoder (NewFrames "Frames") "getBestFrames"
+loadBestFrames : Int -> Cmd Msg
+loadBestFrames slotId =
+    loadData Term.bestTermsDecoder (NewFrames "Frames" slotId) "getBestFrames"
 
 loadSearchTopics : String -> Cmd Msg
 loadSearchTopics search =

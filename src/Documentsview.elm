@@ -79,21 +79,21 @@ doc2CardView model doc cardID =
                 [ span
                     [ css "width" "calc(100% - 48px)"]
                     [ text doc.title]
-                , span
-                    [ onMouseDown
-                        (SelectAction
-                            None
+                --, span
+                --    [ onMouseDown
+                --        (SelectAction
+                --            None
 --                            (ShowTopics
 --                                (List.filterMap
 --                                    (Topic.topicId2Topic model.topics)
 --                                    doc.top_topic
 --                                )
 --                            )
-                        )
-                    ]
-                    [ Icon.i "bubble_chart"]
+                --        )
+                --    ]
+                --    [ Icon.i "bubble_chart"]
                 , span
-                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc)))
+                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc slotId)))
                     ]
                     [ Icon.i "list"]
                 ]

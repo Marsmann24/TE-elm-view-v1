@@ -44,12 +44,12 @@ type Msg
     --| ToggleBottom
     --| ToggleView2
     --| ToggleShowSaved
-    | NewTopics String (Result Http.Error (List Topic))
+    | NewTopics String Int (Result Http.Error (List Topic))
     | NewDocument (Result Http.Error Document)
-    | NewDocs String (Result Http.Error (List Doc))
-    | NewDocTokens String (Result Http.Error Document)
-    | NewTerms String (Result Http.Error (List Term))
-    | NewFrames String (Result Http.Error (List Term))
+    | NewDocs String Int (Result Http.Error (List Doc))
+    | NewDocTokens String Int (Result Http.Error Document)
+    | NewTerms String Int (Result Http.Error (List Term))
+    | NewFrames String Int (Result Http.Error (List Term))
     | NewTermTopics String (Result Http.Error (List Term))
     | NewSearchTopics String (Result Http.Error (List Term))
     | NewSearchTerms String (Result Http.Error (List Term))

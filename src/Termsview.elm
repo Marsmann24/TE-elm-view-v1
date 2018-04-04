@@ -74,7 +74,7 @@ terms2ListItem model slotId id term =
                 ]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadAutocompleteTerms term.name))
+                    (ExecCmd (Request.loadAutocompleteTerms term.name slotId))
                 --    (ShowTopics
                 --        (List.filter
                 --            (Topic.termInTopic term)
@@ -84,7 +84,7 @@ terms2ListItem model slotId id term =
                 [ Icon.view "bubble_chart" (iconHighlighted model.settings (slotId, id))]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs Topic.defaultTopic (Just term) "RELEVANCE"))
+                    (ExecCmd (Request.loadBestDocs Topic.defaultTopic (Just term) "RELEVANCE" slotId))
                     --(ShowDocuments
                     --    (List.filter
                     --        (Document.termInDocument term)

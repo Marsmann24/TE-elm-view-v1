@@ -223,14 +223,14 @@ update msg model =
                 | slots = Slots.setAt model.slots view slotId
                                         --slotChangeTo oldSlots slotId view
             }, Cmd.none)
-        NewTopics name result ->
+        NewTopics name slotId result ->
             let oldSettings = model.settings
                 topicsContainer = model.topicsContainer
             in
             case result of
                 Ok newTopics ->
                     ({ model
-                        | slots = Slots.insertEnd model.slots (TopicsView name newTopics topicsContainer)
+                        | slots = Slots.insertAfter model.slots (TopicsView name newTopics topicsContainer) slotId
                                         --slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
                         , topics = newTopics
                         , settings =
@@ -241,13 +241,13 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewTerms name result ->
+        NewTerms name slotId result ->
             let oldSettings = model.settings
             in
             case result of
                 Ok newTerms ->
                     ({ model
-                        | slots = Slots.insertEnd model.slots (TermsView name newTerms)
+                        | slots = Slots.insertAfter model.slots (TermsView name newTerms) slotId
                                         --slotFromTo oldSlots Empty (TermsView name newTerms)
                         , terms = newTerms
                         , settings =
@@ -258,13 +258,13 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocs name result ->
+        NewDocs name slotId result ->
             let oldSettings = model.settings
             in
             case result of
                 Ok newDocs ->
                     ({ model
-                        | slots = Slots.insertEnd model.slots (DocumentsView name newDocs)
+                        | slots = Slots.insertAfter model.slots (DocumentsView name newDocs) slotId
                                         --slotFromTo oldSlots Empty (DocumentsView name newDocs)
                         , docs = newDocs
                         ,settings =
@@ -275,14 +275,14 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocTokens name result ->
+        NewDocTokens name slotId result ->
             let oldSettings = model.settings
                 allTerms = model.terms
             in
             case result of
                 Ok document ->
                     ({ model
-                        | slots = Slots.insertEnd model.slots (TermsView name (Document.documentTerms document allTerms))
+                        | slots = Slots.insertAfter model.slots (TermsView name (Document.documentTerms document allTerms)) slotId
                                         --slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))
                         ,settings =
                             { oldSettings
@@ -306,7 +306,7 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = "Document not found"}}, Cmd.none)
-        NewFrames name result ->
+        NewFrames name slotId result ->
             (model, Cmd.none)
         NewTermTopics termName result ->
             let oldSettings = model.settings
