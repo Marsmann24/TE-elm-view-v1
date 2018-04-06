@@ -50,7 +50,7 @@ type Msg
     | NewDocTokens String Int (Result Http.Error Document)
     | NewTerms String Int (Result Http.Error (List Term))
     | NewFrames String Int (Result Http.Error (List Term))
-    | NewTermTopics String (Result Http.Error (List Term))
+    | NewTermTopics String Int (Result Http.Error (List Term))
     | NewSearchTopics String (Result Http.Error (List Term))
     | NewSearchTerms String (Result Http.Error (List Term))
     | NewSearchDocs String (Result Http.Error (List Doc))

@@ -125,13 +125,13 @@ currentTopic2Chip model topic =
             [ text (toString topic.id)
             , span
                 [ onClick
-                    (ExecCmd (Request.loadTerms topic 30))
+                    (ExecCmd (Request.loadTerms topic 30 2))
                     --(ShowTerms topic.words)
                 ]
                 [ Icon.i "list"]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs topic Nothing "relevance"))
+                    (ExecCmd (Request.loadBestDocs topic Nothing "relevance" 2))
                     --(ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDocument topic)

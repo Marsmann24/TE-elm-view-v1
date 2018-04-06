@@ -41,7 +41,7 @@ init =
     , containerTopicModel = ContainerCache.newContainerModel Array.empty 3 ContainerCache.defaultContainer
     , topicsContainer = 0
     , mdl = Material.model
-    } , loadTopics)
+    } , (loadTopics 0))
 
 --initResult : List Searchresult
 --initResult =

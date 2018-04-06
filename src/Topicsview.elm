@@ -74,7 +74,7 @@ topic2Chip settings slotId id topic =
                 [ Icon.view "list" (iconHighlighted settings (slotId, id))]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadBestDocs topic Nothing "RELEVANCE" slotId)))
+                    (ExecCmd (Request.loadBestDocs topic Nothing "RELEVANCE" slotId))
                     --ShowDocuments
                     --    (List.filter
                     --        (Document.topicInDoc topic)

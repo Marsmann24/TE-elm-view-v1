@@ -308,7 +308,7 @@ update msg model =
                     ({ model | settings = { oldSettings | error = "Document not found"}}, Cmd.none)
         NewFrames name slotId result ->
             (model, Cmd.none)
-        NewTermTopics termName result ->
+        NewTermTopics termName slotId result ->
             let oldSettings = model.settings
                 topicsContainer = model.topicsContainer
                 fetchTerm : List Term -> Maybe Term
@@ -337,7 +337,7 @@ update msg model =
             case result of
                 Ok termList ->
                     ({ model
-                        | slots = Slots.insertEnd model.slots (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
+                        | slots = Slots.insertAfter model.slots (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer) slotId
                                         --slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
                         , settings =
                             { oldSettings | error = ""

@@ -28,8 +28,8 @@ loadDoc : Doc -> Cmd Msg
 loadDoc doc =
     loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString doc.id))
 
-loadDocTokens : Int -> Doc -> Cmd Msg
-loadDocTokens slotId doc =
+loadDocTokens : Doc -> Int -> Cmd Msg
+loadDocTokens doc slotId =
     loadData Document.documentDecoder (NewDocTokens (("Terms in \"" ++ doc.title) ++ "\"") slotId) ("getDoc&DocId=" ++ (toString doc.id))
 
 loadBestDocs : Topic -> Maybe Term -> String -> Int -> Cmd Msg
@@ -73,11 +73,11 @@ loadBestTerms : Int -> Cmd Msg
 loadBestTerms slotId =
     loadData Term.bestTermsDecoder (NewTerms "Terms" slotId) "getBestTerms"
 
-loadAutocompleteTerms : String -> Cmd Msg
-loadAutocompleteTerms termName =
+loadAutocompleteTerms : String  -> Int-> Cmd Msg
+loadAutocompleteTerms termName slotId=
     let command = "autocomplete&SearchWord=" ++ termName
     in
-    loadData Term.searchTermDecoder (NewTermTopics termName) command
+    loadData Term.searchTermDecoder (NewTermTopics termName slotId) command
 
 loadBestFrames : Int -> Cmd Msg
 loadBestFrames slotId =

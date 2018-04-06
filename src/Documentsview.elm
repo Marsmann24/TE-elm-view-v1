@@ -47,11 +47,11 @@ view model flex slotId slotName =
         , div
             [ cs "slot__content"
             ]
-            (List.map2 (doc2CardView model) model.docs (List.range 1 (List.length model.docs)))
+            (List.map2 (doc2CardView model slotId) model.docs (List.range 1 (List.length model.docs)))
         ]
 
-doc2CardView : Model -> Doc -> Int -> Html Msg
-doc2CardView model doc cardID =
+doc2CardView : Model -> Int -> Doc -> Int -> Html Msg
+doc2CardView model slotId doc cardID =
     Card.view
         [ css "height" "100px"
         , css "width" "94%"
