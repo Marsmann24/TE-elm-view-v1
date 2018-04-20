@@ -21,12 +21,30 @@ import Set
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
+        Mobile mobileB ->
+            let oldSettings = model.settings
+                newSlots =
+                    if mobileB
+                    then
+                        Slots.setFocusSize model.slots 1
+                    else
+                        Slots.setFocusSize model.slots 3
+            in
+            ({ model
+                | settings =
+                    { oldSettings
+                        | mobile = mobileB
+                        , docview = False
+                    }
+                , slots = newSlots
+            }, Cmd.none)
         Toggle settings ->
             ({ model | settings = settings}, Cmd.none)
         SelectTab tabId ->
             ({ model | currentTab = tabId}, Cmd.none)
         CloseTab ->
-            let newCurrentTab =
+            let oldSettings = model.settings
+                newCurrentTab =
                     model.currentTab - 1
                 newTabs =
                     List.append (List.take model.currentTab model.tabs) (List.drop (model.currentTab + 1) model.tabs)
@@ -34,6 +52,10 @@ update msg model =
             ({ model
                 | currentTab = newCurrentTab
                 , tabs = newTabs
+                , settings =
+                    { oldSettings
+                        | docview = False
+                    }
             }, Cmd.none)
         SelectItem itemId ->
             let oldSettings = model.settings
@@ -302,7 +324,11 @@ update msg model =
                     ({ model
                         | tabs = (List.append oldTabs [DocumentTab document.title document])
                         , currentTab = tabNumber
-                        , settings = { oldSettings | error = ""}
+                        , settings =
+                            { oldSettings
+                                | error = ""
+                                , docview = True
+                            }
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = "Document not found"}}, Cmd.none)

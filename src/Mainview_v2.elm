@@ -121,42 +121,75 @@ viewSwitch model =
             , Toggles.value model.settings.showRelevance
             ]
             [ text "show term relevance"]
+        , Toggles.switch Mdl [4] model.mdl
+            [ css "margin" "5px"
+            , onToggle (Mobile (not model.settings.mobile))
+            , Toggles.value model.settings.mobile
+            ]
+            [ text "mobile version"]
+        , Toggles.switch Mdl [5] model.mdl
+            [ css "margin" "5px"
+            , onToggle (Toggle { oldSettings | docview = not model.settings.docview})
+            , Toggles.value model.settings.docview
+            ]
+            [ text "show Document"]
         ]
 
 viewBody : Model -> Html Msg
 viewBody model =
-    div [ Elevation.e4
-        , cs "flex__column"
-        , css "height" "100%"
-        ]
-        [div
-            [ cs "flex__row"
-            , css "flex" "3 2 70%"
+    if (not model.settings.mobile)
+    then
+        div [ Elevation.e4
+            , cs "flex__column"
             , css "height" "100%"
             ]
-            (List.concat
-                [ [ if (not (List.isEmpty model.slots.left))
-                    then slotAction (onClick MoveRight) "<"
-                    else div [] []
-                  ]
-                --, div
-                --    [ cs "flex__row"
-                --    , css "flex" (flexValue ((slotsCount model.slots) * 2))
-                --    ]
-    --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
-                , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
-                , [ if ((Slots.focusLength model.slots) <= 2)
-                    then slotAction (onClick (ChoseSlotDialog (Slots.focusLength model.slots))) "add"
-                    else if (not (List.isEmpty model.slots.right))
-                    then
-                        slotAction (onClick MoveLeft) ">"
-                    else div [] []
-                  , Tabsview.view model (flexValue 6)
-                  ]
+            [ div
+                [ cs "flex__row"
+                , css "flex" "3 2 70%"
+                , css "height" "100%"
                 ]
-            )
-        , Savedview.view model "1 1 30%"
-        ]
+                (List.concat
+                    [ [ if (not (List.isEmpty model.slots.left))
+                        then slotAction (onClick MoveRight) "navigate_before"
+                        else div [ css "display" "none"] []
+                      ]
+                    --, div
+                    --    [ cs "flex__row"
+                    --    , css "flex" (flexValue ((slotsCount model.slots) * 2))
+                    --    ]
+        --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
+                    , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
+                    , [ if ((Slots.focusLength model.slots) <= 2)
+                        then slotAction (onClick (ChoseSlotDialog (Slots.focusLength model.slots))) "add"
+                        else if (not (List.isEmpty model.slots.right))
+                        then
+                            slotAction (onClick MoveLeft) "navigate_next"
+                        else div [ css "display" "none"] []
+                      , Tabsview.view model (flexValue 6)
+                      ]
+                    ]
+                )
+            , Savedview.view model "1 1 30%"
+            ]
+    else if model.settings.docview
+        then Tabsview.view model (flexValue 1)
+        else div
+                [ cs "flex__row"
+                , css "height" "100%"]
+                (List.concat
+                    [ [ if (not (List.isEmpty model.slots.left))
+                        then slotAction (onClick MoveRight) "navigate_before"
+                        else div [ css "display" "none"] []
+                      ]
+                    , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
+                    , [ if (not (List.isEmpty model.slots.right))
+                        then slotAction (onClick MoveLeft) "navigate_next"
+                        else if ((Slots.focusLength model.slots) <= 2)
+                        then slotAction (onClick (ChoseSlotDialog (Slots.focusLength model.slots))) "add"
+                        else div [ css "display" "none"] []
+                      ]
+                    ]
+                )
 
 slotAction : Property c Msg -> String -> Html Msg
 slotAction action icon =
@@ -164,6 +197,7 @@ slotAction action icon =
         [ generalBackgroundColor
         , center
         , action
+        , css "flex" "0.1 0.1 1%"
         ]
         [ Icon.view icon [ Icon.size48 ]
         ]
@@ -250,7 +284,6 @@ hiddenSlot id =
         [ cs "slot__hidden"
         , center
         , primaryColor
-        , onClick None
         ]
         [ text (toString id)]
 

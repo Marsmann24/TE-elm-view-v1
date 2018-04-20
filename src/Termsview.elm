@@ -2,8 +2,8 @@ module Termsview exposing (view)
 
 import Model exposing (..)
 import Term exposing (..)
-import Document
-import Topic
+import Document exposing (iconDoc)
+import Topic exposing (iconTopic)
 import Request
 
 import Html exposing (Html, text)
@@ -28,7 +28,7 @@ view model flex slotId slotName =
             [ css "height" "45px"
             , center
             ]
-            [ Icon.view "list" [ css "margin" "5px"]
+            [ iconTerm [ css "margin" "5px"]
             , span
                 [ css "width" "calc(100% - 64px)"
                 , css "text-align" "left"
@@ -81,7 +81,7 @@ terms2ListItem model slotId id term =
                 --            model.topics
                 --        ))
                 ]
-                [ Icon.view "bubble_chart" (iconHighlighted model.settings (slotId, id))]
+                [ iconTopic (iconHighlighted model.settings (slotId, id))]
             , span
                 [ onClick
                     (ExecCmd (Request.loadBestDocs Topic.defaultTopic (Just term) "RELEVANCE" slotId))
@@ -92,6 +92,6 @@ terms2ListItem model slotId id term =
                     --    )
                     --)
                 ]
-                [ Icon.view "art_track" (iconHighlighted model.settings (slotId, id))]
+                [ iconDoc (iconHighlighted model.settings (slotId, id))]
             ]
         ]

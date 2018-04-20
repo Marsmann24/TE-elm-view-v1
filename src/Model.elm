@@ -17,6 +17,7 @@ import Maybe exposing (Maybe, withDefault)
 
 type Msg
     = ResetSettings
+    | Mobile Bool
     | Search String
     | AdvancedSearch String
     | Found View
@@ -136,6 +137,8 @@ type alias Settings =
     --, showTerms : Bool
     , showSaved : Bool
     , bottom : Bool
+    , mobile : Bool
+    , docview : Bool
     , view2 : Bool
     , showRelevance : Bool
     , showSlotDialoge : Bool

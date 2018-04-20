@@ -109,6 +109,12 @@ viewSwitch model =
             , Toggles.value model.settings.showRelevance
             ]
             [ text "show term relevance"]
+        , Toggles.switch Mdl [3] model.mdl
+            [ css "margin" "5px"
+            , onToggle (Toggle { oldSettings | showRelevance = not model.settings.mobile})
+            , Toggles.value model.settings.showRelevance
+            ]
+            [ text "mobile version"]
         ]
 
 viewBody : Model -> Html Msg

@@ -9,6 +9,55 @@ type alias Slots a =
     , null : a --nullelement
     }
 
+setFocusSize : Slots a -> Int -> Slots a
+setFocusSize slots focusSize =
+    let currentFocus = Array.length (getFocus slots)
+        newFocus =
+            if (currentFocus == focusSize)
+            then
+                (getFocus slots)
+            else if (currentFocus > focusSize)
+            then
+                Array.slice 0 focusSize (getFocus slots)
+            else
+                Array.append
+                    (getFocus slots)
+                    (Array.fromList
+                        (List.take
+                            (focusSize - currentFocus)
+                            (if (List.length slots.right >= (focusSize - currentFocus))
+                            then slots.right
+                            else
+                                (List.append
+                                    slots.right
+                                    (List.repeat (focusSize - currentFocus) slots.null)
+                                )
+                            )
+                        )
+                    )
+        newRight =
+            if (currentFocus == focusSize)
+            then
+                slots.right
+            else if (currentFocus < focusSize)
+            then
+                List.drop (focusSize - currentFocus) slots.right
+            else
+                List.append
+                    (Array.toList
+                        (Array.slice
+                            focusSize
+                            currentFocus
+                            (getFocus slots)
+                        )
+                    )
+                    slots.right
+    in
+    { slots
+        | focus = newFocus
+        , right = newRight
+    }
+
 focusLength : Slots a -> Int
 focusLength slots =
     let count : a -> Int -> Int
@@ -184,7 +233,7 @@ insertAt slots value id =
 
 insertAfter : Slots a -> a -> Int -> Slots a
 insertAfter slots value id =
-    if (focusIsFull slots)
+    if ((focusIsFull slots) && (id + 1 == (Array.length slots.focus)))
     then
         insertAt (moveLeft slots) value id
     else

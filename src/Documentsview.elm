@@ -2,7 +2,8 @@ module Documentsview exposing (view)
 
 import Model exposing (..)
 import Document exposing (..)
-import Topic
+import Topic exposing (iconTopic)
+import Term exposing (iconTerm)
 import Request
 
 import Html exposing (Html, text)
@@ -28,7 +29,7 @@ view model flex slotId slotName =
             [ css "height" "45px"
             , center
             ]
-            [ Icon.view "art_track" [ css "margin" "5px"]
+            [ iconDoc [ css "margin" "5px"]
             , span
                 [ css "width" "calc(100% - 64px)"
                 , css "text-align" "left"
@@ -91,11 +92,11 @@ doc2CardView model slotId doc cardID =
 --                            )
                 --        )
                 --    ]
-                --    [ Icon.i "bubble_chart"]
+                --    [ iconTopic []]
                 , span
                     [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc slotId)))
                     ]
-                    [ Icon.i "list"]
+                    [ iconTerm []]
                 ]
             , span
                 [ Color.text (Color.color Color.Grey Color.S200)

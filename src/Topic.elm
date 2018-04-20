@@ -6,6 +6,13 @@ import Json.Decode exposing (Decoder, string, int, list, map, map3, map4, field,
 import Decoderhelper exposing (int2, intDictDecoder)
 import Dict exposing (Dict)
 
+import Html exposing (Html)
+import Material.Icon as Icon
+
+iconTopic : List (Icon.Property msg) -> Html msg
+iconTopic args =
+    Icon.view "subject" args
+
 type alias RawTopic =
     { id : Int
     , hirarchical_topic : TopicHirarchie

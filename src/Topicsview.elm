@@ -2,7 +2,8 @@ module Topicsview exposing (view)
 
 import Model exposing (..)
 import Topic exposing (..)
-import Document
+import Term exposing (iconTerm)
+import Document exposing (iconDoc)
 import Request
 
 import Html exposing (Html, text)
@@ -25,9 +26,10 @@ view model flex slotId slotName =
         ]
         [ div
             [ css "height" "45px"
+            , css "max-width" "400px"
             , center
             ]
-            [ Icon.view "bubble_chart" [ css "margin" "5px"]
+            [ iconTopic [ css "margin" "5px"]
             , span
                 [ css "width" "calc(100% - 64px)"
                 , css "text-align" "left"
@@ -44,6 +46,7 @@ view model flex slotId slotName =
             ]
         , div
             [ cs "slot__content"
+            , css "max-width" "400px"
             ]
             (List.indexedMap (topic2Chip model.settings slotId) model.topics)
         ]
@@ -60,18 +63,30 @@ topic2Chip settings slotId id topic =
             , center
             ]
             [ span
-                [ css "width" "calc(100% - 48px)"
-                , css "text-align" "center"
+                [ css "width" "calc(100% - 58px)"
+                , css "overflow" "hidden"
+                , css "margin-right" "10px"
                 , onClick (SelectItem (slotId, id))
                 ]
-                [ text ("Topic " ++ (toString topic.id))]
+                [ span [ css "margin-right" "10px"] [ text (("Topic " ++ (toString topic.id)) ++ ": ")]
+                , text
+                    (String.concat
+                        (List.intersperse
+                            ", "
+                            (List.take 2
+                                (List.map .name topic.top_terms)
+                            )
+                        )
+                    )
+                , text " ... "
+                ]
             , span
                 [ onClick
                     (ExecCmd (Request.loadTerms topic 0 slotId))
                     --(ShowTermList topic.top_terms)
                 , center
                 ]
-                [ Icon.view "list" (iconHighlighted settings (slotId, id))]
+                [ iconTerm (iconHighlighted settings (slotId, id))]
             , span
                 [ onClick
                     (ExecCmd (Request.loadBestDocs topic Nothing "RELEVANCE" slotId))
@@ -82,6 +97,6 @@ topic2Chip settings slotId id topic =
                     --    ))]
                 , center
                 ]
-                [ Icon.view "art_track" (iconHighlighted settings (slotId, id))]
+                [ iconDoc (iconHighlighted settings (slotId, id))]
             ]
         ]

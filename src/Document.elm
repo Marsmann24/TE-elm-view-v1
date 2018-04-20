@@ -6,6 +6,13 @@ import Term exposing (..)
 import Json.Decode exposing (Decoder, int, string, list, map2, map4, map8, field, keyValuePairs, maybe)
 import Decoderhelper exposing (int2, float2, map12, pseudolist, listheadwithdefault)
 
+import Html exposing (Html)
+import Material.Icon as Icon
+
+iconDoc : List (Icon.Property msg) -> Html msg
+iconDoc args =
+    Icon.view "description" args
+
 -- Types
 type alias Token =
     { topic_id : Int

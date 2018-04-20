@@ -4,6 +4,13 @@ import Json.Decode exposing (Decoder, string, int, list, map, map2, map6, field,
 import Decoderhelper exposing (int2, intDictDecoder, listheadwithdefault, pseudolist)
 import Dict exposing (Dict)
 
+import Html exposing (Html)
+import Material.Icon as Icon
+
+iconTerm : List (Icon.Property msg) -> Html msg
+iconTerm args =
+    Icon.view "list" args
+
 type alias Term =
     { id : Int
     , name : String
