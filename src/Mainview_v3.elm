@@ -158,6 +158,7 @@ slotAction action icon =
         [ generalBackgroundColor
         , center
         , action
+        , cs "slots__action"
         ]
         [ Icon.view icon [ Icon.size48 ]
         ]
@@ -165,12 +166,12 @@ slotAction action icon =
 slot : Model -> Int -> View -> Html Msg
 slot model slotId view =
     case view of
-        TopicsView name topics contId ->
-            Topicsview.view { model | topics = topics, topicsContainer = contId} (flexValue 2) slotId name
-        TermsView name terms ->
-            Termsview.view { model | terms = terms} (flexValue 2) slotId name
-        DocumentsView name docs ->
-            Documentsview.view { model | docs = docs} (flexValue 2) slotId name
+        TopicsView name topics contId parent ->
+            Topicsview.view { model | topics = topics, topicsContainer = contId} (flexValue 2) slotId name parent
+        TermsView name terms parent ->
+            Termsview.view { model | terms = terms} (flexValue 2) slotId name parent
+        DocumentsView name docs parent ->
+            Documentsview.view { model | docs = docs} (flexValue 2) slotId name parent
         Dialog ->
             div
                 [ cs "slot"
@@ -192,9 +193,9 @@ slot model slotId view =
                     , cs "slot__content"
                     , cs "flex__column"
                     ]
-                    [ slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer) slotId
-                    , slotDialogCard "Terms" (TermsView "Terms" model.terms) slotId
-                    , slotDialogCard "Documents" (DocumentsView "Documents" model.docs) slotId
+                    [ slotDialogCard "Topics" (TopicsView "Topics" model.topics model.topicsContainer Noparent) slotId
+                    , slotDialogCard "Terms" (TermsView "Terms" model.terms Noparent) slotId
+                    , slotDialogCard "Documents" (DocumentsView "Documents" model.docs Noparent) slotId
                 --, Button.render Mdl [5] model.mdl
                 --    [ Button.ripple
                 --    , css "flex" "flexValue 1"

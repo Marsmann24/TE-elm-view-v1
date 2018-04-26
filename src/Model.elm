@@ -42,19 +42,20 @@ type Msg
     | ChoseSlotDialog Int
     | UpdateSlot View Int
     | Toggle Settings
+    | SetParent Parent
     --| ToggleBottom
     --| ToggleView2
     --| ToggleShowSaved
-    | NewTopics String Int (Result Http.Error (List Topic))
-    | NewDocument (Result Http.Error Document)
-    | NewDocs String Int (Result Http.Error (List Doc))
-    | NewDocTokens String Int (Result Http.Error Document)
-    | NewTerms String Int (Result Http.Error (List Term))
-    | NewFrames String Int (Result Http.Error (List Term))
-    | NewTermTopics String Int (Result Http.Error (List Term))
-    | NewSearchTopics String (Result Http.Error (List Term))
-    | NewSearchTerms String (Result Http.Error (List Term))
-    | NewSearchDocs String (Result Http.Error (List Doc))
+    | NewTopics Parent String Int (Result Http.Error (List Topic))
+    | NewDocument Parent (Result Http.Error Document)
+    | NewDocs Parent String Int (Result Http.Error (List Doc))
+    | NewDocTokens Parent String Int (Result Http.Error Document)
+    | NewTerms Parent String Int (Result Http.Error (List Term))
+    | NewFrames Parent String Int (Result Http.Error (List Term))
+    | NewTermTopics Parent String Int (Result Http.Error (List Term))
+    | NewSearchTopics Parent String (Result Http.Error (List Term))
+    | NewSearchTerms Parent String (Result Http.Error (List Term))
+    | NewSearchDocs Parent String (Result Http.Error (List Doc))
     | ExecCmd (Cmd Msg)
     | SelectAction Msg
     | ExecuteActionIfNone Msg
@@ -140,6 +141,7 @@ type alias Settings =
     , mobile : Bool
     , docview : Bool
     , view2 : Bool
+    , parent : Parent
     , showRelevance : Bool
     , showSlotDialoge : Bool
     , search : Bool
@@ -161,14 +163,44 @@ type SearchResult
 
 --Slots
 
+type Parent
+    = Termparent Int
+    | Docparent Int
+    | Topicparent Int
+    | Noparent
+
+getActive : Parent -> Settings -> Bool
+getActive parent settings =
+    if ((parent == settings.parent) || (settings.parent == Noparent))
+        then True
+        else False
+
+isParent : Int -> Settings -> Bool
+isParent id settings =
+    case settings.parent of
+        Termparent par ->
+            if (par == id)
+                then True
+                else False
+        Docparent par ->
+            if (par == id)
+                then True
+                else False
+        Topicparent par ->
+            if (par == id)
+                then True
+                else False
+        _ ->
+            False
+
 type View
-    = TermsView String (List Term)
+    = TermsView String (List Term) Parent
     -- WordlistView (List String)
-    | TopicsView String (List Topic) Int
+    | TopicsView String (List Topic) Int Parent
     --| TopicsView (ContainerCache.Container (List Topic))
     --| DocumentsView (List Document)
     --| DocumentsView (ContainerCache.Container (List Doc))
-    | DocumentsView String (List Doc)
+    | DocumentsView String (List Doc) Parent
     | Dialog
     | Empty
     | ErrorSlot

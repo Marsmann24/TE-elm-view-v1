@@ -21903,6 +21903,20 @@ var _user$project$Model$iconHighlighted = F2(
 			}
 		} : {ctor: '[]'};
 	});
+var _user$project$Model$isParent = F2(
+	function (id, settings) {
+		var _p0 = settings.parent;
+		switch (_p0.ctor) {
+			case 'Termparent':
+				return _elm_lang$core$Native_Utils.eq(_p0._0, id) ? true : false;
+			case 'Docparent':
+				return _elm_lang$core$Native_Utils.eq(_p0._0, id) ? true : false;
+			case 'Topicparent':
+				return _elm_lang$core$Native_Utils.eq(_p0._0, id) ? true : false;
+			default:
+				return false;
+		}
+	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
 		return function (c) {
@@ -21947,7 +21961,9 @@ var _user$project$Model$Settings = function (a) {
 										return function (k) {
 											return function (l) {
 												return function (m) {
-													return {error: a, showSaved: b, bottom: c, mobile: d, docview: e, view2: f, showRelevance: g, showSlotDialoge: h, search: i, search4: j, searchResult: k, slotToDelete: l, selectedItem: m};
+													return function (n) {
+														return {error: a, showSaved: b, bottom: c, mobile: d, docview: e, view2: f, parent: g, showRelevance: h, showSlotDialoge: i, search: j, search4: k, searchResult: l, slotToDelete: m, selectedItem: n};
+													};
 												};
 											};
 										};
@@ -21981,45 +21997,49 @@ var _user$project$Model$SelectAction = function (a) {
 var _user$project$Model$ExecCmd = function (a) {
 	return {ctor: 'ExecCmd', _0: a};
 };
-var _user$project$Model$NewSearchDocs = F2(
+var _user$project$Model$NewSearchDocs = F3(
+	function (a, b, c) {
+		return {ctor: 'NewSearchDocs', _0: a, _1: b, _2: c};
+	});
+var _user$project$Model$NewSearchTerms = F3(
+	function (a, b, c) {
+		return {ctor: 'NewSearchTerms', _0: a, _1: b, _2: c};
+	});
+var _user$project$Model$NewSearchTopics = F3(
+	function (a, b, c) {
+		return {ctor: 'NewSearchTopics', _0: a, _1: b, _2: c};
+	});
+var _user$project$Model$NewTermTopics = F4(
+	function (a, b, c, d) {
+		return {ctor: 'NewTermTopics', _0: a, _1: b, _2: c, _3: d};
+	});
+var _user$project$Model$NewFrames = F4(
+	function (a, b, c, d) {
+		return {ctor: 'NewFrames', _0: a, _1: b, _2: c, _3: d};
+	});
+var _user$project$Model$NewTerms = F4(
+	function (a, b, c, d) {
+		return {ctor: 'NewTerms', _0: a, _1: b, _2: c, _3: d};
+	});
+var _user$project$Model$NewDocTokens = F4(
+	function (a, b, c, d) {
+		return {ctor: 'NewDocTokens', _0: a, _1: b, _2: c, _3: d};
+	});
+var _user$project$Model$NewDocs = F4(
+	function (a, b, c, d) {
+		return {ctor: 'NewDocs', _0: a, _1: b, _2: c, _3: d};
+	});
+var _user$project$Model$NewDocument = F2(
 	function (a, b) {
-		return {ctor: 'NewSearchDocs', _0: a, _1: b};
+		return {ctor: 'NewDocument', _0: a, _1: b};
 	});
-var _user$project$Model$NewSearchTerms = F2(
-	function (a, b) {
-		return {ctor: 'NewSearchTerms', _0: a, _1: b};
+var _user$project$Model$NewTopics = F4(
+	function (a, b, c, d) {
+		return {ctor: 'NewTopics', _0: a, _1: b, _2: c, _3: d};
 	});
-var _user$project$Model$NewSearchTopics = F2(
-	function (a, b) {
-		return {ctor: 'NewSearchTopics', _0: a, _1: b};
-	});
-var _user$project$Model$NewTermTopics = F3(
-	function (a, b, c) {
-		return {ctor: 'NewTermTopics', _0: a, _1: b, _2: c};
-	});
-var _user$project$Model$NewFrames = F3(
-	function (a, b, c) {
-		return {ctor: 'NewFrames', _0: a, _1: b, _2: c};
-	});
-var _user$project$Model$NewTerms = F3(
-	function (a, b, c) {
-		return {ctor: 'NewTerms', _0: a, _1: b, _2: c};
-	});
-var _user$project$Model$NewDocTokens = F3(
-	function (a, b, c) {
-		return {ctor: 'NewDocTokens', _0: a, _1: b, _2: c};
-	});
-var _user$project$Model$NewDocs = F3(
-	function (a, b, c) {
-		return {ctor: 'NewDocs', _0: a, _1: b, _2: c};
-	});
-var _user$project$Model$NewDocument = function (a) {
-	return {ctor: 'NewDocument', _0: a};
+var _user$project$Model$SetParent = function (a) {
+	return {ctor: 'SetParent', _0: a};
 };
-var _user$project$Model$NewTopics = F3(
-	function (a, b, c) {
-		return {ctor: 'NewTopics', _0: a, _1: b, _2: c};
-	});
 var _user$project$Model$Toggle = function (a) {
 	return {ctor: 'Toggle', _0: a};
 };
@@ -22092,20 +22112,34 @@ var _user$project$Model$TermResult = function (a) {
 var _user$project$Model$TopicResult = function (a) {
 	return {ctor: 'TopicResult', _0: a};
 };
+var _user$project$Model$Noparent = {ctor: 'Noparent'};
+var _user$project$Model$getActive = F2(
+	function (parent, settings) {
+		return (_elm_lang$core$Native_Utils.eq(parent, settings.parent) || _elm_lang$core$Native_Utils.eq(settings.parent, _user$project$Model$Noparent)) ? true : false;
+	});
+var _user$project$Model$Topicparent = function (a) {
+	return {ctor: 'Topicparent', _0: a};
+};
+var _user$project$Model$Docparent = function (a) {
+	return {ctor: 'Docparent', _0: a};
+};
+var _user$project$Model$Termparent = function (a) {
+	return {ctor: 'Termparent', _0: a};
+};
 var _user$project$Model$ErrorSlot = {ctor: 'ErrorSlot'};
 var _user$project$Model$Empty = {ctor: 'Empty'};
 var _user$project$Model$Dialog = {ctor: 'Dialog'};
-var _user$project$Model$DocumentsView = F2(
-	function (a, b) {
-		return {ctor: 'DocumentsView', _0: a, _1: b};
-	});
-var _user$project$Model$TopicsView = F3(
+var _user$project$Model$DocumentsView = F3(
 	function (a, b, c) {
-		return {ctor: 'TopicsView', _0: a, _1: b, _2: c};
+		return {ctor: 'DocumentsView', _0: a, _1: b, _2: c};
 	});
-var _user$project$Model$TermsView = F2(
-	function (a, b) {
-		return {ctor: 'TermsView', _0: a, _1: b};
+var _user$project$Model$TopicsView = F4(
+	function (a, b, c, d) {
+		return {ctor: 'TopicsView', _0: a, _1: b, _2: c, _3: d};
+	});
+var _user$project$Model$TermsView = F3(
+	function (a, b, c) {
+		return {ctor: 'TermsView', _0: a, _1: b, _2: c};
 	});
 
 var _user$project$Request$baseURL = 'https://topicexplorer.informatik.uni-halle.de/09sdfjglikqw3bret5cp84vqyolrfiksefgdakyuheas/webapp/ZEIT0614_3_te/JsonServlet?Command=';
@@ -22119,14 +22153,14 @@ var _user$project$Request$loadTopics = function (slotId) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Topic$decodeTopics,
-		A2(_user$project$Model$NewTopics, 'Topics', slotId),
+		A3(_user$project$Model$NewTopics, _user$project$Model$Noparent, 'Topics', slotId),
 		'getTopics');
 };
 var _user$project$Request$loadDoc = function (doc) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Document$documentDecoder,
-		_user$project$Model$NewDocument,
+		_user$project$Model$NewDocument(_user$project$Model$Noparent),
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			'getDoc&DocId=',
@@ -22137,8 +22171,9 @@ var _user$project$Request$loadDocTokens = F2(
 		return A3(
 			_user$project$Request$loadData,
 			_user$project$Document$documentDecoder,
-			A2(
+			A3(
 				_user$project$Model$NewDocTokens,
+				_user$project$Model$Docparent(doc.id),
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					A2(_elm_lang$core$Basics_ops['++'], 'Terms in \"', doc.title),
@@ -22162,13 +22197,21 @@ var _user$project$Request$loadBestDocs = F4(
 					_elm_lang$core$Basics$toString(topic.id));
 			}
 		}();
-		var termArgument = function () {
+		var parent = function () {
 			var _p1 = maybeterm;
 			if (_p1.ctor === 'Just') {
+				return _user$project$Model$Termparent(_p1._0.id);
+			} else {
+				return _user$project$Model$Topicparent(topic.id);
+			}
+		}();
+		var termArgument = function () {
+			var _p2 = maybeterm;
+			if (_p2.ctor === 'Just') {
 				return A2(
 					_elm_lang$core$Basics_ops['++'],
 					'&term',
-					_elm_lang$core$Basics$toString(_p1._0));
+					_elm_lang$core$Basics$toString(_p2._0));
 			} else {
 				return '';
 			}
@@ -22198,7 +22241,7 @@ var _user$project$Request$loadBestDocs = F4(
 		return A3(
 			_user$project$Request$loadData,
 			_user$project$Document$bestDocsDecoder,
-			A2(_user$project$Model$NewDocs, name, slotId),
+			A3(_user$project$Model$NewDocs, parent, name, slotId),
 			command);
 	});
 var _user$project$Request$loadTerms = F3(
@@ -22224,8 +22267,9 @@ var _user$project$Request$loadTerms = F3(
 		return A3(
 			_user$project$Request$loadData,
 			_user$project$Term$termsDecoder,
-			A2(
+			A3(
 				_user$project$Model$NewTerms,
+				_user$project$Model$Topicparent(topic.id),
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					'Terms in Topic ',
@@ -22237,23 +22281,23 @@ var _user$project$Request$loadBestTerms = function (slotId) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Term$bestTermsDecoder,
-		A2(_user$project$Model$NewTerms, 'Terms', slotId),
+		A3(_user$project$Model$NewTerms, _user$project$Model$Noparent, 'Terms', slotId),
 		'getBestTerms');
 };
-var _user$project$Request$loadAutocompleteTerms = F2(
-	function (termName, slotId) {
+var _user$project$Request$loadAutocompleteTerms = F3(
+	function (parent, termName, slotId) {
 		var command = A2(_elm_lang$core$Basics_ops['++'], 'autocomplete&SearchWord=', termName);
 		return A3(
 			_user$project$Request$loadData,
 			_user$project$Term$searchTermDecoder,
-			A2(_user$project$Model$NewTermTopics, termName, slotId),
+			A3(_user$project$Model$NewTermTopics, parent, termName, slotId),
 			command);
 	});
 var _user$project$Request$loadBestFrames = function (slotId) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Term$bestTermsDecoder,
-		A2(_user$project$Model$NewFrames, 'Frames', slotId),
+		A3(_user$project$Model$NewFrames, _user$project$Model$Noparent, 'Frames', slotId),
 		'getBestFrames');
 };
 var _user$project$Request$loadSearchTopics = function (search) {
@@ -22262,7 +22306,7 @@ var _user$project$Request$loadSearchTopics = function (search) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Term$searchTermDecoder,
-		_user$project$Model$NewSearchTopics(name),
+		A2(_user$project$Model$NewSearchTopics, _user$project$Model$Noparent, name),
 		command);
 };
 var _user$project$Request$loadSearchTerms = function (search) {
@@ -22271,7 +22315,7 @@ var _user$project$Request$loadSearchTerms = function (search) {
 	return A3(
 		_user$project$Request$loadData,
 		_user$project$Term$searchTermDecoder,
-		_user$project$Model$NewSearchTerms(name),
+		A2(_user$project$Model$NewSearchTerms, _user$project$Model$Noparent, name),
 		command);
 };
 var _user$project$Request$loadSearchDocs = F3(
@@ -22306,12 +22350,12 @@ var _user$project$Request$loadSearchDocs = F3(
 		return A3(
 			_user$project$Request$loadData,
 			_user$project$Document$bestDocsDecoder,
-			_user$project$Model$NewSearchDocs(name),
+			A2(_user$project$Model$NewSearchDocs, _user$project$Model$Noparent, name),
 			command);
 	});
 
-var _user$project$Documentsview$doc2CardView = F4(
-	function (model, slotId, doc, cardID) {
+var _user$project$Documentsview$doc2CardView = F5(
+	function (parent, model, slotId, doc, cardID) {
 		return A2(
 			_debois$elm_mdl$Material_Card$view,
 			{
@@ -22325,7 +22369,7 @@ var _user$project$Documentsview$doc2CardView = F4(
 						_0: A2(_debois$elm_mdl$Material_Options$css, 'margin', '4% 8% 4% 3%'),
 						_1: {
 							ctor: '::',
-							_0: _debois$elm_mdl$Material_Color$background(_debois$elm_mdl$Material_Color$primary),
+							_0: A2(_user$project$Model$getActive, parent, model.settings) ? _debois$elm_mdl$Material_Color$background(_debois$elm_mdl$Material_Color$primary) : (A2(_user$project$Model$isParent, doc.id, model.settings) ? _debois$elm_mdl$Material_Options$cs('active__doc') : _debois$elm_mdl$Material_Options$cs('unactive__doc')),
 							_1: {
 								ctor: '::',
 								_0: _elm_lang$core$Native_Utils.eq(cardID, model.currentDocument.cardID) ? _debois$elm_mdl$Material_Elevation$e0 : (_elm_lang$core$Native_Utils.eq(cardID, model.raised) ? _debois$elm_mdl$Material_Elevation$e16 : _debois$elm_mdl$Material_Elevation$e8),
@@ -22483,8 +22527,8 @@ var _user$project$Documentsview$doc2CardView = F4(
 				}
 			});
 	});
-var _user$project$Documentsview$view = F4(
-	function (model, flex, slotId, slotName) {
+var _user$project$Documentsview$view = F5(
+	function (model, flex, slotId, slotName, parent) {
 		return A2(
 			_debois$elm_mdl$Material_Options$div,
 			{
@@ -22492,14 +22536,24 @@ var _user$project$Documentsview$view = F4(
 				_0: _debois$elm_mdl$Material_Options$cs('slot'),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$core$Native_Utils.eq(slotId, model.settings.slotToDelete) ? _debois$elm_mdl$Material_Options$cs('slot__remove') : A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+					_0: A2(_user$project$Model$getActive, parent, model.settings) ? _debois$elm_mdl$Material_Options$cs('active') : _debois$elm_mdl$Material_Options$cs('unactive'),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e0,
+						_0: _elm_lang$core$Native_Utils.eq(slotId, model.settings.slotToDelete) ? _debois$elm_mdl$Material_Options$cs('slot__remove') : A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 						_1: {
 							ctor: '::',
-							_0: _user$project$Model$primaryColor,
-							_1: {ctor: '[]'}
+							_0: _debois$elm_mdl$Material_Elevation$e0,
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onMouseEnter(
+									_user$project$Model$SetParent(parent)),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onMouseLeave(
+										_user$project$Model$SetParent(_user$project$Model$Noparent)),
+									_1: {ctor: '[]'}
+								}
+							}
 						}
 					}
 				}
@@ -22600,7 +22654,7 @@ var _user$project$Documentsview$view = F4(
 						},
 						A3(
 							_elm_lang$core$List$map2,
-							A2(_user$project$Documentsview$doc2CardView, model, slotId),
+							A3(_user$project$Documentsview$doc2CardView, parent, model, slotId),
 							model.docs,
 							A2(
 								_elm_lang$core$List$range,
@@ -22639,6 +22693,7 @@ var _user$project$Init$initSettings = {
 	docview: false,
 	bottom: false,
 	view2: true,
+	parent: _user$project$Model$Noparent,
 	showRelevance: true,
 	showSlotDialoge: false,
 	search: false,
@@ -22920,8 +22975,8 @@ var _user$project$Tabsview$view = F2(
 			});
 	});
 
-var _user$project$Topicsview$topic2Chip = F4(
-	function (settings, slotId, id, topic) {
+var _user$project$Topicsview$topic2Chip = F5(
+	function (parent, settings, slotId, id, topic) {
 		return A2(
 			_debois$elm_mdl$Material_Chip$span,
 			{
@@ -22933,7 +22988,11 @@ var _user$project$Topicsview$topic2Chip = F4(
 					_1: {
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Options$center,
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Model$getActive, parent, settings) ? _debois$elm_mdl$Material_Options$cs('item') : (A2(_user$project$Model$isParent, topic.id, settings) ? _debois$elm_mdl$Material_Options$cs('active__item') : _debois$elm_mdl$Material_Options$cs('unactive__item')),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			},
@@ -23072,8 +23131,8 @@ var _user$project$Topicsview$topic2Chip = F4(
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Topicsview$view = F4(
-	function (model, flex, slotId, slotName) {
+var _user$project$Topicsview$view = F5(
+	function (model, flex, slotId, slotName, parent) {
 		return A2(
 			_debois$elm_mdl$Material_Options$div,
 			{
@@ -23081,14 +23140,24 @@ var _user$project$Topicsview$view = F4(
 				_0: _debois$elm_mdl$Material_Options$cs('slot'),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$core$Native_Utils.eq(slotId, model.settings.slotToDelete) ? _debois$elm_mdl$Material_Options$cs('slot__remove') : A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+					_0: A2(_user$project$Model$getActive, parent, model.settings) ? _debois$elm_mdl$Material_Options$cs('active') : _debois$elm_mdl$Material_Options$cs('unactive'),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e0,
+						_0: _elm_lang$core$Native_Utils.eq(slotId, model.settings.slotToDelete) ? _debois$elm_mdl$Material_Options$cs('slot__remove') : A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 						_1: {
 							ctor: '::',
-							_0: _user$project$Model$primaryColor,
-							_1: {ctor: '[]'}
+							_0: _debois$elm_mdl$Material_Elevation$e0,
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onMouseEnter(
+									_user$project$Model$SetParent(parent)),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onMouseLeave(
+										_user$project$Model$SetParent(_user$project$Model$Noparent)),
+									_1: {ctor: '[]'}
+								}
+							}
 						}
 					}
 				}
@@ -23134,7 +23203,17 @@ var _user$project$Topicsview$view = F4(
 								{
 									ctor: '::',
 									_0: _elm_lang$html$Html$text(slotName),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											_elm_lang$core$Basics$toString(parent)),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												_elm_lang$core$Basics$toString(model.settings.parent)),
+											_1: {ctor: '[]'}
+										}
+									}
 								}),
 							_1: {
 								ctor: '::',
@@ -23193,7 +23272,7 @@ var _user$project$Topicsview$view = F4(
 						},
 						A2(
 							_elm_lang$core$List$indexedMap,
-							A2(_user$project$Topicsview$topic2Chip, model.settings, slotId),
+							A3(_user$project$Topicsview$topic2Chip, parent, model.settings, slotId),
 							model.topics)),
 					_1: {ctor: '[]'}
 				}
@@ -23571,8 +23650,8 @@ var _user$project$Savedview$view = F2(
 			});
 	});
 
-var _user$project$Termsview$terms2ListItem = F4(
-	function (model, slotId, id, term) {
+var _user$project$Termsview$terms2ListItem = F5(
+	function (parent, model, slotId, id, term) {
 		return A2(
 			_debois$elm_mdl$Material_List$li,
 			{
@@ -23595,11 +23674,15 @@ var _user$project$Termsview$terms2ListItem = F4(
 								_0: A2(_debois$elm_mdl$Material_Options$css, 'overflow', 'visible'),
 								_1: {
 									ctor: '::',
-									_0: _debois$elm_mdl$Material_Options$center,
+									_0: A2(_user$project$Model$getActive, parent, model.settings) ? _debois$elm_mdl$Material_Options$cs('item') : (A2(_user$project$Model$isParent, term.id, model.settings) ? _debois$elm_mdl$Material_Options$cs('active__item') : _debois$elm_mdl$Material_Options$cs('unactive__item')),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$core$Native_Utils.eq(term.id, model.currentTerm.id) ? _debois$elm_mdl$Material_Elevation$e2 : _debois$elm_mdl$Material_Options$nop,
-										_1: {ctor: '[]'}
+										_0: _debois$elm_mdl$Material_Options$center,
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$core$Native_Utils.eq(term.id, model.currentTerm.id) ? _debois$elm_mdl$Material_Elevation$e2 : _debois$elm_mdl$Material_Options$nop,
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}
@@ -23644,7 +23727,11 @@ var _user$project$Termsview$terms2ListItem = F4(
 									ctor: '::',
 									_0: _debois$elm_mdl$Material_Options$onClick(
 										_user$project$Model$ExecCmd(
-											A2(_user$project$Request$loadAutocompleteTerms, term.name, slotId))),
+											A3(
+												_user$project$Request$loadAutocompleteTerms,
+												_user$project$Model$Termparent(term.id),
+												term.name,
+												slotId))),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -23688,8 +23775,8 @@ var _user$project$Termsview$terms2ListItem = F4(
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Termsview$view = F4(
-	function (model, flex, slotId, slotName) {
+var _user$project$Termsview$view = F5(
+	function (model, flex, slotId, slotName, parent) {
 		return A2(
 			_debois$elm_mdl$Material_Options$div,
 			{
@@ -23697,14 +23784,24 @@ var _user$project$Termsview$view = F4(
 				_0: _debois$elm_mdl$Material_Options$cs('slot'),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$core$Native_Utils.eq(slotId, model.settings.slotToDelete) ? _debois$elm_mdl$Material_Options$cs('slot__remove') : A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
+					_0: A2(_user$project$Model$getActive, parent, model.settings) ? _debois$elm_mdl$Material_Options$cs('active') : _debois$elm_mdl$Material_Options$cs('unactive'),
 					_1: {
 						ctor: '::',
-						_0: _debois$elm_mdl$Material_Elevation$e0,
+						_0: _elm_lang$core$Native_Utils.eq(slotId, model.settings.slotToDelete) ? _debois$elm_mdl$Material_Options$cs('slot__remove') : A2(_debois$elm_mdl$Material_Options$css, 'flex', flex),
 						_1: {
 							ctor: '::',
-							_0: _user$project$Model$primaryColor,
-							_1: {ctor: '[]'}
+							_0: _debois$elm_mdl$Material_Elevation$e0,
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$onMouseEnter(
+									_user$project$Model$SetParent(parent)),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Options$onMouseLeave(
+										_user$project$Model$SetParent(_user$project$Model$Noparent)),
+									_1: {ctor: '[]'}
+								}
+							}
 						}
 					}
 				}
@@ -23805,7 +23902,7 @@ var _user$project$Termsview$view = F4(
 						},
 						A2(
 							_elm_lang$core$List$indexedMap,
-							A2(_user$project$Termsview$terms2ListItem, model, slotId),
+							A3(_user$project$Termsview$terms2ListItem, parent, model, slotId),
 							model.terms)),
 					_1: {ctor: '[]'}
 				}
@@ -23859,14 +23956,15 @@ var _user$project$Searchview$searchresult2ListItems = function (result) {
 					'list',
 					a.name,
 					_user$project$Model$Found(
-						A2(
+						A3(
 							_user$project$Model$TermsView,
 							'Terms',
 							{
 								ctor: '::',
 								_0: a,
 								_1: {ctor: '[]'}
-							})));
+							},
+							_user$project$Model$Noparent)));
 			};
 			return A2(_elm_lang$core$List$map, lia, _p0._0);
 		case 'TopicResult':
@@ -23876,7 +23974,7 @@ var _user$project$Searchview$searchresult2ListItems = function (result) {
 					'bubble_chart',
 					_elm_lang$core$Basics$toString(a.id),
 					_user$project$Model$Found(
-						A3(
+						A4(
 							_user$project$Model$TopicsView,
 							'Topics',
 							{
@@ -23884,7 +23982,8 @@ var _user$project$Searchview$searchresult2ListItems = function (result) {
 								_0: a,
 								_1: {ctor: '[]'}
 							},
-							0)));
+							0,
+							_user$project$Model$Noparent)));
 			};
 			return A2(_elm_lang$core$List$map, lia, _p0._0);
 		default:
@@ -23896,14 +23995,15 @@ var _user$project$Searchview$searchresult2ListItems = function (result) {
 					'art_track',
 					_p1.title,
 					_user$project$Model$Found(
-						A2(
+						A3(
 							_user$project$Model$DocumentsView,
 							'Documents',
 							{
 								ctor: '::',
 								_0: _p1,
 								_1: {ctor: '[]'}
-							}))),
+							},
+							_user$project$Model$Noparent))),
 				_1: {ctor: '[]'}
 			};
 	}
@@ -24105,32 +24205,35 @@ var _user$project$Mainview_v2$slot = F3(
 		var _p1 = view;
 		switch (_p1.ctor) {
 			case 'TopicsView':
-				return A4(
+				return A5(
 					_user$project$Topicsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{topics: _p1._1, topicsContainer: _p1._2}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId,
-					_p1._0);
+					_p1._0,
+					_p1._3);
 			case 'TermsView':
-				return A4(
+				return A5(
 					_user$project$Termsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{terms: _p1._1}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId,
-					_p1._0);
+					_p1._0,
+					_p1._2);
 			case 'DocumentsView':
-				return A4(
+				return A5(
 					_user$project$Documentsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{docs: _p1._1}),
 					_user$project$Mainview_v2$flexValue(2),
 					slotId,
-					_p1._0);
+					_p1._0,
+					_p1._2);
 			case 'Dialog':
 				return A2(
 					_debois$elm_mdl$Material_Options$div,
@@ -24215,21 +24318,21 @@ var _user$project$Mainview_v2$slot = F3(
 									_0: A3(
 										_user$project$Mainview_v2$slotDialogCard,
 										'Topics',
-										A3(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer),
+										A4(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer, _user$project$Model$Noparent),
 										slotId),
 									_1: {
 										ctor: '::',
 										_0: A3(
 											_user$project$Mainview_v2$slotDialogCard,
 											'Terms',
-											A2(_user$project$Model$TermsView, 'Terms', model.terms),
+											A3(_user$project$Model$TermsView, 'Terms', model.terms, _user$project$Model$Noparent),
 											slotId),
 										_1: {
 											ctor: '::',
 											_0: A3(
 												_user$project$Mainview_v2$slotDialogCard,
 												'Documents',
-												A2(_user$project$Model$DocumentsView, 'Documents', model.docs),
+												A3(_user$project$Model$DocumentsView, 'Documents', model.docs, _user$project$Model$Noparent),
 												slotId),
 											_1: {ctor: '[]'}
 										}
@@ -24270,7 +24373,11 @@ var _user$project$Mainview_v2$slotAction = F2(
 						_1: {
 							ctor: '::',
 							_0: A2(_debois$elm_mdl$Material_Options$css, 'flex', '0.1 0.1 1%'),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$cs('slots__action'),
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
@@ -24927,32 +25034,35 @@ var _user$project$Mainview_v3$slot = F3(
 		var _p1 = view;
 		switch (_p1.ctor) {
 			case 'TopicsView':
-				return A4(
+				return A5(
 					_user$project$Topicsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{topics: _p1._1, topicsContainer: _p1._2}),
 					_user$project$Mainview_v3$flexValue(2),
 					slotId,
-					_p1._0);
+					_p1._0,
+					_p1._3);
 			case 'TermsView':
-				return A4(
+				return A5(
 					_user$project$Termsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{terms: _p1._1}),
 					_user$project$Mainview_v3$flexValue(2),
 					slotId,
-					_p1._0);
+					_p1._0,
+					_p1._2);
 			case 'DocumentsView':
-				return A4(
+				return A5(
 					_user$project$Documentsview$view,
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{docs: _p1._1}),
 					_user$project$Mainview_v3$flexValue(2),
 					slotId,
-					_p1._0);
+					_p1._0,
+					_p1._2);
 			case 'Dialog':
 				return A2(
 					_debois$elm_mdl$Material_Options$div,
@@ -25037,21 +25147,21 @@ var _user$project$Mainview_v3$slot = F3(
 									_0: A3(
 										_user$project$Mainview_v3$slotDialogCard,
 										'Topics',
-										A3(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer),
+										A4(_user$project$Model$TopicsView, 'Topics', model.topics, model.topicsContainer, _user$project$Model$Noparent),
 										slotId),
 									_1: {
 										ctor: '::',
 										_0: A3(
 											_user$project$Mainview_v3$slotDialogCard,
 											'Terms',
-											A2(_user$project$Model$TermsView, 'Terms', model.terms),
+											A3(_user$project$Model$TermsView, 'Terms', model.terms, _user$project$Model$Noparent),
 											slotId),
 										_1: {
 											ctor: '::',
 											_0: A3(
 												_user$project$Mainview_v3$slotDialogCard,
 												'Documents',
-												A2(_user$project$Model$DocumentsView, 'Documents', model.docs),
+												A3(_user$project$Model$DocumentsView, 'Documents', model.docs, _user$project$Model$Noparent),
 												slotId),
 											_1: {ctor: '[]'}
 										}
@@ -25089,7 +25199,11 @@ var _user$project$Mainview_v3$slotAction = F2(
 					_1: {
 						ctor: '::',
 						_0: action,
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('slots__action'),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			},
@@ -25845,6 +25959,19 @@ var _user$project$Update$update = F2(
 							{settings: _p0._0}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
+				case 'SetParent':
+					var oldSettings = model.settings;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								settings: _elm_lang$core$Native_Utils.update(
+									oldSettings,
+									{parent: _p0._0})
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
 				case 'SelectTab':
 					return {
 						ctor: '_Tuple2',
@@ -26088,7 +26215,7 @@ var _user$project$Update$update = F2(
 				case 'NewTopics':
 					var topicsContainer = model.topicsContainer;
 					var oldSettings = model.settings;
-					var _p5 = _p0._2;
+					var _p5 = _p0._3;
 					if (_p5.ctor === 'Ok') {
 						var _p6 = _p5._0;
 						return {
@@ -26099,8 +26226,8 @@ var _user$project$Update$update = F2(
 									slots: A3(
 										_user$project$Slots$insertAfter,
 										model.slots,
-										A3(_user$project$Model$TopicsView, _p0._0, _p6, topicsContainer),
-										_p0._1),
+										A4(_user$project$Model$TopicsView, _p0._1, _p6, topicsContainer, _p0._0),
+										_p0._2),
 									topics: _p6,
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
@@ -26125,7 +26252,7 @@ var _user$project$Update$update = F2(
 					}
 				case 'NewTerms':
 					var oldSettings = model.settings;
-					var _p7 = _p0._2;
+					var _p7 = _p0._3;
 					if (_p7.ctor === 'Ok') {
 						var _p8 = _p7._0;
 						return {
@@ -26136,8 +26263,8 @@ var _user$project$Update$update = F2(
 									slots: A3(
 										_user$project$Slots$insertAfter,
 										model.slots,
-										A2(_user$project$Model$TermsView, _p0._0, _p8),
-										_p0._1),
+										A3(_user$project$Model$TermsView, _p0._1, _p8, _p0._0),
+										_p0._2),
 									terms: _p8,
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
@@ -26162,7 +26289,7 @@ var _user$project$Update$update = F2(
 					}
 				case 'NewDocs':
 					var oldSettings = model.settings;
-					var _p9 = _p0._2;
+					var _p9 = _p0._3;
 					if (_p9.ctor === 'Ok') {
 						var _p10 = _p9._0;
 						return {
@@ -26173,8 +26300,8 @@ var _user$project$Update$update = F2(
 									slots: A3(
 										_user$project$Slots$insertAfter,
 										model.slots,
-										A2(_user$project$Model$DocumentsView, _p0._0, _p10),
-										_p0._1),
+										A3(_user$project$Model$DocumentsView, _p0._1, _p10, _p0._0),
+										_p0._2),
 									docs: _p10,
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
@@ -26200,7 +26327,7 @@ var _user$project$Update$update = F2(
 				case 'NewDocTokens':
 					var allTerms = model.terms;
 					var oldSettings = model.settings;
-					var _p11 = _p0._2;
+					var _p11 = _p0._3;
 					if (_p11.ctor === 'Ok') {
 						return {
 							ctor: '_Tuple2',
@@ -26210,11 +26337,12 @@ var _user$project$Update$update = F2(
 									slots: A3(
 										_user$project$Slots$insertAfter,
 										model.slots,
-										A2(
+										A3(
 											_user$project$Model$TermsView,
-											_p0._0,
-											A2(_user$project$Document$documentTerms, _p11._0, allTerms)),
-										_p0._1),
+											_p0._1,
+											A2(_user$project$Document$documentTerms, _p11._0, allTerms),
+											_p0._0),
+										_p0._2),
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
 										{error: ''})
@@ -26240,7 +26368,7 @@ var _user$project$Update$update = F2(
 					var oldTabs = model.tabs;
 					var tabNumber = _elm_lang$core$List$length(oldTabs);
 					var oldSettings = model.settings;
-					var _p12 = _p0._0;
+					var _p12 = _p0._1;
 					if (_p12.ctor === 'Ok') {
 						var _p13 = _p12._0;
 						return {
@@ -26279,7 +26407,7 @@ var _user$project$Update$update = F2(
 				case 'NewFrames':
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				case 'NewTermTopics':
-					var _p16 = _p0._0;
+					var _p16 = _p0._1;
 					var maybeTerm2TopicList = function (terms) {
 						var _p14 = terms;
 						if (_p14.ctor === 'Just') {
@@ -26313,7 +26441,7 @@ var _user$project$Update$update = F2(
 					};
 					var topicsContainer = model.topicsContainer;
 					var oldSettings = model.settings;
-					var _p15 = _p0._2;
+					var _p15 = _p0._3;
 					if (_p15.ctor === 'Ok') {
 						return {
 							ctor: '_Tuple2',
@@ -26323,12 +26451,13 @@ var _user$project$Update$update = F2(
 									slots: A3(
 										_user$project$Slots$insertAfter,
 										model.slots,
-										A3(
+										A4(
 											_user$project$Model$TopicsView,
 											A2(_elm_lang$core$Basics_ops['++'], 'Topics with ', _p16),
 											newTopics(_p15._0),
-											topicsContainer),
-										_p0._1),
+											topicsContainer,
+											_p0._0),
+										_p0._2),
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
 										{error: ''})
@@ -26377,7 +26506,7 @@ var _user$project$Update$update = F2(
 					};
 					var topicsContainer = model.topicsContainer;
 					var oldSettings = model.settings;
-					var _p17 = _p0._1;
+					var _p17 = _p0._2;
 					if (_p17.ctor === 'Ok') {
 						return {
 							ctor: '_Tuple2',
@@ -26387,11 +26516,12 @@ var _user$project$Update$update = F2(
 									slots: A2(
 										_user$project$Slots$insertEnd,
 										model.slots,
-										A3(
+										A4(
 											_user$project$Model$TopicsView,
-											_p0._0,
+											_p0._1,
 											newTopics(_p17._0),
-											topicsContainer)),
+											topicsContainer,
+											_p0._0)),
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
 										{search: false, error: ''})
@@ -26417,7 +26547,7 @@ var _user$project$Update$update = F2(
 					}
 				case 'NewSearchTerms':
 					var oldSettings = model.settings;
-					var _p18 = _p0._1;
+					var _p18 = _p0._2;
 					if (_p18.ctor === 'Ok') {
 						return {
 							ctor: '_Tuple2',
@@ -26452,7 +26582,7 @@ var _user$project$Update$update = F2(
 					}
 				case 'NewSearchDocs':
 					var oldSettings = model.settings;
-					var _p19 = _p0._1;
+					var _p19 = _p0._2;
 					if (_p19.ctor === 'Ok') {
 						return {
 							ctor: '_Tuple2',
@@ -26462,7 +26592,7 @@ var _user$project$Update$update = F2(
 									slots: A2(
 										_user$project$Slots$insertEnd,
 										model.slots,
-										A2(_user$project$Model$DocumentsView, _p0._0, _p19._0)),
+										A3(_user$project$Model$DocumentsView, _p0._1, _p19._0, _p0._0)),
 									settings: _elm_lang$core$Native_Utils.update(
 										oldSettings,
 										{search: false, error: ''})
@@ -26519,8 +26649,8 @@ var _user$project$Update$update = F2(
 					model = _v13;
 					continue update;
 				case 'ContainerCacheTopicMsg':
-					var _p26 = _p0._1;
-					var _p25 = _p0._0;
+					var _p28 = _p0._1;
+					var _p27 = _p0._0;
 					var currentPage = function (cont) {
 						return A2(
 							_elm_lang$core$Maybe$withDefault,
@@ -26535,11 +26665,11 @@ var _user$project$Update$update = F2(
 							return {ctor: '[]'};
 						}
 					};
-					var _p21 = A2(_user$project$ContainerCache$update, _p26, model.containerTopicModel);
+					var _p21 = A2(_user$project$ContainerCache$update, _p28, model.containerTopicModel);
 					var newdata = _p21._0;
 					var cmd = _p21._1;
 					var newSlots = function () {
-						var _p22 = _p26;
+						var _p22 = _p28;
 						switch (_p22.ctor) {
 							case 'CreateNewContainer':
 								var index = _elm_lang$core$Array$length(newdata.arrayOfContainer) - 1;
@@ -26547,34 +26677,24 @@ var _user$project$Update$update = F2(
 									_elm_lang$core$Maybe$withDefault,
 									_user$project$ContainerCache$defaultContainer,
 									A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
-								var newView = A3(
+								var newView = A4(
 									_user$project$Model$TopicsView,
 									'Topics',
 									topicList(newContainer),
-									index);
+									index,
+									_user$project$Model$Noparent);
 								return A2(_user$project$Slots$insertEnd, model.slots, newView);
 							case 'PageUpdate':
-								var index = function () {
-									var _p23 = A2(_user$project$Slots$getById, model.slots, _p25);
+								var parent = function () {
+									var _p23 = A2(_user$project$Slots$getById, model.slots, _p27);
 									if (_p23.ctor === 'TopicsView') {
-										return _p23._2;
+										return _p23._3;
 									} else {
-										return -1;
+										return _user$project$Model$Noparent;
 									}
 								}();
-								var newContainer = A2(
-									_elm_lang$core$Maybe$withDefault,
-									_user$project$ContainerCache$defaultContainer,
-									A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
-								var newView = A3(
-									_user$project$Model$TopicsView,
-									'Topics',
-									topicList(newContainer),
-									index);
-								return A3(_user$project$Slots$setAt, model.slots, newView, _p25);
-							default:
 								var index = function () {
-									var _p24 = A2(_user$project$Slots$getById, model.slots, _p25);
+									var _p24 = A2(_user$project$Slots$getById, model.slots, _p27);
 									if (_p24.ctor === 'TopicsView') {
 										return _p24._2;
 									} else {
@@ -26585,12 +26705,41 @@ var _user$project$Update$update = F2(
 									_elm_lang$core$Maybe$withDefault,
 									_user$project$ContainerCache$defaultContainer,
 									A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
-								var newView = A3(
+								var newView = A4(
 									_user$project$Model$TopicsView,
 									'Topics',
 									topicList(newContainer),
-									index);
-								return A3(_user$project$Slots$setAt, model.slots, newView, _p25);
+									index,
+									parent);
+								return A3(_user$project$Slots$setAt, model.slots, newView, _p27);
+							default:
+								var parent = function () {
+									var _p25 = A2(_user$project$Slots$getById, model.slots, _p27);
+									if (_p25.ctor === 'TopicsView') {
+										return _p25._3;
+									} else {
+										return _user$project$Model$Noparent;
+									}
+								}();
+								var index = function () {
+									var _p26 = A2(_user$project$Slots$getById, model.slots, _p27);
+									if (_p26.ctor === 'TopicsView') {
+										return _p26._2;
+									} else {
+										return -1;
+									}
+								}();
+								var newContainer = A2(
+									_elm_lang$core$Maybe$withDefault,
+									_user$project$ContainerCache$defaultContainer,
+									A2(_elm_lang$core$Array$get, index, newdata.arrayOfContainer));
+								var newView = A4(
+									_user$project$Model$TopicsView,
+									'Topics',
+									topicList(newContainer),
+									index,
+									parent);
+								return A3(_user$project$Slots$setAt, model.slots, newView, _p27);
 						}
 					}();
 					return {
@@ -26600,7 +26749,7 @@ var _user$project$Update$update = F2(
 							{containerTopicModel: newdata, slots: newSlots}),
 						_1: A2(
 							_elm_lang$core$Platform_Cmd$map,
-							_user$project$Model$ContainerCacheTopicMsg(_p25),
+							_user$project$Model$ContainerCacheTopicMsg(_p27),
 							cmd)
 					};
 				case 'Batch':
@@ -26680,7 +26829,7 @@ if (typeof _user$project$Slots$main !== 'undefined') {
 }
 Elm['TE_elm_v1'] = Elm['TE_elm_v1'] || {};
 if (typeof _user$project$TE_elm_v1$main !== 'undefined') {
-    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int"],"Dialog":[],"TermsView":["String","List Term.Term"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Batch":["List Model.Msg"],"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["String","Int","Result.Result Http.Error (List Document.Doc)"],"RemoveSlot":["Int"],"NewFrames":["String","Int","Result.Result Http.Error (List Term.Term)"],"None":[],"Toggle":["Model.Settings"],"SelectItem":["( Int, Int )"],"DeleteSlot":["Int"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["String","Int","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["String","Int","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"NewSearchDocs":["String","Result.Result Http.Error (List Document.Doc)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"NewDocTokens":["String","Int","Result.Result Http.Error Document.Document"],"NewSearchTerms":["String","Result.Result Http.Error (List Term.Term)"],"RemoveTopic":["Int"],"MoveLeft":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"NewSearchTopics":["String","Result.Result Http.Error (List Term.Term)"],"ResetSettings":[],"AdvancedSearch":["String"],"Mobile":["Bool"],"SelectAction":["Model.Msg"],"ChoseSlotDialog":["Int"],"Search":["String"],"MoveRight":[],"NewTerms":["String","Int","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Model.SearchResult":{"args":[],"tags":{"TopicResult":["List Topic.Topic"],"DocumentResult":["Document.Doc"],"TermResult":["List Term.Term"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , relevance : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ id : Int , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String , topic_id : Maybe.Maybe Int , document_count : Maybe.Maybe String , relevance : Maybe.Maybe Float , isino : Maybe.Maybe Int }"},"Model.Settings":{"args":[],"type":"{ error : String , showSaved : Bool , bottom : Bool , mobile : Bool , docview : Bool , view2 : Bool , showRelevance : Bool , showSlotDialoge : Bool , search : Bool , search4 : String , searchResult : Model.SearchResult , slotToDelete : Int , selectedItem : ( Int, Int ) }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$TE_elm_v1$main(Elm['TE_elm_v1'], 'TE_elm_v1', {"types":{"unions":{"ContainerCache.Msg":{"args":["a"],"tags":{"LoadCheckPage":["ContainerCache.Meta a","Int","Result.Result Http.Error a"],"UpdatePage":["ContainerCache.PageMsg","Maybe.Maybe (ContainerCache.Page a)"],"LoadNewContainer":["String","Int","Int","Int","Int","Json.Decode.Decoder a","ContainerCache.Meta a -> Int -> ContainerCache.Page a"]}},"Model.View":{"args":[],"tags":{"Empty":[],"DocumentsView":["String","List Document.Doc","Model.Parent"],"ErrorSlot":[],"TopicsView":["String","List Topic.Topic","Int","Model.Parent"],"Dialog":[],"TermsView":["String","List Term.Term","Model.Parent"]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Platform.Cmd.Cmd":{"args":["msg"],"tags":{"Cmd":[]}},"Material.Component.Msg":{"args":["button","textfield","menu","layout","toggles","tooltip","tabs","dispatch"],"tags":{"TooltipMsg":["Material.Component.Index","tooltip"],"TogglesMsg":["Material.Component.Index","toggles"],"LayoutMsg":["layout"],"ButtonMsg":["Material.Component.Index","button"],"MenuMsg":["Material.Component.Index","menu"],"TabsMsg":["Material.Component.Index","tabs"],"Dispatch":["dispatch"],"TextfieldMsg":["Material.Component.Index","textfield"]}},"Material.Ripple.Msg":{"args":[],"tags":{"Down":["Material.Ripple.DOMState"],"Up":[],"Tick":[]}},"Model.Msg":{"args":[],"tags":{"Batch":["List Model.Msg"],"Raise":["Int"],"SlotToLastFromOther":["Int"],"ChangeCurrentDoc":["Int","Document.Doc"],"SelectTab":["Int"],"NewDocs":["Model.Parent","String","Int","Result.Result Http.Error (List Document.Doc)"],"RemoveSlot":["Int"],"NewFrames":["Model.Parent","String","Int","Result.Result Http.Error (List Term.Term)"],"None":[],"Toggle":["Model.Settings"],"SelectItem":["( Int, Int )"],"DeleteSlot":["Int"],"UpdateSlot":["Model.View","Int"],"NewTermTopics":["Model.Parent","String","Int","Result.Result Http.Error (List Term.Term)"],"ContainerCacheTopicMsg":["Int","ContainerCache.ContainerModelMsg (List Topic.Topic)"],"NewDocument":["Model.Parent","Result.Result Http.Error Document.Document"],"Found":["Model.View"],"NewTopics":["Model.Parent","String","Int","Result.Result Http.Error (List Topic.Topic)"],"CloseTab":[],"NewSearchDocs":["Model.Parent","String","Result.Result Http.Error (List Document.Doc)"],"ExecCmd":["Platform.Cmd.Cmd Model.Msg"],"ExecuteActionIfNone":["Model.Msg"],"NewDocTokens":["Model.Parent","String","Int","Result.Result Http.Error Document.Document"],"NewSearchTerms":["Model.Parent","String","Result.Result Http.Error (List Term.Term)"],"RemoveTopic":["Int"],"MoveLeft":[],"Mdl":["Material.Msg Model.Msg"],"RemoveSlotFromOther":["Int"],"NewSearchTopics":["Model.Parent","String","Result.Result Http.Error (List Term.Term)"],"ResetSettings":[],"AdvancedSearch":["String"],"Mobile":["Bool"],"SelectAction":["Model.Msg"],"ChoseSlotDialog":["Int"],"Search":["String"],"SetParent":["Model.Parent"],"MoveRight":[],"NewTerms":["Model.Parent","String","Int","Result.Result Http.Error (List Term.Term)"]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Model.SearchResult":{"args":[],"tags":{"TopicResult":["List Topic.Topic"],"DocumentResult":["Document.Doc"],"TermResult":["List Term.Term"]}},"ContainerCache.Page":{"args":["a"],"tags":{"Loaded":["a"],"HandleError":["String"],"ToLoad":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"ContainerCache.ContainerModelMsg":{"args":["a"],"tags":{"LoadNewPage":["Int","Platform.Cmd.Cmd (ContainerCache.Msg a)","ContainerCache.Msg a"],"CreateNewContainer":["ContainerCache.Msg a"],"PageUpdate":["Int","ContainerCache.PageMsg"]}},"Material.Tooltip.Msg":{"args":[],"tags":{"Enter":["Material.Tooltip.DOMState"],"Leave":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"ContainerCache.PageMsg":{"args":[],"tags":{"NextPage":[],"PrevPage":[]}},"Json.Decode.Decoder":{"args":["a"],"tags":{"Decoder":[]}},"Material.Textfield.Msg":{"args":[],"tags":{"Focus":[],"Input":["String"],"Blur":[]}},"Model.Parent":{"args":[],"tags":{"Docparent":["Int"],"Noparent":[],"Topicparent":["Int"],"Termparent":["Int"]}},"Material.Layout.Msg":{"args":[],"tags":{"Resize":["Int"],"ToggleDrawer":[],"TransitionEnd":[],"ScrollPane":["Bool","Float"],"Ripple":["Int","Material.Ripple.Msg"],"ScrollTab":["Material.Layout.TabScrollState"],"TransitionHeader":["{ toCompact : Bool, fixedHeader : Bool }"],"NOP":[]}},"Material.Toggles.Msg":{"args":[],"tags":{"Ripple":["Material.Ripple.Msg"],"SetFocus":["Bool"]}},"VirtualDom.Property":{"args":["msg"],"tags":{"Property":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Material.Tabs.Msg":{"args":[],"tags":{"Ripple":["Int","Material.Ripple.Msg"]}},"Material.Menu.Msg":{"args":["m"],"tags":{"Tick":[],"Close":[],"Open":["Material.Menu.Geometry.Geometry"],"Key":["List (Material.Options.Internal.Summary (Material.Menu.ItemConfig m) m)","Int"],"Ripple":["Int","Material.Ripple.Msg"],"Select":["Int","Maybe.Maybe m"],"Click":["Mouse.Position"]}},"Material.Dispatch.Config":{"args":["msg"],"tags":{"Config":["{ decoders : List ( String , ( Json.Decode.Decoder msg, Maybe.Maybe Html.Events.Options ) ) , lift : Maybe.Maybe (Json.Decode.Decoder (List msg) -> Json.Decode.Decoder msg) }"]}}},"aliases":{"Material.Button.Msg":{"args":[],"type":"Material.Ripple.Msg"},"Material.Layout.TabScrollState":{"args":[],"type":"{ canScrollLeft : Bool , canScrollRight : Bool , width : Maybe.Maybe Int }"},"Material.Tooltip.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle, offsetWidth : Float, offsetHeight : Float }"},"Html.Attribute":{"args":["msg"],"type":"VirtualDom.Property msg"},"Material.Menu.ItemConfig":{"args":["m"],"type":"{ enabled : Bool, divider : Bool, onSelect : Maybe.Maybe m }"},"Document.Token":{"args":[],"type":"{ topic_id : Int , posintion_in_document : Int , term : String , parent_topic_ids : List Int }"},"Material.Component.Index":{"args":[],"type":"List Int"},"Html.Events.Options":{"args":[],"type":"{ stopPropagation : Bool, preventDefault : Bool }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"ContainerCache.Meta":{"args":["a"],"type":"{ name : String , numOfItemsInContainer : Int , itemsPerPage : Int , numOfPages : Int , identifier : Int , windowSize : Int , currPage : Int , decoder : Json.Decode.Decoder a }"},"Material.Ripple.DOMState":{"args":[],"type":"{ rect : DOM.Rectangle , clientX : Maybe.Maybe Float , clientY : Maybe.Maybe Float , touchX : Maybe.Maybe Float , touchY : Maybe.Maybe Float , type_ : String }"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Topic.Topic":{"args":[],"type":"{ id : Int , hirarchical_topic : Topic.TopicHirarchie , color_topic : String , top_terms : List Term.Term }"},"Term.Term":{"args":[],"type":"{ id : Int , name : String , wordtype : Maybe.Maybe Int , count : Maybe.Maybe Int , relevance : Maybe.Maybe Int , top_topic : List Int }"},"Material.Options.Internal.Summary":{"args":["c","m"],"type":"{ classes : List String , css : List ( String, String ) , attrs : List (Html.Attribute m) , internal : List (Html.Attribute m) , dispatch : Material.Dispatch.Config m , config : c }"},"Document.Doc":{"args":[],"type":"{ id : Int , keyword_snippet : String , keyword_title : String , top_topic : List Int , linkurl : String , time_stamp : Int , title : String , snippet : String , topic_id : Maybe.Maybe Int , document_count : Maybe.Maybe String , relevance : Maybe.Maybe Float , isino : Maybe.Maybe Int }"},"Model.Settings":{"args":[],"type":"{ error : String , showSaved : Bool , bottom : Bool , mobile : Bool , docview : Bool , view2 : Bool , parent : Model.Parent , showRelevance : Bool , showSlotDialoge : Bool , search : Bool , search4 : String , searchResult : Model.SearchResult , slotToDelete : Int , selectedItem : ( Int, Int ) }"},"Material.Msg":{"args":["m"],"type":"Material.Component.Msg Material.Button.Msg Material.Textfield.Msg (Material.Menu.Msg m) Material.Layout.Msg Material.Toggles.Msg Material.Tooltip.Msg Material.Tabs.Msg (List m)"},"Material.Menu.Geometry.Element":{"args":[],"type":"{ offsetTop : Float , offsetLeft : Float , offsetHeight : Float , bounds : DOM.Rectangle }"},"Material.Menu.Geometry.Geometry":{"args":[],"type":"{ button : Material.Menu.Geometry.Element , menu : Material.Menu.Geometry.Element , container : Material.Menu.Geometry.Element , offsetTops : List Float , offsetHeights : List Float }"},"Document.Document":{"args":[],"type":"{ id : Int , linkurl : String , time_stamp : Int , title : String , fulltext : String , search_test : String , frame_list : List String , word_list : List Document.Token }"},"Topic.TopicHirarchie":{"args":[],"type":"{ start : Int, end : Int, depth : Int, cluster : Maybe.Maybe String }"},"DOM.Rectangle":{"args":[],"type":"{ top : Float, left : Float, width : Float, height : Float }"}},"message":"Model.Msg"},"versions":{"elm":"0.18.0"}});
 }
 Elm['Tabsview'] = Elm['Tabsview'] || {};
 if (typeof _user$project$Tabsview$main !== 'undefined') {

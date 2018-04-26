@@ -1,6 +1,6 @@
 module Request exposing (..)
 
-import Model exposing (Msg(..))
+import Model exposing (Msg(..), Parent(..))
 --, Command(..))
 import Topic exposing (Topic)
 import Term exposing (Term)
@@ -22,15 +22,15 @@ loadData decoder msg arguments =
 
 loadTopics : Int -> Cmd Msg
 loadTopics slotId =
-    loadData Topic.decodeTopics (NewTopics "Topics" slotId) "getTopics"
+    loadData Topic.decodeTopics (NewTopics (Noparent) "Topics" slotId) "getTopics"
 
 loadDoc : Doc -> Cmd Msg
 loadDoc doc =
-    loadData Document.documentDecoder (NewDocument) ("getDoc&DocId=" ++ (toString doc.id))
+    loadData Document.documentDecoder (NewDocument (Noparent)) ("getDoc&DocId=" ++ (toString doc.id))
 
 loadDocTokens : Doc -> Int -> Cmd Msg
 loadDocTokens doc slotId =
-    loadData Document.documentDecoder (NewDocTokens (("Terms in \"" ++ doc.title) ++ "\"") slotId) ("getDoc&DocId=" ++ (toString doc.id))
+    loadData Document.documentDecoder (NewDocTokens (Docparent doc.id)(("Terms in \"" ++ doc.title) ++ "\"") slotId) ("getDoc&DocId=" ++ (toString doc.id))
 
 loadBestDocs : Topic -> Maybe Term -> String -> Int -> Cmd Msg
 loadBestDocs topic maybeterm sorting slotId =
@@ -48,6 +48,12 @@ loadBestDocs topic maybeterm sorting slotId =
                     "&term" ++ (toString term)
                 _ ->
                     ""
+        parent =
+            case maybeterm of
+                Just term ->
+                    Termparent term.id
+                _ ->
+                    Topicparent topic.id
         name =
             case maybeterm of
                 Just term ->
@@ -55,7 +61,7 @@ loadBestDocs topic maybeterm sorting slotId =
                 _ ->
                     "Docs in Topic " ++ (toString topic.id)
     in
-    loadData Document.bestDocsDecoder (NewDocs name slotId) command
+    loadData Document.bestDocsDecoder (NewDocs parent name slotId) command
 
 loadTerms : Topic -> Int -> Int -> Cmd Msg
 loadTerms topic offset slotId =
@@ -67,21 +73,21 @@ loadTerms topic offset slotId =
                 , (toString offset)
                 ]
     in
-    loadData Term.termsDecoder (NewTerms ("Terms in Topic " ++ (toString topic.id)) slotId) command
+    loadData Term.termsDecoder (NewTerms (Topicparent topic.id) ("Terms in Topic " ++ (toString topic.id)) slotId) command
 
 loadBestTerms : Int -> Cmd Msg
 loadBestTerms slotId =
-    loadData Term.bestTermsDecoder (NewTerms "Terms" slotId) "getBestTerms"
+    loadData Term.bestTermsDecoder (NewTerms (Noparent) "Terms" slotId) "getBestTerms"
 
-loadAutocompleteTerms : String  -> Int-> Cmd Msg
-loadAutocompleteTerms termName slotId=
+loadAutocompleteTerms : Parent -> String  -> Int-> Cmd Msg
+loadAutocompleteTerms parent termName slotId=
     let command = "autocomplete&SearchWord=" ++ termName
     in
-    loadData Term.searchTermDecoder (NewTermTopics termName slotId) command
+    loadData Term.searchTermDecoder (NewTermTopics (parent) termName slotId) command
 
 loadBestFrames : Int -> Cmd Msg
 loadBestFrames slotId =
-    loadData Term.bestTermsDecoder (NewFrames "Frames" slotId) "getBestFrames"
+    loadData Term.bestTermsDecoder (NewFrames (Noparent) "Frames" slotId) "getBestFrames"
 
 loadSearchTopics : String -> Cmd Msg
 loadSearchTopics search =
@@ -89,7 +95,7 @@ loadSearchTopics search =
             "autocomplete&SearchWord=" ++ search
         name = "Search Result for " ++ search
     in
-    loadData Term.searchTermDecoder (NewSearchTopics name) command
+    loadData Term.searchTermDecoder (NewSearchTopics (Noparent) name) command
 
 loadSearchTerms : String -> Cmd Msg
 loadSearchTerms search =
@@ -97,7 +103,7 @@ loadSearchTerms search =
             "autocomplete&SearchWord=" ++ search
         name = "Search Result for " ++ search
     in
-    loadData Term.searchTermDecoder (NewSearchTerms name) command
+    loadData Term.searchTermDecoder (NewSearchTerms (Noparent) name) command
 
 loadSearchDocs : String -> Bool -> String -> Cmd Msg
 loadSearchDocs search strict sorting =
@@ -114,7 +120,7 @@ loadSearchDocs search strict sorting =
                 ]
         name = "Search Result for " ++ search
     in
-    loadData Document.bestDocsDecoder (NewSearchDocs name) command
+    loadData Document.bestDocsDecoder (NewSearchDocs (Noparent) name) command
 
 -- Command Struktur
 --loadData : Command -> String -> Cmd Msg

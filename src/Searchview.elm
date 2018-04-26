@@ -63,17 +63,17 @@ searchresult2ListItems result =
         TermResult list ->
             let lia : Term -> Html Msg
                 lia a =
-                    li "list" a.name (Found (TermsView "Terms" [a]))
+                    li "list" a.name (Found (TermsView "Terms" [a] Noparent))
             in
             List.map lia list
         TopicResult list ->
             let lia : Topic -> Html Msg
                 lia a =
-                    li "bubble_chart" (toString a.id) (Found (TopicsView "Topics" [a] 0))
+                    li "bubble_chart" (toString a.id) (Found (TopicsView "Topics" [a] 0 Noparent))
             in
             List.map lia list
         DocumentResult a ->
-            [ li "art_track" a.title (Found (DocumentsView "Documents" [a]))]
+            [ li "art_track" a.title (Found (DocumentsView "Documents" [a] Noparent))]
 
 li : String -> String -> Msg -> Html Msg
 li icon label msg =

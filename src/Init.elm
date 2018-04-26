@@ -65,6 +65,7 @@ initSettings =
     , docview = False
     , bottom = False
     , view2 = True
+    , parent = Noparent
     , showRelevance = True
     , showSlotDialoge = False
     , search = False

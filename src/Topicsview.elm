@@ -8,21 +8,26 @@ import Request
 
 import Html exposing (Html, text)
 import Html.Attributes exposing (style, class)
-import Material.Options exposing (css, cs, div, span, onClick, center)
+import Material.Options exposing (css, cs, div, span, onClick, onMouseEnter, onMouseLeave, center)
 import Material.Elevation as Elevation
 import Material.Icon as Icon
 import Material.Button as Button
 import Material.Chip as Chip
 import ContainerCache exposing (Page(..))
 
-view : Model -> String -> Int -> String -> Html Msg
-view model flex slotId slotName =
+view : Model -> String -> Int -> String -> Parent -> Html Msg
+view model flex slotId slotName parent =
     div [ cs "slot"
+        , if (getActive parent model.settings)
+            then cs "active"
+            else cs "unactive"
         , if (slotId == model.settings.slotToDelete)
             then cs "slot__remove"
             else css "flex" flex
         , Elevation.e0
-        , primaryColor
+        -- , primaryColor
+        , onMouseEnter (SetParent parent)
+        , onMouseLeave (SetParent Noparent)
         ]
         [ div
             [ css "height" "45px"
@@ -34,7 +39,9 @@ view model flex slotId slotName =
                 [ css "width" "calc(100% - 64px)"
                 , css "text-align" "left"
                 ]
-                [ text slotName]
+                [ text slotName
+                , text (toString parent)
+                , text (toString model.settings.parent)]
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab
@@ -48,15 +55,20 @@ view model flex slotId slotName =
             [ cs "slot__content"
             , css "max-width" "400px"
             ]
-            (List.indexedMap (topic2Chip model.settings slotId) model.topics)
+            (List.indexedMap (topic2Chip parent model.settings slotId) model.topics)
         ]
 
-topic2Chip : Settings -> Int -> Int -> Topic -> Html Msg
-topic2Chip settings slotId id topic =
+topic2Chip : Parent -> Settings -> Int -> Int -> Topic -> Html Msg
+topic2Chip parent settings slotId id topic =
     Chip.span
         [ css "width" "calc(100% - 40px)"
         , css "margin" "6px 4px"
         , center
+        , if (getActive parent settings)
+            then cs "item"
+            else if  (isParent topic.id settings)
+                then cs "active__item"
+                else cs "unactive__item"
         ]
         [ Chip.content
             [ css "width" "100%"

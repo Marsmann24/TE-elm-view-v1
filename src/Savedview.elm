@@ -47,7 +47,7 @@ view model flex =
 slotView2Chip : Int -> View -> Html Msg
 slotView2Chip id view =
     case view of
-        TopicsView name _ _ ->
+        TopicsView name _ _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
                 , css "display" "block"
@@ -67,7 +67,7 @@ slotView2Chip id view =
                         ]
                     ]
                 ]
-        TermsView name _ ->
+        TermsView name _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
                 , css "display" "block"
@@ -87,7 +87,7 @@ slotView2Chip id view =
                         ]
                     ]
                 ]
-        DocumentsView name _ ->
+        DocumentsView name _ _ ->
             Chip.chip Html.div
                 [ css "width" "200px"
                 , css "display" "block"

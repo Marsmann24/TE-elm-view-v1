@@ -40,6 +40,10 @@ update msg model =
             }, Cmd.none)
         Toggle settings ->
             ({ model | settings = settings}, Cmd.none)
+        SetParent parent ->
+            let oldSettings = model.settings
+            in
+            ({ model | settings = { oldSettings | parent = parent}}, Cmd.none)
         SelectTab tabId ->
             ({ model | currentTab = tabId}, Cmd.none)
         CloseTab ->
@@ -245,14 +249,14 @@ update msg model =
                 | slots = Slots.setAt model.slots view slotId
                                         --slotChangeTo oldSlots slotId view
             }, Cmd.none)
-        NewTopics name slotId result ->
+        NewTopics parent name slotId result ->
             let oldSettings = model.settings
                 topicsContainer = model.topicsContainer
             in
             case result of
                 Ok newTopics ->
                     ({ model
-                        | slots = Slots.insertAfter model.slots (TopicsView name newTopics topicsContainer) slotId
+                        | slots = Slots.insertAfter model.slots (TopicsView name newTopics topicsContainer parent) slotId
                                         --slotFromTo oldSlots Empty (TopicsView name newTopics topicsContainer)
                         , topics = newTopics
                         , settings =
@@ -263,13 +267,13 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewTerms name slotId result ->
+        NewTerms parent name slotId result ->
             let oldSettings = model.settings
             in
             case result of
                 Ok newTerms ->
                     ({ model
-                        | slots = Slots.insertAfter model.slots (TermsView name newTerms) slotId
+                        | slots = Slots.insertAfter model.slots (TermsView name newTerms parent) slotId
                                         --slotFromTo oldSlots Empty (TermsView name newTerms)
                         , terms = newTerms
                         , settings =
@@ -280,13 +284,13 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocs name slotId result ->
+        NewDocs parent name slotId result ->
             let oldSettings = model.settings
             in
             case result of
                 Ok newDocs ->
                     ({ model
-                        | slots = Slots.insertAfter model.slots (DocumentsView name newDocs) slotId
+                        | slots = Slots.insertAfter model.slots (DocumentsView name newDocs parent) slotId
                                         --slotFromTo oldSlots Empty (DocumentsView name newDocs)
                         , docs = newDocs
                         ,settings =
@@ -297,14 +301,14 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocTokens name slotId result ->
+        NewDocTokens parent name slotId result ->
             let oldSettings = model.settings
                 allTerms = model.terms
             in
             case result of
                 Ok document ->
                     ({ model
-                        | slots = Slots.insertAfter model.slots (TermsView name (Document.documentTerms document allTerms)) slotId
+                        | slots = Slots.insertAfter model.slots (TermsView name (Document.documentTerms document allTerms) parent) slotId
                                         --slotFromTo oldSlots Empty (TermsView name (Document.documentTerms document allTerms))
                         ,settings =
                             { oldSettings
@@ -314,7 +318,7 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewDocument result ->
+        NewDocument parent result ->
             let oldSettings = model.settings
                 oldTabs = model.tabs
                 tabNumber = List.length oldTabs
@@ -332,9 +336,9 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = "Document not found"}}, Cmd.none)
-        NewFrames name slotId result ->
+        NewFrames parent name slotId result ->
             (model, Cmd.none)
-        NewTermTopics termName slotId result ->
+        NewTermTopics parent termName slotId result ->
             let oldSettings = model.settings
                 topicsContainer = model.topicsContainer
                 fetchTerm : List Term -> Maybe Term
@@ -363,7 +367,7 @@ update msg model =
             case result of
                 Ok termList ->
                     ({ model
-                        | slots = Slots.insertAfter model.slots (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer) slotId
+                        | slots = Slots.insertAfter model.slots (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer parent) slotId
                                         --slotFromTo oldSlots Empty (TopicsView ("Topics with " ++ termName) (newTopics termList) topicsContainer)
                         , settings =
                             { oldSettings | error = ""
@@ -372,7 +376,7 @@ update msg model =
                     }, Cmd.none)
                 Err err ->
                     ({ model | settings = { oldSettings | error = toString err}}, Cmd.none)
-        NewSearchTopics name result ->
+        NewSearchTopics parent name result ->
             let oldSettings = model.settings
                 topicsContainer = model.topicsContainer
                 concatTopTopics : List Term -> List Int
@@ -397,7 +401,7 @@ update msg model =
             case result of
                 Ok termList ->
                     ({ model
-                        | slots = Slots.insertEnd model.slots (TopicsView name (newTopics termList) topicsContainer)
+                        | slots = Slots.insertEnd model.slots (TopicsView name (newTopics termList) topicsContainer parent)
                                         --slotFromTo oldSlots Empty (TopicsView name (newTopics termList) topicsContainer)
                         , settings =
                             { oldSettings
@@ -416,7 +420,7 @@ update msg model =
                                 , error = toString err
                             }
                     }, Cmd.none)
-        NewSearchTerms name result ->
+        NewSearchTerms parent name result ->
             let oldSettings = model.settings
             in
             case result of
@@ -440,13 +444,13 @@ update msg model =
                                 , error = toString err
                             }
                     }, Cmd.none)
-        NewSearchDocs name result ->
+        NewSearchDocs parent name result ->
             let oldSettings = model.settings
             in
             case result of
                 Ok docList ->
                     ({ model
-                        | slots = Slots.insertEnd model.slots (DocumentsView name docList)
+                        | slots = Slots.insertEnd model.slots (DocumentsView name docList parent)
                                         --slotFromTo oldSlots Empty (DocumentsView name docList)
                         , settings =
                             { oldSettings
@@ -503,35 +507,47 @@ update msg model =
                                 newContainer =
                                     (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
                                 newView =
-                                    TopicsView "Topics" (topicList newContainer) index
+                                    TopicsView "Topics" (topicList newContainer) index Noparent
                             in
                             Slots.insertEnd model.slots newView
                             --slotFromTo model.slots Empty newView
                         ContainerCache.PageUpdate _ _ ->
                             let index =
                                     case (Slots.getById model.slots slotId) of
-                                        TopicsView _ _ contId->
+                                        TopicsView _ _ contId _->
                                             contId
                                         _ ->
                                             -1
+                                parent =
+                                        case (Slots.getById model.slots slotId) of
+                                            TopicsView _ _ _ par->
+                                                par
+                                            _ ->
+                                                Noparent
                                 newContainer =
                                     (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
                                 newView =
-                                    TopicsView "Topics" (topicList newContainer) index
+                                    TopicsView "Topics" (topicList newContainer) index parent
                             in
                             Slots.setAt model.slots newView slotId
                             --slotChangeTo model.slots slotId newView
                         _ ->
                             let index =
                                     case (Slots.getById model.slots slotId) of
-                                        TopicsView _ _ contId->
+                                        TopicsView _ _ contId _->
                                             contId
                                         _ ->
                                             -1
+                                parent =
+                                    case (Slots.getById model.slots slotId) of
+                                        TopicsView _ _ _ par->
+                                            par
+                                        _ ->
+                                            Noparent
                                 newContainer =
                                     (withDefault ContainerCache.defaultContainer (Array.get index newdata.arrayOfContainer))
                                 newView =
-                                    TopicsView "Topics" (topicList newContainer) index
+                                    TopicsView "Topics" (topicList newContainer) index parent
                             in
                             Slots.setAt model.slots newView slotId
                             --slotChangeTo model.slots slotId newView

@@ -158,6 +158,53 @@
     overflow: hidden;
 }
 
+.active {
+    background-color: #f0f0f0 !important;
+    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.50);
+}
+
+.unactive {
+    background-color: #d5d5b5 !important;
+    box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.50) inset;
+}
+
+.item:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.50);
+}
+
+.active__item {
+    background-color: #e0e0e0 !important;
+    width: calc(100% - 80px) !important;
+    margin-left: 40px !important;
+    box-shadow: 0 0 10px rgba(145, 235, 190, 0.50);
+
+}
+
+.unactive__item {
+    background-color: rgba(0, 0, 0, 0.17) !important;
+    width: calc(100% - 80px) !important;
+}
+
+.active__doc {
+    background-color: rgb(76,175,80) !important;
+    width: 90% !important;
+    margin: 4% 8% 4% 7% !important;
+}
+
+.unactive__doc {
+    background-color: rgba(0, 0, 0, 0.17) !important;
+    width: 90% !important;
+    margin: 4% 12% 4% 3% !important;
+}
+
+.slots__action:hover{
+    background-color: #d5d5b5 !important;
+    box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.50) inset;
+    border-radius: 25px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar-track
 {
@@ -178,10 +225,10 @@
 
 .primaryColor
 {
-    background-color: #f0f0f0 !important
+    background-color: #f0f0f0 !important;
 }
 
 .generalBackgroundColor, main
 {
-    background-color: #d0d0b0
+    background-color: #d0d0b0 !important;
 }

@@ -8,21 +8,26 @@ import Request
 
 import Html exposing (Html, text)
 import Html.Events
-import Material.Options exposing (css, cs, div, span, center, onClick, nop)
+import Material.Options exposing (css, cs, div, span, center, onClick, onMouseEnter, onMouseLeave, nop)
 import Material.Elevation as Elevation
 import Material.Icon as Icon
 import Material.Button as Button
 import Material.List as Lists
 
-view : Model -> String -> Int -> String -> Html Msg
-view model flex slotId slotName =
+view : Model -> String -> Int -> String -> Parent -> Html Msg
+view model flex slotId slotName parent =
     div
         [ cs "slot"
+        , if (getActive parent model.settings)
+            then cs "active"
+            else cs "unactive"
         , if (slotId == model.settings.slotToDelete)
             then cs "slot__remove"
             else css "flex" flex
         , Elevation.e0
-        , primaryColor
+        -- , primaryColor
+        , onMouseEnter (SetParent parent)
+        , onMouseLeave (SetParent Noparent)
         ]
         [ div
             [ css "height" "45px"
@@ -47,11 +52,11 @@ view model flex slotId slotName =
         , Lists.ul
             [ cs "slot__content"
             ]
-            (List.indexedMap (terms2ListItem model slotId) model.terms)
+            (List.indexedMap (terms2ListItem parent model slotId) model.terms)
         ]
 
-terms2ListItem : Model -> Int -> Int -> Term -> Html Msg
-terms2ListItem model slotId id term =
+terms2ListItem : Parent -> Model -> Int -> Int -> Term -> Html Msg
+terms2ListItem parent model slotId id term =
     Lists.li
         [ css "overflow" "visible"
         ]
@@ -59,6 +64,11 @@ terms2ListItem model slotId id term =
             [ cs "mdl-button"
             , cs "mdl-button--raised"
             , css "overflow" "visible"
+            , if (getActive parent model.settings)
+                then cs "item"
+                else if  (isParent term.id model.settings)
+                    then cs "active__item"
+                    else cs "unactive__item"
             , center
             , if (term.id == model.currentTerm.id)
                 then Elevation.e2
@@ -74,7 +84,7 @@ terms2ListItem model slotId id term =
                 ]
             , span
                 [ onClick
-                    (ExecCmd (Request.loadAutocompleteTerms term.name slotId))
+                    (ExecCmd (Request.loadAutocompleteTerms (Termparent term.id) term.name slotId))
                 --    (ShowTopics
                 --        (List.filter
                 --            (Topic.termInTopic term)

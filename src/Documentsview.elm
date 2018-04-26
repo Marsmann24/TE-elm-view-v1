@@ -15,15 +15,20 @@ import Material.Button as Button
 import Material.Color as Color
 import Material.Card as Card
 
-view : Model -> String -> Int -> String -> Html Msg
-view model flex slotId slotName =
+view : Model -> String -> Int -> String -> Parent -> Html Msg
+view model flex slotId slotName parent =
     div
         [ cs "slot"
+        , if (getActive parent model.settings)
+            then cs "active"
+            else cs "unactive"
         , if (slotId == model.settings.slotToDelete)
             then cs "slot__remove"
             else css "flex" flex
         , Elevation.e0
-        , primaryColor
+        -- , primaryColor
+        , onMouseEnter (SetParent parent)
+        , onMouseLeave (SetParent Noparent)
         ]
         [ div
             [ css "height" "45px"
@@ -48,16 +53,21 @@ view model flex slotId slotName =
         , div
             [ cs "slot__content"
             ]
-            (List.map2 (doc2CardView model slotId) model.docs (List.range 1 (List.length model.docs)))
+            (List.map2 (doc2CardView parent model slotId) model.docs (List.range 1 (List.length model.docs)))
         ]
 
-doc2CardView : Model -> Int -> Doc -> Int -> Html Msg
-doc2CardView model slotId doc cardID =
+doc2CardView : Parent -> Model -> Int -> Doc -> Int -> Html Msg
+doc2CardView parent model slotId doc cardID =
     Card.view
         [ css "height" "100px"
         , css "width" "94%"
         , css "margin" "4% 8% 4% 3%"
-        , Color.background Color.primary
+        , if (getActive parent model.settings)
+            then Color.background Color.primary
+            else if  (isParent doc.id model.settings)
+                then cs "active__doc"
+                else cs "unactive__doc"
+        -- , Color.background Color.primary
         , if (cardID == model.currentDocument.cardID)
             then Elevation.e0
           else if (cardID == model.raised)
