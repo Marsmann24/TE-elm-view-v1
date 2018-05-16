@@ -3,6 +3,7 @@ module TE_elm_v1 exposing (..)
 --import Mainview_v1
 import Mainview_v2
 import Mainview_v3
+import Mainview_v4
 import Update
 import Init
 
@@ -25,7 +26,7 @@ view model =
         then
             Mainview_v2.view model
         else
-            Mainview_v3.view model
+            Mainview_v4.view model
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

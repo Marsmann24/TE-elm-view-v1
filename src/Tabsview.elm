@@ -4,23 +4,26 @@ import Model exposing (..)
 import Document exposing (Document)
 
 import Html exposing (Html, text, h1, br)
-import Material.Options exposing (css, cs, div, span, onClick)
+import Material.Options exposing (Property, css, cs, div, span, onClick)
 import Material.Tabs as Tabs
 import Material.Button as Button
 import Material.Icon as Icon
 
-view : Model -> String -> Html Msg
+view : Model -> Property c Msg -> Html Msg
 view model flex =
     div
         [ cs "slot"
-        , css "flex" flex
+        , flex
         , css "padding" "0px 10px"
+        -- , css "margin" "3px 0"
+        , css "box-shadow" "0 0 10px rgba(0, 0, 0, 0.80)"
         , primaryColor
         ]
         [ Tabs.render Mdl [0] model.mdl
             [ Tabs.ripple
             , Tabs.onSelectTab SelectTab
             , Tabs.activeTab model.currentTab
+            , css "height" "100%"
             ]
             (List.map tab2TabView  model.tabs)
             [ let maybetab = (List.head (List.drop model.currentTab model.tabs))
@@ -69,7 +72,9 @@ tab2TabView tab =
 
 document2DocumentView : Model -> Document -> Html Msg
 document2DocumentView model document =
-    div [ css "margin" "0px 6px"]
+    div [ css "margin" "0px 6px"
+        , css "height" "calc(100% - 97px)"
+        ]
         [ Button.render Mdl [99] model.mdl
             [ cs "slot__close_button"
             , Button.icon
@@ -85,5 +90,9 @@ document2DocumentView model document =
             , br [][]
             ]
         , h1 [] [ text document.title]
-        , span [] [ text document.fulltext]
+        , div
+            [ css "overflow-y" "auto"
+            , css "height" "inherit"
+            ]
+            [ text document.fulltext]
         ]

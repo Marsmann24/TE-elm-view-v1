@@ -6,11 +6,11 @@ import Topic exposing (Topic)
 import Term exposing (Term)
 
 import Html exposing (Html, text)
-import Material.Options exposing (div, span, cs, css, center, onClick)
+import Material.Options exposing (Property, div, span, cs, css, center, onClick)
 import Material.List as Lists
 import Material.Elevation as Elevation
 
-view : Model -> String -> Html Msg
+view : Model -> Property c Msg -> Html Msg
 view model flex =
     div
         [ cs "search_results"

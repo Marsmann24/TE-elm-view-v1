@@ -155,7 +155,7 @@ viewBody model =
                       ]
                     --, div
                     --    [ cs "flex__row"
-                    --    , css "flex" (flexValue ((slotsCount model.slots) * 2))
+                    --    , (flexValue ((slotsCount model.slots) * 2))
                     --    ]
         --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
                     , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
@@ -238,21 +238,21 @@ slot model slotId view =
                     , slotDialogCard "Documents" (DocumentsView "Documents" model.docs Noparent) slotId
                 --, Button.render Mdl [5] model.mdl
                 --    [ Button.ripple
-                --    , css "flex" "flexValue 1"
+                --    , flexValue 1
                 --    , css "margin" "70px 0"
                 --    , onClick (UpdateSlot (TopicsView model.topics) slotId)
                 --    ]
                 --    [ text "Topics"]
                 --, Button.render Mdl [5] model.mdl
                 --    [ Button.ripple
-                --    , css "flex" "flexValue 1"
+                --    , flexValue 1
                 --    , css "margin" "70px 0"
                 --    , onClick (UpdateSlot (WordlistView model.terms) slotId)
                 --    ]
                 --    [ text "Terms"]
                 --, Button.render Mdl [6] model.mdl
                 --    [ Button.ripple
-                --    , css "flex" "flexValue 1"
+                --    , flexValue 1
                 --    , css "margin" "70px 0"
                 --    , onClick (UpdateSlot (DocumentsView model.docs) slotId)
                 --    ]
@@ -309,24 +309,24 @@ viewOrEmptyFlex : Bool -> Html Msg -> Html Msg
 viewOrEmptyFlex condition view =
     if condition
         then view
-        else div [ css "flex" (flexValue 0)] []
+        else div [ (flexValue 0)] []
 
-flexValue : Int -> String
+flexValue : Int -> Property c Msg
 flexValue flex =
     case flex of
         6 ->
-            "6 5 50%"
+            css "flex" "6 5 50%"
         5 ->
-            "5 4 47%"
+            css "flex" "5 4 47%"
         4 ->
-            "4 3 32%"
+            css "flex" "4 3 32%"
         3 ->
-            "3 2 25%"
+            css "flex" "3 2 25%"
         2 ->
-            "2 2 12%"
+            css "flex" "2 2 12%"
         1 ->
-            "1 1 7%"
+            css "flex" "1 1 7%"
         0 ->
-            "0 0 0%"
+            css "flex" "0 0 0%"
         _ ->
-            "1 1 100%"
+            css "flex" "1 1 100%"

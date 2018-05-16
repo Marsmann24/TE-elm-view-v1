@@ -1,4 +1,4 @@
-module Mainview_v3 exposing (view)
+module Mainview_v4 exposing (view)
 
 import Model exposing (..)
 import Tabsview
@@ -31,9 +31,11 @@ view model =
             { header =
                 (if model.settings.error == ""
                 then
-                    [ span [] []]
+                    [ viewSearch model
+                    ]
                 else
-                    [ span
+                    [ viewSearch model
+                    , span
                         []
                         [ text model.settings.error
                         ]
@@ -42,7 +44,17 @@ view model =
             , drawer = [ viewSwitch model]
             , tabs = ( [], [])
             , main =
-                [ viewBody model
+                [ (if model.settings.search
+                    then
+                        span
+                            [ cs "search_overlay"
+                            , onClick ResetSettings
+                            ]
+                            [ Searchview.view model (flexValue (-1))]
+                    else
+                        span [] []
+                    )
+                , viewBody model
                 ]
             }
         |> Scheme.topWithScheme Color.Green Color.Orange
@@ -109,48 +121,64 @@ viewSwitch model =
             , Toggles.value model.settings.showRelevance
             ]
             [ text "show term relevance"]
-        , Toggles.switch Mdl [3] model.mdl
+        , Toggles.switch Mdl [4] model.mdl
             [ css "margin" "5px"
-            , onToggle (Toggle { oldSettings | showRelevance = not model.settings.mobile})
-            , Toggles.value model.settings.showRelevance
+            , onToggle (Mobile (not model.settings.mobile))
+            , Toggles.value model.settings.mobile
             ]
             [ text "mobile version"]
+        , Toggles.switch Mdl [5] model.mdl
+            [ css "margin" "5px"
+            , onToggle (Toggle { oldSettings | docview = not model.settings.docview})
+            , Toggles.value model.settings.docview
+            ]
+            [ text "show Document"]
         ]
 
 viewBody : Model -> Html Msg
 viewBody model =
-    div [ Elevation.e4
-        , cs "flex__column"
-        , css "height" "100%"
-        ]
-        [div
-            [ cs "flex__row"
-            , css "flex" "3 2 70%"
+    if (not model.settings.mobile)
+    then
+        div [ Elevation.e4
+            , cs "flex__row"
             , css "height" "100%"
             ]
-            (List.concat
-                [ [ if (not (List.isEmpty model.slots.left))
-                    then slotAction (onClick MoveRight) "<"
-                    else div [] []
-                  ]
-                --, div
-                --    [ cs "flex__row"
-                --    ,(flexValue ((slotsCount model.slots) * 2))
-                --    ]
-    --                    (List.map hiddenSlot (List.reverse (List.range 1 (List.length model.slots.more)))))
-                , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
-                , [ if ((Slots.focusLength model.slots) <= 2)
-                    then slotAction (onClick (ChoseSlotDialog (Slots.focusLength model.slots))) "add"
-                    else if (not (List.isEmpty model.slots.right))
-                    then
-                        slotAction (onClick MoveLeft) ">"
-                    else div [] []
-                  , Tabsview.view model (flexValue 6)
-                  ]
+            [ div
+                [ css "white-space" "nowrap"
+                , css "display" "inline-block"
+                , css "overflow-y" "hidden"
+                , css "overflow-x" "auto"
+                , (flexValue 6)
+                , css "height" "100%"
                 ]
-            )
-        --, Savedview.view model "1 1 30%"
-        ]
+                (List.concat
+                    [ List.indexedMap (slot model) (model.slots.left)
+                    , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
+                    , List.indexedMap (slot model) (model.slots.right)
+                    ])
+            , if (model.settings.docview)
+                then Tabsview.view model (flexValue 6)
+                else div [] []
+            ]
+    else if model.settings.docview
+        then Tabsview.view model (flexValue 1)
+        else div
+                [ cs "flex__row"
+                , css "height" "100%"]
+                (List.concat
+                    [ [ if (not (List.isEmpty model.slots.left))
+                        then slotAction (onClick MoveRight) "navigate_before"
+                        else div [ css "display" "none"] []
+                      ]
+                    , (Array.toList (Array.indexedMap (slot model) (Slots.getFocus model.slots)))
+                    , [ if (not (List.isEmpty model.slots.right))
+                        then slotAction (onClick MoveLeft) "navigate_next"
+                        else if ((Slots.focusLength model.slots) <= 2)
+                        then slotAction (onClick (ChoseSlotDialog (Slots.focusLength model.slots))) "add"
+                        else div [ css "display" "none"] []
+                      ]
+                    ]
+                )
 
 slotAction : Property c Msg -> String -> Html Msg
 slotAction action icon =
@@ -158,6 +186,7 @@ slotAction action icon =
         [ generalBackgroundColor
         , center
         , action
+        , css "flex" "0.1 0.1 1%"
         , cs "slots__action"
         ]
         [ Icon.view icon [ Icon.size48 ]
@@ -167,15 +196,15 @@ slot : Model -> Int -> View -> Html Msg
 slot model slotId view =
     case view of
         TopicsView name topics contId parent ->
-            Topicsview.view { model | topics = topics, topicsContainer = contId} (flexValue 2) slotId name parent
+            Topicsview.view { model | topics = topics, topicsContainer = contId} (css "width" "300px") slotId name parent
         TermsView name terms parent ->
-            Termsview.view { model | terms = terms} (flexValue 2) slotId name parent
+            Termsview.view { model | terms = terms} (css "width" "300px") slotId name parent
         DocumentsView name docs parent ->
-            Documentsview.view { model | docs = docs} (flexValue 2) slotId name parent
+            Documentsview.view { model | docs = docs} (css "width" "300px") slotId name parent
         Dialog ->
             div
                 [ cs "slot"
-                , cs "slot__new"
+                , css "width" "200px"
                 , primaryColor
                 ]
                 [ Button.render Mdl [slotId] model.mdl
@@ -245,7 +274,6 @@ hiddenSlot id =
         [ cs "slot__hidden"
         , center
         , primaryColor
-        , onClick None
         ]
         [ text (toString id)]
 

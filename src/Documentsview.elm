@@ -7,7 +7,7 @@ import Term exposing (iconTerm)
 import Request
 
 import Html exposing (Html, text)
-import Material.Options exposing (css, cs, div, span, center, onClick, onMouseEnter, onMouseLeave, onMouseDown, onMouseUp)
+import Material.Options exposing (Property, css, cs, div, span, center, onClick, onMouseEnter, onMouseLeave, onMouseDown, onMouseUp)
 import Material.Color as Color
 import Material.Elevation as Elevation
 import Material.Icon as Icon
@@ -15,7 +15,7 @@ import Material.Button as Button
 import Material.Color as Color
 import Material.Card as Card
 
-view : Model -> String -> Int -> String -> Parent -> Html Msg
+view : Model -> Property c Msg -> Int -> String -> Parent -> Html Msg
 view model flex slotId slotName parent =
     div
         [ cs "slot"
@@ -24,7 +24,7 @@ view model flex slotId slotName parent =
             else cs "unactive"
         , if (slotId == model.settings.slotToDelete)
             then cs "slot__remove"
-            else css "flex" flex
+            else flex
         , Elevation.e0
         -- , primaryColor
         , onMouseEnter (SetParent parent)
@@ -32,6 +32,7 @@ view model flex slotId slotName parent =
         ]
         [ div
             [ css "height" "45px"
+            , css "max-width" "400px"
             , center
             ]
             [ iconDoc [ css "margin" "5px"]
@@ -52,6 +53,7 @@ view model flex slotId slotName parent =
             ]
         , div
             [ cs "slot__content"
+            , css "max-width" "400px"
             ]
             (List.map2 (doc2CardView parent model slotId) model.docs (List.range 1 (List.length model.docs)))
         ]

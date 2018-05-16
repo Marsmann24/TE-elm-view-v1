@@ -8,14 +8,14 @@ import Request
 
 import Html exposing (Html, text)
 import Html.Attributes exposing (style, class)
-import Material.Options exposing (css, cs, div, span, onClick, onMouseEnter, onMouseLeave, center)
+import Material.Options exposing (Property, css, cs, div, span, onClick, onMouseEnter, onMouseLeave, center)
 import Material.Elevation as Elevation
 import Material.Icon as Icon
 import Material.Button as Button
 import Material.Chip as Chip
 import ContainerCache exposing (Page(..))
 
-view : Model -> String -> Int -> String -> Parent -> Html Msg
+view : Model -> Property c Msg -> Int -> String -> Parent -> Html Msg
 view model flex slotId slotName parent =
     div [ cs "slot"
         , if (getActive parent model.settings)
@@ -23,7 +23,7 @@ view model flex slotId slotName parent =
             else cs "unactive"
         , if (slotId == model.settings.slotToDelete)
             then cs "slot__remove"
-            else css "flex" flex
+            else flex
         , Elevation.e0
         -- , primaryColor
         , onMouseEnter (SetParent parent)
@@ -40,8 +40,7 @@ view model flex slotId slotName parent =
                 , css "text-align" "left"
                 ]
                 [ text slotName
-                , text (toString parent)
-                , text (toString model.settings.parent)]
+                ]
             , Button.render Mdl [slotId] model.mdl
                 [ cs "slot__close_button"
                 , Button.fab
