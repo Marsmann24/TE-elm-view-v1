@@ -22440,26 +22440,7 @@ var _user$project$Documentsview$doc2CardView = F5(
 										_0: _elm_lang$html$Html$text(doc.title),
 										_1: {ctor: '[]'}
 									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_debois$elm_mdl$Material_Options$span,
-										{
-											ctor: '::',
-											_0: _debois$elm_mdl$Material_Options$onMouseDown(
-												_user$project$Model$SelectAction(
-													_user$project$Model$ExecCmd(
-														A2(_user$project$Request$loadDocTokens, doc, slotId)))),
-											_1: {ctor: '[]'}
-										},
-										{
-											ctor: '::',
-											_0: _user$project$Term$iconTerm(
-												{ctor: '[]'}),
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
-								}
+								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',

@@ -105,10 +105,10 @@ doc2CardView parent model slotId doc cardID =
                 --        )
                 --    ]
                 --    [ iconTopic []]
-                , span
-                    [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc slotId)))
-                    ]
-                    [ iconTerm []]
+                -- , span
+                --     [ onMouseDown (SelectAction (ExecCmd (Request.loadDocTokens doc slotId)))
+                --     ]
+                --     [ iconTerm []]
                 ]
             , span
                 [ Color.text (Color.color Color.Grey Color.S200)
